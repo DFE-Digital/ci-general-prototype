@@ -1,0 +1,86 @@
+{#
+For guidance on how to use layouts see:
+https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
+#}
+
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{% block header %}
+
+<header class="govuk-header" data-module="govuk-header">
+    <div class="govuk-header__container govuk-width-container" style="position: relative;">
+        <div class="govuk-header__logo">
+        <a href="/" class="govuk-header__link govuk-header__link--homepage">
+            <img src="/public/images/department-for-education_white.png" alt="Department for Education" class="govuk-header__logotype">
+        </a>
+        </div>
+        <div class="govuk-header__search" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); width: 300px; z-index: 10;">
+            <form class="govuk-header__search-form" action="#" method="get" role="search" style="position: relative; width: 100%;">
+                <div class="govuk-header__search-wrapper" style="display: flex; border: 2px solid #0b0c0c; background: #ffffff; position: relative;">
+                    <input class="govuk-header__search-input" id="search" name="search" type="search" placeholder="Search projects" aria-label="Search projects" style="flex: 1; border: none; padding: 8px 12px; font-size: 16px; background: transparent; outline: none; color: #0b0c0c;">
+                    <button class="govuk-header__search-button" type="submit" aria-label="Search" style="background: #f3f2f1; border: none; padding: 8px 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; min-width: 44px; border-left: 1px solid #b1b4b6;">
+                        <svg class="govuk-header__search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; color: #0b0c0c;">
+                            <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="2"/>
+                            <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</header>
+<section aria-label="Service information" class="govuk-service-navigation"
+data-module="govuk-service-navigation">
+    <div class="govuk-width-container">
+        <div class="govuk-service-navigation__container">
+        <span class="govuk-service-navigation__service-name">
+            <a href="#" class="govuk-service-navigation__link">
+                Complete conversions, transfers and changes
+            </a>
+        </span>
+        <nav aria-label="Menu" class="govuk-service-navigation__wrapper">
+            <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="navigation" hidden>
+            Menu
+            </button>
+            <ul class="govuk-service-navigation__list" id="navigation">
+                <li class="govuk-service-navigation__item govuk-service-navigation__item--active">
+                    <a class="govuk-service-navigation__link" href="#" aria-current="true">
+                        <strong class="govuk-service-navigation__active-fallback">Your projects</strong>
+                    </a>
+                </li>
+                <li class="govuk-service-navigation__item">
+                    <a class="govuk-service-navigation__link" href="#">
+                        Your team projects
+                    </a>
+                </li>
+                <li class="govuk-service-navigation__item">
+                    <a class="govuk-service-navigation__link" href="#">
+                        All projects
+                    </a>
+                </li>
+                <li class="govuk-service-navigation__item">
+                    <a class="govuk-service-navigation__link" href="#">
+                        Groups
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        </div>
+    </div>
+</section>
+<div class="govuk-phase-banner">
+    <div class="govuk-width-container">
+        <p class="govuk-phase-banner__content">
+            <strong class="govuk-tag govuk-phase-banner__content__tag">
+            Prototype
+            </strong>
+            <span class="govuk-phase-banner__text">
+            This is a new service. Help us improve it and <a class="govuk-link" href="#">give your feedback by email</a>.
+            </span>
+        </p>
+    </div>
+</div>
+
+
+{% endblock %}

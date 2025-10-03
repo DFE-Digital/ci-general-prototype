@@ -12,3 +12,77 @@
     content: url(/public/images/department-for-education_black.png);
     height: 30px;
 }
+
+// Search box styles
+.govuk-header__search {
+    position: absolute;
+    top: 50%;
+    right: 0;
+    transform: translateY(-50%);
+    width: 300px;
+}
+
+.govuk-header__search-form {
+    position: relative;
+    width: 100%;
+}
+
+.govuk-header__search-wrapper {
+    display: flex;
+    border: 2px solid #0b0c0c;
+    border-radius: 0;
+    background: #ffffff;
+    position: relative;
+}
+
+.govuk-header__search-input {
+    flex: 1;
+    border: none;
+    padding: 8px 12px;
+    font-size: 16px;
+    line-height: 1.25;
+    background: transparent;
+    outline: none;
+    color: #0b0c0c;
+}
+
+.govuk-header__search-input::placeholder {
+    color: #626a6e;
+}
+
+.govuk-header__search-button {
+    background: #f3f2f1;
+    border: none;
+    padding: 8px 12px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 44px;
+    border-left: 1px solid #b1b4b6;
+}
+
+.govuk-header__search-button:hover {
+    background: #dbdad9;
+}
+
+.govuk-header__search-button:focus {
+    outline: 3px solid #fd0;
+    outline-offset: 0;
+}
+
+.govuk-header__search-icon {
+    width: 20px;
+    height: 20px;
+    color: #0b0c0c;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+    .govuk-header__search {
+        position: static;
+        transform: none;
+        width: 100%;
+        margin-top: 10px;
+    }
+}
