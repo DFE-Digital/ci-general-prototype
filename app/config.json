@@ -1,5 +1,5 @@
 {
-  "serviceName": "Service name goes here",
+  "serviceName": "CI prototypes hub",
   "plugins": {
     "govuk-frontend": {
       "rebrand": true
