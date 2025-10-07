@@ -86,3 +86,10 @@
         margin-top: 10px;
     }
 }
+
+// Complete alternative styles
+.complete-alternative {
+    .govuk-service-navigation__service-name {
+        padding-bottom: 0;
+    }
+}

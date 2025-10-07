@@ -1,0 +1,97 @@
+{#
+For guidance on how to use layouts see:
+https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
+#}
+
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{% block header %}
+
+<header class="govuk-header" data-module="govuk-header">
+    <div class="govuk-header__container govuk-width-container" style="position: relative;">
+        <div class="govuk-header__logo">
+        <a href="/" class="govuk-header__link govuk-header__link--homepage">
+            <img src="/public/images/department-for-education_white.png" alt="Department for Education" class="govuk-header__logotype">
+        </a>
+        </div>
+    </div>
+</header>
+<section aria-label="Service information" class="govuk-service-navigation"
+data-module="govuk-service-navigation">
+    <div class="govuk-width-container">
+        <div class="govuk-service-navigation__container">
+        <span class="govuk-service-navigation__service-name">
+            <a href="#" class="govuk-service-navigation__link">
+                Complete conversions, transfers and changes
+            </a>
+        </span>
+        <nav aria-label="Menu" class="govuk-service-navigation__wrapper">
+            <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="navigation" hidden>
+            Menu
+            </button>
+            <ul class="govuk-service-navigation__list" id="navigation">
+                <li class="govuk-service-navigation__item govuk-service-navigation__item--active">
+                    <a class="govuk-service-navigation__link" href="#" aria-current="true">
+                        <strong class="govuk-service-navigation__active-fallback">Your projects</strong>
+                    </a>
+                </li>
+                <li class="govuk-service-navigation__item">
+                    <a class="govuk-service-navigation__link" href="#">
+                        Your team projects
+                    </a>
+                </li>
+                <li class="govuk-service-navigation__item">
+                    <a class="govuk-service-navigation__link" href="#">
+                        All projects
+                    </a>
+                </li>
+                <li class="govuk-service-navigation__item">
+                    <a class="govuk-service-navigation__link" href="#">
+                        Groups
+                    </a>
+                </li>
+                <li class="govuk-service-navigation__item">
+                    <a class="govuk-service-navigation__link" href="rebranded-complete-search">
+                        Search
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        </div>
+    </div>
+</section>
+<div class="govuk-phase-banner">
+    <div class="govuk-width-container">
+        <p class="govuk-phase-banner__content">
+            <strong class="govuk-tag govuk-phase-banner__content__tag">
+            Prototype
+            </strong>
+            <span class="govuk-phase-banner__text">
+            This is a new service. Help us improve it and <a class="govuk-link" href="#">give your feedback by email</a>.
+            </span>
+        </p>
+    </div>
+</div>
+<div class="moj-primary-navigation">
+    <div class="moj-primary-navigation__container">
+        <div class="moj-primary-navigation__nav">
+        <nav class="moj-primary-navigation" aria-label="Primary navigation">
+            <ul class="moj-primary-navigation__list">
+            <li class="moj-primary-navigation__item">
+                <a class="moj-primary-navigation__link" aria-current="page" href="#1">In progress</a>
+            </li>
+            <li class="moj-primary-navigation__item">
+                <a class="moj-primary-navigation__link" href="#2">Added by you</a>
+            </li>
+            <li class="moj-primary-navigation__item">
+                <a class="moj-primary-navigation__link" href="#3">Completed</a>
+            </li>
+            </ul>
+        </nav>
+        </div>
+    </div>
+</div>
+  
+
+{% endblock %}
