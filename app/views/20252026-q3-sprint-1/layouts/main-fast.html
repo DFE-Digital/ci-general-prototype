@@ -1,0 +1,62 @@
+{#
+For guidance on how to use layouts see:
+https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
+#}
+
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{% block header %}
+
+<header class="govuk-header" data-module="govuk-header">
+    <div class="govuk-header__container govuk-width-container" style="position: relative;">
+        <div class="govuk-header__logo">
+        <a href="/" class="govuk-header__link govuk-header__link--homepage">
+            <img src="/public/images/department-for-education_white.png" alt="Department for Education" class="govuk-header__logotype">
+        </a>
+        </div>
+    </div>
+</header>
+<section aria-label="Service information" class="govuk-service-navigation"
+data-module="govuk-service-navigation">
+    <div class="govuk-width-container">
+        <div class="govuk-service-navigation__container">
+        <span class="govuk-service-navigation__service-name">
+            <a href="#" class="govuk-service-navigation__link">
+                Find information about schools and trusts
+            </a>
+        </span>
+        </div>
+    </div>
+</section>
+
+
+<div class="govuk-grid-row" style="background-color: #ebf2f6; padding: 40px 0 15px 0">
+    <div class="govuk-grid-column-full govuk-!-margin-bottom-6">
+        <div class="govuk-width-container">
+            <div class="govuk-grid-row">
+                <div class="govuk-grid-column-two-thirds">
+                    <h1 class="govuk-heading-xl govuk-!-margin-bottom-3">
+                        Find information about schools and trusts
+                    </h1>
+                    <p class="govuk-body-l">Use this tool to find information on trusts and schools, including academies.</p>
+        
+                    <h2 class="govuk-heading-m">Search for a trust or school</h2>
+                    <p class="govuk-body govuk-!-margin-bottom-4">
+                    Search by URN (unique reference number), TRN (trust reference number) or name. Include any punctuation in names.
+                    </p>
+                    
+                    <form action="rebranded-fast-school" method="post">
+                        <div class="govuk-input__wrapper">
+                            <input class="govuk-input govuk-input--width-20" id="search-input" name="search" type="text" placeholder="e.g. st mary's primary school" value="{{ data['search'] or '' }}">
+                            <button class="govuk-button govuk-button--secondary" data-module="govuk-button" type="submit">
+                                Search
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>     
+</div>
+{% endblock %}
