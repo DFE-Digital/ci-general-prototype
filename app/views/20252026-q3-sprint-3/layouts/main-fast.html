@@ -8,18 +8,52 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 
 {% block header %}
 
-<header class="govuk-header" data-module="govuk-header">
-    <div class="govuk-header__container govuk-width-container" style="position: relative;">
-        <div class="govuk-header__logo">
-        <a href="/" class="govuk-header__link govuk-header__link--homepage">
+<header class="gem-c-layout-super-navigation-header">
+    <div class="gem-c-layout-super-navigation-header__container govuk-clearfix">
+      <div class="govuk-width-container transparent-bottom-border header-top">
+        <!-- Logo -->
+        <div class="gem-c-layout-super-navigation-header__header-logo">
+          <a class="govuk-header__link govuk-header__link--homepage" id="logo" href="/">
             <img src="/public/images/department-for-education_white.png" alt="Department for Education" class="govuk-header__logotype">
-        </a>
+          </a>
         </div>
-        <div class="govuk-header__search" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); width: 300px; z-index: 10;">
-            <p class="govuk-body-s" style="margin-bottom: 0;"><a href="#" class="govuk-header__link govuk-link">Manage projects and cases</a></p>
+        <!-- Header right -->
+        <div class="header-right">
+          <!-- Links -->
+          <div class="header-links">
+            <a class="govuk-link" href="#">Manage projects and cases</a>
+          </div>
         </div>
+      </div>
     </div>
 </header>
+<!-- SEARCH PANEL -->
+<div id="super-search-menu" class="gem-c-layout-super-navigation-header__navigation-dropdown-menu" hidden>
+    <div class="govuk-width-container gem-c-layout-super-navigation-header__search-container gem-c-layout-super-navigation-header__search-items">
+        <h3 class="govuk-visually-hidden">Search for a trust or school</h3>
+        <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form class="gem-c-layout-super-navigation-header__search-form" id="search" action="/search/all" method="get" role="search" aria-label="Site-wide">
+            <div class="gem-c-search govuk-!-display-none-print gem-c-search--large gem-c-search--on-white govuk-!-margin-bottom-0">
+                <label for="search-main" class="govuk-label govuk-label--m gem-c-layout-super-navigation-header__search-label--large-navbar">Search for a trust or school</label>
+                <div class="gem-c-search__item-wrapper">
+                <input id="search-main" name="keywords" type="search" class="gem-c-search__input govuk-input">
+                <div class="gem-c-search__item gem-c-search__submit-wrapper">
+                    <button class="gem-c-search__submit gem-c-search__submit--icon-only" type="submit" aria-label="Search">
+                    <span class="govuk-visually-hidden">Search</span>
+                    <svg class="gem-c-search__icon" width="20" height="20" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="#ffffff" stroke-width="3"></circle>
+                        <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="#ffffff" stroke-width="3"></line>
+                    </svg>
+                    </button>
+                </div>
+                </div>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
 <section aria-label="Service information" class="govuk-service-navigation"
 data-module="govuk-service-navigation">
     <div class="govuk-width-container">

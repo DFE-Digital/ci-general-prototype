@@ -8,29 +8,63 @@ https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
 
 {% block header %}
 
-<header class="govuk-header" data-module="govuk-header">
-    <div class="govuk-header__container govuk-width-container" style="position: relative;">
-        <div class="govuk-header__logo">
-        <a href="/" class="govuk-header__link govuk-header__link--homepage">
+<header class="gem-c-layout-super-navigation-header">
+    <div class="gem-c-layout-super-navigation-header__container govuk-clearfix">
+      <div class="govuk-width-container transparent-bottom-border header-top">
+        <!-- Logo -->
+        <div class="gem-c-layout-super-navigation-header__header-logo">
+          <a class="govuk-header__link govuk-header__link--homepage" id="logo" href="/">
             <img src="/public/images/department-for-education_white.png" alt="Department for Education" class="govuk-header__logotype">
-        </a>
+          </a>
         </div>
-        <div class="govuk-header__search" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); width: 300px; z-index: 10;">
-            <p class="govuk-body-s" style="margin-bottom: 0;"><a href="#" class="govuk-header__link govuk-link">Manage projects and cases</a></p>
-            <form class="govuk-header__search-form" action="#" method="get" role="search" style="position: relative; width: 100%;">
-                <div class="govuk-header__search-wrapper" style="display: flex; border: 2px solid #0b0c0c; background: #ffffff; position: relative;">
-                    <input class="govuk-header__search-input" id="search" name="search" type="search" placeholder="Search for a school or trust" aria-label="Search projects" style="flex: 1; border: none; padding: 8px 12px; font-size: 16px; background: transparent; outline: none; color: #0b0c0c;">
-                    <button class="govuk-header__search-button" type="submit" aria-label="Search" style="background: #f3f2f1; border: none; padding: 8px 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; min-width: 44px; border-left: 1px solid #b1b4b6;">
-                        <svg class="govuk-header__search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; color: #0b0c0c;">
-                            <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="2"/>
-                            <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
-                    </button>
-                </div>
-            </form>
+        <!-- Header right -->
+        <div class="header-right">
+          <!-- Search -->
+          <div class="gem-c-layout-super-navigation-header__search-item">
+            <button id="super-search-menu-toggle" class="gem-c-layout-super-navigation-header__search-toggle-button" aria-controls="super-search-menu" aria-expanded="false" aria-label="Show search menu" type="button">
+              <span class="govuk-visually-hidden">Search for a trust or school</span>
+              <svg class="gem-c-layout-super-navigation-header__search-toggle-button-link-icon" width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+              </svg>
+              <span aria-hidden="true" class="gem-c-layout-super-navigation-header__navigation-top-toggle-close-icon">×</span>
+            </button>
+          </div>
+          <!-- Links -->
+          <div class="header-links">
+            <a class="govuk-link" href="#">Manage projects and cases</a>
+          </div>
         </div>
+      </div>
     </div>
 </header>
+<!-- SEARCH PANEL -->
+<div id="super-search-menu" class="gem-c-layout-super-navigation-header__navigation-dropdown-menu" hidden>
+    <div class="govuk-width-container gem-c-layout-super-navigation-header__search-container gem-c-layout-super-navigation-header__search-items">
+        <h3 class="govuk-visually-hidden">Search for a trust or school</h3>
+        <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+            <form class="gem-c-layout-super-navigation-header__search-form" id="search" action="/search/all" method="get" role="search" aria-label="Site-wide">
+            <div class="gem-c-search govuk-!-display-none-print gem-c-search--large gem-c-search--on-white govuk-!-margin-bottom-0">
+                <label for="search-main" class="govuk-label govuk-label--m gem-c-layout-super-navigation-header__search-label--large-navbar">Search for a trust or school</label>
+                <div class="gem-c-search__item-wrapper">
+                <input id="search-main" name="keywords" type="search" class="gem-c-search__input govuk-input">
+                <div class="gem-c-search__item gem-c-search__submit-wrapper">
+                    <button class="gem-c-search__submit gem-c-search__submit--icon-only" type="submit" aria-label="Search">
+                    <span class="govuk-visually-hidden">Search</span>
+                    <svg class="gem-c-search__icon" width="20" height="20" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                        <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="#ffffff" stroke-width="3"></circle>
+                        <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="#ffffff" stroke-width="3"></line>
+                    </svg>
+                    </button>
+                </div>
+                </div>
+            </div>
+            </form>
+        </div>
+        </div>
+    </div>
+</div>
 <section aria-label="Service information" class="govuk-service-navigation"
 data-module="govuk-service-navigation">
     <div class="govuk-width-container">

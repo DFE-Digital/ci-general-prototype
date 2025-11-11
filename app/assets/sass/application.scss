@@ -96,6 +96,36 @@
 
 
 // DfE rebranding styles
+.header-top {
+    display: flex;
+    justify-content: space-between;
+}
+.header-right {
+    display: flex;
+    align-items: center;
+}
+.header-links .govuk-link:link {
+    color: govuk-colour("white");
+    padding: 0 15px;
+}
+.gem-c-search__item-wrapper {
+    display: flex;
+}
+.gem-c-search__input {
+    height: 50px;
+    border-right-width: 0;
+}
+.gem-c-search__submit {
+    width: 50px;
+    height: 50px;
+    background-color: govuk-colour("blue");
+    color: govuk-colour("white");
+    border: 0;
+}
+.govuk-template--rebranded .govuk-service-navigation {
+    height: 59px;
+}
+
 .govuk-header__link .govuk-header__logotype {
 	height: 30px;
 }
