@@ -1,0 +1,128 @@
+{#
+For guidance on how to use layouts see:
+https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
+#}
+
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{% block header %}
+
+<header class="govuk-header" data-module="govuk-header">
+    <div class="govuk-header__container govuk-width-container" style="position: relative;">
+        <div class="govuk-header__logo">
+        <a href="/" class="govuk-header__link govuk-header__link--homepage">
+            <img src="/public/images/department-for-education_white.png" alt="Department for Education" class="govuk-header__logotype">
+        </a>
+        </div>
+        <div class="govuk-header__search" style="position: absolute; top: 50%; right: 0; transform: translateY(-50%); width: 300px; z-index: 10;">
+            <p class="govuk-body-s" style="margin-bottom: 0;"><a href="#" class="govuk-header__link govuk-link">Manage projects and cases</a></p>
+            <form class="govuk-header__search-form" action="#" method="get" role="search" style="position: relative; width: 100%;">
+                <div class="govuk-header__search-wrapper" style="display: flex; border: 2px solid #0b0c0c; background: #ffffff; position: relative;">
+                    <input class="govuk-header__search-input" id="search" name="search" type="search" placeholder="Search for a school or trust" aria-label="Search projects" style="flex: 1; border: none; padding: 8px 12px; font-size: 16px; background: transparent; outline: none; color: #0b0c0c;">
+                    <button class="govuk-header__search-button" type="submit" aria-label="Search" style="background: #f3f2f1; border: none; padding: 8px 12px; cursor: pointer; display: flex; align-items: center; justify-content: center; min-width: 44px; border-left: 1px solid #b1b4b6;">
+                        <svg class="govuk-header__search-icon" width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" style="width: 20px; height: 20px; color: #0b0c0c;">
+                            <circle cx="9" cy="9" r="8" stroke="currentColor" stroke-width="2"/>
+                            <path d="m21 21-4.35-4.35" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</header>
+<section aria-label="Service information" class="govuk-service-navigation"
+data-module="govuk-service-navigation">
+    <div class="govuk-width-container">
+        <div class="govuk-service-navigation__container">
+        <span class="govuk-service-navigation__service-name">
+            <a href="#" class="govuk-service-navigation__link">
+                Find information about schools and trusts
+            </a>
+        </span>
+        </div>
+    </div>
+</section>
+<aside class="app-banner school" style="background-color: #f4f0ff; padding: 15px 0" data-testid="app-school-header">
+    <div class="govuk-width-container">
+        <div class="govuk-grid-row">
+        <div class="govuk-grid-column-three-quarters">
+            
+            <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <nav class="govuk-breadcrumbs govuk-!-margin-0" aria-label="Breadcrumb">
+                <ol class="govuk-breadcrumbs__list">
+                    <li class="govuk-breadcrumbs__list-item" data-testid="breadcrumb-home-link">
+                    <a class="govuk-breadcrumbs__link" href="rebranded-fast">Home</a>
+                    </li>
+                    <li class="govuk-breadcrumbs__list-item" data-testid="breadcrumb-trust-name">
+                    <a class="govuk-breadcrumbs__link" href="#">
+                        Ab Kettleby Primary School
+                    </a>
+                    </li>
+                    <li class="govuk-breadcrumbs__list-item" data-testid="breadcrumb-page-name">
+                    Overview
+                    </li>
+                </ol>
+                </nav>
+            </div>
+            </div>
+
+            <h1 class="govuk-heading-xl app-banner--heading govuk-!-margin-top-3 govuk-!-margin-bottom-3" data-testid="school-name-heading">
+            Ab Kettleby Primary School
+            </h1>
+            <p class="govuk-body app-banner--body govuk-!-margin-bottom-0" data-testid="school-type">
+            Academy converter
+            </p>
+            <p class="govuk-caption-m govuk-!-margin-top-2 govuk-!-margin-bottom-0">
+            Trust:
+            <a data-testid="header-trust-link" class="govuk-link" href="#">
+                MOWBRAY EDUCATION TRUST LIMITED
+            </a>
+            </p>
+        </div>
+        </div>
+    </div>
+</aside>
+<div class="govuk-service-navigation" data-module="govuk-service-navigation" data-govuk-service-navigation-init="">
+    <div class="govuk-width-container">
+        <div class="govuk-service-navigation__container">
+        <nav aria-label="Menu" class="govuk-service-navigation__wrapper">
+            <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="navigation" hidden="">
+            Menu
+            </button>
+            <ul class="govuk-service-navigation__list" id="navigation">
+                <li class="govuk-service-navigation__item govuk-service-navigation__item--active" data-testid="overview-nav">
+                <a class="govuk-service-navigation__link govuk-!-font-weight-bold" href="#">
+                    <span class="govuk-visually-hidden">Academy </span>
+                    <strong class="govuk-service-navigation__active-fallback">
+                        Overview
+                    </strong>
+                </a>
+                </li>
+                <li class="govuk-service-navigation__item " data-testid="pupils-nav">
+                <a class="govuk-service-navigation__link govuk-!-font-weight-bold" href="#">
+                    <span class="govuk-visually-hidden">Academy </span>
+    Pupils              </a>
+                </li>
+                <li class="govuk-service-navigation__item " data-testid="contacts-nav">
+                <a class="govuk-service-navigation__link govuk-!-font-weight-bold" href="#">
+                    <span class="govuk-visually-hidden">Academy </span>
+    Contacts              </a>
+                </li>
+                <li class="govuk-service-navigation__item " data-testid="governance-nav">
+                <a class="govuk-service-navigation__link govuk-!-font-weight-bold" href="#">
+                    <span class="govuk-visually-hidden">Academy </span>
+    Governance              </a>
+                </li>
+                <li class="govuk-service-navigation__item " data-testid="ofsted-nav">
+                <a class="govuk-service-navigation__link govuk-!-font-weight-bold" href="#">
+                    <span class="govuk-visually-hidden">Academy </span>
+    Ofsted              </a>
+                </li>
+            </ul>
+        </nav>
+        </div>
+    </div>
+</div>
+{% endblock %}

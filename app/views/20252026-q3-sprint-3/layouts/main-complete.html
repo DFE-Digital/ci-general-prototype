@@ -1,0 +1,206 @@
+{#
+For guidance on how to use layouts see:
+https://prototype-kit.service.gov.uk/docs/how-to-use-layouts
+#}
+
+{% extends "govuk-prototype-kit/layouts/govuk-branded.njk" %}
+{% from "govuk/components/service-navigation/macro.njk" import govukServiceNavigation %}
+
+{% block header %}
+<header class="gem-c-layout-super-navigation-header">
+    <div class="gem-c-layout-super-navigation-header__container govuk-clearfix">
+      <div class="govuk-width-container transparent-bottom-border header-top">
+        <!-- Logo -->
+        <div class="gem-c-layout-super-navigation-header__header-logo">
+          <a class="govuk-header__link govuk-header__link--homepage" id="logo" href="/">
+            <img src="/public/images/department-for-education_white.png" alt="Department for Education" class="govuk-header__logotype">
+          </a>
+        </div>
+        <!-- Header right -->
+        <div class="header-right">
+          <!-- Menu -->
+          <nav aria-labelledby="super-navigation-menu-heading" class="gem-c-layout-super-navigation-header__content govuk-!-display-none-print js-module-initialised" data-module="super-navigation-mega-menu" data-super-navigation-mega-menu-module-started="true">
+            <h2 id="super-navigation-menu-heading" class="govuk-visually-hidden"> Navigation menu </h2>
+            <div class="govuk-width-container gem-c-layout-super-navigation-header__button-width-container">
+              <div class="gem-c-layout-super-navigation-header__button-container">
+                <div class="gem-c-layout-super-navigation-header__navigation-item">
+                  <button id="super-navigation-menu-toggle" aria-controls="super-navigation-menu" aria-expanded="false" aria-label="Show navigation menu" class="gem-c-layout-super-navigation-header__navigation-top-toggle-button" type="button">
+                    <span class="gem-c-layout-super-navigation-header__navigation-top-toggle-button-inner">Academy Name <span class="location">Location</span>
+                    </span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </nav>
+          <!-- Search -->
+          <div class="gem-c-layout-super-navigation-header__search-item">
+            <button id="super-search-menu-toggle" class="gem-c-layout-super-navigation-header__search-toggle-button" aria-controls="super-search-menu" aria-expanded="false" aria-label="Show search menu" type="button">
+              <span class="govuk-visually-hidden">Search GOV.UK</span>
+              <svg class="gem-c-layout-super-navigation-header__search-toggle-button-link-icon" width="27" height="27" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="currentColor" stroke-width="3"></circle>
+                <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="currentColor" stroke-width="3"></line>
+              </svg>
+              <span aria-hidden="true" class="gem-c-layout-super-navigation-header__navigation-top-toggle-close-icon">×</span>
+            </button>
+          </div>
+          <!-- Sign out -->
+          <div class="header-links">
+            <a class="govuk-link" href="/sign-out">Sign out</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <!--MEGA MENU-->
+  <div id="super-navigation-menu" class="gem-c-layout-super-navigation-header__navigation-dropdown-menu" hidden="hidden">
+    <div class="govuk-width-container">
+      <div class="govuk-grid-row gem-c-layout-super-navigation-header__navigation-items">
+        <div class="govuk-grid-column-two-thirds-from-desktop gem-c-layout-super-navigation-header__column--services-and-information">
+          <h3 class="govuk-heading-m gem-c-layout-super-navigation-header__column-header">Academy Name <span class="location">Location</span>
+          </h3>
+          <ul class="gem-c-layout-super-navigation-header__navigation-second-items gem-c-layout-super-navigation-header__navigation-second-items--services-and-information">
+            <li class="gem-c-layout-super-navigation-header__dropdown-list-item">
+              <a class="govuk-link gem-c-layout-super-navigation-header__navigation-second-item-link" href="#">Menu item</a>
+            </li>
+            <li class="gem-c-layout-super-navigation-header__dropdown-list-item">
+              <a class="govuk-link gem-c-layout-super-navigation-header__navigation-second-item-link" href="#">Menu item</a>
+            </li>
+            <li class="gem-c-layout-super-navigation-header__dropdown-list-item">
+              <a class="govuk-link gem-c-layout-super-navigation-header__navigation-second-item-link" href="#">Menu item</a>
+            </li>
+            <li class="gem-c-layout-super-navigation-header__dropdown-list-item">
+              <a class="govuk-link gem-c-layout-super-navigation-header__navigation-second-item-link" href="#">Menu item</a>
+            </li>
+            <li class="gem-c-layout-super-navigation-header__dropdown-list-item">
+              <a class="govuk-link gem-c-layout-super-navigation-header__navigation-second-item-link" href="#">Menu item</a>
+            </li>
+            <li class="gem-c-layout-super-navigation-header__dropdown-list-item">
+              <a class="govuk-link gem-c-layout-super-navigation-header__navigation-second-item-link" href="#">Menu item</a>
+            </li>
+            <li class="gem-c-layout-super-navigation-header__dropdown-list-item">
+              <a class="govuk-link gem-c-layout-super-navigation-header__navigation-second-item-link" href="#">Menu item</a>
+            </li>
+            <li class="gem-c-layout-super-navigation-header__dropdown-list-item">
+              <a class="govuk-link gem-c-layout-super-navigation-header__navigation-second-item-link" href="#">Menu item</a>
+            </li>
+            <li class="gem-c-layout-super-navigation-header__dropdown-list-item">
+              <a class="govuk-link gem-c-layout-super-navigation-header__navigation-second-item-link" href="#">Menu item</a>
+            </li>
+            <li class="gem-c-layout-super-navigation-header__dropdown-list-item">
+              <a class="govuk-link gem-c-layout-super-navigation-header__navigation-second-item-link" href="#">Menu item</a>
+            </li>
+          </ul>
+        </div>
+        <div class="govuk-grid-column-one-third-from-desktop gem-c-layout-super-navigation-header__column--government-activity">
+          <h3 class="govuk-heading-m gem-c-layout-super-navigation-header__column-header">DfE support</h3>
+          <ul class="gem-c-layout-super-navigation-header__navigation-second-items gem-c-layout-super-navigation-header__navigation-second-items--government-activity">
+            <li class="gem-c-layout-super-navigation-header__dropdown-list-item">
+              <a class="govuk-link gem-c-layout-super-navigation-header__navigation-second-item-link" href="https://customerhelpportal.education.gov.uk/">Customer help portal</a>
+              <p class="gem-c-layout-super-navigation-header__navigation-second-item-description">Get help with DfE enquiries, complaints and general questions.</p>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- SEARCH PANEL -->
+  <div id="super-search-menu" class="gem-c-layout-super-navigation-header__navigation-dropdown-menu" hidden>
+    <div class="govuk-width-container gem-c-layout-super-navigation-header__search-container gem-c-layout-super-navigation-header__search-items">
+      <h3 class="govuk-visually-hidden">Search</h3>
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <form class="gem-c-layout-super-navigation-header__search-form" id="search" action="/search/all" method="get" role="search" aria-label="Site-wide">
+            <div class="gem-c-search govuk-!-display-none-print gem-c-search--large gem-c-search--on-white govuk-!-margin-bottom-0">
+              <label for="search-main" class="govuk-label govuk-label--m gem-c-layout-super-navigation-header__search-label--large-navbar">Search DfE Connect</label>
+              <div class="gem-c-search__item-wrapper">
+                <input id="search-main" name="keywords" type="search" class="gem-c-search__input govuk-input">
+                <div class="gem-c-search__item gem-c-search__submit-wrapper">
+                  <button class="gem-c-search__submit gem-c-search__submit--icon-only" type="submit" aria-label="Search">
+                    <span class="govuk-visually-hidden">Search</span>
+                    <svg class="gem-c-search__icon" width="20" height="20" viewBox="0 0 27 27" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+                      <circle cx="12.0161" cy="11.0161" r="8.51613" stroke="#ffffff" stroke-width="3"></circle>
+                      <line x1="17.8668" y1="17.3587" x2="26.4475" y2="25.9393" stroke="#ffffff" stroke-width="3"></line>
+                    </svg>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<section aria-label="Service information" class="govuk-service-navigation"
+data-module="govuk-service-navigation">
+    <div class="govuk-width-container">
+        <div class="govuk-service-navigation__container">
+        <span class="govuk-service-navigation__service-name">
+            <a href="#" class="govuk-service-navigation__link">
+                Complete conversions, transfers and changes
+            </a>
+        </span>
+        <nav aria-label="Menu" class="govuk-service-navigation__wrapper">
+            <button type="button" class="govuk-service-navigation__toggle govuk-js-service-navigation-toggle" aria-controls="navigation" hidden>
+            Menu
+            </button>
+            <ul class="govuk-service-navigation__list" id="navigation">
+                <li class="govuk-service-navigation__item govuk-service-navigation__item--active">
+                    <a class="govuk-service-navigation__link" href="#" aria-current="true">
+                        <strong class="govuk-service-navigation__active-fallback">Your projects</strong>
+                    </a>
+                </li>
+                <li class="govuk-service-navigation__item">
+                    <a class="govuk-service-navigation__link" href="#">
+                        Your team projects
+                    </a>
+                </li>
+                <li class="govuk-service-navigation__item">
+                    <a class="govuk-service-navigation__link" href="#">
+                        All projects
+                    </a>
+                </li>
+                <li class="govuk-service-navigation__item">
+                    <a class="govuk-service-navigation__link" href="#">
+                        Groups
+                    </a>
+                </li>
+            </ul>
+        </nav>
+        </div>
+    </div>
+</section>
+<div class="govuk-phase-banner">
+    <div class="govuk-width-container">
+        <p class="govuk-phase-banner__content">
+            <strong class="govuk-tag govuk-phase-banner__content__tag">
+            Prototype
+            </strong>
+            <span class="govuk-phase-banner__text">
+            This is a new service. Help us improve it and <a class="govuk-link" href="#">give your feedback by email</a>.
+            </span>
+        </p>
+    </div>
+</div>
+<div class="moj-primary-navigation">
+    <div class="moj-primary-navigation__container">
+        <div class="moj-primary-navigation__nav">
+        <nav class="moj-primary-navigation" aria-label="Primary navigation">
+            <ul class="moj-primary-navigation__list">
+            <li class="moj-primary-navigation__item">
+                <a class="moj-primary-navigation__link" aria-current="page" href="#1">In progress</a>
+            </li>
+            <li class="moj-primary-navigation__item">
+                <a class="moj-primary-navigation__link" href="#2">Added by you</a>
+            </li>
+            <li class="moj-primary-navigation__item">
+                <a class="moj-primary-navigation__link" href="#3">Completed</a>
+            </li>
+            </ul>
+        </nav>
+        </div>
+    </div>
+</div>
+  
+
+{% endblock %}
