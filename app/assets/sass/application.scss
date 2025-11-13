@@ -108,6 +108,9 @@
     color: govuk-colour("white");
     padding: 0 15px;
 }
+.header-links .govuk-link:visited {
+    color: govuk-colour("white");
+}
 .gem-c-search__item-wrapper {
     display: flex;
 }
