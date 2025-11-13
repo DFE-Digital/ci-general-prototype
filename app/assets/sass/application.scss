@@ -111,6 +111,9 @@
 .header-links .govuk-link:visited {
     color: govuk-colour("white");
 }
+.header-links .govuk-link:focus {
+    color: govuk-colour("black");
+}
 .gem-c-search__item-wrapper {
     display: flex;
 }
