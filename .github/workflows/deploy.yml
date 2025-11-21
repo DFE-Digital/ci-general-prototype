@@ -50,7 +50,6 @@ jobs:
     environment: ${{ needs.set-env.outputs.environment }}
     permissions:
       contents: read
-      attestations: write
       packages: write
       id-token: write
 
