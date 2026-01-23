@@ -1323,3 +1323,24 @@
 		padding-bottom: 0;
 	}
 }
+
+// Case details page styles
+.govuk-summary-list__key--no-label {
+	width: 0;
+	padding: 0;
+}
+
+.govuk-summary-list__value--no-label {
+	padding-left: 0;
+}
+
+.govuk-tag--orange {
+	background-color: #f47738;
+	color: #ffffff;
+}
+
+// Cases listing wide page - 1200px width
+.cases-listing-wide .govuk-width-container,
+.cases-listing-wide .moj-primary-navigation__container {
+	max-width: 1200px;
+}

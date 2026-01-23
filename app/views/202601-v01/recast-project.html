@@ -1,0 +1,310 @@
+{% extends "202601-v01/layouts/main-recast.html" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/accordion/macro.njk" import govukAccordion %}
+{% from "govuk/components/tag/macro.njk" import govukTag %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "moj/components/sub-navigation/macro.njk" import mojSubNavigation %}
+
+{% set pageName="Case details" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <!-- Case ID and Title Header -->
+    <div class="govuk-!-margin-bottom-4">
+      <p class="govuk-body-s govuk-!-margin-bottom-1" style="color: #6b7280;">Case ID 2039681</p>
+      <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 20px;">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-0">
+          City Of London Academies Trust
+        </h1>
+        {{ govukButton({
+          text: "Close case",
+          classes: "govuk-button--warning",
+          href: "#"
+        }) }}
+      </div>
+    </div>
+
+    <!-- MOJ Sub Navigation -->
+    {{ mojSubNavigation({
+      label: "Sub navigation",
+      items: [{
+        text: "About the case",
+        href: "#about-case",
+        active: true
+      }, {
+        text: "About the trust",
+        href: "#about-trust"
+      }]
+    }) }}
+
+    <!-- Case Summary List -->
+    <div class="govuk-!-margin-top-6">
+      {% set riskRatingHtml %}
+        {% if data['riskRating'] == "amber-green" %}
+          <span class="govuk-tag govuk-tag--yellow">Amber</span><span class="govuk-tag govuk-tag--green">Green</span>
+        {% elif data['riskRating'] == "red-amber" %}
+          <span class="govuk-tag govuk-tag--red">Red</span><span class="govuk-tag govuk-tag--yellow">Amber</span>
+        {% elif data['riskRating'] == "red" %}
+          <span class="govuk-tag govuk-tag--red">Red</span>
+        {% elif data['riskRating'] == "red-plus" %}
+          <span class="govuk-tag" style="background-color: #942514; color: #ffffff;">Red Plus</span>
+        {% endif %}
+      {% endset %}
+      {% set summaryListRows = [
+        {
+          key: {
+            text: "Trust"
+          },
+          value: {
+            text: "City Of London Academies Trust"
+          }
+        },
+        {
+          key: {
+            text: "Risk to trust"
+          },
+          value: {
+            html: riskRatingHtml
+          },
+          actions: {
+            items: [
+              {
+                href: "recast-risk-rating-edit",
+                text: "Change",
+                visuallyHiddenText: "risk to trust"
+              }
+            ]
+          }
+        }
+      ] %}
+      {% if data['ragRationale'] and data['ragRationale'] != "" %}
+        {% set _ = summaryListRows.push({
+          key: {
+            text: "RAG rationale commentary"
+          },
+          value: {
+            text: data['ragRationale']
+          },
+          actions: {
+            items: [
+              {
+                href: "recast-risk-rating-edit",
+                text: "Change",
+                visuallyHiddenText: "RAG rationale commentary"
+              }
+            ]
+          }
+        }) %}
+      {% endif %}
+      {% set _ = summaryListRows.push({
+        key: {
+          text: "Direction of travel"
+        },
+        value: {
+          text: "Deteriorating"
+        },
+        actions: {
+          items: [
+            {
+              href: "#",
+              text: "Change",
+              visuallyHiddenText: "direction of travel"
+            }
+          ]
+        }
+      }) %}
+      {% set _ = summaryListRows.push({
+        key: {
+          text: "Concerns"
+        },
+        value: {
+          html: 'Governance capability <span class="govuk-tag govuk-tag--red" style="margin-left: 8px;">Red Plus</span><div class="govuk-o-grid__item--one-half">
+                <a href="#" class="govuk-link govuk-link-no-visited-state" data-testid="add-additional-concern">Add concern</a>
+            </div>'
+        },
+        actions: {
+          items: [
+            {
+              href: "#",
+              text: "Close",
+              visuallyHiddenText: "concern"
+            },
+            {
+              href: "#",
+              text: "Change",
+              visuallyHiddenText: "concern"
+            }
+          ]
+        }
+      }) %}
+      {% set _ = summaryListRows.push({
+        key: {
+          text: "Managed by"
+        },
+        value: {
+          text: "Regions Group London"
+        },
+        actions: {
+          items: [
+            {
+              href: "#",
+              text: "Change",
+              visuallyHiddenText: "managed by"
+            }
+          ]
+        }
+      }) %}
+      {% set _ = summaryListRows.push({
+        key: {
+          text: "Owned by"
+        },
+        value: {
+          text: "Ming Chan"
+        },
+        actions: {
+          items: [
+            {
+              href: "#",
+              text: "Change",
+              visuallyHiddenText: "owned by"
+            }
+          ]
+        }
+      }) %}
+      {% set _ = summaryListRows.push({
+        key: {
+          text: "Case manager"
+        },
+        value: {
+          text: data['caseManagerEmail'] or ""
+        },
+        actions: {
+          items: [
+            {
+              href: "recast-case-manager-edit",
+              text: "Change",
+              visuallyHiddenText: "case manager"
+            }
+          ]
+        }
+      }) %}
+      {% set _ = summaryListRows.push({
+        key: {
+          text: "Date created"
+        },
+        value: {
+          text: "12 November 2025"
+        }
+      }) %}
+      {{ govukSummaryList({
+        rows: summaryListRows
+      }) }}
+    </div>
+
+    <!-- Case Details Accordion -->
+    <div class="govuk-!-margin-top-8">
+      <h2 class="govuk-heading-l govuk-!-margin-bottom-4">Case details</h2>
+      <p class="govuk-body">
+        <a href="#" class="govuk-link">Show all sections</a>
+      </p>
+      
+      {{ govukAccordion({
+        id: "case-details",
+        items: [
+          {
+            heading: {
+              text: "Issue"
+            },
+            content: {
+              html: "<p class='govuk-body'>Content for Issue section</p>"
+            }
+          },
+          {
+            heading: {
+              text: "Current status"
+            },
+            content: {
+              html: "<p class='govuk-body'>Content for Current status section</p>"
+            }
+          },
+          {
+            heading: {
+              text: "Case aim"
+            },
+            content: {
+              html: "<p class='govuk-body'>Content for Case aim section</p>"
+            }
+          },
+          {
+            heading: {
+              text: "De-escalation point"
+            },
+            content: {
+              html: "<p class='govuk-body'>Content for De-escalation point section</p>"
+            }
+          },
+          {
+            heading: {
+              text: "Next steps"
+            },
+            content: {
+              html: "<p class='govuk-body'>Content for Next steps section</p>"
+            }
+          },
+          {
+            heading: {
+              text: "Case notes"
+            },
+            content: {
+              html: "<p class='govuk-body'>Content for Case notes section</p>"
+            }
+          }
+        ]
+      }) }}
+    </div>
+
+    <!-- Case Actions and Decisions -->
+    <div class="govuk-!-margin-top-8">
+      <h2 class="govuk-heading-l govuk-!-margin-bottom-4">Case actions and decisions</h2>
+      
+      {{ govukButton({
+        text: "Add to case",
+        classes: "govuk-button--secondary",
+        href: "#"
+      }) }}
+
+      <div class="govuk-!-margin-top-6">
+        <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Active actions and decisions</h3>
+        <p class="govuk-body">There are no active actions or decisions added to this case.</p>
+        <div class="govuk-table govuk-!-margin-top-4" style="display: none;">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" style="text-align: right;">Date opened</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+
+      <div class="govuk-!-margin-top-6">
+        <h3 class="govuk-heading-m govuk-!-margin-bottom-2">Closed actions and decisions</h3>
+        <p class="govuk-body">There are no closed actions or decisions added to this case.</p>
+        <div class="govuk-table govuk-!-margin-top-4" style="display: none;">
+          <table class="govuk-table">
+            <thead class="govuk-table__head">
+              <tr class="govuk-table__row">
+                <th class="govuk-table__header" style="text-align: right;">Date opened</th>
+                <th class="govuk-table__header" style="text-align: right;">Date closed</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

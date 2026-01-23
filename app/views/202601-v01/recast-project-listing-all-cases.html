@@ -1,0 +1,193 @@
+{% extends "202601-v01/layouts/main-recast-new.html" %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+
+{% set pageName="All cases" %}
+{% set bodyClasses = "cases-listing-wide" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <!-- Main Heading -->
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+        All cases
+      </h1>
+
+      
+
+      <!-- Table -->
+      <table class="govuk-table">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">Case ID</th>
+            <th scope="col" class="govuk-table__header">Contents</th>
+            <th scope="col" class="govuk-table__header">Trust</th>
+            <th scope="col" class="govuk-table__header">Managed by</th>
+            <th scope="col" class="govuk-table__header">Last updated</th>
+            <th scope="col" class="govuk-table__header">Owned by</th>
+            <th scope="col" class="govuk-table__header">Case manager</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <a href="recast-project" class="govuk-link">2039681</a>
+            </td>
+            <td class="govuk-table__cell">
+              <div class="govuk-body">
+                <strong>Concerns</strong><br>
+                • Governance capability<br>
+                • Viability<br>
+                • Deficit<br>
+                <br>
+                Risk to trust<br>
+                <span class="govuk-tag" style="background-color: #f47738; color: #ffffff; margin-right: 8px;">Amber</span>
+                <span class="govuk-tag govuk-tag--green">Green</span>
+              </div>
+            </td>
+            <td class="govuk-table__cell">City Of London Academies Trust</td>
+            <td class="govuk-table__cell">Regions Group London</td>
+            <td class="govuk-table__cell">12 November 2025</td>
+            <td class="govuk-table__cell">Ming Chan</td>
+            <td class="govuk-table__cell">{{ data['caseManagerEmail'] or "" }}</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link">2038878</a>
+            </td>
+            <td class="govuk-table__cell">
+              <div class="govuk-body">
+                <strong>Concerns</strong><br>
+                • Governance capability<br>
+                • Viability<br>
+                • Deficit<br>
+                <br>
+                Risk to trust<br>
+                <span class="govuk-tag" style="background-color: #f47738; color: #ffffff; margin-right: 8px;">Amber</span>
+                <span class="govuk-tag govuk-tag--green">Green</span>
+              </div>
+            </td>
+            <td class="govuk-table__cell">Ekc Schools Trust Limited</td>
+            <td class="govuk-table__cell">Regions Group East of England</td>
+            <td class="govuk-table__cell">21 January 2026</td>
+            <td class="govuk-table__cell">James Humble</td>
+            <td class="govuk-table__cell">Michelle Daniels</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link">2038877</a>
+            </td>
+            <td class="govuk-table__cell">
+              <div class="govuk-body">
+                <strong>Concerns</strong><br>
+                • Governance capability<br>
+                • Viability<br>
+                • Deficit<br>
+                <br>
+                Risk to trust<br>
+                <span class="govuk-tag govuk-tag--red" style="margin-right: 8px;">Red</span>
+                <span class="govuk-tag" style="background-color: #f47738; color: #ffffff;">Amber</span>
+              </div>
+            </td>
+            <td class="govuk-table__cell">Prince Regent Street Trust</td>
+            <td class="govuk-table__cell">SFSO North - East Midlands</td>
+            <td class="govuk-table__cell">08 January 2026</td>
+            <td class="govuk-table__cell">Sukhvinder Kaur</td>
+            <td class="govuk-table__cell">Michelle Daniels</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link">2038876</a>
+            </td>
+            <td class="govuk-table__cell">
+              <div class="govuk-body">
+                <strong>Concerns</strong><br>
+                • Governance capability<br>
+                • Viability<br>
+                <br>
+                Risk to trust<br>
+                <span class="govuk-tag govuk-tag--red" style="margin-right: 8px;">Red</span>
+                <span class="govuk-tag" style="background-color: #f47738; color: #ffffff;">Amber</span>
+              </div>
+            </td>
+            <td class="govuk-table__cell">City Of London Academies Trust</td>
+            <td class="govuk-table__cell">Regions Group London</td>
+            <td class="govuk-table__cell">05 January 2026</td>
+            <td class="govuk-table__cell">Ming1 Chan</td>
+            <td class="govuk-table__cell">Michelle Daniels</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link">2038875</a>
+            </td>
+            <td class="govuk-table__cell">
+              <div class="govuk-body">
+                <strong>Concerns</strong><br>
+                • Governance capability<br>
+                <br>
+                Risk to trust<br>
+                <span class="govuk-tag govuk-tag--red">Red</span>
+              </div>
+            </td>
+            <td class="govuk-table__cell">Acme Trust</td>
+            <td class="govuk-table__cell">Regions Group South West</td>
+            <td class="govuk-table__cell">03 January 2026</td>
+            <td class="govuk-table__cell">Sarah Johnson</td>
+            <td class="govuk-table__cell">Michelle Daniels</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <a href="#" class="govuk-link">2038874</a>
+            </td>
+            <td class="govuk-table__cell">
+              <div class="govuk-body">
+                <strong>Concerns</strong><br>
+                • Governance capability<br>
+                • Viability<br>
+                <br>
+                Risk to trust<br>
+                <span class="govuk-tag govuk-tag--red" style="margin-right: 8px;">Red</span>
+                <span class="govuk-tag" style="background-color: #f47738; color: #ffffff;">Amber</span>
+              </div>
+            </td>
+            <td class="govuk-table__cell">Bright Futures Academy Trust</td>
+            <td class="govuk-table__cell">Regions Group North West</td>
+            <td class="govuk-table__cell">01 January 2026</td>
+            <td class="govuk-table__cell">David Smith</td>
+          </tr>
+          <td class="govuk-table__cell">Michelle Daniels</td>
+        </tbody>
+      </table>
+
+      <!-- Pagination -->
+      <div class="govuk-!-margin-top-6">
+        {{ govukPagination({
+          previous: {
+            href: "#",
+            text: "← Previous"
+          },
+          next: {
+            href: "#",
+            text: "Next →"
+          },
+          items: [
+            {
+              number: 1,
+              href: "#",
+              current: true
+            },
+            {
+              number: 2,
+              href: "#"
+            },
+            {
+              number: 3,
+              href: "#"
+            }
+          ]
+        }) }}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

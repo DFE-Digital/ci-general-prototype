@@ -1,0 +1,86 @@
+{% extends "202601-v01/layouts/main-recast.html" %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName="Change risk to trust rating" %}
+{% set bodyClasses = "cases-listing-wide" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <!-- Case ID -->
+    <h1 class="govuk-heading-l" name="caseID">
+      <span class="govuk-caption-m">Case ID</span>
+      2039681
+    </h1>
+
+    <!-- Main Heading -->
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+      Change risk to trust rating
+    </h1>
+
+    <!-- Instructional Text -->
+    <div class="govuk-hint govuk-!-margin-bottom-6">
+      Risk to trust is the total risk rating in a case. It should match the concern risk rating if your case has only one concern.</div>
+      <div class="govuk-hint govuk-!-margin-bottom-6">The risk to trust rating may be higher than the concerns ratings if your case has more than one concern and the spread of the issues causes greater risk. For example, a case with 3 amber/green concerns might have an amber/red risk to trust rating.
+    </div>
+
+    <!-- Form -->
+    <form method="post" action="/202601-v01/recast-risk-rating-edit">
+      {{ govukRadios({
+        name: "riskRating",
+        fieldset: {
+          legend: {
+            text: "",
+            classes: "govuk-visually-hidden"
+          }
+        },
+        items: [
+          {
+            value: "amber-green",
+            checked: data['riskRating'] == "amber-green",
+            html: '<span class="govuk-tag govuk-tag--yellow">Amber</span><span class="govuk-tag govuk-tag--green">Green</span>'
+          },
+          {
+            value: "red-amber",
+            checked: data['riskRating'] == "red-amber",
+            html: '<span class="govuk-tag govuk-tag--red">Red</span><span class="govuk-tag govuk-tag--yellow">Amber</span>'
+          },
+          {
+            value: "red",
+            checked: data['riskRating'] == "red",
+            html: '<span class="govuk-tag govuk-tag--red" >Red</span>'
+          },
+          {
+            value: "red-plus",
+            checked: data['riskRating'] == "red-plus",
+            html: '<span class="govuk-tag" style="background-color: #942514; color: #ffffff;">Red Plus</span>'
+          }
+        ]
+      }) }}
+
+      <div class="govuk-form-group govuk-character-count" data-module="govuk-character-count" data-maxlength="4000">
+        <h2 class="govuk-label-wrapper">
+          <label class="govuk-label govuk-label--m" for="with-hint">
+            RAG rationale commentary
+          </label>
+        </h2>
+        <textarea class="govuk-textarea govuk-js-character-count" id="with-hint" name="ragRationale" rows="5" aria-describedby="with-hint-info with-hint-hint">{{ data['ragRationale'] or "" }}</textarea>
+        <div id="with-hint-info" class="govuk-hint govuk-character-count__message">
+          You can enter up to 4000 characters
+        </div>
+      </div>
+
+      <div class="govuk-button-group govuk-!-margin-top-6">
+        {{ govukButton({
+          text: "Apply",
+          type: "submit"
+        }) }}
+        <a href="/202601-v01/recast-project" class="govuk-link">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}
