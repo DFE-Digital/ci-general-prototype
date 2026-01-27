@@ -39,7 +39,7 @@
         items: [
           {
             value: "amber-green",
-            checked: data['riskRating'] == "amber-green",
+            checked: data['riskRating'] == "amber-green" or not data['riskRating'],
             html: '<span class="govuk-tag govuk-tag--yellow">Amber</span><span class="govuk-tag govuk-tag--green">Green</span>'
           },
           {

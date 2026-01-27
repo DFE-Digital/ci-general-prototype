@@ -42,7 +42,7 @@
     <!-- Case Summary List -->
     <div class="govuk-!-margin-top-6">
       {% set riskRatingHtml %}
-        {% if data['riskRating'] == "amber-green" %}
+        {% if data['riskRating'] == "amber-green" or not data['riskRating'] %}
           <span class="govuk-tag govuk-tag--yellow">Amber</span><span class="govuk-tag govuk-tag--green">Green</span>
         {% elif data['riskRating'] == "red-amber" %}
           <span class="govuk-tag govuk-tag--red">Red</span><span class="govuk-tag govuk-tag--yellow">Amber</span>
