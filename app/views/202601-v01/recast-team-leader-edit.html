@@ -2,7 +2,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% set pageName="Change case manager" %}
+{% set pageName="Change Team leader" %}
 
 {% block content %}
 
@@ -16,7 +16,7 @@
 
     <!-- Main Heading -->
     <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
-      Change case manager
+      Change Team leader
     </h1>
 
     <!-- Instructional Text -->
@@ -25,11 +25,11 @@
     </div>
 
     <!-- Form -->
-    <form method="post" action="/202601-v01/recast-case-manager-edit">
+    <form method="post" action="/202601-v01/recast-team-leader-edit">
       {{ govukInput({
-        id: "case-manager-email",
-        name: "caseManagerEmail",
-        value: data['caseManagerEmail'] or ""
+        id: "team-leader-email",
+        name: "teamLeaderEmail",
+        value: data['teamLeaderEmail'] or ""
       }) }}
 
       <div class="govuk-button-group govuk-!-margin-top-6">

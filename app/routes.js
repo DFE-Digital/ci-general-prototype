@@ -8,10 +8,10 @@ const router = govukPrototypeKit.requests.setupRouter()
 
 // Add your routes here
 
-// Handle case manager edit form submission
-router.post('/202601-v01/recast-case-manager-edit', function (req, res) {
-  // Store the case manager email in session
-  req.session.data['caseManagerEmail'] = req.body.caseManagerEmail
+// Handle Team leader edit form submission
+router.post('/202601-v01/recast-team-leader-edit', function (req, res) {
+  // Store the Team leader email in session
+  req.session.data['teamLeaderEmail'] = req.body.teamLeaderEmail
   // Redirect back to the project page
   res.redirect('/202601-v01/recast-project')
 })

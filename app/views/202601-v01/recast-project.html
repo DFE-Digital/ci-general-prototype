@@ -79,25 +79,23 @@
           }
         }
       ] %}
-      {% if data['ragRationale'] and data['ragRationale'] != "" %}
-        {% set _ = summaryListRows.push({
-          key: {
-            text: "RAG rationale commentary"
-          },
-          value: {
-            text: data['ragRationale']
-          },
-          actions: {
-            items: [
-              {
-                href: "recast-risk-rating-edit",
-                text: "Change",
-                visuallyHiddenText: "RAG rationale commentary"
-              }
-            ]
-          }
-        }) %}
-      {% endif %}
+      {% set _ = summaryListRows.push({
+        key: {
+          text: "RAG rationale commentary"
+        },
+        value: {
+          text: data['ragRationale']
+        },
+        actions: {
+          items: [
+            {
+              href: "recast-risk-rating-edit",
+              text: "Change",
+              visuallyHiddenText: "RAG rationale commentary"
+            }
+          ]
+        }
+      }) %}
       {% set _ = summaryListRows.push({
         key: {
           text: "Direction of travel"
@@ -175,17 +173,17 @@
       }) %}
       {% set _ = summaryListRows.push({
         key: {
-          text: "Case manager"
+          text: "Team leader"
         },
         value: {
-          text: data['caseManagerEmail'] or ""
+          text: data['teamLeaderEmail'] or ""
         },
         actions: {
           items: [
             {
-              href: "recast-case-manager-edit",
+              href: "recast-team-leader-edit",
               text: "Change",
-              visuallyHiddenText: "case manager"
+              visuallyHiddenText: "Team leader"
             }
           ]
         }
