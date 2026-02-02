@@ -1,0 +1,197 @@
+{% extends "202601-v01/layouts/main-recast.html" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName="Add concern" %}
+{% set bodyClasses = "cases-listing-wide" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <!-- Page Heading -->
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-m">Create a case</span>
+      Add concern
+    </h1>
+
+    <!-- Trust and Managed By Summary List -->
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: "Trust"
+          },
+          value: {
+            html: "City Of London Academies Trust<br>North Wing, Guildhall, Gresham Street, London, EC2V 7HH"
+          }
+        },
+        {
+          key: {
+            text: "Managed by"
+          },
+          value: {
+            html: "Regions Group<br>London"
+          }
+        }
+      ]
+    }) }}
+
+    <!-- Form -->
+    <form method="post" action="recast-create-add-concern-check-your-answer">
+      <!-- Select concern type -->
+      <div class="govuk-!-margin-top-8">
+        {{ govukRadios({
+          name: "concernType",
+          fieldset: {
+            legend: {
+              text: "Select concern type",
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          hint: {
+            html: '<a href="#" class="govuk-link">Help with choosing a concern type</a>'
+          },
+          items: [
+            {
+              value: "governance-capability",
+              text: "Governance capability"
+            },
+            {
+              value: "non-compliance",
+              text: "Non-compliance"
+            },
+            {
+              value: "safeguarding-non-compliance",
+              text: "Safeguarding non-compliance"
+            }
+          ]
+        }) }}
+      </div>
+
+      <!-- Select concern risk rating -->
+      <div class="govuk-!-margin-top-8">
+        {{ govukRadios({
+          name: "concernRiskRating",
+          fieldset: {
+            legend: {
+              text: "Select concern risk rating",
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          hint: {
+            html: 'Use the <a href="#" class="govuk-link" target="_blank" rel="noopener noreferrer">Risk Management Framework (opens in new tab)</a> to assess the concern.'
+          },
+          items: [
+            {
+              value: "amber-green",
+              html: '<span class="govuk-tag govuk-tag--yellow">Amber</span><span class="govuk-tag govuk-tag--green">Green</span>'
+            },
+            {
+              value: "red-amber",
+              html: '<span class="govuk-tag govuk-tag--red">Red</span><span class="govuk-tag govuk-tag--yellow">Amber</span>'
+            },
+            {
+              value: "red",
+              html: '<span class="govuk-tag govuk-tag--red">Red</span>'
+            },
+            {
+              value: "red-plus",
+              html: '<span class="govuk-tag" style="background-color: #942514; color: #ffffff;">Red Plus</span>'
+            }
+          ]
+        }) }}
+      </div>
+
+
+      {% set yesHtml %}
+      {{ govukTextarea({
+        id: "contact-by-email",
+        name: "contactByEmail",
+        spellcheck: false,
+        classes: "",
+        label: {
+          text: "RAG rationale commentary"
+        }
+      }) }}
+      {% endset -%}
+
+      {{ govukRadios({
+        name: "contact",
+        classes: "",
+        fieldset: {
+          legend: {
+            text: "Do you have the RAG rationale commentary now?",
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--m govuk-!-padding-top-6"
+          }
+        },
+        items: [
+          {
+            value: "no",
+            text: "No, the RAG rationale commentary is not available yet",
+            conditional: {
+              html: noHtml
+            }
+          },
+          {
+            value: "yes",
+            text: "Yes",
+            conditional: {
+              html: yesHtml
+            }
+          }
+        ]
+      }) }}
+
+
+      <!-- What was the source of the concern? -->
+      <div class="govuk-!-margin-top-8">
+        {{ govukRadios({
+          name: "concernSource",
+          fieldset: {
+            legend: {
+              text: "What was the source of the concern?",
+              classes: "govuk-fieldset__legend--m"
+            }
+          },
+          items: [
+            {
+              value: "internal",
+              text: "Internal department activity",
+              hint: {
+                text: "Regions Group activity including Schools Complaints and Compliance Unit, or other departmental activity"
+              }
+            },
+            {
+              value: "external",
+              text: "An external source",
+              hint: {
+                text: "Self-reported by trust, SFSO, Ofsted or other government bodies"
+              }
+            },
+            {
+              value: "whistleblowing",
+              text: "Whistleblowing",
+              hint: {
+                html: "The Department defines a whistleblower as someone who:<ul class='govuk-list govuk-list--bullet govuk-!-margin-top-2'><li>Has privileged knowledge of the governance or administration of the institution.</li><li>Is making the disclosure in the public interest.</li></ul>"
+              }
+            }
+          ]
+        }) }}
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="govuk-button-group govuk-!-margin-top-8">
+        {{ govukButton({
+          text: "Add concern",
+          type: "submit"
+        }) }}
+        <a href="#" class="govuk-link">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

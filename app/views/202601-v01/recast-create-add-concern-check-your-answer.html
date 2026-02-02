@@ -1,0 +1,94 @@
+{% extends "202601-v01/layouts/main-recast.html" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName="Check your answer" %}
+{% set bodyClasses = "cases-listing-wide" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <!-- Page Heading -->
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-m">Create a case</span>
+      Concern
+    </h1>
+
+    <!-- RAG rationale commentary display (from add concern form) -->
+    {% set ragRationaleText %}
+      {% if data['ragRationaleAvailable'] == "no" or not data['ragRationaleAvailable'] %}
+        The RAG rationale commentary is not available yet
+      {% else %}
+        {{ data['ragRationaleCommentary'] or "" }}
+      {% endif %}
+    {% endset %}
+
+    <!-- Concerns row: concern type + risk rating tags (from add concern form) -->
+    {% set concernsValueHtml %}
+      {% if data['concernType'] == "governance-capability" %}Governance capability 
+      {% elif data['concernType'] == "non-compliance" %}Non-compliance 
+      {% elif data['concernType'] == "safeguarding-non-compliance" %}Safeguarding non-compliance 
+      {% else %}{{ data['concernType'] or "" }}{% endif %}
+      {% if data['concernRiskRating'] == "amber-green" or not data['concernRiskRating'] %}
+        <span class="govuk-tag govuk-tag--yellow">Amber</span><span class="govuk-tag govuk-tag--green">Green</span>
+      {% elif data['concernRiskRating'] == "red-amber" %}
+        <span class="govuk-tag govuk-tag--red">Red</span><span class="govuk-tag govuk-tag--yellow">Amber</span>
+      {% elif data['concernRiskRating'] == "red" %}
+        <span class="govuk-tag govuk-tag--red">Red</span>
+      {% elif data['concernRiskRating'] == "red-plus" %}
+        <span class="govuk-tag" style="background-color: #942514; color: #ffffff;">Red Plus</span>
+      {% endif %}
+    {% endset %}
+
+    <!-- Trust, Managed By and Concerns Summary List -->
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: "Trust"
+          },
+          value: {
+            html: "City Of London Academies Trust<br>North Wing, Guildhall, Gresham Street, London, EC2V 7HH"
+          }
+        },
+        {
+          key: {
+            text: "Managed by"
+          },
+          value: {
+            html: "Regions Group<br>London"
+          }
+        },
+        {
+          key: {
+            text: "Concerns"
+          },
+          value: {
+            html: concernsValueHtml
+          }
+        },
+        {
+          key: {
+            text: "RAG rationale commentary"
+          },
+          value: {
+            text: ragRationaleText
+          }
+        }
+      ]
+    }) }}
+
+    <!-- Action Buttons -->
+    <div class="govuk-button-group govuk-!-margin-top-8">
+      {{ govukButton({
+        text: "Confirm",
+        href: "#"
+      }) }}
+      <a href="/202601-v01/recast-create-add-concern" class="govuk-link">Change</a>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

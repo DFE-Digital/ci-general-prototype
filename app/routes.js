@@ -16,6 +16,16 @@ router.post('/202601-v01/recast-team-leader-edit', function (req, res) {
   res.redirect('/202601-v01/recast-project')
 })
 
+// Handle add concern form submission - redirect to check your answer
+router.post('/202601-v01/recast-create-add-concern-check-your-answer', function (req, res) {
+  req.session.data['concernType'] = req.body.concernType
+  req.session.data['concernRiskRating'] = req.body.concernRiskRating
+  req.session.data['concernSource'] = req.body.concernSource
+  req.session.data['ragRationaleAvailable'] = req.body.contact
+  req.session.data['ragRationaleCommentary'] = req.body.contactByEmail
+  res.redirect('/202601-v01/recast-create-add-concern-check-your-answer')
+})
+
 // Handle risk rating edit form submission
 router.post('/202601-v01/recast-risk-rating-edit', function (req, res) {
   // Store the risk rating in session
