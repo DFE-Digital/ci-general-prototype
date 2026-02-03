@@ -3,7 +3,7 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% set pageName="Check your answer" %}
+{% set pageName="Concern details" %}
 {% set bodyClasses = "cases-listing-wide" %}
 
 {% block content %}
@@ -13,11 +13,23 @@
     <!-- Page Heading -->
     <h1 class="govuk-heading-l">
       <span class="govuk-caption-m">Create a case</span>
-      Concern
+      Concern details
     </h1>
+    
 
-    <!-- RAG rationale commentary display (from add concern form) -->
-    {% set ragRationaleText %}
+    <!-- RAG rating and RAG rationale from risk-to-trust page -->
+    {% set riskToTrustRatingHtml %}
+      {% if data['riskToTrustRating'] == "amber-green" or not data['riskToTrustRating'] %}
+        <span class="govuk-tag govuk-tag--yellow">Amber</span><span class="govuk-tag govuk-tag--green">Green</span>
+      {% elif data['riskToTrustRating'] == "red-amber" %}
+        <span class="govuk-tag govuk-tag--red">Red</span><span class="govuk-tag govuk-tag--yellow">Amber</span>
+      {% elif data['riskToTrustRating'] == "red" %}
+        <span class="govuk-tag govuk-tag--red">Red</span>
+      {% elif data['riskToTrustRating'] == "red-plus" %}
+        <span class="govuk-tag" style="background-color: #942514; color: #ffffff;">Red Plus</span>
+      {% endif %}
+    {% endset %}
+    {% set ragRationalePlayback %}
       {% if data['ragRationaleAvailable'] == "no" or not data['ragRationaleAvailable'] %}
         The RAG rationale commentary is not available yet
       {% else %}
@@ -25,24 +37,7 @@
       {% endif %}
     {% endset %}
 
-    <!-- Concerns row: concern type + risk rating tags (from add concern form) -->
-    {% set concernsValueHtml %}
-      {% if data['concernType'] == "governance-capability" %}Governance capability 
-      {% elif data['concernType'] == "non-compliance" %}Non-compliance 
-      {% elif data['concernType'] == "safeguarding-non-compliance" %}Safeguarding non-compliance 
-      {% else %}{{ data['concernType'] or "" }}{% endif %}
-      {% if data['concernRiskRating'] == "amber-green" or not data['concernRiskRating'] %}
-        <span class="govuk-tag govuk-tag--yellow">Amber</span><span class="govuk-tag govuk-tag--green">Green</span>
-      {% elif data['concernRiskRating'] == "red-amber" %}
-        <span class="govuk-tag govuk-tag--red">Red</span><span class="govuk-tag govuk-tag--yellow">Amber</span>
-      {% elif data['concernRiskRating'] == "red" %}
-        <span class="govuk-tag govuk-tag--red">Red</span>
-      {% elif data['concernRiskRating'] == "red-plus" %}
-        <span class="govuk-tag" style="background-color: #942514; color: #ffffff;">Red Plus</span>
-      {% endif %}
-    {% endset %}
-
-    <!-- Trust, Managed By and Concerns Summary List -->
+    <!-- Trust, Managed By, Concerns, RAG rating and RAG rationale Summary List -->
     {{ govukSummaryList({
       rows: [
         {
@@ -58,7 +53,7 @@
             text: "Managed by"
           },
           value: {
-            html: "Regions Group<br>London"
+            html: "SFSO<br>South London"
           }
         },
         {
@@ -66,7 +61,15 @@
             text: "Concerns"
           },
           value: {
-            html: concernsValueHtml
+            html: 'Financial governance <span class="govuk-tag govuk-tag--red" style="margin-left: 8px;">Red</span>'
+          }
+        },
+        {
+          key: {
+            text: "RAG rating"
+          },
+          value: {
+            html: riskToTrustRatingHtml
           }
         },
         {
@@ -74,19 +77,23 @@
             text: "RAG rationale commentary"
           },
           value: {
-            text: ragRationaleText
+            text: ragRationalePlayback
           }
         }
       ]
     }) }}
 
+    <h2 class="govuk-heading-m">
+      Add concern details
+    </h2>
+
     <!-- Action Buttons -->
     <div class="govuk-button-group govuk-!-margin-top-8">
       {{ govukButton({
-        text: "Confirm",
+        text: "Create this case",
         href: "#"
       }) }}
-      <a href="/202601-v01/recast-create-add-concern" class="govuk-link">Change</a>
+      <a href="#" class="govuk-link">Cancel</a>
     </div>
   </div>
 </div>
