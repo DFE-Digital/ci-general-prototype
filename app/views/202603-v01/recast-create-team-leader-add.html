@@ -1,0 +1,43 @@
+{% extends "202601-v01/layouts/main-recast.html" %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName="Add team leader" %}
+{% set bodyClasses = "cases-listing-wide" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+
+    <!-- Main Heading -->
+    <h1 class="govuk-heading-l govuk-!-margin-bottom-4">
+      <span class="govuk-caption-m">Create a case</span>
+      Add team leader
+    </h1>
+
+    <!-- Instructional Text -->
+    <div class="govuk-hint">
+      Find and select the email address of the team leader for this case
+    </div>
+
+    <!-- Form -->
+    <form method="post" action="/202601-v01/recast-team-leader-edit">
+      {{ govukInput({
+        id: "team-leader-email",
+        name: "teamLeaderEmail",
+        value: data['teamLeaderEmail'] or ""
+      }) }}
+
+      <div class="govuk-button-group govuk-!-margin-top-6">
+        {{ govukButton({
+          text: "Next step",
+          type: "submit"
+        }) }}
+        <a href="#" class="govuk-link">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

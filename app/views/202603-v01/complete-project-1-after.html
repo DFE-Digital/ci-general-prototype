@@ -1,0 +1,229 @@
+{% extends "202603-v01/layouts/main-complete-project.html" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "moj/components/sub-navigation/macro.njk" import mojSubNavigation %}
+
+{% set pageName="UTC Reading" %}
+{% set bodyClasses = "cases-listing-wide" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters-from-desktop">
+    <div class="govuk-notification-banner govuk-notification-banner--success" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+      <div class="govuk-notification-banner__header">
+        <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+          Success
+        </h2>
+      </div>
+      <div class="govuk-notification-banner__content">
+        <h3 class="govuk-notification-banner__heading">
+          The project is put on hold.
+        </h3>
+      </div>
+    </div>
+    <!-- Project caption, type tag and title -->
+    <div class="govuk-!-margin-bottom-4">
+      <p class="govuk-body govuk-!-margin-bottom-2">
+        <span class="govuk-caption-m govuk-!-display-inline-block govuk-!-margin-right-2">School URN 139268</span>
+        <span class="govuk-tag govuk-tag--purple">Conversion</span>
+        <span class="govuk-tag govuk-tag--red">On hold</span>
+      </p>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+        UTC Reading
+      </h1>
+
+      <div class="govuk-notification-banner" role="alert" aria-labelledby="govuk-notification-banner-title" data-module="govuk-notification-banner">
+        <div class="govuk-notification-banner__header">
+          <h2 class="govuk-notification-banner__title" id="govuk-notification-banner-title">
+            Important
+          </h2>
+        </div>
+        <div class="govuk-notification-banner__content">
+          <p class="govuk-body">The project was put on hold on 10 January 2026. You can <a class="govuk-notification-banner__link" href="#">resume the project</a> if you are ready to continue with it.</p>
+        </div>
+      </div>
+
+      <!-- Project details summary -->
+      {{ govukSummaryList({
+        classes: "govuk-summary-list--no-border",
+        rows: [
+          {
+            key: {
+              text: "Conversion date"
+            },
+            value: {
+              html: '1 October 2023 <span class="govuk-tag complete-project-tag--provisional govuk-!-margin-left-2">provisional</span>'
+            }
+          },
+          {
+            key: {
+              text: "Incoming trust"
+            },
+            value: {
+              html: '<span class="govuk-visually-hidden">Not provided</span>'
+            }
+          },
+          {
+            key: {
+              text: "LA and region"
+            },
+            value: {
+              text: "Norfolk, East Of England"
+            }
+          },
+          {
+            key: {
+              text: "SharePoint links"
+            },
+            value: {
+              html: '<a href="#" class="govuk-link" target="_blank" rel="noopener noreferrer">School folder (opens in new tab)</a> <span class="govuk-body" aria-hidden="true">|</span> <a href="#" class="govuk-link" target="_blank" rel="noopener noreferrer">Trust folder (opens in new tab)</a>'
+            }
+          }
+        ]
+      }) }}
+  
+      <div class="govuk-!-margin-top-4">
+        {{ govukButton({
+          text: "Delete project",
+          classes: "govuk-button--destructive",
+          href: "#"
+        }) }}
+      </div>
+    </div>
+  </div>
+</div>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <!-- MOJ Sub Navigation -->
+    {{ mojSubNavigation({
+      label: "Project sub navigation",
+      items: [{
+        text: "Task list",
+        href: "#",
+        active: true
+      }, {
+        text: "About the project",
+        href: "#"
+      }, {
+        text: "Notes",
+        href: "#"
+      }, {
+        text: "External contacts",
+        href: "#"
+      }, {
+        text: "Internal contacts",
+        href: "#"
+      }, {
+        text: "Conversion date history",
+        href: "#"
+      }]
+    }) }}
+
+    <!-- Task list: jump nav + sections -->
+    <div class="govuk-grid-row govuk-!-margin-top-8">
+      <div class="govuk-grid-column-one-quarter-from-desktop">
+        <nav class="govuk-!-margin-bottom-6" aria-label="Jump to section">
+          <h2 class="govuk-heading-s govuk-!-margin-bottom-3">Jump to section</h2>
+          <ul class="govuk-list">
+            <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#project-kick-off">Project kick-off</a></li>
+            <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#clear-and-sign-legal-documents">Clear and sign legal documents</a></li>
+            <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#get-ready-for-opening">Get ready for opening</a></li>
+            <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#after-opening">After opening</a></li>
+            <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#completing-a-project">Completing a project</a></li>
+          </ul>
+        </nav>
+      </div>
+      <div class="govuk-grid-column-three-quarters-from-desktop">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-6">Task list</h1>
+
+        <section id="project-kick-off" class="govuk-!-margin-bottom-8">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-4">Project kick-off</h2>
+          <table class="govuk-table complete-project-task-list">
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Handover with regional delivery officer</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">External stakeholder kick-off</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Confirm the academy's risk protection arrangements</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Check accuracy of high needs places information</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Complete a notification of changes to funded high needs places form</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Process conversion support grant</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Confirm and process the sponsored support grant</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Confirm the academy name</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Confirm the headteacher's details</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Confirm the chair of governors' details</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Confirm the incoming trust CEO's details</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Confirm the main contact</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Confirm the proposed capacity of the academy</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="clear-and-sign-legal-documents" class="govuk-!-margin-bottom-8">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-4">Clear and sign legal documents</h2>
+          <table class="govuk-table complete-project-task-list">
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Land questionnaire</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Land registry title plans</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Supplemental funding agreement</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Church supplemental agreement</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Master funding agreement</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Articles of association</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Deed of variation</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Trust modification order</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Direction to transfer</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">125 year lease</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Subleases</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Tenancy at will</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Commercial transfer agreement</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="get-ready-for-opening" class="govuk-!-margin-bottom-8">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-4">Get ready for opening</h2>
+          <table class="govuk-table complete-project-task-list">
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Confirm the school has completed all actions</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Confirm all conditions have been met</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Share the information about opening</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="after-opening" class="govuk-!-margin-bottom-8">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-4">After opening</h2>
+          <table class="govuk-table complete-project-task-list">
+            <tbody class="govuk-table__body">
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Confirm the academy open date</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag govuk-tag--green">Completed</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Redact and send documents</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+              <tr class="govuk-table__row"><td class="govuk-table__cell"><a href="#" class="govuk-link">Receive declaration of expenditure certificate</a></td><td class="govuk-table__cell govuk-table__cell--numeric"><strong class="govuk-tag complete-task-tag--not-started">Not started</strong></td></tr>
+            </tbody>
+          </table>
+        </section>
+
+        <section id="completing-a-project" class="govuk-!-margin-bottom-8">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-4">Completing a project</h2>
+          <p class="govuk-body">You should only complete the project when you have finished every task and marked any that are not needed as not applicable.</p>
+          <p class="govuk-body">You will not be able to change this project once it is completed.</p>
+          {{ govukButton({
+            text: "Complete project",
+            href: "#"
+          }) }}
+        </section>
+
+        <section id="completing-a-project" class="govuk-!-margin-bottom-8">
+          <h2 class="govuk-heading-m govuk-!-margin-bottom-4">Resume the project</h2>
+          <p class="govuk-body">You can resume the project if you are ready to continue with it.</p>
+          {{ govukButton({
+            text: "Resume the project",
+            href: "#",
+            classes: "govuk-button--secondary"
+          }) }}
+        </section>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

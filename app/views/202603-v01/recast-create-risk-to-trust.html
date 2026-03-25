@@ -1,0 +1,156 @@
+{% extends "202601-v01/layouts/main-recast.html" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName="Risk to trust" %}
+{% set bodyClasses = "cases-listing-wide" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <!-- Page Heading -->
+    <h1 class="govuk-heading-l">
+      <span class="govuk-caption-m">Create a case</span>
+      Risk to trust
+    </h1>
+
+    <!-- RAG rationale commentary display (from add concern form) -->
+    {% set ragRationaleText %}
+      {% if data['ragRationaleAvailable'] == "no" or not data['ragRationaleAvailable'] %}
+        The RAG rationale commentary is not available yet
+      {% else %}
+        {{ data['ragRationaleCommentary'] or "" }}
+      {% endif %}
+    {% endset %}
+
+    <!-- Concerns row: concern type + risk rating tags (from add concern form) -->
+    
+
+    <!-- Trust, Managed By and Concerns Summary List -->
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: "Trust"
+          },
+          value: {
+            html: "City Of London Academies Trust<br>North Wing, Guildhall, Gresham Street, London, EC2V 7HH"
+          }
+        },
+        {
+          key: {
+            text: "Managed by"
+          },
+          value: {
+            html: "SFSO<br>South London"
+          }
+        },
+        {
+          key: {
+            text: "Concerns"
+          },
+          value: {
+            html: 'Financial governance <span class="govuk-tag govuk-tag--red" style="margin-left: 8px;">Red</span>'
+          }
+        }
+      ]
+    }) }}
+
+    <form method="post" action="/202601-v01/recast-create-risk-to-trust">
+    <!-- What is the overall risk to the trust? -->
+    <div class="govuk-!-margin-top-8">
+      {{ govukRadios({
+        name: "concernRiskRating",
+        fieldset: {
+          legend: {
+            text: "What is the overall risk to the trust?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        hint: {
+          html: '<p class="govuk-hint">Risk to trust is the total risk rating in a case. It should match the concern risk rating if your case has only one concern.</p><p class="govuk-hint">The risk to trust rating may be higher than the concerns ratings if your case has more than one concern and the spread of the issues causes greater risk. For example, a case with 3 amber/green concerns might have an amber/red risk to trust rating</p>'
+        },
+        items: [
+          {
+            value: "amber-green",
+            checked: data['riskToTrustRating'] == "amber-green",
+            html: '<span class="govuk-tag govuk-tag--yellow">Amber</span><span class="govuk-tag govuk-tag--green">Green</span>'
+          },
+          {
+            value: "red-amber",
+            checked: data['riskToTrustRating'] == "red-amber",
+            html: '<span class="govuk-tag govuk-tag--red">Red</span><span class="govuk-tag govuk-tag--yellow">Amber</span>'
+          },
+          {
+            value: "red",
+            checked: data['riskToTrustRating'] == "red",
+            html: '<span class="govuk-tag govuk-tag--red">Red</span>'
+          },
+          {
+            value: "red-plus",
+            checked: data['riskToTrustRating'] == "red-plus",
+            html: '<span class="govuk-tag" style="background-color: #942514; color: #ffffff;">Red Plus</span>'
+          }
+        ]
+      }) }}
+    </div>
+
+
+    {% set yesHtml %}
+    {{ govukTextarea({
+      id: "contact-by-email",
+      name: "contactByEmail",
+      value: data['ragRationaleCommentary'] or "",
+      spellcheck: false,
+      classes: "",
+      label: {
+        text: "RAG rationale commentary"
+      }
+    }) }}
+    {% endset -%}
+
+    {{ govukRadios({
+      name: "contact",
+      classes: "",
+      fieldset: {
+        legend: {
+          text: "Do you have the RAG rationale commentary now?",
+          isPageHeading: true,
+          classes: "govuk-fieldset__legend--m govuk-!-padding-top-3"
+        }
+      },
+      items: [
+        {
+          value: "no",
+          checked: data['ragRationaleAvailable'] == "no" or not data['ragRationaleAvailable'],
+          text: "No, the RAG rationale commentary is not available yet",
+          conditional: {
+            html: noHtml
+          }
+        },
+        {
+          value: "yes",
+          checked: data['ragRationaleAvailable'] == "yes",
+          text: "Yes",
+          conditional: {
+            html: yesHtml
+          }
+        }
+      ]
+    }) }}
+
+    <!-- Action Buttons -->
+    <div class="govuk-button-group govuk-!-margin-top-8">
+      {{ govukButton({
+        text: "Next step",
+        type: "submit"
+      }) }}
+      <a href="#" class="govuk-link">Cancel</a>
+    </div>
+    </form>
+  </div>
+</div>
+
+{% endblock %}

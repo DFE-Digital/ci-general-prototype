@@ -1344,3 +1344,53 @@
 .cases-listing-wide .moj-primary-navigation__container {
 	max-width: 1200px;
 }
+
+// Complete project page – conversion type tag (purple) and destructive delete button
+.complete-project-tag--conversion {
+	background-color: #e1d4ec;
+	color: #3c0960;
+}
+
+.complete-project-tag--provisional {
+	background-color: #f3f2f1;
+	color: #505a5f;
+}
+
+.govuk-button--destructive {
+	background-color: #d4351c;
+	box-shadow: 0 2px 0 #55150b;
+
+	&:hover {
+		background-color: #aa2a16;
+	}
+
+	&:active {
+		background-color: #aa2a16;
+		top: 2px;
+		box-shadow: none;
+	}
+}
+
+// Complete project task list – status tags
+.complete-task-tag--not-started {
+	background-color: #d2e2f1;
+	color: #0b0c0c;
+}
+
+.complete-project-task-list table {
+	border-collapse: collapse;
+	width: 100%;
+}
+
+.complete-project-task-list tbody tr {
+	border-bottom: 1px solid #b1b4b6;
+}
+
+.complete-project-task-list .govuk-table__cell {
+	border-bottom: none;
+	vertical-align: middle;
+}
+
+.complete-project-task-list .govuk-table__header {
+	border-bottom: 1px solid #b1b4b6;
+}
