@@ -1,0 +1,117 @@
+{% extends "202603-v02/layouts/main-complete.html" %}
+{% from "moj/components/sub-navigation/macro.njk" import mojSubNavigation %}
+{% from "govuk/components/pagination/macro.njk" import govukPagination %}
+
+{% set pageName="All projects in progress" %}
+{% set bodyClasses = "cases-listing-wide" %}
+
+{% block content %}
+  <div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+        All projects in progress
+      </h1>
+
+      {{ mojSubNavigation({
+        label: "Project type sub navigation",
+        items: [{
+          text: "All projects",
+          href: "#",
+          active: true
+        }, {
+          text: "Conversions",
+          href: "#"
+        }, {
+          text: "Transfers",
+          href: "#"
+        }, {
+          text: "Form a MAT",
+          href: "#"
+        }]
+      }) }}
+
+      <table class="govuk-table govuk-!-margin-top-6">
+        <thead class="govuk-table__head">
+          <tr class="govuk-table__row">
+            <th scope="col" class="govuk-table__header">School or academy</th>
+            <th scope="col" class="govuk-table__header">URN</th>
+            <th scope="col" class="govuk-table__header">Conversion or transfer date</th>
+            <th scope="col" class="govuk-table__header">Project type</th>
+            <th scope="col" class="govuk-table__header">Form a MAT project?</th>
+            <th scope="col" class="govuk-table__header">Assigned to</th>
+          </tr>
+        </thead>
+        <tbody class="govuk-table__body">
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <a href="complete-project-1-before.html" class="govuk-link">UTC Reading</a>
+            </td>
+            <td class="govuk-table__cell">139268</td>
+            <td class="govuk-table__cell">Jan 2022</td>
+            <td class="govuk-table__cell">Conversion</td>
+            <td class="govuk-table__cell">Yes</td>
+            <td class="govuk-table__cell">Tristan Collen</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <a href="complete-project-2-before.html" class="govuk-link">Hampton Court Primary School</a>
+            </td>
+            <td class="govuk-table__cell">116426</td>
+            <td class="govuk-table__cell">Sep 2026</td>
+            <td class="govuk-table__cell">Conversion</td>
+            <td class="govuk-table__cell">No</td>
+            <td class="govuk-table__cell">Mohamed DEIFALLA</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <a href="complete-project-3-before.html" class="govuk-link">Riverside Community Primary School</a>
+            </td>
+            <td class="govuk-table__cell">121466</td>
+            <td class="govuk-table__cell">Oct 2027</td>
+            <td class="govuk-table__cell">Conversion</td>
+            <td class="govuk-table__cell">No</td>
+            <td class="govuk-table__cell">Thomas MCINNES</td>
+          </tr>
+          <tr class="govuk-table__row">
+            <td class="govuk-table__cell">
+              <a href="complete-project-4-before.html" class="govuk-link">Monkwood Primary Academy</a>
+            </td>
+            <td class="govuk-table__cell">114067</td>
+            <td class="govuk-table__cell">Jul 2025</td>
+            <td class="govuk-table__cell">Conversion</td>
+            <td class="govuk-table__cell">No</td>
+            <td class="govuk-table__cell">Thomas MCINNES</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="govuk-!-margin-top-6">
+        {{ govukPagination({
+          next: {
+            href: "#",
+            text: "Next →"
+          },
+          items: [
+            {
+              number: 1,
+              href: "#",
+              current: true
+            },
+            {
+              number: 2,
+              href: "#"
+            },
+            {
+              ellipsis: true
+            },
+            {
+              number: 9,
+              href: "#"
+            }
+          ]
+        }) }}
+      </div>
+    </div>
+  </div>
+
+{% endblock %}

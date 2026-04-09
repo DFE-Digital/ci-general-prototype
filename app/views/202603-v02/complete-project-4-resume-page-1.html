@@ -1,0 +1,108 @@
+{% extends "202603-v02/layouts/main-complete-project.html" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "moj/components/sub-navigation/macro.njk" import mojSubNavigation %}
+
+{% set pageName="Resume Monkwood Primary Academy" %}
+{% set bodyClasses = "cases-listing-wide" %}
+
+{% block content %}
+
+{% set dateInputErrorMessage = false %}
+{% if data['complete-project-4-conversionDateError'] %}
+  {% set dateInputErrorMessage = {
+    text: data['complete-project-4-conversionDateErrorMessage'] or "The conversion date cannot be in the past. It must be today or in the future."
+  } %}
+{% endif %}
+{% set dateInputItemClasses = "govuk-input--width-2" %}
+{% set dateInputYearClasses = "govuk-input--width-4" %}
+{% if data['complete-project-4-conversionDateError'] %}
+  {% set dateInputItemClasses = "govuk-input--width-2 govuk-input--error" %}
+  {% set dateInputYearClasses = "govuk-input--width-4 govuk-input--error" %}
+{% endif %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters-from-desktop">
+    {% if data['complete-project-4-conversionDateError'] %}
+      {{ govukErrorSummary({
+        titleText: "There is a problem",
+        errorList: [
+          {
+            text: data['complete-project-4-conversionDateErrorMessage'] or "The conversion date cannot be in the past. It must be today or in the future.",
+            href: "#conversion-date-day"
+          }
+        ]
+      }) }}
+    {% endif %}
+    <!-- Project caption, type tag and title -->
+    <div class="govuk-!-margin-bottom-4">
+      <p class="govuk-body govuk-!-margin-bottom-2">
+        <span class="govuk-caption-m govuk-!-display-inline-block govuk-!-margin-right-2">School URN 114067</span>
+        <span class="govuk-tag complete-project-tag--conversion">Conversion</span>
+      </p>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+        Resume Monkwood Primary Academy
+      </h1>
+
+      <p class="govuk-body govuk-!-margin-top-6">You are about to resume Hampton Court Primary School. This will allow you to make changes to the project.</p>
+
+      <p class="govuk-body govuk-!-margin-top-6">You can change the conversion date to a different date.</p>
+
+      <form method="post" action="/202603-v02/complete-project-4-resume">
+      {{ govukDateInput({
+        id: "conversion-date",
+        namePrefix: "conversion-date",
+        fieldset: {
+          legend: {
+            text: "The current conversion date",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        hint: {
+          text: "For example, 12 9 2026"
+        },
+        errorMessage: dateInputErrorMessage,
+        items: [
+          {
+            name: "day",
+            value: data['complete-project-4-conversion-date-day'] or "21",
+            classes: dateInputItemClasses,
+            attributes: {
+              inputmode: "numeric"
+            }
+          },
+          {
+            name: "month",
+            value: data['complete-project-4-conversion-date-month'] or "7",
+            classes: dateInputItemClasses,
+            attributes: {
+              inputmode: "numeric"
+            }
+          },
+          {
+            name: "year",
+            value: data['complete-project-4-conversion-date-year'] or "2025",
+            classes: dateInputYearClasses,
+            attributes: {
+              inputmode: "numeric"
+            }
+          }
+        ]
+      }) }}
+
+      <div class="govuk-button-group govuk-!-margin-top-6">
+        {{ govukButton({
+          text: "Resume the project",
+          type: "submit"
+        }) }}
+        <a class="govuk-link" href="complete-project-4-before.html">Cancel</a>
+      </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+{% endblock %}

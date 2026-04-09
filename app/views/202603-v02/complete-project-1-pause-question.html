@@ -1,0 +1,34 @@
+{% extends "202603-v02/layouts/main-complete-project.html" %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+{% from "moj/components/sub-navigation/macro.njk" import mojSubNavigation %}
+
+{% set pageName="Put UTC Reading on hold" %}
+{% set bodyClasses = "cases-listing-wide" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters-from-desktop">
+    <!-- Project caption, type tag and title -->
+    <div class="govuk-!-margin-bottom-4">
+      <p class="govuk-body govuk-!-margin-bottom-2">
+        <span class="govuk-caption-m govuk-!-display-inline-block govuk-!-margin-right-2">School URN 139268</span>
+        <span class="govuk-tag complete-project-tag--conversion">Conversion</span>
+      </p>
+      <h1 class="govuk-heading-xl govuk-!-margin-bottom-4">
+        Put UTC Reading on hold
+      </h1>
+
+      <p class="govuk-body">You are about to put UTC Reading on hold. This will prevent any changes being made to the project until you resume it.</p>
+  
+      <div class="govuk-button-group">
+        <a class="govuk-button" href="complete-project-1-after.html">Continue</a>
+        <a class="govuk-link" href="complete-project-1-before.html">Cancel</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
