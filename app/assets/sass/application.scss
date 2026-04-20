@@ -1356,6 +1356,14 @@
 	color: #505a5f;
 }
 
+// Prepare project hero – inline “empty” project owner placeholder (bordered box)
+.prepare-project-hero__empty-placeholder {
+	border: 1px solid #0b0c0c;
+	display: inline-block;
+	padding: 2px 8px;
+	vertical-align: baseline;
+}
+
 .govuk-button--destructive {
 	background-color: #d4351c;
 	box-shadow: 0 2px 0 #55150b;
