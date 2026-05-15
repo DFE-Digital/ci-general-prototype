@@ -1,0 +1,63 @@
+{% extends "20252026-q3-sprint-1/layouts/main-prepare.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+        
+    
+    <a class="govuk-back-link" href="third-page.html">Back</a>
+ 
+ 
+ 
+         <main class="govuk-main-wrapper" id="main-content" role="main">
+ 
+             
+ 
+             
+ 
+ <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+       <form method="post" novalidate="">
+          <span class="govuk-caption-l">Greenhill Primary School</span>
+          
+ 
+ <div class="govuk-form-group ">
+          <h1 class="govuk-label-wrapper">
+             <label class="govuk-label govuk-label--l" for="project-rationale">
+                Write the rationale for the project
+             </label>
+          </h1>
+       <div id="project-rationale-hint" class="govuk-hint">
+          Edit the school's rationale to add your own analysis
+       </div>
+       <textarea class="govuk-textarea " id="project-rationale" name="project-rationale" rows="15" aria-describedby="&quot;project-rationale-hint&quot;">Greenhill Primary School (PPS) is a community primary school located in the Bury, accepting children between the ages of 4 and 11. The school has 205 pupils on roll, a school capacity of 210 (98% full), and has no recorded SEN or resourced provisions. In terms of the school’s pupil population for 2023/24, 3.3% of pupils have a Special Education Needs (SEN) Education, Health and Care Plan (EHCP), slightly above the national figure of 3.0%. 16.0% have SEN support, also above the national figure of 14.1%. 23.0% of pupils speak English as an additional language, compared to the national figure of 22.8%, and 18.1% of pupils have been eligible for free school meals (FSM) at any time during the past 6 years, below the national figure of 25.9%.The overall absence at the school for 2023/24 was 3.4%, significantly lower than the national figure of 5.5%. Persistent absence was 4.6%, also lower than the national figure of 14.6%.Following an Ofsted inspection in March 2022, the school was judged good overall. The inspection report highlighted strengths in the school’s curriculum design, safeguarding arrangements, and the positive relationships between staff and pupils. The school was noted for its inclusive ethos and commitment to pupil wellbeing.The report did not identify significant weaknesses but did suggest areas for improvement, including ensuring consistency in teaching across subjects and further developing subject leadership. There were no concerns raised about leadership capacity or governance.The school’s revised key stage 2 performance data for 2024/25 shows that 57% of pupils met the expected standard in reading, writing, and maths, lower the national figure of 62%, and 4% of pupils achieved the higher standard, compared to the national figure of 8%. For disadvantaged pupils, all attainment data is suppressed at this school. The school’s educational performance has declined compared to the previous year of 2023/24. As a result of this decline, the local authority has commissioned school improvement support to meet the school’s needs and will continue to support the school alongside the new trust. </textarea>
+ 
+ </div>
+          <a class="govuk-button" id="save-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton" data-govuk-button-init="" href="fifth-page.html">
+             Save and continue
+          </a>
+       <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EovP-Fj4sJCoAVh2xt8RLEcuKfpVwYemXGNs3ofMrd1rCaMF4qRluQo4nYH1IltXaQ4m49uEXXAoPD6CDccrFSgoDK3TbsUcO2eCGc3tmG-LqYxiVMQu-uTjvvbfK7nyFK261LUyDOpXrRE9MqnuuGvoY8RFr3YRFUt0FTy4-LNJ5X0-JmjM8nubZB7HiNjGQ"></form>
+    </div>
+           <div class="govuk-grid-column-one-third">
+    <aside class="app-related-items" role="complementary">
+       <h2 class="govuk-heading-s" id="subsection-title">
+          Useful information
+       </h2>
+       <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list govuk-!-font-size-16">
+             <li>
+                <p class="govuk-body-s">
+                   <a class="govuk-link" target="application" href="/school-application-form/22958">School application form (opens in a new tab)</a>
+                </p>
+             </li>
+          </ul>
+       </nav>
+    </aside>
+ </div>
+ </div>
+         </main>
+     </div>
+
+{% endblock %}

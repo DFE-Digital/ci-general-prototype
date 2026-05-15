@@ -1402,3 +1402,99 @@
 .complete-project-task-list .govuk-table__header {
 	border-bottom: 1px solid #b1b4b6;
 }
+
+// Word-style rich text toolbar (prototype)
+.app-word-toolbar {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px;
+	padding: 8px 10px;
+	margin-bottom: -2px;
+	background: #f3f2f1;
+	border: 2px solid #0b0c0c;
+	border-bottom-width: 0;
+}
+
+.app-word-toolbar__group {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 4px;
+	padding-right: 8px;
+	margin-right: 4px;
+	border-right: 1px solid #b1b4b6;
+
+	&:last-child {
+		border-right: 0;
+		margin-right: 0;
+		padding-right: 0;
+	}
+}
+
+.app-word-toolbar__btn {
+	box-sizing: border-box;
+	min-width: 2.25rem;
+	height: 2.25rem;
+	margin: 0;
+	padding: 0 8px;
+	font-family: inherit;
+	font-size: 16px;
+	line-height: 1;
+	font-weight: 700;
+	color: #0b0c0c;
+	background: #ffffff;
+	border: 2px solid #0b0c0c;
+	cursor: pointer;
+
+	&:hover {
+		background: #f3f2f1;
+	}
+
+	&:focus {
+		outline: 3px solid #fd0;
+		outline-offset: 0;
+	}
+
+	&--italic {
+		font-style: italic;
+		font-weight: 400;
+	}
+
+	&--underline {
+		text-decoration: underline;
+		font-weight: 400;
+	}
+}
+
+// Rich text editor (contenteditable) — matches textarea look, supports lists inside
+.app-rich-text-editor {
+	min-height: 15rem;
+	max-height: 40rem;
+	overflow-y: auto;
+}
+
+.app-rich-text-editor,
+.app-project-rationale-summary {
+	p {
+		margin-top: 0;
+		margin-bottom: 0.5em;
+
+		&:last-child {
+			margin-bottom: 0;
+		}
+	}
+
+	ul,
+	ol {
+		margin-top: 0;
+		margin-bottom: 0.5em;
+		padding-left: 1.25em;
+	}
+}
+
+// Rationale task “Completed” (prototype)
+.govuk-tag.app-task-tag--rationale-complete {
+	color: #0c2d4a;
+	background-color: #bbd4ea;
+}

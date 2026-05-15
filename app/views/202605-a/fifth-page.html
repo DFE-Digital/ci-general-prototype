@@ -1,0 +1,87 @@
+{% extends "20252026-q3-sprint-1/layouts/main-prepare.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+        
+    <a class="govuk-back-link" href="second-page.html">Back</a>
+
+
+        <main class="govuk-main-wrapper" id="main-content" role="main">
+
+            
+
+            
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">Greenhill Primary School</span>
+        <h1 class="govuk-heading-l">
+            Confirm project and trust rationale
+        </h1>
+        <div class="govuk-body">
+                <p>
+                    This information comes from the
+                    <a class="govuk-link" target="_blank" href="/school-application-form/22958">school's application form (opens in a new tab)</a>.
+                </p>
+        </div>
+    </div>
+    <div class="govuk-grid-column-full">
+        <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+        Rationale for project
+    </dt>
+    <dd class="govuk-summary-list__value govuk-!-width-full">
+
+
+            <span id="rationale-for-project" class="empty">Greenhill Primary School (PPS) is a community primary school located in the Bury, accepting children between the ages of 4 and 11. The school has 205 pupils on roll, a school capacity of 210 (98% full), and has no recorded SEN or resourced provisions. In terms of the school’s pupil population for 2023/24, 3.3% of pupils have a Special Education Needs (SEN) Education, Health and Care Plan (EHCP), slightly above the national figure of 3.0%. 16.0% have SEN support, also above the national figure of 14.1%. 23.0% of pupils speak English as an additional language, compared to the national figure of 22.8%, and 18.1% of pupils have been eligible for free school meals (FSM) at any time during the past 6 years, below the national figure of 25.9%.The overall absence at the school for 2023/24 was 3.4%, significantly lower than the national figure of 5.5%. Persistent absence was 4.6%, also lower than the national figure of 14.6%.Following an Ofsted inspection in March 2022, the school was judged good overall. The inspection report highlighted strengths in the school’s curriculum design, safeguarding arrangements, and the positive relationships between staff and pupils. The school was noted for its inclusive ethos and commitment to pupil wellbeing.The report did not identify significant weaknesses but did suggest areas for improvement, including ensuring consistency in teaching across subjects and further developing subject leadership. There were no concerns raised about leadership capacity or governance.The school’s revised key stage 2 performance data for 2024/25 shows that 57% of pupils met the expected standard in reading, writing, and maths, lower the national figure of 62%, and 4% of pupils achieved the higher standard, compared to the national figure of 8%. For disadvantaged pupils, all attainment data is suppressed at this school. The school’s educational performance has declined compared to the previous year of 2023/24. As a result of this decline, the local authority has commissioned school improvement support to meet the school’s needs and will continue to support the school alongside the new trust. </span>
+    </dd>
+        <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" data-test="change-rationale-for-project" href="fourth-page.html">
+                            Change<span class="govuk-visually-hidden">project rationale</span>
+                        </a>
+         </dd>
+</div>
+            <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+        Rationale for the trust or sponsor
+    </dt>
+    <dd class="govuk-summary-list__value govuk-!-width-full">
+
+
+            <span id="rationale-for-trust" class="empty">Empty</span>
+    </dd>
+        <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" data-test="change-rationale-for-trust" href="/task-list/22958/confirm-project-trust-rationale/trust-rationale">
+                            Change<span class="govuk-visually-hidden">sponsor rationale</span>
+                        </a>
+         </dd>
+</div>
+        </dl>
+           <form method="post">
+               <div class="govuk-form-group">
+   <div class="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+         <input name="rationale-complete-hidden" type="hidden" value="false">
+         <input class="govuk-checkboxes__input" id="rationale-complete" name="rationale-complete" type="checkbox" value="true">
+         <label class="govuk-label govuk-checkboxes__label" for="rationale-complete">
+            Mark this section as complete, you can still make changes later
+         </label>
+      </div>
+   </div>
+</div>
+
+               <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button" data-govuk-button-init="">
+                   Confirm and continue
+               </button>
+           <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EovP-Fj4sJCoAVh2xt8RLHQ2ltxP8TqXnmZNcNCcVFSGdHigD5oEYCDS0K9g1aMUKH6EBXxnQuQxXubnJi5xXwY5ZJjoC9AkOYI5bFZsOzxnI5rL2o7VekB4DIBDBwOgXNOK4Q-k-mAkBSjcRn1dedfw4GvX-juiRUqxAdbXWhu0LndkGTiKOwkftiNR1ILvw"></form>
+    </div>
+</div>
+        </main>
+    </div>
+
+{% endblock %}

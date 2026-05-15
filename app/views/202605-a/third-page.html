@@ -1,0 +1,87 @@
+{% extends "20252026-q3-sprint-1/layouts/main-prepare.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+        
+    <a class="govuk-back-link" href="second-page.html">Back</a>
+
+
+        <main class="govuk-main-wrapper" id="main-content" role="main">
+
+            
+
+            
+
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+        <span class="govuk-caption-l">Greenhill Primary School</span>
+        <h1 class="govuk-heading-l">
+            Confirm project and trust rationale
+        </h1>
+        <div class="govuk-body">
+                <p>
+                    This information comes from the
+                    <a class="govuk-link" target="_blank" href="/school-application-form/22958">school's application form (opens in a new tab)</a>.
+                </p>
+        </div>
+    </div>
+    <div class="govuk-grid-column-full">
+        <dl class="govuk-summary-list">
+                <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+        Rationale for project
+    </dt>
+    <dd class="govuk-summary-list__value govuk-!-width-full">
+
+
+            <span id="rationale-for-project" class="empty">Empty</span>
+    </dd>
+        <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" data-test="change-rationale-for-project" href="fourth-page.html">
+                            Change<span class="govuk-visually-hidden">project rationale</span>
+                        </a>
+         </dd>
+</div>
+            <div class="govuk-summary-list__row">
+    <dt class="govuk-summary-list__key govuk-!-width-one-quarter">
+        Rationale for the trust or sponsor
+    </dt>
+    <dd class="govuk-summary-list__value govuk-!-width-full">
+
+
+            <span id="rationale-for-trust" class="empty">Empty</span>
+    </dd>
+        <dd class="govuk-summary-list__actions">
+                        <a class="govuk-link" data-test="change-rationale-for-trust" href="/task-list/22958/confirm-project-trust-rationale/trust-rationale">
+                            Change<span class="govuk-visually-hidden">sponsor rationale</span>
+                        </a>
+         </dd>
+</div>
+        </dl>
+           <form method="post">
+               <div class="govuk-form-group">
+   <div class="govuk-checkboxes">
+      <div class="govuk-checkboxes__item">
+         <input name="rationale-complete-hidden" type="hidden" value="false">
+         <input class="govuk-checkboxes__input" id="rationale-complete" name="rationale-complete" type="checkbox" value="true">
+         <label class="govuk-label govuk-checkboxes__label" for="rationale-complete">
+            Mark this section as complete, you can still make changes later
+         </label>
+      </div>
+   </div>
+</div>
+
+               <button class="govuk-button" id="confirm-and-continue-button" data-module="govuk-button" data-govuk-button-init="">
+                   Confirm and continue
+               </button>
+           <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EovP-Fj4sJCoAVh2xt8RLHQ2ltxP8TqXnmZNcNCcVFSGdHigD5oEYCDS0K9g1aMUKH6EBXxnQuQxXubnJi5xXwY5ZJjoC9AkOYI5bFZsOzxnI5rL2o7VekB4DIBDBwOgXNOK4Q-k-mAkBSjcRn1dedfw4GvX-juiRUqxAdbXWhu0LndkGTiKOwkftiNR1ILvw"></form>
+    </div>
+</div>
+        </main>
+    </div>
+
+{% endblock %}

@@ -1,0 +1,184 @@
+{% extends "20252026-q3-sprint-1/layouts/main-prepare.html" %}
+
+{% set pageName="Home" %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+        
+    
+    <a class="govuk-back-link" href="third-page.html">Back</a>
+ 
+ 
+ 
+         <main class="govuk-main-wrapper" id="main-content" role="main">
+ 
+             
+ 
+             
+ 
+ <div class="govuk-grid-row">
+    <div class="govuk-grid-column-two-thirds">
+       <form method="post" novalidate="">
+          <span class="govuk-caption-l">Greenhill Primary School</span>
+          
+ 
+ <div class="govuk-form-group ">
+          <h1 class="govuk-label-wrapper">
+             <label class="govuk-label govuk-label--l" id="project-rationale-label" for="project-rationale">
+                Write the rationale for the project
+             </label>
+          </h1>
+       <div id="project-rationale-hint" class="govuk-hint">
+          Edit the school's rationale to add your own analysis
+       </div>
+       <div class="app-word-toolbar" role="toolbar" aria-label="Text formatting" aria-controls="project-rationale">
+          <div class="app-word-toolbar__group" role="group" aria-label="Font">
+             <button type="button" class="app-word-toolbar__btn" id="project-rationale-bold" data-format="bold" title="Bold" aria-keyshortcuts="Control+B">B</button>
+             <button type="button" class="app-word-toolbar__btn app-word-toolbar__btn--italic" id="project-rationale-italic" data-format="italic" title="Italic" aria-keyshortcuts="Control+I">I</button>
+             <button type="button" class="app-word-toolbar__btn app-word-toolbar__btn--underline" id="project-rationale-underline" data-format="underline" title="Underline" aria-keyshortcuts="Control+U">U</button>
+          </div>
+          <div class="app-word-toolbar__group" role="group" aria-label="Lists">
+             <button type="button" class="app-word-toolbar__btn" id="project-rationale-bullet" data-format="bullet" title="Bulleted list">•</button>
+             <button type="button" class="app-word-toolbar__btn" id="project-rationale-numbered" data-format="numbered" title="Numbered list">1.</button>
+          </div>
+       </div>
+       <div class="govuk-textarea govuk-!-margin-top-0 app-rich-text-editor" id="project-rationale" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="project-rationale-label" aria-describedby="project-rationale-hint" tabindex="0"><p>Greenhill Primary School (PPS) is a community primary school located in the Bury, accepting children between the ages of 4 and 11. The school has 205 pupils on roll, a school capacity of 210 (98% full), and has no recorded SEN or resourced provisions. In terms of the school’s pupil population for 2023/24, 3.3% of pupils have a Special Education Needs (SEN) Education, Health and Care Plan (EHCP), slightly above the national figure of 3.0%. 16.0% have SEN support, also above the national figure of 14.1%. 23.0% of pupils speak English as an additional language, compared to the national figure of 22.8%, and 18.1% of pupils have been eligible for free school meals (FSM) at any time during the past 6 years, below the national figure of 25.9%.The overall absence at the school for 2023/24 was 3.4%, significantly lower than the national figure of 5.5%. Persistent absence was 4.6%, also lower than the national figure of 14.6%.Following an Ofsted inspection in March 2022, the school was judged good overall. The inspection report highlighted strengths in the school’s curriculum design, safeguarding arrangements, and the positive relationships between staff and pupils. The school was noted for its inclusive ethos and commitment to pupil wellbeing.The report did not identify significant weaknesses but did suggest areas for improvement, including ensuring consistency in teaching across subjects and further developing subject leadership. There were no concerns raised about leadership capacity or governance.The school’s revised key stage 2 performance data for 2024/25 shows that 57% of pupils met the expected standard in reading, writing, and maths, lower the national figure of 62%, and 4% of pupils achieved the higher standard, compared to the national figure of 8%. For disadvantaged pupils, all attainment data is suppressed at this school. The school’s educational performance has declined compared to the previous year of 2023/24. As a result of this decline, the local authority has commissioned school improvement support to meet the school’s needs and will continue to support the school alongside the new trust.</p></div>
+       <textarea name="project-rationale" id="project-rationale-data" class="govuk-visually-hidden" rows="1" aria-hidden="true" tabindex="-1"></textarea>
+ 
+ </div>
+          <a class="govuk-button" id="save-and-continue-button" data-module="govuk-button" data-cy="select-common-submitbutton" data-govuk-button-init="" href="fifth-page.html">
+             Save and continue
+          </a>
+       <input name="__RequestVerificationToken" type="hidden" value="CfDJ8EovP-Fj4sJCoAVh2xt8RLEcuKfpVwYemXGNs3ofMrd1rCaMF4qRluQo4nYH1IltXaQ4m49uEXXAoPD6CDccrFSgoDK3TbsUcO2eCGc3tmG-LqYxiVMQu-uTjvvbfK7nyFK261LUyDOpXrRE9MqnuuGvoY8RFr3YRFUt0FTy4-LNJ5X0-JmjM8nubZB7HiNjGQ"></form>
+    </div>
+           <div class="govuk-grid-column-one-third">
+    <aside class="app-related-items" role="complementary">
+       <h2 class="govuk-heading-s" id="subsection-title">
+          Useful information
+       </h2>
+       <nav role="navigation" aria-labelledby="subsection-title">
+          <ul class="govuk-list govuk-!-font-size-16">
+             <li>
+                <p class="govuk-body-s">
+                   <a class="govuk-link" target="application" href="/school-application-form/22958">School application form (opens in a new tab)</a>
+                </p>
+             </li>
+          </ul>
+       </nav>
+    </aside>
+ </div>
+ </div>
+         </main>
+     </div>
+
+<script>
+(function () {
+  var STORAGE_KEY = 'prototypePrepare:202605b:projectRationaleHtml';
+  var STATUS_KEY = 'prototypePrepare:202605b:rationaleSectionStatus';
+  var LEGACY_KEY = 'prototypePrepare:202605b:rationaleSectionComplete';
+  var editor = document.getElementById('project-rationale');
+  var store = document.getElementById('project-rationale-data');
+  var toolbar = document.querySelector('.app-word-toolbar');
+  var seedTmpl = document.getElementById('project-rationale-seed-default');
+  if (!editor || !store || !toolbar) return;
+
+  function rationaleStatusStarted() {
+    try {
+      var s = sessionStorage.getItem(STATUS_KEY);
+      if (s === 'completed' || s === 'in-progress') {
+        return true;
+      }
+      if (!s && sessionStorage.getItem(LEGACY_KEY) === 'true') {
+        return true;
+      }
+      return false;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function syncToStore() {
+    store.value = editor.innerHTML;
+    try {
+      sessionStorage.setItem(STORAGE_KEY, editor.innerHTML);
+    } catch (err) {
+      /* quota or private mode */
+    }
+  }
+
+  editor.addEventListener('input', syncToStore);
+  editor.addEventListener('blur', syncToStore);
+
+  var form = editor.closest('form');
+  if (form) {
+    form.addEventListener('submit', syncToStore);
+  }
+
+  toolbar.querySelectorAll('button').forEach(function (btn) {
+    btn.addEventListener('mousedown', function (e) {
+      e.preventDefault();
+    });
+  });
+
+  function runCommand(command) {
+    editor.focus();
+    try {
+      document.execCommand(command, false, null);
+    } catch (err) {
+      /* execCommand unsupported */
+    }
+    syncToStore();
+  }
+
+  toolbar.addEventListener('click', function (e) {
+    var btn = e.target.closest('[data-format]');
+    if (!btn) return;
+    e.preventDefault();
+    var f = btn.getAttribute('data-format');
+    if (f === 'bold') runCommand('bold');
+    else if (f === 'italic') runCommand('italic');
+    else if (f === 'underline') runCommand('underline');
+    else if (f === 'bullet') runCommand('insertUnorderedList');
+    else if (f === 'numbered') runCommand('insertOrderedList');
+  });
+
+  editor.addEventListener('keydown', function (e) {
+    if (!e.ctrlKey && !e.metaKey) return;
+    var k = e.key.toLowerCase();
+    if (k === 'b') {
+      e.preventDefault();
+      runCommand('bold');
+    } else if (k === 'i') {
+      e.preventDefault();
+      runCommand('italic');
+    } else if (k === 'u') {
+      e.preventDefault();
+      runCommand('underline');
+    }
+  });
+
+  var saveBtn = document.getElementById('save-and-continue-button');
+  if (saveBtn) {
+    saveBtn.addEventListener('click', syncToStore);
+  }
+
+  try {
+    if (rationaleStatusStarted()) {
+      var saved = sessionStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        editor.innerHTML = saved;
+      } else if (seedTmpl) {
+        editor.appendChild(seedTmpl.content.cloneNode(true));
+      }
+    } else {
+      editor.innerHTML = '';
+    }
+  } catch (err) {
+    editor.innerHTML = '';
+  }
+  syncToStore();
+})();
+</script>
+
+{% endblock %}
