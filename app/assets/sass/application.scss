@@ -1540,6 +1540,33 @@
 	font-size: 16px;
 }
 
+// Project task list sub-navigation
+.moj-sub-navigation__link {
+	font-weight: 700;
+}
+
+// Empty placeholder (matches production site.css .empty)
+.empty {
+	display: inline-block;
+	box-sizing: border-box;
+	margin: 0 8px 0 0;
+	padding: 3px 8px;
+	border: 2px solid #505a5f;
+	outline-offset: -2px;
+	color: #505a5f;
+	background-color: #fff;
+	font-family: "GDS Transport", arial, sans-serif;
+	font-size: 14px;
+	font-weight: 700;
+	line-height: 1.25;
+	letter-spacing: 1px;
+	text-decoration: none;
+	text-transform: uppercase;
+	vertical-align: middle;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
 // Read-only Word document preview (eighth page — full viewport)
 .govuk-width-container:has(.app-word-doc-preview-only) {
 	max-width: none;
