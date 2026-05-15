@@ -1498,3 +1498,261 @@
 	color: #0c2d4a;
 	background-color: #bbd4ea;
 }
+
+// Download attachment (thumbnail left, details right)
+.app-c-attachment {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	align-items: flex-start;
+	gap: 15px;
+}
+
+.app-c-attachment__thumbnail {
+	flex-shrink: 0;
+}
+
+.app-c-attachment__thumbnail-image {
+	display: block;
+	vertical-align: top;
+}
+
+.app-c-attachment__details {
+	flex: 1;
+	min-width: 0;
+}
+
+.app-c-attachment__title {
+	margin-top: 0;
+	margin-bottom: 10px;
+	font-size: 27px;
+	font-weight: 700;
+}
+
+.app-c-attachment__title .app-c-attachment__link {
+	font-size: 27px;
+}
+
+.app-c-attachment__metadata {
+	margin-top: 0;
+	margin-bottom: 0;
+	color: #505a5f;
+	font-size: 16px;
+}
+
+// Read-only Word document preview (eighth page — full viewport)
+.govuk-width-container:has(.app-word-doc-preview-only) {
+	max-width: none;
+	padding: 0;
+	margin: 0;
+}
+
+.govuk-main-wrapper:has(> .app-word-doc-preview-only) {
+	padding: 0;
+	margin-top: 0;
+}
+
+.govuk-main-wrapper:has(> .govuk-width-container > .govuk-back-link) {
+	padding-top: 0;
+}
+
+.govuk-width-container > .govuk-back-link:first-child {
+	margin-top: 14px;
+}
+
+body:has(.app-word-doc-preview-only) .govuk-footer,
+body:has(.app-word-doc-preview-only) footer {
+	display: none;
+}
+
+.app-word-doc-preview-only {
+	min-height: 100vh;
+	background: #e8e8e8;
+
+	.app-word-doc-preview__back {
+		position: fixed;
+		top: 14px;
+		left: 16px;
+		z-index: 10;
+		margin: 0;
+	}
+
+	.app-word-doc-preview__frame {
+		border: 0;
+		background: #e8e8e8;
+		min-height: 100vh;
+	}
+
+	.app-word-doc-preview__page {
+		max-height: none;
+		min-height: 100vh;
+		overflow: auto;
+		padding: 24px;
+		box-sizing: border-box;
+	}
+}
+
+.app-word-doc-preview__frame {
+	border: 1px solid #b1b4b6;
+	background: #e8e8e8;
+}
+
+.app-word-doc-preview__page {
+	max-height: 70vh;
+	overflow: auto;
+	padding: 24px;
+}
+
+.app-word-doc-preview__content {
+	box-sizing: border-box;
+	max-width: 21cm;
+	min-height: 29.7cm;
+	margin: 0 auto;
+	padding: 96px 72px;
+	background: #ffffff;
+	box-shadow: 0 2px 8px rgba(11, 12, 12, 0.15);
+	color: #0b0c0c;
+	font-size: 16px;
+	line-height: 1.5;
+	cursor: default;
+	user-select: text;
+
+	p {
+		margin-top: 0;
+		margin-bottom: 1em;
+	}
+
+	h1,
+	h2,
+	h3 {
+		margin-top: 1.5em;
+		margin-bottom: 0.5em;
+	}
+
+	ul,
+	ol {
+		margin-top: 0;
+		margin-bottom: 1em;
+		padding-left: 1.25em;
+	}
+
+	// MAT sponsor template document (eighth page)
+	$word-doc-border: #1d70b8;
+
+	color: #0b0c0c;
+	background: #ffffff;
+
+	.app-word-doc__title {
+		margin: 0 0 8px;
+		padding: 0;
+		font-size: 28px;
+		font-weight: 700;
+		line-height: 1.25;
+		text-align: center;
+		color: #0b0c0c;
+	}
+
+	.app-word-doc__subtitle {
+		margin: 0 0 24px;
+		text-align: center;
+		font-size: 18px;
+		font-weight: 700;
+		color: #0b0c0c;
+	}
+
+	.app-word-doc__section {
+		margin-bottom: 20px;
+		border: 2px solid $word-doc-border;
+		background: #ffffff;
+	}
+
+	.app-word-doc__section--meta {
+		padding: 0;
+	}
+
+	.app-word-doc__section--content {
+		> .app-word-doc__section-body > h2:first-child {
+			margin: 0;
+			padding: 12px 16px;
+			font-size: 18px;
+			font-weight: 700;
+			border-bottom: 1px solid $word-doc-border;
+			background: #ffffff;
+			color: #0b0c0c;
+		}
+	}
+
+	.app-word-doc__section-body {
+		padding: 16px;
+		color: #0b0c0c;
+
+		h2 {
+			margin-top: 1.25em;
+			margin-bottom: 0.5em;
+			font-size: 16px;
+			font-weight: 700;
+			color: #0b0c0c;
+		}
+
+		h3,
+		h4 {
+			margin-top: 1em;
+			margin-bottom: 0.35em;
+			font-weight: 700;
+			color: #0b0c0c;
+		}
+
+		p,
+		ul,
+		ol {
+			color: #0b0c0c;
+		}
+	}
+
+	.app-word-doc__meta-table {
+		width: 100%;
+		margin: 0;
+		border-collapse: collapse;
+		font-size: 16px;
+		background: #ffffff;
+
+		th,
+		td {
+			width: 50%;
+			padding: 12px 16px;
+			border: 1px solid $word-doc-border;
+			text-align: left;
+			vertical-align: top;
+			background: #ffffff;
+			color: #0b0c0c;
+			font-weight: 400;
+		}
+
+		th {
+			font-weight: 700;
+		}
+	}
+
+	.app-word-doc__data-table {
+		width: 100%;
+		margin-bottom: 1em;
+		border-collapse: collapse;
+		font-size: 14px;
+		border: 1px solid $word-doc-border;
+
+		th,
+		td {
+			padding: 10px 12px;
+			border: 1px solid $word-doc-border;
+			text-align: left;
+			vertical-align: top;
+			background: #ffffff;
+			color: #0b0c0c;
+		}
+
+		thead th {
+			font-weight: 700;
+			background: #ffffff;
+		}
+	}
+}

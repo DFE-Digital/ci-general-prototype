@@ -4,9 +4,18 @@
 //
 
 const govukPrototypeKit = require('govuk-prototype-kit')
+const path = require('path')
 const router = govukPrototypeKit.requests.setupRouter()
 
 // Add your routes here
+
+router.get('/202605-b/download-project-template', function (req, res) {
+  const filePath = path.join(
+    __dirname,
+    'assets/documents/greenhill-primary-school-project-template.docx'
+  )
+  res.download(filePath, "Greenhill Primary School's project template.docx")
+})
 
 // Handle Team leader edit form submission
 router.post('/202601-v01/recast-team-leader-edit', function (req, res) {
