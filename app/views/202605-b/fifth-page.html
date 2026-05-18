@@ -6,7 +6,7 @@
 
 <div class="govuk-width-container">
         
-    <a class="govuk-back-link" href="second-page.html">Back</a>
+    <a class="govuk-back-link" href="fourth-page.html">Back</a>
 
 
         <main class="govuk-main-wrapper" id="main-content" role="main">
@@ -37,8 +37,6 @@
     </dt>
     <dd class="govuk-summary-list__value govuk-!-width-full">
 
-
-            <template id="rationale-for-project-default"><p>Greenhill Primary School (PPS) is a community primary school located in the Bury, accepting children between the ages of 4 and 11. The school has 205 pupils on roll, a school capacity of 210 (98% full), and has no recorded SEN or resourced provisions. In terms of the school’s pupil population for 2023/24, 3.3% of pupils have a Special Education Needs (SEN) Education, Health and Care Plan (EHCP), slightly above the national figure of 3.0%. 16.0% have SEN support, also above the national figure of 14.1%. 23.0% of pupils speak English as an additional language, compared to the national figure of 22.8%, and 18.1% of pupils have been eligible for free school meals (FSM) at any time during the past 6 years, below the national figure of 25.9%.The overall absence at the school for 2023/24 was 3.4%, significantly lower than the national figure of 5.5%. Persistent absence was 4.6%, also lower than the national figure of 14.6%.Following an Ofsted inspection in March 2022, the school was judged good overall. The inspection report highlighted strengths in the school’s curriculum design, safeguarding arrangements, and the positive relationships between staff and pupils. The school was noted for its inclusive ethos and commitment to pupil wellbeing.The report did not identify significant weaknesses but did suggest areas for improvement, including ensuring consistency in teaching across subjects and further developing subject leadership. There were no concerns raised about leadership capacity or governance.The school’s revised key stage 2 performance data for 2024/25 shows that 57% of pupils met the expected standard in reading, writing, and maths, lower the national figure of 62%, and 4% of pupils achieved the higher standard, compared to the national figure of 8%. For disadvantaged pupils, all attainment data is suppressed at this school. The school’s educational performance has declined compared to the previous year of 2023/24. As a result of this decline, the local authority has commissioned school improvement support to meet the school’s needs and will continue to support the school alongside the new trust.</p></template>
             <div id="rationale-for-project" class="govuk-body app-project-rationale-summary" role="region" aria-label="Rationale for project"></div>
     </dd>
         <dd class="govuk-summary-list__actions">
@@ -91,18 +89,23 @@
   var STATUS_KEY = 'prototypePrepare:202605b:rationaleSectionStatus';
 
   var el = document.getElementById('rationale-for-project');
-  var tmpl = document.getElementById('rationale-for-project-default');
-  if (el && tmpl) {
+  function hasContent(html) {
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = html || '';
+    return wrapper.textContent.trim().length > 0;
+  }
+
+  if (el) {
     var saved = null;
     try {
       saved = sessionStorage.getItem(STORAGE_KEY);
     } catch (err) {
       /* storage disabled */
     }
-    if (saved) {
+    if (hasContent(saved)) {
       el.innerHTML = saved;
     } else {
-      el.appendChild(tmpl.content.cloneNode(true));
+      el.innerHTML = '<span class="empty">Empty</span>';
     }
   }
 
