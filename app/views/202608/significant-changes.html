@@ -1,0 +1,242 @@
+{% extends "202608/layouts/main-prepare.html" %}
+
+{% set pageName = "Significant change projects" %}
+{% set navActive = "significant-changes" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-3" data-cy="select-heading">Significant change projects</h1>
+        <p class="govuk-body-l">Find and manage existing significant change projects.</p>
+
+        <h2 class="govuk-heading-l" test-id="projectCount" data-cy="select-projectlist-filter-count">14 projects found</h2>
+
+        <div class="sort-component">
+            <nav class="govuk-body sort-component__nav" aria-label="sort-by">
+                <span class="govuk-!-font-weight-bold">Sorted by:</span> Project created date
+            </nav>
+        </div>
+
+        <table class="govuk-table">
+            <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Projects (6)</caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header app-!-width-three-fifths">Application information</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-0" class="govuk-link" href="st-theresas">St Theresa’s Catholic Primary School</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-0"><strong>URN:</strong> 101335</span>
+                        </div>
+                        <div id="trust-0" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Appleby Grammar School (10059089)</span>
+                        </div>
+                        <div id="tier-0" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>3</span>
+                        </div>
+                        <div id="route-0" class="govuk-!-margin-top-1">
+                            <strong>Route:</strong>
+                            <span>Testing tiers</span>
+                        </div>
+                        <div id="assigned-to-0" class="do govuk-!-margin-top-1">
+                            <strong>Assigned to:</strong>
+                            <span class="empty">Unassigned</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-0">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-1" class="govuk-link" href="#">Forge Valley Community School</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-1"><strong>URN:</strong> 138908</span>
+                        </div>
+                        <div id="trust-1" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Appleby Grammar School (10059089)</span>
+                        </div>
+                        <div id="tier-1" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>3</span>
+                        </div>
+                        <div id="route-1" class="govuk-!-margin-top-1">
+                            <strong>Route:</strong>
+                            <span>3 new classes</span>
+                        </div>
+                        <div id="assigned-to-1" class="do govuk-!-margin-top-1">
+                            <strong>Assigned to:</strong>
+                            <span class="empty">Unassigned</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-1">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-2" class="govuk-link" href="#">Leeds Christian School</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-2"><strong>URN:</strong> 107140</span>
+                        </div>
+                        <div id="trust-2" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Appleby Grammar School (10059089)</span>
+                        </div>
+                        <div id="tier-2" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>3</span>
+                        </div>
+                        <div id="route-2" class="govuk-!-margin-top-1">
+                            <strong>Route:</strong>
+                            <span>Move location</span>
+                        </div>
+                        <div id="assigned-to-2" class="do govuk-!-margin-top-1">
+                            <strong>Assigned to:</strong>
+                            <span class="empty">Unassigned</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-2">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-3" class="govuk-link" href="#">John Spence Community High School</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-3"><strong>URN:</strong> 108627</span>
+                        </div>
+                        <div id="trust-3" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Appleby Grammar School (10059089)</span>
+                        </div>
+                        <div id="tier-3" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>3</span>
+                        </div>
+                        <div id="route-3" class="govuk-!-margin-top-1">
+                            <strong>Route:</strong>
+                            <span>Change school name</span>
+                        </div>
+                        <div id="assigned-to-3" class="do govuk-!-margin-top-1">
+                            <strong>Assigned to:</strong>
+                            <span class="empty">Unassigned</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-3">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-4" class="govuk-link" href="#">Our Lady of The Rosary Catholic Primary School, Bristol</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-4"><strong>URN:</strong> 109238</span>
+                        </div>
+                        <div id="trust-4" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Appleby Grammar School (10059089)</span>
+                        </div>
+                        <div id="tier-4" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>3</span>
+                        </div>
+                        <div id="route-4" class="govuk-!-margin-top-1">
+                            <strong>Route:</strong>
+                            <span>Double the school size</span>
+                        </div>
+                        <div id="assigned-to-4" class="do govuk-!-margin-top-1">
+                            <strong>Assigned to:</strong>
+                            <span>Tristan Collen</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-4">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-5" class="govuk-link" href="#">Lycee Cambridge</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-5"><strong>URN:</strong> 110912</span>
+                        </div>
+                        <div id="trust-5" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Appleby Grammar School (10059089)</span>
+                        </div>
+                        <div id="tier-5" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>3</span>
+                        </div>
+                        <div id="route-5" class="govuk-!-margin-top-1">
+                            <strong>Route:</strong>
+                            <span>4 new swimming pool</span>
+                        </div>
+                        <div id="assigned-to-5" class="do govuk-!-margin-top-1">
+                            <strong>Assigned to:</strong>
+                            <span>Tristan Collen</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-5">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <nav class="moj-pagination" id="pagination-label" aria-label="pagination">
+            <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
+            <ul class="moj-pagination__list">
+                <li class="moj-pagination__item moj-pagination__item--active">
+                    <a id="1" class="moj-pagination__link" aria-label="Current page, page 1" href="#">1</a>
+                </li>
+                <li class="moj-pagination__item">
+                    <a id="2" class="moj-pagination__link" aria-label="Go to page 2" href="#">2</a>
+                </li>
+                <li class="moj-pagination__item moj-pagination__item--next">
+                    <a class="moj-pagination__link" test-id="nextPage" href="#">Next<span class="govuk-visually-hidden"> set of pages</span></a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</div>
+
+{% endblock %}

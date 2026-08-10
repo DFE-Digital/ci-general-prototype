@@ -1,0 +1,88 @@
+{% extends "202608/layouts/main-prepare.html" %}
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set pageName = "School application form" %}
+{% set navActive = "significant-changes" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">URN: 101335</span>
+    <h1 class="govuk-heading-xl">School application form</h1>
+    <p class="govuk-body-l">St Theresa’s Catholic Primary School</p>
+
+    <h2 class="govuk-heading-m">School and trust details</h2>
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "School name" },
+          value: { text: "St Theresa’s Catholic Primary School" }
+        },
+        {
+          key: { text: "URN" },
+          value: { text: "101335" }
+        },
+        {
+          key: { text: "Trust" },
+          value: { text: "Appleby Grammar School (10059089)" }
+        },
+        {
+          key: { text: "Tier" },
+          value: { text: "3" }
+        },
+        {
+          key: { text: "Route" },
+          value: { text: "Testing tiers" }
+        }
+      ]
+    }) }}
+
+    <h2 class="govuk-heading-m">Consultation</h2>
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "Has a 3 week minimum consultation been carried out?" },
+          value: { text: "Yes" }
+        },
+        {
+          key: { text: "What date did the consultation start?" },
+          value: { text: "01/03/2026" }
+        },
+        {
+          key: { text: "What date did the consultation end?" },
+          value: { text: "30/04/2026" }
+        },
+        {
+          key: { text: "Provide a brief summary of the consultation responses." },
+          value: { text: "None" }
+        }
+      ]
+    }) }}
+
+    <h2 class="govuk-heading-m">Public Sector Equality Duty</h2>
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "Has the Public Sector Equality Duty been considered?" },
+          value: { text: "Yes" }
+        },
+        {
+          key: { text: "Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "What date was the equality assessment completed?" },
+          value: { text: "15/02/2026" }
+        },
+        {
+          key: { text: "Provide a brief summary of the Public Sector Equality Duty consideration" },
+          value: { text: "The decision is unlikely to disproportionately affect any particular person or group who share protected characteristics" }
+        }
+      ]
+    }) }}
+  </div>
+</div>
+
+{% endblock %}

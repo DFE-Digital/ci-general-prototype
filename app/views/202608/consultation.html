@@ -1,0 +1,144 @@
+{% extends "202608/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set pageName = "Consultation" %}
+{% set navActive = "significant-changes" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: "st-theresas"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <h1 class="govuk-heading-l">Consultation</h1>
+
+    <form method="post" action="st-theresas">
+
+      {{ govukRadios({
+        name: "consultation-carried-out",
+        fieldset: {
+          legend: {
+            text: "Has a 3 week minimum consultation been carried out?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes"
+          },
+          {
+            value: "no",
+            text: "No"
+          }
+        ]
+      }) }}
+
+      {{ govukDateInput({
+        id: "consultation-start-date",
+        namePrefix: "consultation-start-date",
+        fieldset: {
+          legend: {
+            text: "What date did the consultation start?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        hint: {
+          text: "For example, 05 08 2021"
+        }
+      }) }}
+
+      {{ govukDateInput({
+        id: "consultation-end-date",
+        namePrefix: "consultation-end-date",
+        fieldset: {
+          legend: {
+            text: "What date did the consultation end?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        hint: {
+          text: "For example, 05 08 2021"
+        }
+      }) }}
+
+      {{ govukTextarea({
+        name: "consultation-summary",
+        id: "consultation-summary",
+        label: {
+          text: "Provide a brief summary of the consultation response",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      {{ govukInput({
+        id: "supporting-evidence",
+        name: "supporting-evidence",
+        value: "http://sharepoint.edu.gov.uk/.....",
+        label: {
+          text: "Supporting evidence",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      {{ govukButton({
+        text: "Save and return"
+      }) }}
+
+    </form>
+
+    <h2 class="govuk-heading-m">Application details</h2>
+    <p class="govuk-body">The following are the relevant answers from the application form</p>
+
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: {
+            text: "Has a 3 week minimum consultation been carried out?"
+          },
+          value: {
+            text: "Yes"
+          }
+        },
+        {
+          key: {
+            text: "What date did the consultation start?"
+          },
+          value: {
+            text: "01/03/2026"
+          }
+        },
+        {
+          key: {
+            text: "What date did the consultation end?"
+          },
+          value: {
+            text: "30/04/2026"
+          }
+        },
+        {
+          key: {
+            text: "Provide a brief summary of the consultation responses."
+          },
+          value: {
+            text: "None"
+          }
+        }
+      ]
+    }) }}
+  </div>
+</div>
+
+{% endblock %}
