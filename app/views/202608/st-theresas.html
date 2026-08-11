@@ -70,10 +70,10 @@
                 <nav class="govuk-!-margin-bottom-6" aria-label="Jump to section">
                     <h2 class="govuk-heading-s govuk-!-margin-bottom-3">Jump to section</h2>
                     <ul class="govuk-list">
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#add-dfe-information">Add DfE information</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#add-school-information">Add school information</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#add-dfe-information">Individual information</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#add-school-information">School information</a></li>
                         <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#change-type-and-recommendations">Change type and recommendations</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#screening-questions">Screening questions</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#screening-questions">Mandatory legal requirements</a></li>
                         <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#growth-applications">GROWTH applications</a></li>
                     </ul>
                 </nav>
@@ -82,7 +82,7 @@
             <div class="govuk-grid-column-three-quarters">
 
                 <section id="add-dfe-information" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Add DfE information</h2>
+                    <h2 class="app-task-list__section">Individual information</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
@@ -108,7 +108,7 @@
                 </section>
 
                 <section id="add-school-information" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Add school information</h2>
+                    <h2 class="app-task-list__section">School information</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
@@ -160,14 +160,18 @@
                 </section>
 
                 <section id="screening-questions" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Screening questions</h2>
+                    <h2 class="app-task-list__section">Mandatory legal requirements</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="consultation-status" href="consultation">Consultation</a>
                                 </span>
+                                {% if data['consultation-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="consultation-status">Completed</strong>
+                                {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="consultation-status">Not started</strong>
+                                {% endif %}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
@@ -185,7 +189,11 @@
                                 <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="psed-status" href="psed">Public Sector Equality Duty (PSED)</a>
                                 </span>
+                                {% if data['psed-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="psed-status">Completed</strong>
+                                {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="psed-status">Not started</strong>
+                                {% endif %}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">

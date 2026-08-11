@@ -1788,3 +1788,8 @@ body:has(.app-word-doc-preview-only) footer {
 	border-top: 2px solid govuk-colour("blue");
 	padding-top: govuk-spacing(2);
 }
+
+.govuk-tag.app-task-list__tag--completed {
+	color: #0b0c0c;
+	background-color: transparent;
+}

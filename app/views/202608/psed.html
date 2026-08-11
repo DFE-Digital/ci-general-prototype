@@ -6,7 +6,6 @@
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% set pageName = "Public Sector Equality Duty (PSED)" %}
 {% set navActive = "significant-changes" %}
@@ -23,6 +22,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
     <h1 class="govuk-heading-l">Public Sector Equality Duty (PSED)</h1>
+    <p class="govuk-body">The Public Sector Equality Duty (PSED), under Section 149 of the Equality Act 2010, requires public authorities to have “due regard” to eliminating unlawful discrimination, advancing equality of opportunity, and fostering good relations between people with and without protected characteristics in their day-to-day public functions.</p>
 
     <form method="post" action="st-theresas">
 
@@ -99,51 +99,13 @@
         }
       }) }}
 
+      <input type="hidden" name="psed-complete" value="true">
+
       {{ govukButton({
         text: "Save and return"
       }) }}
 
     </form>
-
-    <h2 class="govuk-heading-m">Application details</h2>
-    <p class="govuk-body">The following are the relevant answers from the application form</p>
-
-    {{ govukSummaryList({
-      rows: [
-        {
-          key: {
-            text: "Has the Public Sector Equality Duty been considered?"
-          },
-          value: {
-            text: "Yes"
-          }
-        },
-        {
-          key: {
-            text: "Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?"
-          },
-          value: {
-            text: "No"
-          }
-        },
-        {
-          key: {
-            text: "What date was the equality assessment completed?"
-          },
-          value: {
-            text: "15/02/2026"
-          }
-        },
-        {
-          key: {
-            text: "Provide a brief summary of the Public Sector Equality Duty consideration"
-          },
-          value: {
-            text: "The decision is unlikely to disproportionately affect any particular person or group who share protected characteristics"
-          }
-        }
-      ]
-    }) }}
   </div>
 
   <div class="govuk-grid-column-one-quarter">
