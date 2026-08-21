@@ -1,0 +1,129 @@
+{% extends "202608v2/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Public Sector Equality Duty (PSED)" %}
+{% set navActive = "significant-changes" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: "st-theresas"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    <h1 class="govuk-heading-l">Public Sector Equality Duty (PSED)</h1>
+    <p class="govuk-body">The Public Sector Equality Duty (PSED), under Section 149 of the Equality Act 2010, requires public authorities to have “due regard” to eliminating unlawful discrimination, advancing equality of opportunity, and fostering good relations between people with and without protected characteristics in their day-to-day public functions.</p>
+
+    <form method="post" action="st-theresas">
+
+      {{ govukRadios({
+        name: "psed-considered",
+        fieldset: {
+          legend: {
+            text: "Has the Public Sector Equality Duty been considered?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes"
+          },
+          {
+            value: "no",
+            text: "No"
+          }
+        ]
+      }) }}
+
+      {{ govukRadios({
+        name: "psed-disproportionate-impact",
+        fieldset: {
+          legend: {
+            text: "Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes"
+          },
+          {
+            value: "no",
+            text: "No"
+          }
+        ]
+      }) }}
+
+      {{ govukDateInput({
+        id: "psed-assessment-date",
+        namePrefix: "psed-assessment-date",
+        fieldset: {
+          legend: {
+            text: "What date was the equality assessment completed?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        hint: {
+          text: "For example, 05 08 2021"
+        }
+      }) }}
+
+      {{ govukTextarea({
+        name: "psed-summary",
+        id: "psed-summary",
+        label: {
+          text: "Provide a brief summary of the Public Sector Equality Duty consideration",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      {{ govukInput({
+        id: "supporting-evidence",
+        name: "supporting-evidence",
+        value: "http://sharepoint.edu.gov.uk/.....",
+        label: {
+          text: "Supporting evidence",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      <input type="hidden" name="psed-complete" value="true">
+
+      {{ govukButton({
+        text: "Save and return"
+      }) }}
+
+    </form>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">
+        Useful information
+      </h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</div>
+
+{% endblock %}
