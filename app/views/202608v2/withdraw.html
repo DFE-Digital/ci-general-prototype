@@ -1,0 +1,63 @@
+{% extends "202608v2/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Withdraw" %}
+{% set navActive = "significant-changes" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: "st-theresas"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    <h1 class="govuk-heading-l">Withdraw</h1>
+    <p class="govuk-body">Record a withdraw recommendation for this significant change.</p>
+
+    <form method="post" action="st-theresas">
+
+      {{ govukRadios({
+        name: "withdraw-recommendation",
+        value: data['withdraw-recommendation'],
+        fieldset: {
+          legend: {
+            text: "Do you recommend that this application is withdrawn?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "yes", text: "Yes" },
+          { value: "no", text: "No" }
+        ]
+      }) }}
+
+      {{ govukTextarea({
+        name: "withdraw-rationale",
+        id: "withdraw-rationale",
+        value: data['withdraw-rationale'],
+        label: {
+          text: "Provide a rationale for this recommendation",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      <input type="hidden" name="withdraw-complete" value="true">
+
+      {{ govukButton({
+        text: "Save and return"
+      }) }}
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}

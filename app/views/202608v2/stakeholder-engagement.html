@@ -1,0 +1,142 @@
+{% extends "202608v2/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Stakeholder engagement" %}
+{% set navActive = "significant-changes" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: "st-theresas"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    <h1 class="govuk-heading-l">Stakeholder engagement</h1>
+    <p class="govuk-body">Record the stakeholder engagement carried out for this significant change.</p>
+
+    <form method="post" action="st-theresas">
+
+      {{ govukRadios({
+        name: "stakeholder-engagement-carried-out",
+        value: data['stakeholder-engagement-carried-out'],
+        fieldset: {
+          legend: {
+            text: "Has stakeholder engagement been carried out?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes"
+          },
+          {
+            value: "no",
+            text: "No"
+          }
+        ]
+      }) }}
+
+      {{ govukCheckboxes({
+        name: "stakeholder-engagement-groups",
+        values: data['stakeholder-engagement-groups'],
+        fieldset: {
+          legend: {
+            text: "Which stakeholders have been engaged?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        hint: {
+          text: "Select all that apply"
+        },
+        items: [
+          {
+            value: "Parents and carers",
+            text: "Parents and carers"
+          },
+          {
+            value: "Staff",
+            text: "Staff"
+          },
+          {
+            value: "Pupils",
+            text: "Pupils"
+          },
+          {
+            value: "Local authority",
+            text: "Local authority"
+          },
+          {
+            value: "Local schools",
+            text: "Local schools"
+          },
+          {
+            value: "Diocese or religious authority",
+            text: "Diocese or religious authority"
+          },
+          {
+            value: "Other",
+            text: "Other"
+          }
+        ]
+      }) }}
+
+      {{ govukTextarea({
+        name: "stakeholder-engagement-summary",
+        id: "stakeholder-engagement-summary",
+        value: data['stakeholder-engagement-summary'],
+        label: {
+          text: "Provide a brief summary of the stakeholder engagement",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      {{ govukInput({
+        id: "stakeholder-engagement-supporting-evidence",
+        name: "stakeholder-engagement-supporting-evidence",
+        value: data['stakeholder-engagement-supporting-evidence'] or "http://sharepoint.edu.gov.uk/.....",
+        label: {
+          text: "Supporting evidence",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      <input type="hidden" name="stakeholder-engagement-complete" value="true">
+
+      {{ govukButton({
+        text: "Save and return"
+      }) }}
+
+    </form>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">
+        Useful information
+      </h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</div>
+
+{% endblock %}

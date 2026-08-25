@@ -7,6 +7,17 @@
 
 <div class="govuk-grid-row">
     <div class="govuk-grid-column-full">
+        <div class="govuk-notification-banner govuk-notification-banner--success" id="projects-filtered-banner" role="alert" aria-labelledby="projects-filtered-banner-title" data-module="govuk-notification-banner" hidden>
+            <div class="govuk-notification-banner__header">
+                <h2 class="govuk-notification-banner__title" id="projects-filtered-banner-title">
+                    Success
+                </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+                <h3 class="govuk-notification-banner__heading">Projects filtered.</h3>
+            </div>
+        </div>
+
         <h1 class="govuk-heading-xl govuk-!-margin-bottom-3" data-cy="select-heading">Significant change projects</h1>
         <p class="govuk-body-l">Find and manage existing significant change projects.</p>
     </div>
@@ -26,7 +37,20 @@
         </div>
     
         <div class="moj-filter__content">
-            
+
+            <div class="moj-filter__selected" id="project-selected-filters" hidden>
+                <div class="moj-filter__selected-heading">
+                    <div class="moj-filter__heading-title">
+                        <h2 class="govuk-heading-m">Selected filters</h2>
+                    </div>
+                    <div class="moj-filter__heading-action">
+                        <p>
+                            <a class="govuk-link govuk-link--no-visited-state" href="#" data-cy="select-projectlist-filter-clear">Clear filters</a>
+                        </p>
+                    </div>
+                </div>
+                <div id="project-selected-filters-list"></div>
+            </div>
     
             <div class="moj-filter__options">
                 <form method="get" class="form">
@@ -34,7 +58,6 @@
                         <button type="submit" class="govuk-button" data-module="govuk-button" data-test-id="submit-button" data-cy="select-projectlist-filter-apply">
                             Apply filters
                         </button>
-                        <a class="govuk-link" href="#" data-cy="select-projectlist-filter-clear">Clear filters</a>
                     </div>
     
                     <div class="govuk-form-group">
@@ -474,7 +497,6 @@
                         <button type="submit" class="govuk-button" data-module="govuk-button" data-test-id="submit-button" data-cy="select-projectlist-filter-apply">
                             Apply filters
                         </button>
-                        <a class="govuk-link" href="#" data-cy="select-projectlist-filter-clear">Clear filters</a>
                     </div>
                 </form>
             </div>

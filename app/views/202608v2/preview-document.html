@@ -2,12 +2,57 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 
-{% set pageName = "Preview project document" %}
+{% set pageName = "Preview" %}
 {% set navActive = "significant-changes" %}
+
+{% macro empty() %}<span class="empty">Empty</span>{% endmacro %}
+
+{% macro value(text) -%}
+  {%- if text -%}{{ text }}{%- else -%}{{ empty() }}{%- endif -%}
+{%- endmacro %}
+
+{% macro yesNo(text) -%}
+  {%- if text == "yes" -%}Yes
+  {%- elseif text == "no" -%}No
+  {%- elseif text == "not-applicable" -%}Not applicable
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro dateValue(prefix) -%}
+  {%- set d = data[prefix + "-day"] -%}
+  {%- set m = data[prefix + "-month"] -%}
+  {%- set y = data[prefix + "-year"] -%}
+  {%- if d and m and y -%}{{ d }}/{{ m }}/{{ y }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro listValue(items) -%}
+  {%- if items -%}
+    {%- if items is string -%}{{ items }}
+    {%- else -%}{{ items | join(", ") }}
+    {%- endif -%}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro row(key, href, hidden) %}
+          <div class="govuk-summary-list__row">
+            <dt class="govuk-summary-list__key">{{ key }}</dt>
+            <dd class="govuk-summary-list__value">{{ caller() }}</dd>
+            <dd class="govuk-summary-list__actions">
+              {% if href %}
+              <a class="govuk-link" href="{{ href }}">Change<span class="govuk-visually-hidden"> {{ hidden or key }}</span></a>
+              {% endif %}
+            </dd>
+          </div>
+{% endmacro %}
 
 {% block beforeContent %}
 {{ govukBackLink({
-  text: "Back to project list / St Theresa’s Catholic Primary School",
+  text: "Back",
   href: "/202608v2/st-theresas"
 }) }}
 {% endblock %}
@@ -17,426 +62,560 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
-    <h1 class="govuk-heading-xl">Preview project document</h1>
+    <h1 class="govuk-heading-xl">Preview</h1>
   </div>
 </div>
 
-{# School details #}
+{# Individual information #}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h2 class="app-preview-section-heading">School details</h2>
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">School name</dt>
-        <dd class="govuk-summary-list__value">St Theresa’s Catholic Primary School</dd>
-        <dd class="govuk-summary-list__actions"></dd>
+    <h2 class="govuk-heading-l">Individual information</h2>
+    <div class="app-summary-card">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Confirm project dates</h3>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">URN</dt>
-        <dd class="govuk-summary-list__value">101335</dd>
-        <dd class="govuk-summary-list__actions"></dd>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Date the application was received", "/202608v2/confirm-project-dates", "date the application was received") %}
+            {{ dateValue("application-received-date") }}
+          {% endcall %}
+          {% call row("Proposed decision date", "/202608v2/confirm-project-dates", "proposed decision date") %}
+            {{ dateValue("proposed-decision-date") }}
+          {% endcall %}
+          {% call row("Proposed implementation date", "/202608v2/confirm-project-dates", "proposed implementation date") %}
+            {{ dateValue("proposed-implementation-date") }}
+          {% endcall %}
+        </dl>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Address</dt>
-        <dd class="govuk-summary-list__value">Prince of Wales Road, Sheffield, S2 1EY</dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">School type</dt>
-        <dd class="govuk-summary-list__value">Voluntary aided school</dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Age range</dt>
-        <dd class="govuk-summary-list__value">3 to 11</dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Capacity</dt>
-        <dd class="govuk-summary-list__value">210</dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Published admission number (PAN)</dt>
-        <dd class="govuk-summary-list__value">30</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> published admission number</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Pre-conversion (PUP)</dt>
-        <dd class="govuk-summary-list__value">200</dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Total pupils on roll</dt>
-        <dd class="govuk-summary-list__value">200</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> total pupils on roll</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Diocese</dt>
-        <dd class="govuk-summary-list__value">Hallam</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> diocese</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Religious character</dt>
-        <dd class="govuk-summary-list__value">Catholic</dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Faith school</dt>
-        <dd class="govuk-summary-list__value">Yes</dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Distance from the trust to the school</dt>
-        <dd class="govuk-summary-list__value">12.4 miles</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> distance from the trust to the school</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Parliamentary constituency</dt>
-        <dd class="govuk-summary-list__value">Sheffield Heeley</dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">MP</dt>
-        <dd class="govuk-summary-list__value">Louise Haigh (Labour)</dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-    </dl>
+    </div>
   </div>
 </div>
 
-{# Budget #}
+{# Change type #}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h2 class="app-preview-section-heading">Budget</h2>
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">End of current financial year</dt>
-        <dd class="govuk-summary-list__value">31 March 2026</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> end of current financial year</span></a>
-        </dd>
+    <h2 class="govuk-heading-l">Change type</h2>
+    <div class="app-summary-card">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Select change type</h3>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Forecasted revenue carry forward at the end of the current financial year</dt>
-        <dd class="govuk-summary-list__value">£85,000</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> forecasted revenue carry forward current year</span></a>
-        </dd>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Change type", "/202608v2/select-change-type", "change type") %}
+            {{ listValue(data["change-type"]) }}
+          {% endcall %}
+        </dl>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Forecasted revenue carry forward at the end of the next financial year</dt>
-        <dd class="govuk-summary-list__value">£92,500</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> forecasted revenue carry forward next year</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Capital carry forward at the end of the current financial year</dt>
-        <dd class="govuk-summary-list__value">£15,000</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> capital carry forward current year</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Forecasted capital carry forward at the end of the next financial year</dt>
-        <dd class="govuk-summary-list__value">£18,200</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> forecasted capital carry forward next year</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Additional information</dt>
-        <dd class="govuk-summary-list__value"><span class="empty">Empty</span></dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> budget additional information</span></a>
-        </dd>
-      </div>
-    </dl>
+    </div>
   </div>
 </div>
 
-{# Pupil forecasts #}
+{# Admissions variation #}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h2 class="app-preview-section-heading">Pupil forecasts</h2>
-    <table class="govuk-table">
-      <thead class="govuk-table__head">
-        <tr class="govuk-table__row">
-          <th scope="col" class="govuk-table__header">Year</th>
-          <th scope="col" class="govuk-table__header">Capacity</th>
-          <th scope="col" class="govuk-table__header">Total pupil numbers</th>
-          <th scope="col" class="govuk-table__header">Percentage full</th>
-        </tr>
-      </thead>
-      <tbody class="govuk-table__body">
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">Current</th>
-          <td class="govuk-table__cell">210</td>
-          <td class="govuk-table__cell">200</td>
-          <td class="govuk-table__cell">95.2%</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">Projected pupil numbers year 1</th>
-          <td class="govuk-table__cell">210</td>
-          <td class="govuk-table__cell">205</td>
-          <td class="govuk-table__cell">97.6%</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">Projected pupil numbers year 2</th>
-          <td class="govuk-table__cell">210</td>
-          <td class="govuk-table__cell">208</td>
-          <td class="govuk-table__cell">99.0%</td>
-        </tr>
-        <tr class="govuk-table__row">
-          <th scope="row" class="govuk-table__header">Projected pupil numbers year 3</th>
-          <td class="govuk-table__cell">210</td>
-          <td class="govuk-table__cell">210</td>
-          <td class="govuk-table__cell">100.0%</td>
-        </tr>
-      </tbody>
-    </table>
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Additional information</dt>
-        <dd class="govuk-summary-list__value"><span class="empty">Empty</span></dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> pupil forecasts additional information</span></a>
-        </dd>
+    <h2 class="govuk-heading-l">Admissions variation</h2>
+    <div class="app-summary-card">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Admissions variation</h3>
       </div>
-    </dl>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Is an admissions variation required?", "/202608v2/admissions-variation") %}
+            {{ yesNo(data["admissions-variation-required"]) }}
+          {% endcall %}
+          {% call row("Current published admission number (PAN)", "/202608v2/admissions-variation", "current PAN") %}
+            {{ value(data["current-pan"]) }}
+          {% endcall %}
+          {% call row("Proposed published admission number (PAN)", "/202608v2/admissions-variation", "proposed PAN") %}
+            {{ value(data["proposed-pan"]) }}
+          {% endcall %}
+          {% call row("Details of the admissions variation", "/202608v2/admissions-variation", "admissions variation details") %}
+            {{ value(data["admissions-variation-details"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/admissions-variation", "admissions variation supporting evidence") %}
+            {{ value(data["admissions-variation-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
   </div>
 </div>
 
-{# Project details #}
+{# Consultation #}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h2 class="app-preview-section-heading">Project details</h2>
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">School name</dt>
-        <dd class="govuk-summary-list__value">St Theresa’s Catholic Primary School</dd>
-        <dd class="govuk-summary-list__actions"></dd>
+    <h2 class="govuk-heading-l">Consultation</h2>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Stakeholder engagement</h3>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">School type</dt>
-        <dd class="govuk-summary-list__value">Voluntary aided school</dd>
-        <dd class="govuk-summary-list__actions"></dd>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Has stakeholder engagement been carried out?", "/202608v2/stakeholder-engagement") %}
+            {{ yesNo(data["stakeholder-engagement-carried-out"]) }}
+          {% endcall %}
+          {% call row("Which stakeholders have been engaged?", "/202608v2/stakeholder-engagement", "stakeholders engaged") %}
+            {{ listValue(data["stakeholder-engagement-groups"]) }}
+          {% endcall %}
+          {% call row("Summary", "/202608v2/stakeholder-engagement", "stakeholder engagement summary") %}
+            {{ value(data["stakeholder-engagement-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/stakeholder-engagement", "stakeholder engagement supporting evidence") %}
+            {{ value(data["stakeholder-engagement-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">URN</dt>
-        <dd class="govuk-summary-list__value">101335</dd>
-        <dd class="govuk-summary-list__actions"></dd>
+    </div>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">LA objections</h3>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Trust reference number</dt>
-        <dd class="govuk-summary-list__value">10059089</dd>
-        <dd class="govuk-summary-list__actions"></dd>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Has the local authority raised any objections?", "/202608v2/la-objections") %}
+            {{ yesNo(data["la-objections-raised"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/la-objections", "LA objections details") %}
+            {{ value(data["la-objections-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/la-objections", "LA objections supporting evidence") %}
+            {{ value(data["la-objections-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Trust name</dt>
-        <dd class="govuk-summary-list__value">Appleby Grammar School</dd>
-        <dd class="govuk-summary-list__actions"></dd>
+    </div>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Consultation</h3>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Type</dt>
-        <dd class="govuk-summary-list__value">Testing tiers</dd>
-        <dd class="govuk-summary-list__actions"></dd>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Has a 3 week minimum consultation been carried out?", "/202608v2/consultation") %}
+            {{ yesNo(data["consultation-carried-out"]) }}
+          {% endcall %}
+          {% call row("Consultation start date", "/202608v2/consultation", "consultation start date") %}
+            {{ dateValue("consultation-start-date") }}
+          {% endcall %}
+          {% call row("Consultation end date", "/202608v2/consultation", "consultation end date") %}
+            {{ dateValue("consultation-end-date") }}
+          {% endcall %}
+          {% call row("Summary", "/202608v2/consultation", "consultation summary") %}
+            {{ value(data["consultation-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/consultation", "consultation supporting evidence") %}
+            {{ value(data["consultation-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Tier</dt>
-        <dd class="govuk-summary-list__value">3</dd>
-        <dd class="govuk-summary-list__actions"></dd>
+    </div>
+
+    <div class="app-summary-card">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Religious bodies</h3>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Proposed decision date</dt>
-        <dd class="govuk-summary-list__value">15 September 2026</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> proposed decision date</span></a>
-        </dd>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Have the relevant religious bodies been consulted?", "/202608v2/religious-bodies") %}
+            {{ yesNo(data["religious-bodies-consulted"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/religious-bodies", "religious bodies details") %}
+            {{ value(data["religious-bodies-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/religious-bodies", "religious bodies supporting evidence") %}
+            {{ value(data["religious-bodies-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Project status</dt>
-        <dd class="govuk-summary-list__value">Pre decision</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> project status</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Assigned to</dt>
-        <dd class="govuk-summary-list__value">Richard Gibbons</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> assigned to</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Local authority</dt>
-        <dd class="govuk-summary-list__value">Sheffield</dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Region</dt>
-        <dd class="govuk-summary-list__value">Yorkshire and the Humber</dd>
-        <dd class="govuk-summary-list__actions"></dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Town</dt>
-        <dd class="govuk-summary-list__value">Sheffield</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> town</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">County</dt>
-        <dd class="govuk-summary-list__value">South Yorkshire</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> county</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Postcode</dt>
-        <dd class="govuk-summary-list__value">S2 1EY</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> postcode</span></a>
-        </dd>
-      </div>
-    </dl>
+    </div>
   </div>
 </div>
 
-{# Legal requirements #}
+{# Mandatory legal requirements #}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h2 class="app-preview-section-heading">Legal requirements</h2>
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Governing body resolution</dt>
-        <dd class="govuk-summary-list__value">Yes</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> governing body resolution</span></a>
-        </dd>
+    <h2 class="govuk-heading-l">Mandatory legal requirements</h2>
+    <div class="app-summary-card">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Ofsted inspection</h3>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Consultation</dt>
-        <dd class="govuk-summary-list__value">Yes</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="/202608v2/consultation">Change<span class="govuk-visually-hidden"> consultation</span></a>
-        </dd>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Has the most recent Ofsted inspection been considered?", "/202608v2/ofsted-inspection") %}
+            {{ yesNo(data["ofsted-inspection-considered"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/ofsted-inspection", "Ofsted inspection details") %}
+            {{ value(data["ofsted-inspection-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/ofsted-inspection", "Ofsted inspection supporting evidence") %}
+            {{ value(data["ofsted-inspection-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Diocesan consent</dt>
-        <dd class="govuk-summary-list__value">Yes</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> diocesan consent</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Foundation consent</dt>
-        <dd class="govuk-summary-list__value">Not applicable</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> foundation consent</span></a>
-        </dd>
-      </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Public Sector Equality Duty</dt>
-        <dd class="govuk-summary-list__value">Yes</dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="/202608v2/psed">Change<span class="govuk-visually-hidden"> Public Sector Equality Duty</span></a>
-        </dd>
-      </div>
-    </dl>
+    </div>
   </div>
 </div>
 
-{# Performance and quality #}
+{# PSED #}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h2 class="app-preview-section-heading">Performance and quality</h2>
-    <h3 class="govuk-heading-m">Educational performance</h3>
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Provide details on the school’s performance</dt>
-        <dd class="govuk-summary-list__value">
-          The school was judged Good at its most recent Ofsted inspection. Outcomes for pupils are in line with national averages, with particular strengths in reading and early years provision.
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> school performance details</span></a>
-        </dd>
+    <h2 class="govuk-heading-l">PSED</h2>
+    <div class="app-summary-card">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Public Sector Equality Duty</h3>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">What actions are being taken to improve?</dt>
-        <dd class="govuk-summary-list__value">
-          The trust is supporting targeted school improvement in mathematics and continuing professional development for middle leaders.
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> actions being taken to improve</span></a>
-        </dd>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Has the Public Sector Equality Duty been considered?", "/202608v2/psed") %}
+            {{ yesNo(data["psed-considered"]) }}
+          {% endcall %}
+          {% call row("Is the decision likely to disproportionately affect any particular person or group?", "/202608v2/psed", "disproportionate impact") %}
+            {{ yesNo(data["psed-disproportionate-impact"]) }}
+          {% endcall %}
+          {% call row("Date equality assessment completed", "/202608v2/psed", "equality assessment date") %}
+            {{ dateValue("psed-assessment-date") }}
+          {% endcall %}
+          {% call row("Summary", "/202608v2/psed", "PSED summary") %}
+            {{ value(data["psed-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/psed", "PSED supporting evidence") %}
+            {{ value(data["supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
       </div>
-    </dl>
+    </div>
   </div>
 </div>
 
-{# Rationale #}
+{# Land and planning #}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h2 class="app-preview-section-heading">Rationale</h2>
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Project rationale</dt>
-        <dd class="govuk-summary-list__value">
-          The significant change will allow the school to better meet local demand and strengthen provision within the trust.
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> project rationale</span></a>
-        </dd>
+    <h2 class="govuk-heading-l">Land and planning</h2>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Land transaction</h3>
       </div>
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Trust rationale</dt>
-        <dd class="govuk-summary-list__value">
-          Appleby Grammar School trust supports the change as part of its strategic growth and school improvement plan.
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> trust rationale</span></a>
-        </dd>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Is a land transaction required?", "/202608v2/land-transaction") %}
+            {{ yesNo(data["land-transaction-required"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/land-transaction", "land transaction details") %}
+            {{ value(data["land-transaction-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/land-transaction", "land transaction supporting evidence") %}
+            {{ value(data["land-transaction-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
       </div>
-    </dl>
+    </div>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Planning permission</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Is planning permission required?", "/202608v2/planning-permission") %}
+            {{ yesNo(data["planning-permission-required"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/planning-permission", "planning permission details") %}
+            {{ value(data["planning-permission-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/planning-permission", "planning permission supporting evidence") %}
+            {{ value(data["planning-permission-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
+
+    <div class="app-summary-card">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Land transaction Team</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Has the Land transaction Team been contacted?", "/202608v2/land-transaction-team") %}
+            {{ yesNo(data["land-transaction-team-contacted"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/land-transaction-team", "land transaction Team details") %}
+            {{ value(data["land-transaction-team-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/land-transaction-team", "land transaction Team supporting evidence") %}
+            {{ value(data["land-transaction-team-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
   </div>
 </div>
 
-{# Risks and issues #}
+{# Financials #}
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
-    <h2 class="app-preview-section-heading">Risks and issues</h2>
-    <dl class="govuk-summary-list">
-      <div class="govuk-summary-list__row">
-        <dt class="govuk-summary-list__key">Risks and issues</dt>
-        <dd class="govuk-summary-list__value">
-          No significant risks identified at this stage. Capacity and staffing plans have been reviewed and are considered sufficient.
-        </dd>
-        <dd class="govuk-summary-list__actions">
-          <a class="govuk-link" href="#">Change<span class="govuk-visually-hidden"> risks and issues</span></a>
-        </dd>
+    <h2 class="govuk-heading-l">Financials</h2>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Funding</h3>
       </div>
-    </dl>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Has funding been considered?", "/202608v2/funding") %}
+            {{ yesNo(data["funding-considered"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/funding", "funding details") %}
+            {{ value(data["funding-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/funding", "funding supporting evidence") %}
+            {{ value(data["funding-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Financial Health Assessment</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Has a Financial Health Assessment been completed?", "/202608v2/financial-health-assessment") %}
+            {{ yesNo(data["financial-health-assessment-completed"]) }}
+          {% endcall %}
+          {% call row("Summary", "/202608v2/financial-health-assessment", "Financial Health Assessment summary") %}
+            {{ value(data["financial-health-assessment-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/financial-health-assessment", "Financial Health Assessment supporting evidence") %}
+            {{ value(data["financial-health-assessment-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
+
+    <div class="app-summary-card">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">FHA Outcomes</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Have FHA outcomes been recorded?", "/202608v2/fha-outcomes") %}
+            {{ yesNo(data["fha-outcomes-recorded"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/fha-outcomes", "FHA Outcomes details") %}
+            {{ value(data["fha-outcomes-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/fha-outcomes", "FHA Outcomes supporting evidence") %}
+            {{ value(data["fha-outcomes-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
   </div>
 </div>
 
-{# Generate document #}
-<div class="govuk-grid-row govuk-!-margin-top-9">
-  <div class="govuk-grid-column-two-thirds">
-    <h2 class="govuk-heading-l">Create your project document</h2>
-    <p class="govuk-body">Select to generate and download the project document.</p>
-    <button type="button" class="govuk-button" data-module="govuk-button">
-      Generate document
-    </button>
+{# HQTF #}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-l">HQTF</h2>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">High quality and inclusive education</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Does the proposal support high quality and inclusive education?", "/202608v2/high-quality-inclusive-education") %}
+            {{ yesNo(data["hqie-supports"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/high-quality-inclusive-education", "high quality and inclusive education details") %}
+            {{ value(data["high-quality-inclusive-education-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/high-quality-inclusive-education", "high quality and inclusive education supporting evidence") %}
+            {{ value(data["high-quality-inclusive-education-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">School improvement</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Does the proposal support school improvement?", "/202608v2/school-improvement") %}
+            {{ yesNo(data["school-improvement-supports"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/school-improvement", "school improvement details") %}
+            {{ value(data["school-improvement-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/school-improvement", "school improvement supporting evidence") %}
+            {{ value(data["school-improvement-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Workforce</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Have workforce implications been considered?", "/202608v2/workforce") %}
+            {{ yesNo(data["workforce-considered"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/workforce", "workforce details") %}
+            {{ value(data["workforce-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/workforce", "workforce supporting evidence") %}
+            {{ value(data["workforce-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Finance and operations</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Have finance and operations been considered?", "/202608v2/finance-and-operations") %}
+            {{ yesNo(data["finance-and-operations-considered"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/finance-and-operations", "finance and operations details") %}
+            {{ value(data["finance-and-operations-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/finance-and-operations", "finance and operations supporting evidence") %}
+            {{ value(data["finance-and-operations-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
+
+    <div class="app-summary-card">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Governance and leadership</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Have governance and leadership been considered?", "/202608v2/governance-and-leadership") %}
+            {{ yesNo(data["governance-and-leadership-considered"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/governance-and-leadership", "governance and leadership details") %}
+            {{ value(data["governance-and-leadership-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/governance-and-leadership", "governance and leadership supporting evidence") %}
+            {{ value(data["governance-and-leadership-supporting-evidence"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
+  </div>
+</div>
+
+{# Recommendations #}
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <h2 class="govuk-heading-l">Recommendations</h2>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Approve</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Recommend approve?", "/202608v2/approve") %}
+            {{ yesNo(data["approve-recommendation"]) }}
+          {% endcall %}
+          {% call row("Rationale", "/202608v2/approve", "approve rationale") %}
+            {{ value(data["approve-rationale"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Approve with conditions</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Recommend approve with conditions?", "/202608v2/approve-with-conditions") %}
+            {{ yesNo(data["approve-with-conditions-recommendation"]) }}
+          {% endcall %}
+          {% call row("Rationale", "/202608v2/approve-with-conditions", "approve with conditions rationale") %}
+            {{ value(data["approve-with-conditions-rationale"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Defer</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Recommend defer?", "/202608v2/defer") %}
+            {{ yesNo(data["defer-recommendation"]) }}
+          {% endcall %}
+          {% call row("Rationale", "/202608v2/defer", "defer rationale") %}
+            {{ value(data["defer-rationale"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Withdraw</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Recommend withdraw?", "/202608v2/withdraw") %}
+            {{ yesNo(data["withdraw-recommendation"]) }}
+          {% endcall %}
+          {% call row("Rationale", "/202608v2/withdraw", "withdraw rationale") %}
+            {{ value(data["withdraw-rationale"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
+
+    <div class="app-summary-card govuk-!-margin-bottom-6">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Decline</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Recommend decline?", "/202608v2/decline") %}
+            {{ yesNo(data["decline-recommendation"]) }}
+          {% endcall %}
+          {% call row("Rationale", "/202608v2/decline", "decline rationale") %}
+            {{ value(data["decline-rationale"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
+
+    <div class="app-summary-card">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">Recommendations notes</h3>
+      </div>
+      <div class="app-summary-card__content">
+        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+          {% call row("Recommendations", "/202608v2/st-theresas#recommendations", "recommendations notes") %}
+            {{ value(data["recommendations-notes"]) }}
+          {% endcall %}
+        </dl>
+      </div>
+    </div>
   </div>
 </div>
 

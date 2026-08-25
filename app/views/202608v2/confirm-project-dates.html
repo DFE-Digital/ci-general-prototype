@@ -1,0 +1,147 @@
+{% extends "202608v2/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Confirm project dates" %}
+{% set navActive = "significant-changes" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: "st-theresas"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    <h1 class="govuk-heading-l">Confirm project dates</h1>
+    <p class="govuk-body">Enter or confirm the key dates for this significant change project.</p>
+
+    <form method="post" action="st-theresas">
+
+      {{ govukDateInput({
+        id: "application-received-date",
+        namePrefix: "application-received-date",
+        fieldset: {
+          legend: {
+            text: "Date the application was received",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        hint: {
+          text: "For example, 27 3 2026"
+        },
+        items: [
+          {
+            name: "day",
+            classes: "govuk-input--width-2",
+            value: data['application-received-date-day']
+          },
+          {
+            name: "month",
+            classes: "govuk-input--width-2",
+            value: data['application-received-date-month']
+          },
+          {
+            name: "year",
+            classes: "govuk-input--width-4",
+            value: data['application-received-date-year']
+          }
+        ]
+      }) }}
+
+      {{ govukDateInput({
+        id: "proposed-decision-date",
+        namePrefix: "proposed-decision-date",
+        fieldset: {
+          legend: {
+            text: "Proposed decision date",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        hint: {
+          text: "For example, 15 9 2026"
+        },
+        items: [
+          {
+            name: "day",
+            classes: "govuk-input--width-2",
+            value: data['proposed-decision-date-day']
+          },
+          {
+            name: "month",
+            classes: "govuk-input--width-2",
+            value: data['proposed-decision-date-month']
+          },
+          {
+            name: "year",
+            classes: "govuk-input--width-4",
+            value: data['proposed-decision-date-year']
+          }
+        ]
+      }) }}
+
+      {{ govukDateInput({
+        id: "proposed-implementation-date",
+        namePrefix: "proposed-implementation-date",
+        fieldset: {
+          legend: {
+            text: "Proposed implementation date",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        hint: {
+          text: "For example, 1 1 2027"
+        },
+        items: [
+          {
+            name: "day",
+            classes: "govuk-input--width-2",
+            value: data['proposed-implementation-date-day']
+          },
+          {
+            name: "month",
+            classes: "govuk-input--width-2",
+            value: data['proposed-implementation-date-month']
+          },
+          {
+            name: "year",
+            classes: "govuk-input--width-4",
+            value: data['proposed-implementation-date-year']
+          }
+        ]
+      }) }}
+
+      <input type="hidden" name="confirm-project-dates-complete" value="true">
+
+      {{ govukButton({
+        text: "Save and return"
+      }) }}
+
+    </form>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">
+        Useful information
+      </h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</div>
+
+{% endblock %}

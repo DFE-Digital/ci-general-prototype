@@ -1,0 +1,138 @@
+{% extends "202608v2/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Select change type" %}
+{% set navActive = "significant-changes" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: "st-theresas"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    <h1 class="govuk-heading-l">Select change type</h1>
+    <p class="govuk-body">Select the type of significant change for this project. You can select more than one.</p>
+
+    <form method="post" action="st-theresas">
+
+      {{ govukCheckboxes({
+        name: "change-type",
+        values: data['change-type'],
+        fieldset: {
+          legend: {
+            text: "What type of significant change is this?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        hint: {
+          text: "Select all that apply"
+        },
+        items: [
+          {
+            value: "Add SEN unit",
+            text: "Add SEN unit"
+          },
+          {
+            value: "Add sixth form",
+            text: "Add sixth form"
+          },
+          {
+            value: "Age range change",
+            text: "Age range change"
+          },
+          {
+            value: "Change admissions policy",
+            text: "Change admissions policy"
+          },
+          {
+            value: "Change of site",
+            text: "Change of site"
+          },
+          {
+            value: "Change school day",
+            text: "Change school day"
+          },
+          {
+            value: "Change school name",
+            text: "Change school name"
+          },
+          {
+            value: "Close satellite site",
+            text: "Close satellite site"
+          },
+          {
+            value: "Expand capacity",
+            text: "Expand capacity"
+          },
+          {
+            value: "Faith designation change",
+            text: "Faith designation change"
+          },
+          {
+            value: "Increase year groups",
+            text: "Increase year groups"
+          },
+          {
+            value: "Merge with another school",
+            text: "Merge with another school"
+          },
+          {
+            value: "Move location",
+            text: "Move location"
+          },
+          {
+            value: "Open nursery",
+            text: "Open nursery"
+          },
+          {
+            value: "PAN increase",
+            text: "PAN increase"
+          },
+          {
+            value: "Remove boarding",
+            text: "Remove boarding"
+          },
+          {
+            value: "Testing tiers",
+            text: "Testing tiers"
+          }
+        ]
+      }) }}
+
+      <input type="hidden" name="select-change-type-complete" value="true">
+
+      {{ govukButton({
+        text: "Save and return"
+      }) }}
+
+    </form>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">
+        Useful information
+      </h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</div>
+
+{% endblock %}

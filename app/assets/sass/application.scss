@@ -1334,15 +1334,36 @@
 	padding-left: 0;
 }
 
-.app-preview-section-heading {
+.app-summary-card {
+	border: 1px solid #b1b4b6;
+	margin-bottom: 40px;
+}
+
+.app-summary-card__title {
 	background-color: #f3f2f1;
+	border-bottom: 1px solid #b1b4b6;
 	padding: 15px 20px;
-	margin-top: 40px;
-	margin-bottom: 20px;
-	font-size: 24px;
+}
+
+.app-summary-card__heading {
+	margin: 0;
+	font-size: 19px;
 	font-weight: 700;
-	line-height: 1.25;
+	line-height: 1.31579;
 	color: #0b0c0c;
+}
+
+.app-summary-card__content {
+	padding: 15px 20px 0;
+	background-color: #ffffff;
+}
+
+.app-summary-card__content .govuk-summary-list {
+	margin-bottom: 0;
+}
+
+.app-summary-card__content .govuk-table {
+	margin-bottom: 20px;
 }
 
 .govuk-tag--orange {
@@ -1554,6 +1575,115 @@
 // Project task list sub-navigation
 .moj-sub-navigation__link {
 	font-weight: 700;
+}
+
+// Significant changes filter panel (MOJ filter selected state)
+.moj-filter {
+	background-color: #ffffff;
+	box-shadow: inset 0 0 0 1px #b1b4b6;
+}
+
+.moj-filter__header {
+	padding: 10px 20px;
+	background-color: #b1b4b6;
+}
+
+.moj-filter__header .govuk-heading-m {
+	margin-bottom: 0;
+	color: #0b0c0c;
+}
+
+.moj-filter__selected {
+	padding: 20px;
+	background-color: #f3f2f1;
+	box-shadow: inset 0 0 0 1px #b1b4b6;
+}
+
+.moj-filter__selected-heading {
+	display: flex;
+	align-items: baseline;
+	flex-wrap: wrap;
+	gap: 10px;
+	margin-bottom: 15px;
+}
+
+.moj-filter__heading-title .govuk-heading-m {
+	margin-bottom: 0;
+	display: inline;
+}
+
+.moj-filter__heading-action {
+	margin: 0;
+	flex-shrink: 0;
+}
+
+.moj-filter__heading-action p {
+	margin: 0;
+}
+
+.moj-filter__heading-action .govuk-link {
+	font-size: 16px;
+	line-height: 1.25;
+}
+
+.moj-filter-tags {
+	margin: 5px 0 20px;
+	padding-left: 0;
+	list-style: none;
+}
+
+.moj-filter-tags:last-child {
+	margin-bottom: 0;
+}
+
+.moj-filter-tags li {
+	display: inline-block;
+	margin-right: 10px;
+	margin-bottom: 5px;
+}
+
+.moj-filter__tag {
+	display: inline-block;
+	position: relative;
+	margin-top: 5px;
+	padding: 5px 10px;
+	border: 1px solid #0b0c0c;
+	color: #0b0c0c;
+	background-color: #ffffff;
+	text-decoration: none;
+	font-size: 16px;
+	line-height: 1.25;
+}
+
+.moj-filter__tag:link,
+.moj-filter__tag:visited {
+	color: #0b0c0c;
+}
+
+.moj-filter__tag:hover {
+	color: #ffffff;
+	background-color: #0b0c0c;
+}
+
+.moj-filter__tag-close {
+	font-size: 18px;
+	font-weight: 700;
+	line-height: 1;
+	margin-left: 6px;
+}
+
+.moj-filter__tag::after {
+	display: none;
+}
+
+.moj-filter__options {
+	margin-top: -1px;
+	padding: 20px;
+	box-shadow: inset 0 0 0 1px #b1b4b6;
+}
+
+.moj-filter__selected[hidden] {
+	display: none;
 }
 
 // Empty placeholder (matches production site.css .empty)

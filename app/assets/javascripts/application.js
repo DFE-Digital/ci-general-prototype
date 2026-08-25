@@ -289,40 +289,219 @@ window.GOVUKPrototypeKit.documentReady(() => {
       renderPagination(matchingRows.length === 0 ? 0 : totalPages);
     }
 
-    function applyProjectSearchFilter() {
-      currentPage = 1;
-      renderProjectList();
+    const selectedFiltersPanel = document.getElementById('project-selected-filters');
+    const selectedFiltersList = document.getElementById('project-selected-filters-list');
+    const filteredBanner = document.getElementById('projects-filtered-banner');
+
+    function showFilteredBanner() {
+      if (!filteredBanner) {
+        return;
+      }
+      filteredBanner.hidden = false;
+      window.scrollTo(0, 0);
+    }
+
+    function hideFilteredBanner() {
+      if (filteredBanner) {
+        filteredBanner.hidden = true;
+      }
+    }
+
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+
+    function slugifyFilterLabel(value) {
+      return (value || '')
+        .toLowerCase()
+        .replace(/\s+/g, '-')
+        .replace(/[^a-z0-9-]/g, '');
+    }
+
+    function getCheckedFilterItems(name) {
+      return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function(input) {
+        const label = filterForm.querySelector('label[for="' + input.id + '"]');
+        return {
+          id: input.id,
+          value: input.value,
+          label: label ? label.textContent.replace(/\s+/g, ' ').trim() : input.value
+        };
+      });
+    }
+
+    function getFilterStateFromForm() {
+      return {
+        title: projectSearchInput ? projectSearchInput.value.trim() : '',
+        officers: getCheckedFilterItems('selectedOfficers'),
+        tiers: getCheckedFilterItems('selectedTiers'),
+        types: getCheckedFilterItems('selectedTypes'),
+        statuses: getCheckedFilterItems('selectedStatuses')
+      };
+    }
+
+    function filterStateHasValues(state) {
+      return !!(
+        state.title ||
+        state.officers.length ||
+        state.tiers.length ||
+        state.types.length ||
+        state.statuses.length
+      );
+    }
+
+    function buildFilterUrl(state, showBanner) {
+      const params = new URLSearchParams();
+
+      if (state.title) {
+        params.set('Title', state.title);
+      }
+
+      state.officers.forEach(function(item) {
+        params.append('selectedOfficers', item.value);
+      });
+      state.tiers.forEach(function(item) {
+        params.append('selectedTiers', item.value);
+      });
+      state.types.forEach(function(item) {
+        params.append('selectedTypes', item.value);
+      });
+      state.statuses.forEach(function(item) {
+        params.append('selectedStatuses', item.value);
+      });
+
+      if (showBanner && filterStateHasValues(state)) {
+        params.set('filtered', '1');
+      }
+
+      const query = params.toString();
+      return window.location.pathname + (query ? '?' + query : '');
+    }
+
+    function setCheckedValues(name, values) {
+      Array.from(document.querySelectorAll('input[name="' + name + '"]')).forEach(function(input) {
+        input.checked = values.indexOf(input.value) !== -1;
+      });
+    }
+
+    function restoreFiltersFromUrl() {
+      const params = new URLSearchParams(window.location.search);
+
+      if (projectSearchInput) {
+        projectSearchInput.value = params.get('Title') || '';
+      }
+
+      setCheckedValues('selectedOfficers', params.getAll('selectedOfficers'));
+      setCheckedValues('selectedTiers', params.getAll('selectedTiers'));
+      setCheckedValues('selectedTypes', params.getAll('selectedTypes'));
+      setCheckedValues('selectedStatuses', params.getAll('selectedStatuses'));
+
+      return params.get('filtered') === '1';
+    }
+
+    function stateWithoutFilter(state, removeValue) {
+      const nextState = {
+        title: state.title,
+        officers: state.officers.slice(),
+        tiers: state.tiers.slice(),
+        types: state.types.slice(),
+        statuses: state.statuses.slice()
+      };
+
+      if (removeValue === 'search') {
+        nextState.title = '';
+        return nextState;
+      }
+
+      nextState.officers = nextState.officers.filter(function(item) { return item.id !== removeValue; });
+      nextState.tiers = nextState.tiers.filter(function(item) { return item.id !== removeValue; });
+      nextState.types = nextState.types.filter(function(item) { return item.id !== removeValue; });
+      nextState.statuses = nextState.statuses.filter(function(item) { return item.id !== removeValue; });
+      return nextState;
+    }
+
+    function renderSelectedFilters() {
+      if (!selectedFiltersPanel || !selectedFiltersList || !filterForm) {
+        return;
+      }
+
+      const state = getFilterStateFromForm();
+      const groups = [];
+
+      if (state.title) {
+        groups.push({
+          heading: 'Search',
+          items: [{
+            removeValue: 'search',
+            display: slugifyFilterLabel(state.title) || state.title,
+            href: buildFilterUrl(stateWithoutFilter(state, 'search'), true)
+          }]
+        });
+      }
+
+      [
+        { heading: 'Assigned to', items: state.officers },
+        { heading: 'Tier', items: state.tiers },
+        { heading: 'Type', items: state.types },
+        { heading: 'Project status', items: state.statuses }
+      ].forEach(function(group) {
+        if (!group.items.length) {
+          return;
+        }
+        groups.push({
+          heading: group.heading,
+          items: group.items.map(function(item) {
+            return {
+              removeValue: item.id,
+              display: slugifyFilterLabel(item.label),
+              href: buildFilterUrl(stateWithoutFilter(state, item.id), true)
+            };
+          })
+        });
+      });
+
+      if (!groups.length) {
+        selectedFiltersPanel.hidden = true;
+        selectedFiltersList.innerHTML = '';
+        return;
+      }
+
+      selectedFiltersPanel.hidden = false;
+      selectedFiltersList.innerHTML = groups.map(function(group) {
+        const tags = group.items.map(function(item) {
+          return '<li>' +
+            '<a class="moj-filter__tag" href="' + item.href + '" data-remove-filter="' + item.removeValue + '">' +
+            '<span class="govuk-visually-hidden">Remove this filter</span> ' +
+            item.display +
+            ' <span class="moj-filter__tag-close" aria-hidden="true">×</span>' +
+            '</a>' +
+            '</li>';
+        }).join('');
+
+        return '<h3 class="govuk-heading-s govuk-!-margin-bottom-0">' + group.heading + '</h3>' +
+          '<ul class="moj-filter-tags">' + tags + '</ul>';
+      }).join('');
+    }
+
+    function reloadWithCurrentFilters(showBanner) {
+      window.location.href = buildFilterUrl(getFilterStateFromForm(), showBanner);
+    }
+
+    function applyProjectSearchFilter(options) {
+      const showBanner = !!(options && options.showBanner);
+      reloadWithCurrentFilters(showBanner);
     }
 
     function clearProjectFilters(e) {
       if (e) {
         e.preventDefault();
       }
-
-      if (!filterForm) {
-        return;
-      }
-
-      filterForm.querySelectorAll('input[type="text"]').forEach(function(input) {
-        input.value = '';
-      });
-
-      filterForm.querySelectorAll('input[type="checkbox"]').forEach(function(checkbox) {
-        checkbox.checked = false;
-      });
-
-      filterForm.querySelectorAll('.govuk-checkboxes__item').forEach(function(item) {
-        item.style.display = '';
-      });
-
-      currentPage = 1;
-      renderProjectList();
+      window.location.href = window.location.pathname;
     }
 
     if (filterForm) {
       filterForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        applyProjectSearchFilter();
+        applyProjectSearchFilter({ showBanner: true });
       });
 
       filterForm.addEventListener('click', function(e) {
@@ -331,11 +510,29 @@ window.GOVUKPrototypeKit.documentReady(() => {
 
         if (applyButton) {
           e.preventDefault();
-          applyProjectSearchFilter();
+          applyProjectSearchFilter({ showBanner: true });
         }
 
         if (clearLink) {
           clearProjectFilters(e);
+        }
+      });
+    }
+
+    const filterRoot = document.querySelector('.moj-filter');
+    if (filterRoot) {
+      filterRoot.addEventListener('click', function(e) {
+        const clearLink = e.target.closest('[data-cy="select-projectlist-filter-clear"]');
+        const removeTag = e.target.closest('[data-remove-filter]');
+
+        if (clearLink && filterForm && !filterForm.contains(clearLink)) {
+          clearProjectFilters(e);
+          return;
+        }
+
+        if (removeTag) {
+          // Allow normal navigation to the tag href so the page reloads with updated filters
+          return;
         }
       });
     }
@@ -370,7 +567,14 @@ window.GOVUKPrototypeKit.documentReady(() => {
       });
     }
 
+    const showBannerFromUrl = restoreFiltersFromUrl();
     renderProjectList();
+    renderSelectedFilters();
+    if (showBannerFromUrl) {
+      showFilteredBanner();
+    } else {
+      window.scrollTo(0, 0);
+    }
   }
 
   // Filter checkbox lists by typing (Assigned to, Tier, Type, etc.)

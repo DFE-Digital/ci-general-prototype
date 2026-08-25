@@ -1,0 +1,92 @@
+{% extends "202608v2/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Finance and operations" %}
+{% set navActive = "significant-changes" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: "st-theresas"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    <h1 class="govuk-heading-l">Finance and operations</h1>
+    <p class="govuk-body">Assess finance and operations for this GROWTH application.</p>
+
+    <form method="post" action="st-theresas">
+
+      {{ govukRadios({
+        name: "finance-and-operations-considered",
+        value: data['finance-and-operations-considered'],
+        fieldset: {
+          legend: {
+            text: "Have finance and operations been considered?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "yes", text: "Yes" },
+          { value: "no", text: "No" },
+          { value: "not-applicable", text: "Not applicable" }
+        ]
+      }) }}
+
+      {{ govukTextarea({
+        name: "finance-and-operations-summary",
+        id: "finance-and-operations-summary",
+        value: data['finance-and-operations-summary'],
+        label: {
+          text: "Provide details of finance and operations",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      {{ govukInput({
+        id: "finance-and-operations-supporting-evidence",
+        name: "finance-and-operations-supporting-evidence",
+        value: data['finance-and-operations-supporting-evidence'] or "http://sharepoint.edu.gov.uk/.....",
+        label: {
+          text: "Supporting evidence",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      <input type="hidden" name="finance-and-operations-complete" value="true">
+
+      {{ govukButton({
+        text: "Save and return"
+      }) }}
+
+    </form>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">
+        Useful information
+      </h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</div>
+
+{% endblock %}

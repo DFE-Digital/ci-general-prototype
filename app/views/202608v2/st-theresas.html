@@ -71,10 +71,15 @@
                     <h2 class="govuk-heading-s govuk-!-margin-bottom-3">Jump to section</h2>
                     <ul class="govuk-list">
                         <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#add-dfe-information">Individual information</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#add-school-information">School information</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#change-type-and-recommendations">Change type and recommendations</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#change-type">Change type</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#admissions-variation">Admissions variation</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#consultation">Consultation</a></li>
                         <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#screening-questions">Mandatory legal requirements</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#growth-applications">GROWTH applications</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#psed">PSED</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#land-and-planning">Land and planning</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#financials">Financials</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#growth-applications">HQTF</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#recommendations">Recommendations</a></li>
                     </ul>
                 </nav>
             </div>
@@ -87,82 +92,78 @@
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="assign-colleagues-status" href="#">Assign colleagues</a>
+                                    <a class="govuk-link" aria-describedby="confirm-project-dates-status" href="confirm-project-dates">Confirm project dates</a>
                                 </span>
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="assign-colleagues-status">Not started</strong>
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="confirm-project-dates-status" href="#">Confirm project dates</a>
-                                </span>
+                                {% if data['confirm-project-dates-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="confirm-project-dates-status">Completed</strong>
+                                {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="confirm-project-dates-status">Not started</strong>
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="retrospective-application-status" href="#">Retrospective application</a>
-                                </span>
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="retrospective-application-status">Not started</strong>
+                                {% endif %}
                             </li>
                         </ul>
                     </div>
                 </section>
 
-                <section id="add-school-information" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">School information</h2>
+                <section id="change-type" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Change type</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="academy-information-status" href="#">Academy information</a>
+                                    <a class="govuk-link" aria-describedby="select-change-type-status" href="select-change-type">Select change type</a>
                                 </span>
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="academy-information-status">Not started</strong>
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="trust-information-status" href="#">Trust information</a>
-                                </span>
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="trust-information-status">Not started</strong>
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="local-authority-information-status" href="#">Local authority information</a>
-                                </span>
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="local-authority-information-status">Not started</strong>
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section id="change-type-and-recommendations" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Change type and recommendations</h2>
-                    <div class="app-task-list">
-                        <ul class="app-task-list__items govuk-!-padding-left-0">
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="select-change-type-status" href="#">Select change type</a>
-                                </span>
+                                {% if data['select-change-type-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="select-change-type-status">Completed</strong>
+                                {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="select-change-type-status">Not started</strong>
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="admissions-variation-status" href="#">Admissions variation</a>
-                                </span>
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="admissions-variation-status">Not started</strong>
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="recommendations-status" href="#">Recommendations</a>
-                                </span>
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="recommendations-status">Not started</strong>
+                                {% endif %}
                             </li>
                         </ul>
                     </div>
                 </section>
 
-                <section id="screening-questions" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Mandatory legal requirements</h2>
+                <section id="admissions-variation" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Admissions variation</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="admissions-variation-status" href="admissions-variation">Admissions variation</a>
+                                </span>
+                                {% if data['admissions-variation-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="admissions-variation-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="admissions-variation-status">Not started</strong>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="consultation" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Consultation</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="stakeholder-engagement-status" href="stakeholder-engagement">Stakeholder engagement</a>
+                                </span>
+                                {% if data['stakeholder-engagement-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="stakeholder-engagement-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="stakeholder-engagement-status">Not started</strong>
+                                {% endif %}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="la-objections-status" href="la-objections">LA objections</a>
+                                </span>
+                                {% if data['la-objections-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="la-objections-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="la-objections-status">Not started</strong>
+                                {% endif %}
+                            </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="consultation-status" href="consultation">Consultation</a>
@@ -175,19 +176,43 @@
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="objections-status" href="#">Objections</a>
+                                    <a class="govuk-link" aria-describedby="religious-bodies-status" href="religious-bodies">Religious bodies</a>
                                 </span>
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="objections-status">Not started</strong>
+                                {% if data['religious-bodies-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="religious-bodies-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="religious-bodies-status">Not started</strong>
+                                {% endif %}
                             </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="screening-questions" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Mandatory legal requirements</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="ofsted-inspection-status" href="#">Ofsted inspection</a>
+                                    <a class="govuk-link" aria-describedby="ofsted-inspection-status" href="ofsted-inspection">Ofsted inspection</a>
                                 </span>
+                                {% if data['ofsted-inspection-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="ofsted-inspection-status">Completed</strong>
+                                {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="ofsted-inspection-status">Not started</strong>
+                                {% endif %}
                             </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="psed" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">PSED</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="psed-status" href="psed">Public Sector Equality Duty (PSED)</a>
+                                    <a class="govuk-link" aria-describedby="psed-status" href="psed">Public Sector Equality Duty</a>
                                 </span>
                                 {% if data['psed-complete'] == 'true' %}
                                 <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="psed-status">Completed</strong>
@@ -195,54 +220,88 @@
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="psed-status">Not started</strong>
                                 {% endif %}
                             </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="land-and-planning" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Land and planning</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="equalities-impact-assessment-status" href="#">Equalities impact assessment</a>
+                                    <a class="govuk-link" aria-describedby="land-transaction-status" href="land-transaction">Land transaction</a>
                                 </span>
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="equalities-impact-assessment-status">Not started</strong>
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="stakeholder-engagement-status" href="#">Stakeholder engagement</a>
-                                </span>
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="stakeholder-engagement-status">Not started</strong>
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="religious-bodies-status" href="#">Religious bodies</a>
-                                </span>
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="religious-bodies-status">Not started</strong>
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="funding-status" href="#">Funding</a>
-                                </span>
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="funding-status">Not started</strong>
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="land-transaction-status" href="#">Land transaction</a>
-                                </span>
+                                {% if data['land-transaction-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="land-transaction-status">Completed</strong>
+                                {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="land-transaction-status">Not started</strong>
+                                {% endif %}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="planning-permission-status" href="#">Planning permission</a>
+                                    <a class="govuk-link" aria-describedby="planning-permission-status" href="planning-permission">Planning permission</a>
                                 </span>
+                                {% if data['planning-permission-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="planning-permission-status">Completed</strong>
+                                {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="planning-permission-status">Not started</strong>
+                                {% endif %}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="sfso-fha-concerns-status" href="#">SFSO FHA concerns</a>
+                                    <a class="govuk-link" aria-describedby="land-transaction-team-status" href="land-transaction-team">Land transaction Team</a>
                                 </span>
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="sfso-fha-concerns-status">Not started</strong>
+                                {% if data['land-transaction-team-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="land-transaction-team-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="land-transaction-team-status">Not started</strong>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="financials" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Financials</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="funding-status" href="funding">Funding</a>
+                                </span>
+                                {% if data['funding-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="funding-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="funding-status">Not started</strong>
+                                {% endif %}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="financial-health-assessment-status" href="financial-health-assessment">Financial Health Assessment</a>
+                                </span>
+                                {% if data['financial-health-assessment-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="financial-health-assessment-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="financial-health-assessment-status">Not started</strong>
+                                {% endif %}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="fha-outcomes-status" href="fha-outcomes">FHA Outcomes</a>
+                                </span>
+                                {% if data['fha-outcomes-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="fha-outcomes-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="fha-outcomes-status">Not started</strong>
+                                {% endif %}
                             </li>
                         </ul>
                     </div>
                 </section>
 
                 <section id="growth-applications" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">GROWTH applications</h2>
+                    <h2 class="app-task-list__section">HQTF</h2>
                     <p class="govuk-body">
                         Only complete this table in Trust ‘GROWTH’ applications only – otherwise delete. Complete for i.e. physical or capacity increases, changing age range, sixth form, SEN unit, satellite site etc. Delete table for changes that relate to removal of provision e.g. removing a sixth form/reduction of capacity etc.
                     </p>
@@ -250,36 +309,125 @@
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="high-quality-inclusive-education-status" href="#">High quality and inclusive education</a>
+                                    <a class="govuk-link" aria-describedby="high-quality-inclusive-education-status" href="high-quality-inclusive-education">High quality and inclusive education</a>
                                 </span>
+                                {% if data['high-quality-inclusive-education-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="high-quality-inclusive-education-status">Completed</strong>
+                                {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="high-quality-inclusive-education-status">Not started</strong>
+                                {% endif %}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="school-improvement-status" href="#">School improvement</a>
+                                    <a class="govuk-link" aria-describedby="school-improvement-status" href="school-improvement">School improvement</a>
                                 </span>
+                                {% if data['school-improvement-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="school-improvement-status">Completed</strong>
+                                {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="school-improvement-status">Not started</strong>
+                                {% endif %}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="workforce-status" href="#">Workforce</a>
+                                    <a class="govuk-link" aria-describedby="workforce-status" href="workforce">Workforce</a>
                                 </span>
+                                {% if data['workforce-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="workforce-status">Completed</strong>
+                                {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="workforce-status">Not started</strong>
+                                {% endif %}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="finance-and-operations-status" href="#">Finance and operations</a>
+                                    <a class="govuk-link" aria-describedby="finance-and-operations-status" href="finance-and-operations">Finance and operations</a>
                                 </span>
+                                {% if data['finance-and-operations-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="finance-and-operations-status">Completed</strong>
+                                {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="finance-and-operations-status">Not started</strong>
+                                {% endif %}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="governance-and-leadership-status" href="#">Governance and leadership</a>
+                                    <a class="govuk-link" aria-describedby="governance-and-leadership-status" href="governance-and-leadership">Governance and leadership</a>
                                 </span>
+                                {% if data['governance-and-leadership-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="governance-and-leadership-status">Completed</strong>
+                                {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="governance-and-leadership-status">Not started</strong>
+                                {% endif %}
                             </li>
                         </ul>
                     </div>
+                </section>
+
+                <section id="recommendations" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Recommendations</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="approve-status" href="approve">Approve</a>
+                                </span>
+                                {% if data['approve-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="approve-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="approve-status">Not started</strong>
+                                {% endif %}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="approve-with-conditions-status" href="approve-with-conditions">Approve with conditions</a>
+                                </span>
+                                {% if data['approve-with-conditions-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="approve-with-conditions-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="approve-with-conditions-status">Not started</strong>
+                                {% endif %}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="defer-status" href="defer">Defer</a>
+                                </span>
+                                {% if data['defer-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="defer-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="defer-status">Not started</strong>
+                                {% endif %}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="withdraw-status" href="withdraw">Withdraw</a>
+                                </span>
+                                {% if data['withdraw-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="withdraw-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="withdraw-status">Not started</strong>
+                                {% endif %}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="decline-status" href="decline">Decline</a>
+                                </span>
+                                {% if data['decline-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="decline-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="decline-status">Not started</strong>
+                                {% endif %}
+                            </li>
+                        </ul>
+                    </div>
+                    <form method="post" action="st-theresas">
+                    <div class="govuk-form-group govuk-!-margin-top-6">
+                        <label class="govuk-label govuk-label--s" for="recommendations-notes">
+                            Recommendations
+                        </label>
+                        <textarea class="govuk-textarea" id="recommendations-notes" name="recommendations-notes" rows="5">{{ data['recommendations-notes'] or '' }}</textarea>
+                    </div>
+                    <button type="submit" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                        Save recommendations
+                    </button>
+                    </form>
                 </section>
 
             </div>
@@ -293,7 +441,7 @@
             </div>
             <div class="govuk-grid-column-three-quarters">
                 <a href="/202608v2/preview-document" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
-                    Preview document
+                    Preview
                 </a>
             </div>
         </div>
