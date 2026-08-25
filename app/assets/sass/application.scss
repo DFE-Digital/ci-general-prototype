@@ -1934,3 +1934,46 @@ body:has(.app-word-doc-preview-only) footer {
 	color: #0b0c0c;
 	background-color: transparent;
 }
+
+.app-jump-layout {
+	display: block;
+	position: relative;
+}
+
+.app-jump-layout__nav {
+	margin-bottom: govuk-spacing(6);
+}
+
+.app-jump-layout__content {
+	display: block;
+	width: 100%;
+}
+
+.govuk-width-container:has(.app-jump-layout) {
+	overflow: visible;
+}
+
+.app-jump-layout__back-to-top {
+	margin-top: govuk-spacing(6);
+	margin-bottom: 0;
+}
+
+// Hang the jump nav in the left gutter, outside the main content column
+@media (min-width: 75em) {
+	.app-jump-layout__nav {
+		float: left;
+		width: 13rem;
+		margin-left: calc(-13rem - #{govuk-spacing(6)});
+		margin-bottom: 0;
+		position: sticky;
+		top: govuk-spacing(4);
+	}
+
+	// Same left column as jump nav; bottom level with end of recommendations
+	.app-jump-layout__back-to-top {
+		clear: both;
+		width: 13rem;
+		margin-left: calc(-13rem - #{govuk-spacing(6)});
+		margin-top: 0;
+	}
+}
