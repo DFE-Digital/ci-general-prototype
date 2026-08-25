@@ -26,10 +26,11 @@
                 </p>
                 <p class="govuk-body govuk-!-margin-bottom-1">
                     Type: Testing tiers
+                    <a class="govuk-link govuk-!-padding-left-50" href="select-change-type">Change</a>
                 </p>
                 <p class="govuk-body govuk-!-margin-bottom-5">
                     Project owner:
-                    <span data-id="assigned-user">Richard Gibbons</span>
+                    <span data-id="assigned-user">Your name</span>
                     <a class="govuk-link govuk-!-padding-left-50" href="#">Change</a>
                 </p>
                 <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-5">
@@ -55,11 +56,6 @@
                                 Decision
                             </a>
                         </li>
-                        <li class="moj-sub-navigation__item">
-                            <a class="moj-sub-navigation__link" href="#">
-                                Project notes
-                            </a>
-                        </li>
                     </ul>
                 </nav>
             </div>
@@ -69,11 +65,10 @@
             <nav class="app-jump-nav" aria-label="Jump to section">
                     <h2 class="govuk-heading-s govuk-!-margin-bottom-3">Jump to section</h2>
                     <ul class="govuk-list">
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#add-dfe-information">Individual information</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#change-type">Change type</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#add-dfe-information">Proposed decision and change dates</a></li>
                         <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#admissions-variation">Admissions variation</a></li>
                         <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#consultation">Consultation</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#screening-questions">Mandatory legal requirements</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#screening-questions">Performance</a></li>
                         <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#psed">PSED</a></li>
                         <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#land-and-planning">Land and planning</a></li>
                         <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#financials">Financials</a></li>
@@ -85,7 +80,7 @@
             <div class="app-task-jump-layout__content">
 
                 <section id="add-dfe-information" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Individual information</h2>
+                    <h2 class="app-task-list__section">Proposed decision and change dates</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
@@ -96,24 +91,6 @@
                                 <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="confirm-project-dates-status">Completed</strong>
                                 {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="confirm-project-dates-status">Not started</strong>
-                                {% endif %}
-                            </li>
-                        </ul>
-                    </div>
-                </section>
-
-                <section id="change-type" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Change type</h2>
-                    <div class="app-task-list">
-                        <ul class="app-task-list__items govuk-!-padding-left-0">
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="select-change-type-status" href="select-change-type">Select change type</a>
-                                </span>
-                                {% if data['select-change-type-complete'] == 'true' %}
-                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="select-change-type-status">Completed</strong>
-                                {% else %}
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="select-change-type-status">Not started</strong>
                                 {% endif %}
                             </li>
                         </ul>
@@ -187,12 +164,12 @@
                 </section>
 
                 <section id="screening-questions" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Mandatory legal requirements</h2>
+                    <h2 class="app-task-list__section">Performance</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="ofsted-inspection-status" href="ofsted-inspection">Ofsted inspection</a>
+                                    <a class="govuk-link" aria-describedby="ofsted-inspection-status" href="ofsted-inspection">Ofsted</a>
                                 </span>
                                 {% if data['ofsted-inspection-complete'] == 'true' %}
                                 <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="ofsted-inspection-status">Completed</strong>
@@ -362,7 +339,7 @@
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="approve-status" href="approve">Approve</a>
+                                    <a class="govuk-link" aria-describedby="approve-status" href="approve">Recommendation</a>
                                 </span>
                                 {% if data['approve-complete'] == 'true' %}
                                 <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="approve-status">Completed</strong>
@@ -370,53 +347,7 @@
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="approve-status">Not started</strong>
                                 {% endif %}
                             </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="approve-with-conditions-status" href="approve-with-conditions">Approve with conditions</a>
-                                </span>
-                                {% if data['approve-with-conditions-complete'] == 'true' %}
-                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="approve-with-conditions-status">Completed</strong>
-                                {% else %}
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="approve-with-conditions-status">Not started</strong>
-                                {% endif %}
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="defer-status" href="defer">Defer</a>
-                                </span>
-                                {% if data['defer-complete'] == 'true' %}
-                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="defer-status">Completed</strong>
-                                {% else %}
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="defer-status">Not started</strong>
-                                {% endif %}
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="withdraw-status" href="withdraw">Withdraw</a>
-                                </span>
-                                {% if data['withdraw-complete'] == 'true' %}
-                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="withdraw-status">Completed</strong>
-                                {% else %}
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="withdraw-status">Not started</strong>
-                                {% endif %}
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="decline-status" href="decline">Decline</a>
-                                </span>
-                                {% if data['decline-complete'] == 'true' %}
-                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="decline-status">Completed</strong>
-                                {% else %}
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="decline-status">Not started</strong>
-                                {% endif %}
-                            </li>
                         </ul>
-                    </div>
-                    <div class="govuk-form-group govuk-!-margin-top-6">
-                        <label class="govuk-label govuk-label--s" for="recommendations-notes">
-                            Recommendations
-                        </label>
-                        <textarea class="govuk-textarea" id="recommendations-notes" name="recommendations-notes" rows="5">{{ data['recommendations-notes'] or '' }}</textarea>
                     </div>
                 </section>
 

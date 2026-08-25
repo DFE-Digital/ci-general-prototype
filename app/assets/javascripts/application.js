@@ -104,7 +104,7 @@ window.GOVUKPrototypeKit.documentReady(() => {
     });
   });
 
-  // Significant changes project list – search, Assigned to filter, pagination
+  // Significant changes project list – search, Project owner filter, pagination
   const projectListTable = document.querySelector('[data-cy="significant-changes-project-list"]');
 
   if (projectListTable) {
@@ -139,7 +139,7 @@ window.GOVUKPrototypeKit.documentReady(() => {
           return normalizeOfficerName(spans[i].textContent);
         }
       }
-      return normalizeOfficerName(assignedBlock.textContent.replace(/Assigned to:/i, ''));
+      return normalizeOfficerName(assignedBlock.textContent.replace(/Project owner:/i, ''));
     }
 
     function updateProjectCount(totalCount) {
@@ -178,13 +178,72 @@ window.GOVUKPrototypeKit.documentReady(() => {
         .trim();
     }
 
-    function getRowType(row) {
-      const typeBlock = row.querySelector('[id^="route-"]');
-      if (!typeBlock) {
+    function normalizeProposedDecisionDate(value) {
+      const text = (value || '').toLowerCase().replace(/\s+/g, ' ').trim();
+      if (!text || text === 'unconfirmed') {
+        return 'unconfirmed';
+      }
+
+      // Already in filter form, e.g. "jan 26"
+      if (/^[a-z]{3} \d{2}$/.test(text)) {
+        return text;
+      }
+
+      const monthMap = {
+        january: 'jan',
+        february: 'feb',
+        march: 'mar',
+        april: 'apr',
+        may: 'may',
+        june: 'jun',
+        july: 'jul',
+        august: 'aug',
+        september: 'sep',
+        october: 'oct',
+        november: 'nov',
+        december: 'dec'
+      };
+
+      const match = text.match(/\b(january|february|march|april|may|june|july|august|september|october|november|december)\s+(\d{4})\b/i);
+      if (!match) {
+        return text;
+      }
+
+      return monthMap[match[1].toLowerCase()] + ' ' + match[2].slice(-2);
+    }
+
+    function getRowProposedDecisionDate(row) {
+      const dateBlock = row.querySelector('[id^="proposed-decision-date-"]');
+      if (!dateBlock) {
         return '';
       }
-      const span = typeBlock.querySelector('span');
-      return (span ? span.textContent : typeBlock.textContent.replace(/Type:/i, ''))
+      if (dateBlock.querySelector('.empty')) {
+        return 'unconfirmed';
+      }
+      const span = dateBlock.querySelector('span');
+      const raw = span ? span.textContent : dateBlock.textContent.replace(/Proposed decision date:/i, '');
+      return normalizeProposedDecisionDate(raw);
+    }
+
+    function getRowRegion(row) {
+      const regionBlock = row.querySelector('[id^="region-"]');
+      if (!regionBlock) {
+        return '';
+      }
+      const span = regionBlock.querySelector('span');
+      return (span ? span.textContent : regionBlock.textContent.replace(/Region:/i, ''))
+        .toLowerCase()
+        .replace(/\s+/g, ' ')
+        .trim();
+    }
+
+    function getRowLocalAuthority(row) {
+      const laBlock = row.querySelector('[id^="local-authority-"]');
+      if (!laBlock) {
+        return '';
+      }
+      const span = laBlock.querySelector('span');
+      return (span ? span.textContent : laBlock.textContent.replace(/Local authority:/i, ''))
         .toLowerCase()
         .replace(/\s+/g, ' ')
         .trim();
@@ -197,15 +256,25 @@ window.GOVUKPrototypeKit.documentReady(() => {
       ).map(function(input) {
         return normalizeOfficerName(input.value);
       });
+      const selectedRegions = Array.from(
+        document.querySelectorAll('input[name="selectedRegions"]:checked')
+      ).map(function(input) {
+        return input.value.toLowerCase().replace(/\s+/g, ' ').trim();
+      });
+      const selectedLocalAuthorities = Array.from(
+        document.querySelectorAll('input[name="selectedLocalAuthorities"]:checked')
+      ).map(function(input) {
+        return input.value.toLowerCase().replace(/\s+/g, ' ').trim();
+      });
       const selectedTiers = Array.from(
         document.querySelectorAll('input[name="selectedTiers"]:checked')
       ).map(function(input) {
         return input.value.trim();
       });
-      const selectedTypes = Array.from(
-        document.querySelectorAll('input[name="selectedTypes"]:checked')
+      const selectedProposedDecisionDates = Array.from(
+        document.querySelectorAll('input[name="SelectedProposedDecisionDates"]:checked')
       ).map(function(input) {
-        return input.value.toLowerCase().replace(/\s+/g, ' ').trim();
+        return normalizeProposedDecisionDate(input.value);
       });
 
       return projectRows.filter(function(row) {
@@ -213,11 +282,15 @@ window.GOVUKPrototypeKit.documentReady(() => {
         const matchesSearch = !query || searchText.includes(query);
         const rowOfficer = getRowAssignedOfficer(row);
         const matchesOfficer = !selectedOfficers.length || selectedOfficers.indexOf(rowOfficer) !== -1;
+        const rowRegion = getRowRegion(row);
+        const matchesRegion = !selectedRegions.length || selectedRegions.indexOf(rowRegion) !== -1;
+        const rowLocalAuthority = getRowLocalAuthority(row);
+        const matchesLocalAuthority = !selectedLocalAuthorities.length || selectedLocalAuthorities.indexOf(rowLocalAuthority) !== -1;
         const rowTier = getRowTier(row);
         const matchesTier = !selectedTiers.length || selectedTiers.indexOf(rowTier) !== -1;
-        const rowType = getRowType(row);
-        const matchesType = !selectedTypes.length || selectedTypes.indexOf(rowType) !== -1;
-        return matchesSearch && matchesOfficer && matchesTier && matchesType;
+        const rowProposedDecisionDate = getRowProposedDecisionDate(row);
+        const matchesProposedDecisionDate = !selectedProposedDecisionDates.length || selectedProposedDecisionDates.indexOf(rowProposedDecisionDate) !== -1;
+        return matchesSearch && matchesOfficer && matchesRegion && matchesLocalAuthority && matchesTier && matchesProposedDecisionDate;
       });
     }
 
@@ -333,8 +406,10 @@ window.GOVUKPrototypeKit.documentReady(() => {
       return {
         title: projectSearchInput ? projectSearchInput.value.trim() : '',
         officers: getCheckedFilterItems('selectedOfficers'),
+        regions: getCheckedFilterItems('selectedRegions'),
+        localAuthorities: getCheckedFilterItems('selectedLocalAuthorities'),
         tiers: getCheckedFilterItems('selectedTiers'),
-        types: getCheckedFilterItems('selectedTypes'),
+        proposedDecisionDates: getCheckedFilterItems('SelectedProposedDecisionDates'),
         statuses: getCheckedFilterItems('selectedStatuses')
       };
     }
@@ -343,8 +418,10 @@ window.GOVUKPrototypeKit.documentReady(() => {
       return !!(
         state.title ||
         state.officers.length ||
+        state.regions.length ||
+        state.localAuthorities.length ||
         state.tiers.length ||
-        state.types.length ||
+        state.proposedDecisionDates.length ||
         state.statuses.length
       );
     }
@@ -359,11 +436,17 @@ window.GOVUKPrototypeKit.documentReady(() => {
       state.officers.forEach(function(item) {
         params.append('selectedOfficers', item.value);
       });
+      state.regions.forEach(function(item) {
+        params.append('selectedRegions', item.value);
+      });
+      state.localAuthorities.forEach(function(item) {
+        params.append('selectedLocalAuthorities', item.value);
+      });
       state.tiers.forEach(function(item) {
         params.append('selectedTiers', item.value);
       });
-      state.types.forEach(function(item) {
-        params.append('selectedTypes', item.value);
+      state.proposedDecisionDates.forEach(function(item) {
+        params.append('SelectedProposedDecisionDates', item.value);
       });
       state.statuses.forEach(function(item) {
         params.append('selectedStatuses', item.value);
@@ -391,8 +474,10 @@ window.GOVUKPrototypeKit.documentReady(() => {
       }
 
       setCheckedValues('selectedOfficers', params.getAll('selectedOfficers'));
+      setCheckedValues('selectedRegions', params.getAll('selectedRegions'));
+      setCheckedValues('selectedLocalAuthorities', params.getAll('selectedLocalAuthorities'));
       setCheckedValues('selectedTiers', params.getAll('selectedTiers'));
-      setCheckedValues('selectedTypes', params.getAll('selectedTypes'));
+      setCheckedValues('SelectedProposedDecisionDates', params.getAll('SelectedProposedDecisionDates'));
       setCheckedValues('selectedStatuses', params.getAll('selectedStatuses'));
 
       return params.get('filtered') === '1';
@@ -402,8 +487,10 @@ window.GOVUKPrototypeKit.documentReady(() => {
       const nextState = {
         title: state.title,
         officers: state.officers.slice(),
+        regions: state.regions.slice(),
+        localAuthorities: state.localAuthorities.slice(),
         tiers: state.tiers.slice(),
-        types: state.types.slice(),
+        proposedDecisionDates: state.proposedDecisionDates.slice(),
         statuses: state.statuses.slice()
       };
 
@@ -413,8 +500,10 @@ window.GOVUKPrototypeKit.documentReady(() => {
       }
 
       nextState.officers = nextState.officers.filter(function(item) { return item.id !== removeValue; });
+      nextState.regions = nextState.regions.filter(function(item) { return item.id !== removeValue; });
+      nextState.localAuthorities = nextState.localAuthorities.filter(function(item) { return item.id !== removeValue; });
       nextState.tiers = nextState.tiers.filter(function(item) { return item.id !== removeValue; });
-      nextState.types = nextState.types.filter(function(item) { return item.id !== removeValue; });
+      nextState.proposedDecisionDates = nextState.proposedDecisionDates.filter(function(item) { return item.id !== removeValue; });
       nextState.statuses = nextState.statuses.filter(function(item) { return item.id !== removeValue; });
       return nextState;
     }
@@ -439,9 +528,11 @@ window.GOVUKPrototypeKit.documentReady(() => {
       }
 
       [
-        { heading: 'Assigned to', items: state.officers },
+        { heading: 'Project owner', items: state.officers },
+        { heading: 'Region', items: state.regions },
+        { heading: 'Local authority', items: state.localAuthorities },
         { heading: 'Tier', items: state.tiers },
-        { heading: 'Type', items: state.types },
+        { heading: 'Proposed decision date', items: state.proposedDecisionDates },
         { heading: 'Project status', items: state.statuses }
       ].forEach(function(group) {
         if (!group.items.length) {
@@ -577,7 +668,7 @@ window.GOVUKPrototypeKit.documentReady(() => {
     }
   }
 
-  // Filter checkbox lists by typing (Assigned to, Tier, Type, etc.)
+  // Filter checkbox lists by typing (Project owner, Region, Tier, etc.)
   document.querySelectorAll('.govuk-accordion__section-content .govuk-input[placeholder^="Type to filter"]').forEach(function(searchInput) {
     const checkboxItems = searchInput
       .closest('.govuk-accordion__section-content')

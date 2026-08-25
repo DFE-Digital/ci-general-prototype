@@ -5,13 +5,14 @@
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% set pageName = "Approve" %}
+{% set pageName = "Recommendation" %}
 {% set navActive = "significant-changes" %}
+{% set returnTo = "/202608v2/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202608v2/st-theresas") %}
 
 {% block beforeContent %}
 {{ govukBackLink({
   text: "Back",
-  href: "st-theresas"
+  href: returnTo
 }) }}
 {% endblock %}
 
@@ -20,23 +21,26 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
-    <h1 class="govuk-heading-l">Approve</h1>
-    <p class="govuk-body">Record an approve recommendation for this significant change.</p>
+    <h1 class="govuk-heading-l">Recommendation</h1>
+    <p class="govuk-body">Record a recommendation for this significant change.</p>
 
-    <form method="post" action="st-theresas">
+    <form method="post" action="{{ returnTo }}">
 
       {{ govukRadios({
-        name: "approve-recommendation",
-        value: data['approve-recommendation'],
+        name: "recommendation",
+        value: data['recommendation'],
         fieldset: {
           legend: {
-            text: "Do you recommend that this application is approved?",
+            text: "What is your recommendation?",
             classes: "govuk-fieldset__legend--m"
           }
         },
         items: [
-          { value: "yes", text: "Yes" },
-          { value: "no", text: "No" }
+          { value: "Approve", text: "Approve" },
+          { value: "Approve with conditions", text: "Approve with conditions" },
+          { value: "Defer", text: "Defer" },
+          { value: "Withdraw", text: "Withdraw" },
+          { value: "Decline", text: "Decline" }
         ]
       }) }}
 

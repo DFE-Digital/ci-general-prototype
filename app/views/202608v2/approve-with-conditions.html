@@ -7,11 +7,12 @@
 
 {% set pageName = "Approve with conditions" %}
 {% set navActive = "significant-changes" %}
+{% set returnTo = "/202608v2/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202608v2/st-theresas") %}
 
 {% block beforeContent %}
 {{ govukBackLink({
   text: "Back",
-  href: "st-theresas"
+  href: returnTo
 }) }}
 {% endblock %}
 
@@ -23,7 +24,7 @@
     <h1 class="govuk-heading-l">Approve with conditions</h1>
     <p class="govuk-body">Record an approve with conditions recommendation for this significant change.</p>
 
-    <form method="post" action="st-theresas">
+    <form method="post" action="{{ returnTo }}">
 
       {{ govukRadios({
         name: "approve-with-conditions-recommendation",

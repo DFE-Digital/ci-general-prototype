@@ -38,13 +38,38 @@
   {%- endif -%}
 {%- endmacro %}
 
-{% macro row(key, href, hidden) %}
+{% macro row(key, href, hidden, section) %}
           <div class="govuk-summary-list__row">
             <dt class="govuk-summary-list__key">{{ key }}</dt>
             <dd class="govuk-summary-list__value">{{ caller() }}</dd>
             <dd class="govuk-summary-list__actions">
               {% if href %}
-              <a class="govuk-link" href="{{ href }}">Change<span class="govuk-visually-hidden"> {{ hidden or key }}</span></a>
+              {% set page = href | replace("/202608v2/", "") %}
+              {% set sectionLookup = {
+                "confirm-project-dates": "individual-information",
+                "admissions-variation": "admissions-variation",
+                "stakeholder-engagement": "consultation",
+                "la-objections": "consultation",
+                "consultation": "consultation",
+                "religious-bodies": "consultation",
+                "ofsted-inspection": "mandatory-legal-requirements",
+                "psed": "psed",
+                "land-transaction": "land-and-planning",
+                "planning-permission": "land-and-planning",
+                "land-transaction-team": "land-and-planning",
+                "funding": "financials",
+                "financial-health-assessment": "financials",
+                "fha-outcomes": "financials",
+                "high-quality-inclusive-education": "hqtf",
+                "school-improvement": "hqtf",
+                "workforce": "hqtf",
+                "finance-and-operations": "hqtf",
+                "governance-and-leadership": "hqtf",
+                "approve": "recommendations"
+              } %}
+              {% set sectionId = section if section else sectionLookup[page] %}
+              {% set changeHref = href + "?returnTo=preview" + (("&section=" + sectionId) if sectionId else "") %}
+              <a class="govuk-link" href="{{ changeHref }}">Change<span class="govuk-visually-hidden"> {{ hidden or key }}</span></a>
               {% endif %}
             </dd>
           </div>
@@ -70,11 +95,10 @@
   <nav class="app-jump-layout__nav" aria-label="Jump to section">
     <h2 class="govuk-heading-s govuk-!-margin-bottom-3">Jump to section</h2>
     <ul class="govuk-list">
-      <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#individual-information">Individual information</a></li>
-      <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#change-type">Change type</a></li>
+      <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#individual-information">Proposed decision and change dates</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#admissions-variation">Admissions variation</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#consultation">Consultation</a></li>
-      <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#mandatory-legal-requirements">Mandatory legal requirements</a></li>
+      <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#mandatory-legal-requirements">Performance</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#psed">PSED</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#land-and-planning">Land and planning</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#financials">Financials</a></li>
@@ -84,9 +108,9 @@
   </nav>
   <div class="app-jump-layout__content">
 
-{# Individual information #}
+{# Proposed decision and change dates #}
 <div id="individual-information" class="govuk-!-margin-bottom-8">
-  <h2 class="govuk-heading-l">Individual information</h2>
+  <h2 class="govuk-heading-l">Proposed decision and change dates</h2>
     <div class="app-summary-card">
       <div class="app-summary-card__title">
         <h3 class="app-summary-card__heading">Confirm project dates</h3>
@@ -101,23 +125,6 @@
           {% endcall %}
           {% call row("Proposed implementation date", "/202608v2/confirm-project-dates", "proposed implementation date") %}
             {{ dateValue("proposed-implementation-date") }}
-          {% endcall %}
-        </dl>
-      </div>
-    </div>
-</div>
-
-{# Change type #}
-<div id="change-type" class="govuk-!-margin-bottom-8">
-  <h2 class="govuk-heading-l">Change type</h2>
-    <div class="app-summary-card">
-      <div class="app-summary-card__title">
-        <h3 class="app-summary-card__heading">Select change type</h3>
-      </div>
-      <div class="app-summary-card__content">
-        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Change type", "/202608v2/select-change-type", "change type") %}
-            {{ listValue(data["change-type"]) }}
           {% endcall %}
         </dl>
       </div>
@@ -243,12 +250,12 @@
     </div>
 </div>
 
-{# Mandatory legal requirements #}
+{# Performance #}
 <div id="mandatory-legal-requirements" class="govuk-!-margin-bottom-8">
-  <h2 class="govuk-heading-l">Mandatory legal requirements</h2>
+  <h2 class="govuk-heading-l">Performance</h2>
     <div class="app-summary-card">
       <div class="app-summary-card__title">
-        <h3 class="app-summary-card__heading">Ofsted inspection</h3>
+        <h3 class="app-summary-card__heading">Ofsted</h3>
       </div>
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
@@ -523,94 +530,17 @@
 <div id="recommendations" class="govuk-!-margin-bottom-8">
   <h2 class="govuk-heading-l">Recommendations</h2>
 
-    <div class="app-summary-card govuk-!-margin-bottom-6">
-      <div class="app-summary-card__title">
-        <h3 class="app-summary-card__heading">Approve</h3>
-      </div>
-      <div class="app-summary-card__content">
-        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Recommend approve?", "/202608v2/approve") %}
-            {{ yesNo(data["approve-recommendation"]) }}
-          {% endcall %}
-          {% call row("Rationale", "/202608v2/approve", "approve rationale") %}
-            {{ value(data["approve-rationale"]) }}
-          {% endcall %}
-        </dl>
-      </div>
-    </div>
-
-    <div class="app-summary-card govuk-!-margin-bottom-6">
-      <div class="app-summary-card__title">
-        <h3 class="app-summary-card__heading">Approve with conditions</h3>
-      </div>
-      <div class="app-summary-card__content">
-        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Recommend approve with conditions?", "/202608v2/approve-with-conditions") %}
-            {{ yesNo(data["approve-with-conditions-recommendation"]) }}
-          {% endcall %}
-          {% call row("Rationale", "/202608v2/approve-with-conditions", "approve with conditions rationale") %}
-            {{ value(data["approve-with-conditions-rationale"]) }}
-          {% endcall %}
-        </dl>
-      </div>
-    </div>
-
-    <div class="app-summary-card govuk-!-margin-bottom-6">
-      <div class="app-summary-card__title">
-        <h3 class="app-summary-card__heading">Defer</h3>
-      </div>
-      <div class="app-summary-card__content">
-        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Recommend defer?", "/202608v2/defer") %}
-            {{ yesNo(data["defer-recommendation"]) }}
-          {% endcall %}
-          {% call row("Rationale", "/202608v2/defer", "defer rationale") %}
-            {{ value(data["defer-rationale"]) }}
-          {% endcall %}
-        </dl>
-      </div>
-    </div>
-
-    <div class="app-summary-card govuk-!-margin-bottom-6">
-      <div class="app-summary-card__title">
-        <h3 class="app-summary-card__heading">Withdraw</h3>
-      </div>
-      <div class="app-summary-card__content">
-        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Recommend withdraw?", "/202608v2/withdraw") %}
-            {{ yesNo(data["withdraw-recommendation"]) }}
-          {% endcall %}
-          {% call row("Rationale", "/202608v2/withdraw", "withdraw rationale") %}
-            {{ value(data["withdraw-rationale"]) }}
-          {% endcall %}
-        </dl>
-      </div>
-    </div>
-
-    <div class="app-summary-card govuk-!-margin-bottom-6">
-      <div class="app-summary-card__title">
-        <h3 class="app-summary-card__heading">Decline</h3>
-      </div>
-      <div class="app-summary-card__content">
-        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Recommend decline?", "/202608v2/decline") %}
-            {{ yesNo(data["decline-recommendation"]) }}
-          {% endcall %}
-          {% call row("Rationale", "/202608v2/decline", "decline rationale") %}
-            {{ value(data["decline-rationale"]) }}
-          {% endcall %}
-        </dl>
-      </div>
-    </div>
-
     <div class="app-summary-card">
       <div class="app-summary-card__title">
-        <h3 class="app-summary-card__heading">Recommendations notes</h3>
+        <h3 class="app-summary-card__heading">Recommendation</h3>
       </div>
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Recommendations", "/202608v2/st-theresas#recommendations", "recommendations notes") %}
-            {{ value(data["recommendations-notes"]) }}
+          {% call row("Recommendation", "/202608v2/approve", "recommendation") %}
+            {{ value(data["recommendation"]) }}
+          {% endcall %}
+          {% call row("Rationale", "/202608v2/approve", "recommendation rationale") %}
+            {{ value(data["approve-rationale"]) }}
           {% endcall %}
         </dl>
       </div>
@@ -628,5 +558,18 @@
   </div>
   <div class="app-jump-layout__content"></div>
 </div>
+
+<script>
+  (function () {
+    var section = new URLSearchParams(window.location.search).get('section')
+    if (!section) {
+      return
+    }
+    var target = document.getElementById(section)
+    if (target) {
+      target.scrollIntoView()
+    }
+  })()
+</script>
 
 {% endblock %}

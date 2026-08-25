@@ -9,11 +9,12 @@
 
 {% set pageName = "Public Sector Equality Duty (PSED)" %}
 {% set navActive = "significant-changes" %}
+{% set returnTo = "/202608v2/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202608v2/st-theresas") %}
 
 {% block beforeContent %}
 {{ govukBackLink({
   text: "Back",
-  href: "st-theresas"
+  href: returnTo
 }) }}
 {% endblock %}
 
@@ -24,7 +25,7 @@
     <h1 class="govuk-heading-l">Public Sector Equality Duty (PSED)</h1>
     <p class="govuk-body">The Public Sector Equality Duty (PSED), under Section 149 of the Equality Act 2010, requires public authorities to have “due regard” to eliminating unlawful discrimination, advancing equality of opportunity, and fostering good relations between people with and without protected characteristics in their day-to-day public functions.</p>
 
-    <form method="post" action="st-theresas">
+    <form method="post" action="{{ returnTo }}">
 
       {{ govukRadios({
         name: "psed-considered",

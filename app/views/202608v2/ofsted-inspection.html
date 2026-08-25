@@ -6,13 +6,14 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% set pageName = "Ofsted inspection" %}
+{% set pageName = "Ofsted" %}
 {% set navActive = "significant-changes" %}
+{% set returnTo = "/202608v2/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202608v2/st-theresas") %}
 
 {% block beforeContent %}
 {{ govukBackLink({
   text: "Back",
-  href: "st-theresas"
+  href: returnTo
 }) }}
 {% endblock %}
 
@@ -21,10 +22,10 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
-    <h1 class="govuk-heading-l">Ofsted inspection</h1>
+    <h1 class="govuk-heading-l">Ofsted</h1>
     <p class="govuk-body">Record Ofsted inspection information relevant to this significant change.</p>
 
-    <form method="post" action="st-theresas">
+    <form method="post" action="{{ returnTo }}">
 
       {{ govukRadios({
         name: "ofsted-inspection-considered",

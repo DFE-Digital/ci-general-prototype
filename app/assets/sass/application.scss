@@ -2072,3 +2072,11 @@ body:has(.app-word-doc-preview-only) footer {
 		position: static;
 	}
 }
+
+// Significant changes project list – no table header styling or borders
+[data-cy="significant-changes-project-list"] {
+	.govuk-table__header,
+	.govuk-table__cell {
+		border: 0;
+	}
+}

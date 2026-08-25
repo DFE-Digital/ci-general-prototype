@@ -6,11 +6,12 @@
 
 {% set pageName = "Select change type" %}
 {% set navActive = "significant-changes" %}
+{% set returnTo = "/202608v2/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202608v2/st-theresas") %}
 
 {% block beforeContent %}
 {{ govukBackLink({
   text: "Back",
-  href: "st-theresas"
+  href: returnTo
 }) }}
 {% endblock %}
 
@@ -22,7 +23,7 @@
     <h1 class="govuk-heading-l">Select change type</h1>
     <p class="govuk-body">Select the type of significant change for this project. You can select more than one.</p>
 
-    <form method="post" action="st-theresas">
+    <form method="post" action="{{ returnTo }}">
 
       {{ govukCheckboxes({
         name: "change-type",

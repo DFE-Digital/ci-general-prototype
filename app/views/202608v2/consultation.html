@@ -10,11 +10,12 @@
 
 {% set pageName = "Consultation" %}
 {% set navActive = "significant-changes" %}
+{% set returnTo = "/202608v2/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202608v2/st-theresas") %}
 
 {% block beforeContent %}
 {{ govukBackLink({
   text: "Back",
-  href: "st-theresas"
+  href: returnTo
 }) }}
 {% endblock %}
 
@@ -26,7 +27,7 @@
     <p class="govuk-body">A three week consultation is a statutory requirement. An application cannot be approved until it is completed.</p>
     <p class="govuk-body">You should not progress until you have a plan for a consultation. Suggest contacting RTM/DO for more help or another signpost to the guidance.</p>
 
-    <form method="post" action="st-theresas">
+    <form method="post" action="{{ returnTo }}">
 
       {{ govukRadios({
         name: "consultation-carried-out",
