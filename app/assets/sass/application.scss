@@ -1936,7 +1936,9 @@ body:has(.app-word-doc-preview-only) footer {
 }
 
 .app-jump-layout {
-	display: block;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: flex-start;
 	position: relative;
 }
 
@@ -1945,8 +1947,8 @@ body:has(.app-word-doc-preview-only) footer {
 }
 
 .app-jump-layout__content {
-	display: block;
-	width: 100%;
+	flex: 1;
+	min-width: 0;
 }
 
 .govuk-width-container:has(.app-jump-layout) {
@@ -1954,26 +1956,119 @@ body:has(.app-word-doc-preview-only) footer {
 }
 
 .app-jump-layout__back-to-top {
-	margin-top: govuk-spacing(6);
+	margin: 0;
+}
+
+.app-jump-layout--footer {
+	margin-top: govuk-spacing(2);
+	align-items: center;
+}
+
+.app-jump-layout--footer .app-jump-layout__nav {
 	margin-bottom: 0;
+	position: static;
+}
+
+.app-jump-nav {
+	position: sticky;
+	top: 20px;
+	align-self: flex-start;
+}
+
+.app-task-jump-layout {
+	display: flex;
+	align-items: flex-start;
+	gap: govuk-spacing(6);
+}
+
+.app-task-jump-layout .app-jump-nav,
+.app-task-jump-layout__back-to-top {
+	flex: 0 0 23%;
+	max-width: 23%;
+	margin-bottom: 0;
+}
+
+.app-task-jump-layout .app-jump-nav {
+	margin-bottom: govuk-spacing(6);
+}
+
+.app-task-jump-layout__content {
+	flex: 1;
+	min-width: 0;
+}
+
+.app-task-jump-layout--footer {
+	margin-top: govuk-spacing(2);
+	align-items: center;
+}
+
+.app-task-jump-layout__back-to-top {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+
+@media (max-width: 40.0625em) {
+	.app-task-jump-layout {
+		display: block;
+	}
+
+	.app-task-jump-layout .app-jump-nav,
+	.app-task-jump-layout__back-to-top {
+		position: static;
+		max-width: none;
+		flex: none;
+		margin-bottom: govuk-spacing(4);
+	}
+}
+
+// Legacy grid-based sticky (unused by task list now, kept for safety)
+@media (min-width: 40.0625em) {
+	.app-jump-follow-scroll {
+		display: flex;
+		align-items: flex-start;
+		overflow: visible;
+	}
+
+	.app-jump-follow-scroll > [class*="govuk-grid-column-"] {
+		float: none;
+		overflow: visible;
+	}
+
+	.app-jump-follow-scroll > .govuk-grid-column-one-quarter {
+		position: sticky;
+		top: 20px;
+		align-self: flex-start;
+		flex: 0 0 25%;
+		width: 25%;
+		max-width: 25%;
+		z-index: 2;
+	}
+
+	.app-jump-follow-scroll > .govuk-grid-column-three-quarters {
+		flex: 1 1 75%;
+		width: 75%;
+		max-width: 75%;
+	}
+
+	.app-jump-follow-scroll .app-jump-nav {
+		position: static;
+		margin-bottom: 0;
+	}
 }
 
 // Hang the jump nav in the left gutter, outside the main content column
 @media (min-width: 75em) {
 	.app-jump-layout__nav {
-		float: left;
+		flex: 0 0 13rem;
 		width: 13rem;
 		margin-left: calc(-13rem - #{govuk-spacing(6)});
+		margin-right: govuk-spacing(6);
 		margin-bottom: 0;
 		position: sticky;
 		top: govuk-spacing(4);
 	}
 
-	// Same left column as jump nav; bottom level with end of recommendations
-	.app-jump-layout__back-to-top {
-		clear: both;
-		width: 13rem;
-		margin-left: calc(-13rem - #{govuk-spacing(6)});
-		margin-top: 0;
+	.app-jump-layout--footer .app-jump-layout__nav {
+		position: static;
 	}
 }
