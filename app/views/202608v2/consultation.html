@@ -2,7 +2,6 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
@@ -45,69 +44,11 @@
           },
           {
             value: "no",
+            text: "No - evidence/rationale provided by the trust confirms satisfactory consultation carried out"
+          },
+          {
+            value: "not-applicable",
             text: "No"
-          }
-        ]
-      }) }}
-
-      {{ govukDateInput({
-        id: "consultation-start-date",
-        namePrefix: "consultation-start-date",
-        fieldset: {
-          legend: {
-            text: "What date did the consultation start?",
-            classes: "govuk-fieldset__legend--m"
-          }
-        },
-        hint: {
-          text: "For example, 05 08 2021"
-        },
-        items: [
-          {
-            name: "day",
-            classes: "govuk-input--width-2",
-            value: data['consultation-start-date-day']
-          },
-          {
-            name: "month",
-            classes: "govuk-input--width-2",
-            value: data['consultation-start-date-month']
-          },
-          {
-            name: "year",
-            classes: "govuk-input--width-4",
-            value: data['consultation-start-date-year']
-          }
-        ]
-      }) }}
-
-      {{ govukDateInput({
-        id: "consultation-end-date",
-        namePrefix: "consultation-end-date",
-        fieldset: {
-          legend: {
-            text: "What date did the consultation end?",
-            classes: "govuk-fieldset__legend--m"
-          }
-        },
-        hint: {
-          text: "For example, 05 08 2021"
-        },
-        items: [
-          {
-            name: "day",
-            classes: "govuk-input--width-2",
-            value: data['consultation-end-date-day']
-          },
-          {
-            name: "month",
-            classes: "govuk-input--width-2",
-            value: data['consultation-end-date-month']
-          },
-          {
-            name: "year",
-            classes: "govuk-input--width-4",
-            value: data['consultation-end-date-year']
           }
         ]
       }) }}
@@ -117,7 +58,7 @@
         id: "consultation-summary",
         value: data['consultation-summary'],
         label: {
-          text: "Provide a brief summary of the consultation response",
+          text: "Further information (optional)",
           classes: "govuk-label--m"
         }
       }) }}

@@ -2,7 +2,6 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/checkboxes/macro.njk" import govukCheckboxes %}
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
@@ -33,7 +32,7 @@
         value: data['stakeholder-engagement-carried-out'],
         fieldset: {
           legend: {
-            text: "Has stakeholder engagement been carried out?",
+            text: "Has the trust consulted stakeholders about the planned significant change?",
             classes: "govuk-fieldset__legend--m"
           }
         },
@@ -49,46 +48,52 @@
         ]
       }) }}
 
-      {{ govukCheckboxes({
-        name: "stakeholder-engagement-groups",
-        values: data['stakeholder-engagement-groups'],
+      {{ govukRadios({
+        name: "stakeholder-engagement-objections-raised",
+        value: data['stakeholder-engagement-objections-raised'],
         fieldset: {
           legend: {
-            text: "Which stakeholders have been engaged?",
+            text: "Were there any objections raised?",
             classes: "govuk-fieldset__legend--m"
           }
         },
-        hint: {
-          text: "Select all that apply"
+        items: [
+          {
+            value: "not-applicable",
+            text: "No"
+          },
+          {
+            value: "yes",
+            text: "Yes - trust has confirmed they have addressed all objections"
+          },
+          {
+            value: "no",
+            text: "Yes - no further information provided"
+          }
+        ]
+      }) }}
+
+      {{ govukRadios({
+        name: "stakeholder-engagement-consultation-included-admissions-variation",
+        value: data['stakeholder-engagement-consultation-included-admissions-variation'],
+        fieldset: {
+          legend: {
+            text: "Have the relevant stakeholder been notified of the admissions changes?",
+            classes: "govuk-fieldset__legend--m"
+          }
         },
         items: [
           {
-            value: "Parents and carers",
-            text: "Parents and carers"
+            value: "not-applicable",
+            text: "Not applicable"
           },
           {
-            value: "Staff",
-            text: "Staff"
+            value: "yes",
+            text: "Yes"
           },
           {
-            value: "Pupils",
-            text: "Pupils"
-          },
-          {
-            value: "Local authority",
-            text: "Local authority"
-          },
-          {
-            value: "Local schools",
-            text: "Local schools"
-          },
-          {
-            value: "Diocese or religious authority",
-            text: "Diocese or religious authority"
-          },
-          {
-            value: "Other",
-            text: "Other"
+            value: "no",
+            text: "No"
           }
         ]
       }) }}
@@ -98,7 +103,7 @@
         id: "stakeholder-engagement-summary",
         value: data['stakeholder-engagement-summary'],
         label: {
-          text: "Provide a brief summary of the stakeholder engagement",
+          text: "Further information (optional)",
           classes: "govuk-label--m"
         }
       }) }}

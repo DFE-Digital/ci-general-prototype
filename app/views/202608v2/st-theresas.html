@@ -121,6 +121,16 @@
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="consultation-status" href="consultation">Consultation</a>
+                                </span>
+                                {% if data['consultation-complete'] == 'true' %}
+                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="consultation-status">Completed</strong>
+                                {% else %}
+                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="consultation-status">Not started</strong>
+                                {% endif %}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="stakeholder-engagement-status" href="stakeholder-engagement">Stakeholder engagement</a>
                                 </span>
                                 {% if data['stakeholder-engagement-complete'] == 'true' %}
@@ -137,16 +147,6 @@
                                 <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="la-objections-status">Completed</strong>
                                 {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="la-objections-status">Not started</strong>
-                                {% endif %}
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="consultation-status" href="consultation">Consultation</a>
-                                </span>
-                                {% if data['consultation-complete'] == 'true' %}
-                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="consultation-status">Completed</strong>
-                                {% else %}
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="consultation-status">Not started</strong>
                                 {% endif %}
                             </li>
                             <li class="app-task-list__item">
@@ -221,16 +221,6 @@
                                 <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="planning-permission-status">Completed</strong>
                                 {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="planning-permission-status">Not started</strong>
-                                {% endif %}
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="land-transaction-team-status" href="land-transaction-team">Land transaction Team</a>
-                                </span>
-                                {% if data['land-transaction-team-complete'] == 'true' %}
-                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="land-transaction-team-status">Completed</strong>
-                                {% else %}
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="land-transaction-team-status">Not started</strong>
                                 {% endif %}
                             </li>
                         </ul>

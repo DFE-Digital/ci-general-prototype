@@ -32,14 +32,14 @@
         value: data['la-objections-raised'],
         fieldset: {
           legend: {
-            text: "Has the local authority raised any objections?",
+            text: "Has the LA (local authority) or any bordering LAs raised objections to this change?",
             classes: "govuk-fieldset__legend--m"
           }
         },
         items: [
-          { value: "yes", text: "Yes" },
-          { value: "no", text: "No" },
-          { value: "not-applicable", text: "Not applicable" }
+          { value: "not-applicable", text: "No" },
+          { value: "yes", text: "Yes - however evidence confirms objections have been addressed" },
+          { value: "no", text: "Yes - no further information provided" }
         ]
       }) }}
 
@@ -48,7 +48,7 @@
         id: "la-objections-summary",
         value: data['la-objections-summary'],
         label: {
-          text: "Provide details of any LA objections",
+          text: "Further information (optional)",
           classes: "govuk-label--m"
         }
       }) }}

@@ -43,12 +43,29 @@
         ]
       }) }}
 
+      {{ govukRadios({
+        name: "religious-bodies-objections-raised",
+        value: data['religious-bodies-objections-raised'],
+        fieldset: {
+          legend: {
+            text: "Has the relevant religious body raised any objections?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "not-applicable", text: "Not applicable" },
+          { value: "no", text: "No" },
+          { value: "yes", text: "Yes - evidence confirms objections addressed and consent obtained" },
+          { value: "yes-no-further-info", text: "Yes - no further information provided" }
+        ]
+      }) }}
+
       {{ govukTextarea({
         name: "religious-bodies-summary",
         id: "religious-bodies-summary",
         value: data['religious-bodies-summary'],
         label: {
-          text: "Provide details of engagement with religious bodies",
+          text: "Further information (optional)",
           classes: "govuk-label--m"
         }
       }) }}

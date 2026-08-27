@@ -26,37 +26,6 @@
     <form method="post" action="{{ returnTo }}">
 
       {{ govukDateInput({
-        id: "application-received-date",
-        namePrefix: "application-received-date",
-        fieldset: {
-          legend: {
-            text: "Date the application was received",
-            classes: "govuk-fieldset__legend--m"
-          }
-        },
-        hint: {
-          text: "For example, 27 3 2026"
-        },
-        items: [
-          {
-            name: "day",
-            classes: "govuk-input--width-2",
-            value: data['application-received-date-day']
-          },
-          {
-            name: "month",
-            classes: "govuk-input--width-2",
-            value: data['application-received-date-month']
-          },
-          {
-            name: "year",
-            classes: "govuk-input--width-4",
-            value: data['application-received-date-year']
-          }
-        ]
-      }) }}
-
-      {{ govukDateInput({
         id: "proposed-decision-date",
         namePrefix: "proposed-decision-date",
         fieldset: {
