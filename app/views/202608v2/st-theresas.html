@@ -2,6 +2,15 @@
 
 {% set pageName = "St Theresa’s Catholic Primary School" %}
 {% set navActive = "significant-changes" %}
+{% if data['change-type'] %}
+  {% if data['change-type'] is string %}
+    {% set changeTypeLabel = data['change-type'] %}
+  {% else %}
+    {% set changeTypeLabel = data['change-type'] | join(", ") %}
+  {% endif %}
+{% else %}
+  {% set changeTypeLabel = "Testing tiers" %}
+{% endif %}
 
 {% block content %}
 
@@ -25,7 +34,7 @@
                     Tier: 1
                 </p>
                 <p class="govuk-body govuk-!-margin-bottom-1">
-                    Type: Testing tiers
+                    Type: {{ changeTypeLabel }}
                     <a class="govuk-link govuk-!-padding-left-50" href="select-change-type">Change</a>
                 </p>
                 <p class="govuk-body govuk-!-margin-bottom-5">
