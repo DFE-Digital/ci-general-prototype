@@ -2,7 +2,6 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
@@ -31,7 +30,7 @@
         name: "psed-considered",
         fieldset: {
           legend: {
-            text: "Has the Public Sector Equality Duty been considered?",
+            text: "Has the Public Sector Equality Duty been considered and an Equalities Impact Assessment been completed?",
             classes: "govuk-fieldset__legend--m"
           }
         },
@@ -49,6 +48,7 @@
 
       {{ govukRadios({
         name: "psed-disproportionate-impact",
+        value: data['psed-disproportionate-impact'],
         fieldset: {
           legend: {
             text: "Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?",
@@ -57,35 +57,25 @@
         },
         items: [
           {
-            value: "yes",
-            text: "Yes"
+            value: "unlikely",
+            text: "Unlikely"
           },
           {
-            value: "no",
-            text: "No"
+            value: "some-impact",
+            text: "Some impact"
+          },
+          {
+            value: "likely",
+            text: "Likely"
           }
         ]
-      }) }}
-
-      {{ govukDateInput({
-        id: "psed-assessment-date",
-        namePrefix: "psed-assessment-date",
-        fieldset: {
-          legend: {
-            text: "What date was the equality assessment completed?",
-            classes: "govuk-fieldset__legend--m"
-          }
-        },
-        hint: {
-          text: "For example, 05 08 2021"
-        }
       }) }}
 
       {{ govukTextarea({
         name: "psed-summary",
         id: "psed-summary",
         label: {
-          text: "Provide a brief summary of the Public Sector Equality Duty consideration",
+          text: "Enter anything notable about the protected characteristics of the pupil demographic at the school/academy",
           classes: "govuk-label--m"
         }
       }) }}

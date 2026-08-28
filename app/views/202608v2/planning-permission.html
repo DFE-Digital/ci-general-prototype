@@ -32,14 +32,15 @@
         value: data['planning-permission-required'],
         fieldset: {
           legend: {
-            text: "Is planning permission required?",
+            text: "Has planning permission been secured?",
             classes: "govuk-fieldset__legend--m"
           }
         },
         items: [
           { value: "yes", text: "Yes" },
-          { value: "no", text: "No" },
-          { value: "not-applicable", text: "Not applicable" }
+          { value: "not-applicable", text: "Not applicable" },
+          { value: "no-awaiting-approval", text: "No - awaiting planning permission" },
+          { value: "no", text: "No" }
         ]
       }) }}
 
@@ -48,7 +49,7 @@
         id: "planning-permission-summary",
         value: data['planning-permission-summary'],
         label: {
-          text: "Provide details of planning permission",
+          text: "Further information (optional)",
           classes: "govuk-label--m"
         }
       }) }}

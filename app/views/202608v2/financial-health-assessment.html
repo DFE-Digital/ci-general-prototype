@@ -1,9 +1,9 @@
 {% extends "202608v2/layouts/main-prepare.html" %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
-{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% from "govuk/components/inset-text/macro.njk" import govukInsetText %}
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set pageName = "Financial Health Assessment" %}
@@ -21,45 +21,32 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+
+    {{ govukNotificationBanner({
+      html: '<p class="govuk-notification-banner__heading">In order to request a financial health assessment, you will need to <a class="govuk-notification-banner__link" href="confirm-project-dates">Enter a new proposed decision date</a>.</p>'
+    }) }}
+
     <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
     <h1 class="govuk-heading-l">Financial Health Assessment</h1>
-    <p class="govuk-body">Record the Financial Health Assessment for this significant change.</p>
+    <p class="govuk-body">This has not yet been requested, as you have not entered a proposed decision date.</p>
+
+    {{ govukInsetText({
+      text: "The system will automatically request a Financial Health Assessment to be provided 15 days from the proposed decision date."
+    }) }}
 
     <form method="post" action="{{ returnTo }}">
-
-      {{ govukRadios({
-        name: "financial-health-assessment-completed",
-        value: data['financial-health-assessment-completed'],
-        fieldset: {
-          legend: {
-            text: "Has a Financial Health Assessment been completed?",
-            classes: "govuk-fieldset__legend--m"
-          }
-        },
-        items: [
-          { value: "yes", text: "Yes" },
-          { value: "no", text: "No" },
-          { value: "not-applicable", text: "Not applicable" }
-        ]
-      }) }}
 
       {{ govukTextarea({
         name: "financial-health-assessment-summary",
         id: "financial-health-assessment-summary",
         value: data['financial-health-assessment-summary'],
+        maxlength: 250,
         label: {
-          text: "Provide a summary of the Financial Health Assessment",
+          text: "Can you provide an overview of your commission?",
           classes: "govuk-label--m"
-        }
-      }) }}
-
-      {{ govukInput({
-        id: "financial-health-assessment-supporting-evidence",
-        name: "financial-health-assessment-supporting-evidence",
-        value: data['financial-health-assessment-supporting-evidence'] or "http://sharepoint.edu.gov.uk/.....",
-        label: {
-          text: "Supporting evidence",
-          classes: "govuk-label--m"
+        },
+        hint: {
+          text: "This is optional. Overview must be 250 characters or less. You might want to include any case complexities that funding delivery need to be aware of and include teams and colleagues that are already involved."
         }
       }) }}
 

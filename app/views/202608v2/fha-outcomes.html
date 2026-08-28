@@ -32,14 +32,13 @@
         value: data['fha-outcomes-recorded'],
         fieldset: {
           legend: {
-            text: "Have FHA outcomes been recorded?",
+            text: "Have there been any risks or issues raised in the financial health assessment?",
             classes: "govuk-fieldset__legend--m"
           }
         },
         items: [
           { value: "yes", text: "Yes" },
-          { value: "no", text: "No" },
-          { value: "not-applicable", text: "Not applicable" }
+          { value: "no", text: "No" }
         ]
       }) }}
 
@@ -48,7 +47,7 @@
         id: "fha-outcomes-summary",
         value: data['fha-outcomes-summary'],
         label: {
-          text: "Provide details of the FHA outcomes",
+          text: "Further information (optional)",
           classes: "govuk-label--m"
         }
       }) }}

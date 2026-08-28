@@ -2,6 +2,7 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 {% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
@@ -24,22 +25,83 @@
     <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
     <h1 class="govuk-heading-l">Ofsted</h1>
     <p class="govuk-body">Record Ofsted inspection information relevant to this significant change.</p>
+    <p class="govuk-body">The date of the last Ofsted inspection was 2nd July 2025.</p>
 
     <form method="post" action="{{ returnTo }}">
+
+      {{ govukDateInput({
+        id: "ofsted-inspection-date",
+        namePrefix: "ofsted-inspection-date",
+        fieldset: {
+          legend: {
+            text: "Date of most recent Ofsted inspection",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        hint: {
+          text: "For example, 15 9 2026"
+        },
+        items: [
+          {
+            name: "day",
+            classes: "govuk-input--width-2",
+            value: data['ofsted-inspection-date-day']
+          },
+          {
+            name: "month",
+            classes: "govuk-input--width-2",
+            value: data['ofsted-inspection-date-month']
+          },
+          {
+            name: "year",
+            classes: "govuk-input--width-4",
+            value: data['ofsted-inspection-date-year']
+          }
+        ]
+      }) }}
 
       {{ govukRadios({
         name: "ofsted-inspection-considered",
         value: data['ofsted-inspection-considered'],
         fieldset: {
           legend: {
-            text: "Has the most recent Ofsted inspection been considered?",
+            text: "Is the academy rated good or outstanding?",
             classes: "govuk-fieldset__legend--m"
           }
         },
         items: [
           { value: "yes", text: "Yes" },
-          { value: "no", text: "No" },
-          { value: "not-applicable", text: "Not applicable" }
+          { value: "no", text: "No" }
+        ]
+      }) }}
+
+      {{ govukRadios({
+        name: "ofsted-inspection-leadership-education",
+        value: data['ofsted-inspection-leadership-education'],
+        fieldset: {
+          legend: {
+            text: "Is the academy rated good or outstanding in leadership & management and quality of education?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "yes", text: "Yes" },
+          { value: "no", text: "No" }
+        ]
+      }) }}
+
+      {{ govukRadios({
+        name: "ofsted-inspection-evaluation-standard",
+        value: data['ofsted-inspection-evaluation-standard'],
+        fieldset: {
+          legend: {
+            text: "Is the academy meeting expected standard, strong standard or exceptional in all evaluation areas?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "yes", text: "Yes" },
+          { value: "no", text: "No" }
         ]
       }) }}
 
@@ -48,7 +110,7 @@
         id: "ofsted-inspection-summary",
         value: data['ofsted-inspection-summary'],
         label: {
-          text: "Provide details of the Ofsted inspection outcome",
+          text: "Further information (optional)",
           classes: "govuk-label--m"
         }
       }) }}

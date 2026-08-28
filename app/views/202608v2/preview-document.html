@@ -20,6 +20,45 @@
   {%- endif -%}
 {%- endmacro %}
 
+{% macro landTransactionRequired(text) -%}
+  {%- if text == "yes" -%}Yes
+  {%- elseif text == "not-applicable" -%}Not applicable
+  {%- elseif text == "no-further-information" -%}No
+  {%- elseif text == "no-landowner-to-submit" -%}No – landowner to submit land transaction application
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro landTransactionTeamConsented(text) -%}
+  {%- if text == "not-applicable" -%}Not applicable
+  {%- elseif text == "yes" -%}Yes
+  {%- elseif text == "awaiting-approval" -%}Awaiting approval from Land Transaction Team
+  {%- elseif text == "no" -%}No
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro planningPermissionSecured(text) -%}
+  {%- if text == "yes" -%}Yes
+  {%- elseif text == "not-applicable" -%}Not applicable
+  {%- elseif text == "no-awaiting-approval" -%}No - awaiting planning permission
+  {%- elseif text == "no" -%}No
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro psedOutcome(text) -%}
+  {%- if text == "unlikely" -%}Unlikely
+  {%- elseif text == "some-impact" -%}Some impact
+  {%- elseif text == "likely" -%}Likely
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
 {% macro consultationCarriedOut(text) -%}
   {%- if text == "yes" -%}Yes
   {%- elseif text == "no" -%}No - evidence/rationale provided by the trust confirms satisfactory consultation carried out
@@ -268,8 +307,17 @@
     <div class="app-summary-card">
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Has the most recent Ofsted inspection been considered?", "/202608v2/ofsted-inspection") %}
+          {% call row("Date of most recent Ofsted inspection", "/202608v2/ofsted-inspection", "Ofsted inspection date") %}
+            {{ dateValue("ofsted-inspection-date") }}
+          {% endcall %}
+          {% call row("Is the academy rated good or outstanding?", "/202608v2/ofsted-inspection") %}
             {{ yesNo(data["ofsted-inspection-considered"]) }}
+          {% endcall %}
+          {% call row("Is the academy rated good or outstanding in leadership & management and quality of education?", "/202608v2/ofsted-inspection", "Ofsted leadership and education") %}
+            {{ yesNo(data["ofsted-inspection-leadership-education"]) }}
+          {% endcall %}
+          {% call row("Is the academy meeting expected standard, strong standard or exceptional in all evaluation areas?", "/202608v2/ofsted-inspection", "Ofsted evaluation standard") %}
+            {{ yesNo(data["ofsted-inspection-evaluation-standard"]) }}
           {% endcall %}
           {% call row("Details", "/202608v2/ofsted-inspection", "Ofsted inspection details") %}
             {{ value(data["ofsted-inspection-summary"]) }}
@@ -288,14 +336,11 @@
     <div class="app-summary-card">
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Has the Public Sector Equality Duty been considered?", "/202608v2/psed") %}
+          {% call row("Has the Public Sector Equality Duty been considered and an Equalities Impact Assessment been completed?", "/202608v2/psed") %}
             {{ yesNo(data["psed-considered"]) }}
           {% endcall %}
-          {% call row("Is the decision likely to disproportionately affect any particular person or group?", "/202608v2/psed", "disproportionate impact") %}
-            {{ yesNo(data["psed-disproportionate-impact"]) }}
-          {% endcall %}
-          {% call row("Date equality assessment completed", "/202608v2/psed", "equality assessment date") %}
-            {{ dateValue("psed-assessment-date") }}
+          {% call row("Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?", "/202608v2/psed", "disproportionate impact") %}
+            {{ psedOutcome(data["psed-disproportionate-impact"]) }}
           {% endcall %}
           {% call row("Summary", "/202608v2/psed", "PSED summary") %}
             {{ value(data["psed-summary"]) }}
@@ -315,8 +360,11 @@
     <div class="app-summary-card">
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Is a land transaction required?", "/202608v2/land-transaction") %}
-            {{ yesNo(data["land-transaction-required"]) }}
+          {% call row("Has the landowner submitted a land transaction application?", "/202608v2/land-transaction") %}
+            {{ landTransactionRequired(data["land-transaction-required"]) }}
+          {% endcall %}
+          {% call row("Have the Land Transaction Team consented to the change?", "/202608v2/land-transaction", "Land Transaction Team consent") %}
+            {{ landTransactionTeamConsented(data["land-transaction-team-consented"]) }}
           {% endcall %}
           {% call row("Details", "/202608v2/land-transaction", "land transaction details") %}
             {{ value(data["land-transaction-summary"]) }}
@@ -331,8 +379,8 @@
     <div class="app-summary-card">
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Is planning permission required?", "/202608v2/planning-permission") %}
-            {{ yesNo(data["planning-permission-required"]) }}
+          {% call row("Has planning permission been secured?", "/202608v2/planning-permission") %}
+            {{ planningPermissionSecured(data["planning-permission-required"]) }}
           {% endcall %}
           {% call row("Details", "/202608v2/planning-permission", "planning permission details") %}
             {{ value(data["planning-permission-summary"]) }}
@@ -352,7 +400,7 @@
     <div class="app-summary-card">
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Has funding been considered?", "/202608v2/funding") %}
+          {% call row("Has funding been secured?", "/202608v2/funding") %}
             {{ yesNo(data["funding-considered"]) }}
           {% endcall %}
           {% call row("Details", "/202608v2/funding", "funding details") %}
@@ -368,14 +416,8 @@
     <div class="app-summary-card">
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Has a Financial Health Assessment been completed?", "/202608v2/financial-health-assessment") %}
-            {{ yesNo(data["financial-health-assessment-completed"]) }}
-          {% endcall %}
-          {% call row("Summary", "/202608v2/financial-health-assessment", "Financial Health Assessment summary") %}
+          {% call row("Can you provide an overview of your commission?", "/202608v2/financial-health-assessment") %}
             {{ value(data["financial-health-assessment-summary"]) }}
-          {% endcall %}
-          {% call row("Supporting evidence", "/202608v2/financial-health-assessment", "Financial Health Assessment supporting evidence") %}
-            {{ value(data["financial-health-assessment-supporting-evidence"]) }}
           {% endcall %}
         </dl>
       </div>
@@ -384,7 +426,7 @@
     <div class="app-summary-card">
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Have FHA outcomes been recorded?", "/202608v2/fha-outcomes") %}
+          {% call row("Have there been any risks or issues raised in the financial health assessment?", "/202608v2/fha-outcomes") %}
             {{ yesNo(data["fha-outcomes-recorded"]) }}
           {% endcall %}
           {% call row("Details", "/202608v2/fha-outcomes", "FHA Outcomes details") %}

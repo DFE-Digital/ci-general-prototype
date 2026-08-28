@@ -32,14 +32,32 @@
         value: data['land-transaction-required'],
         fieldset: {
           legend: {
-            text: "Is a land transaction required?",
+            text: "Has the landowner submitted a land transaction application?",
             classes: "govuk-fieldset__legend--m"
           }
         },
         items: [
           { value: "yes", text: "Yes" },
-          { value: "no", text: "No" },
-          { value: "not-applicable", text: "Not applicable" }
+          { value: "not-applicable", text: "Not applicable" },
+          { value: "no-further-information", text: "No" },
+          { value: "no-landowner-to-submit", text: "No – landowner to submit land transaction application" }
+        ]
+      }) }}
+
+      {{ govukRadios({
+        name: "land-transaction-team-consented",
+        value: data['land-transaction-team-consented'],
+        fieldset: {
+          legend: {
+            text: "Have the Land Transaction Team consented to the change?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "not-applicable", text: "Not applicable" },
+          { value: "yes", text: "Yes" },
+          { value: "awaiting-approval", text: "Awaiting approval from Land Transaction Team" },
+          { value: "no", text: "No" }
         ]
       }) }}
 
@@ -48,7 +66,7 @@
         id: "land-transaction-summary",
         value: data['land-transaction-summary'],
         label: {
-          text: "Provide details of the land transaction",
+          text: "Further information (optional)",
           classes: "govuk-label--m"
         }
       }) }}
