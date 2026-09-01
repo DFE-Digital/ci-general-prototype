@@ -81,7 +81,7 @@
                         <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#psed">PSED</a></li>
                         <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#land-and-planning">Land and planning</a></li>
                         <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#financials">Financials</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#growth-applications">HQTF</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#growth-applications">High Quality Trust Framework</a></li>
                         <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#recommendations">Recommendations</a></li>
                     </ul>
             </nav>
@@ -275,57 +275,17 @@
                 </section>
 
                 <section id="growth-applications" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">HQTF</h2>
+                    <h2 class="app-task-list__section">High Quality Trust Framework</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="high-quality-inclusive-education-status" href="high-quality-inclusive-education">High quality and inclusive education</a>
+                                    <a class="govuk-link" aria-describedby="high-quality-inclusive-education-status" href="high-quality-inclusive-education">HQTF consideration</a>
                                 </span>
                                 {% if data['high-quality-inclusive-education-complete'] == 'true' %}
                                 <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="high-quality-inclusive-education-status">Completed</strong>
                                 {% else %}
                                 <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="high-quality-inclusive-education-status">Not started</strong>
-                                {% endif %}
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="school-improvement-status" href="school-improvement">School improvement</a>
-                                </span>
-                                {% if data['school-improvement-complete'] == 'true' %}
-                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="school-improvement-status">Completed</strong>
-                                {% else %}
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="school-improvement-status">Not started</strong>
-                                {% endif %}
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="workforce-status" href="workforce">Workforce</a>
-                                </span>
-                                {% if data['workforce-complete'] == 'true' %}
-                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="workforce-status">Completed</strong>
-                                {% else %}
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="workforce-status">Not started</strong>
-                                {% endif %}
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="finance-and-operations-status" href="finance-and-operations">Finance and operations</a>
-                                </span>
-                                {% if data['finance-and-operations-complete'] == 'true' %}
-                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="finance-and-operations-status">Completed</strong>
-                                {% else %}
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="finance-and-operations-status">Not started</strong>
-                                {% endif %}
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="governance-and-leadership-status" href="governance-and-leadership">Governance and leadership</a>
-                                </span>
-                                {% if data['governance-and-leadership-complete'] == 'true' %}
-                                <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="governance-and-leadership-status">Completed</strong>
-                                {% else %}
-                                <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="governance-and-leadership-status">Not started</strong>
                                 {% endif %}
                             </li>
                         </ul>

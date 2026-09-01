@@ -136,10 +136,6 @@
                 "financial-health-assessment": "financials",
                 "fha-outcomes": "financials",
                 "high-quality-inclusive-education": "hqtf",
-                "school-improvement": "hqtf",
-                "workforce": "hqtf",
-                "finance-and-operations": "hqtf",
-                "governance-and-leadership": "hqtf",
                 "approve": "recommendations"
               } %}
               {% set sectionId = section if section else sectionLookup[page] %}
@@ -177,7 +173,7 @@
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#psed">PSED</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#land-and-planning">Land and planning</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#financials">Financials</a></li>
-      <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#hqtf">HQTF</a></li>
+      <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#hqtf">High Quality Trust Framework</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#recommendations">Recommendations</a></li>
     </ul>
   </nav>
@@ -310,13 +306,13 @@
           {% call row("Date of most recent Ofsted inspection", "/202608v2/ofsted-inspection", "Ofsted inspection date") %}
             {{ dateValue("ofsted-inspection-date") }}
           {% endcall %}
-          {% call row("Is the academy rated good or outstanding?", "/202608v2/ofsted-inspection") %}
+          {% call row("Is the academy rated good or outstanding? (Pre 19th September 2024)", "/202608v2/ofsted-inspection") %}
             {{ yesNo(data["ofsted-inspection-considered"]) }}
           {% endcall %}
-          {% call row("Is the academy rated good or outstanding in leadership & management and quality of education?", "/202608v2/ofsted-inspection", "Ofsted leadership and education") %}
+          {% call row("Is the academy rated good or outstanding in leadership & management and quality of education? (19 sept 2024 to 9 Nov 2025)", "/202608v2/ofsted-inspection", "Ofsted leadership and education") %}
             {{ yesNo(data["ofsted-inspection-leadership-education"]) }}
           {% endcall %}
-          {% call row("Is the academy meeting expected standard, strong standard or exceptional in all evaluation areas?", "/202608v2/ofsted-inspection", "Ofsted evaluation standard") %}
+          {% call row("Is the academy meeting expected standard, strong standard or exceptional in all evaluation areas? (Post 9 Nov 2025)", "/202608v2/ofsted-inspection", "Ofsted evaluation standard") %}
             {{ yesNo(data["ofsted-inspection-evaluation-standard"]) }}
           {% endcall %}
           {% call row("Details", "/202608v2/ofsted-inspection", "Ofsted inspection details") %}
@@ -440,85 +436,28 @@
     </div>
 </div>
 
-{# HQTF #}
+{# High Quality Trust Framework #}
 <div id="hqtf" class="govuk-!-margin-bottom-9">
-  <h2 class="govuk-heading-l">HQTF</h2>
+  <h2 class="govuk-heading-l">High Quality Trust Framework</h2>
 
     <div class="app-summary-card">
+      <div class="app-summary-card__title">
+        <h3 class="app-summary-card__heading">HQTF consideration</h3>
+      </div>
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Does the proposal support high quality and inclusive education?", "/202608v2/high-quality-inclusive-education") %}
-            {{ yesNo(data["hqie-supports"]) }}
+          {% call row("Have any issues or risks been identified with regards to the HQTF pillars - High Quality & Inclusive Education, School Improvement, Workforce, Finance & Operations, Governance & Leadership?", "/202608v2/high-quality-inclusive-education") %}
+            {%- if data["hqie-supports"] == "yes" -%}No issues or risks identified
+            {%- elseif data["hqie-supports"] == "no" -%}Risks or issues identified that are relevant to this significant change
+            {%- elseif data["hqie-supports"] == "not-relevant" -%}Risks or issues identified that are not relevant to this significant change
+            {%- else -%}{{ yesNo(data["hqie-supports"]) }}
+            {%- endif -%}
           {% endcall %}
-          {% call row("Details", "/202608v2/high-quality-inclusive-education", "high quality and inclusive education details") %}
+          {% call row("Further information (optional)", "/202608v2/high-quality-inclusive-education", "HQTF consideration further information") %}
             {{ value(data["high-quality-inclusive-education-summary"]) }}
           {% endcall %}
-          {% call row("Supporting evidence", "/202608v2/high-quality-inclusive-education", "high quality and inclusive education supporting evidence") %}
+          {% call row("Supporting evidence", "/202608v2/high-quality-inclusive-education", "HQTF consideration supporting evidence") %}
             {{ value(data["high-quality-inclusive-education-supporting-evidence"]) }}
-          {% endcall %}
-        </dl>
-      </div>
-    </div>
-
-    <div class="app-summary-card">
-      <div class="app-summary-card__content">
-        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Does the proposal support school improvement?", "/202608v2/school-improvement") %}
-            {{ yesNo(data["school-improvement-supports"]) }}
-          {% endcall %}
-          {% call row("Details", "/202608v2/school-improvement", "school improvement details") %}
-            {{ value(data["school-improvement-summary"]) }}
-          {% endcall %}
-          {% call row("Supporting evidence", "/202608v2/school-improvement", "school improvement supporting evidence") %}
-            {{ value(data["school-improvement-supporting-evidence"]) }}
-          {% endcall %}
-        </dl>
-      </div>
-    </div>
-
-    <div class="app-summary-card">
-      <div class="app-summary-card__content">
-        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Have workforce implications been considered?", "/202608v2/workforce") %}
-            {{ yesNo(data["workforce-considered"]) }}
-          {% endcall %}
-          {% call row("Details", "/202608v2/workforce", "workforce details") %}
-            {{ value(data["workforce-summary"]) }}
-          {% endcall %}
-          {% call row("Supporting evidence", "/202608v2/workforce", "workforce supporting evidence") %}
-            {{ value(data["workforce-supporting-evidence"]) }}
-          {% endcall %}
-        </dl>
-      </div>
-    </div>
-
-    <div class="app-summary-card">
-      <div class="app-summary-card__content">
-        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Have finance and operations been considered?", "/202608v2/finance-and-operations") %}
-            {{ yesNo(data["finance-and-operations-considered"]) }}
-          {% endcall %}
-          {% call row("Details", "/202608v2/finance-and-operations", "finance and operations details") %}
-            {{ value(data["finance-and-operations-summary"]) }}
-          {% endcall %}
-          {% call row("Supporting evidence", "/202608v2/finance-and-operations", "finance and operations supporting evidence") %}
-            {{ value(data["finance-and-operations-supporting-evidence"]) }}
-          {% endcall %}
-        </dl>
-      </div>
-    </div>
-
-    <div class="app-summary-card">
-      <div class="app-summary-card__content">
-        <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Have governance and leadership been considered?", "/202608v2/governance-and-leadership") %}
-            {{ yesNo(data["governance-and-leadership-considered"]) }}
-          {% endcall %}
-          {% call row("Details", "/202608v2/governance-and-leadership", "governance and leadership details") %}
-            {{ value(data["governance-and-leadership-summary"]) }}
-          {% endcall %}
-          {% call row("Supporting evidence", "/202608v2/governance-and-leadership", "governance and leadership supporting evidence") %}
-            {{ value(data["governance-and-leadership-supporting-evidence"]) }}
           {% endcall %}
         </dl>
       </div>
