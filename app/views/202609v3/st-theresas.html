@@ -1,0 +1,297 @@
+{% extends "202609v3/layouts/main-prepare.html" %}
+
+{% set pageName = "St Theresa’s Catholic Primary School" %}
+{% set navActive = "significant-changes" %}
+{% if data['change-type'] %}
+  {% if data['change-type'] is string %}
+    {% set changeTypeLabel = data['change-type'] %}
+  {% else %}
+    {% set changeTypeLabel = data['change-type'] | join(", ") %}
+  {% endif %}
+{% else %}
+  {% set changeTypeLabel = "Testing tiers" %}
+{% endif %}
+
+{% macro statusTag(id, status) %}
+  {% if status == "completed" %}
+  <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="{{ id }}">Completed</strong>
+  {% elseif status == "in-progress" %}
+  <strong class="govuk-tag govuk-tag--blue app-task-list__tag" id="{{ id }}">In progress</strong>
+  {% else %}
+  <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="{{ id }}">Not started</strong>
+  {% endif %}
+{% endmacro %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+    <a class="govuk-back-link" href="significant-changes">Back</a>
+
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <span class="govuk-caption-xl" data-cy=".govuk-caption-xl">URN: 101335</span>
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" data-cy="select-heading">
+                    St Theresa’s Catholic Primary School
+                </h1>
+            </div>
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body govuk-!-margin-bottom-1">
+                    Trust: Appleby Grammar School (10059089)
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-1">
+                    Tier: 1
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-1">
+                    Type: {{ changeTypeLabel }}
+                    <a class="govuk-link govuk-!-padding-left-50" href="select-change-type">Change</a>
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-5">
+                    Project owner:
+                    <span data-id="assigned-user">Your name</span>
+                    <a class="govuk-link govuk-!-padding-left-50" href="#">Change</a>
+                </p>
+                <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-5">
+                    <strong class="govuk-tag govuk-tag--yellow" id="project-status-101335">Pre decision</strong>
+                </p>
+            </div>
+
+            <div class="govuk-grid-column-full">
+                <nav class="moj-sub-navigation" aria-label="Sub navigation">
+                    <ul class="moj-sub-navigation__list govuk-!-margin-top-6">
+                        <li class="moj-sub-navigation__item">
+                            <a class="moj-sub-navigation__link" aria-current="page" href="#">
+                                Project details
+                            </a>
+                        </li>
+                        <li class="moj-sub-navigation__item">
+                            <a class="moj-sub-navigation__link" href="#">
+                                School application form
+                            </a>
+                        </li>
+                        <li class="moj-sub-navigation__item" data-cy="record_decision_menu">
+                            <a class="moj-sub-navigation__link" href="#">
+                                Decision
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="app-task-jump-layout">
+            <nav class="app-jump-nav" aria-label="Jump to section">
+                    <h2 class="govuk-heading-s govuk-!-margin-bottom-3">Jump to section</h2>
+                    <ul class="govuk-list">
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#add-dfe-information">Proposed decision and change dates</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#admissions-variation">Admissions variation</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#consultation">Consultation</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#screening-questions">Performance</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#psed">PSED</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#land-and-planning">Land and planning</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#financials">Financials</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#growth-applications">High Quality Trust Framework</a></li>
+                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#recommendations">Recommendations</a></li>
+                    </ul>
+            </nav>
+
+            <div class="app-task-jump-layout__content">
+
+                <section id="add-dfe-information" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Proposed decision and change dates</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="confirm-project-dates-status" href="confirm-project-dates">Confirm project dates</a>
+                                </span>
+                                {{ statusTag("confirm-project-dates-status", data | taskStatus([
+                                  ["proposed-decision-date-day", "proposed-decision-date-month", "proposed-decision-date-year"],
+                                  ["proposed-implementation-date-day", "proposed-implementation-date-month", "proposed-implementation-date-year"]
+                                ])) }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="admissions-variation" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Admissions variation</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="admissions-variation-status" href="admissions-variation">Admissions variation</a>
+                                </span>
+                                {{ statusTag("admissions-variation-status", data | taskStatus([
+                                  "admissions-variation-required",
+                                  "admissions-variation-teams-supportive",
+                                  { when: "admissions-variation-teams-supportive", equals: "no", field: "admissions-variation-teams-supportive-details" }
+                                ])) }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="consultation" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Consultation</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="consultation-status" href="consultation">Consultation</a>
+                                </span>
+                                {{ statusTag("consultation-status", data | taskStatus(["consultation-carried-out"])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="stakeholder-engagement-status" href="stakeholder-engagement">Stakeholder engagement</a>
+                                </span>
+                                {{ statusTag("stakeholder-engagement-status", data | taskStatus([
+                                  "stakeholder-engagement-carried-out",
+                                  "stakeholder-engagement-objections-raised",
+                                  "stakeholder-engagement-consultation-included-admissions-variation",
+                                  { when: "stakeholder-engagement-carried-out", equals: "no", field: "stakeholder-engagement-carried-out-details" },
+                                  { when: "stakeholder-engagement-consultation-included-admissions-variation", equals: "no", field: "stakeholder-engagement-consultation-included-admissions-variation-details" }
+                                ])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="la-objections-status" href="la-objections">LA objections</a>
+                                </span>
+                                {{ statusTag("la-objections-status", data | taskStatus(["la-objections-raised"])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="religious-bodies-status" href="religious-bodies">Religious bodies</a>
+                                </span>
+                                {{ statusTag("religious-bodies-status", data | taskStatus([
+                                  "religious-bodies-consulted",
+                                  "religious-bodies-objections-raised",
+                                  { when: "religious-bodies-consulted", equals: "no", field: "religious-bodies-consulted-details" },
+                                  { when: "religious-bodies-objections-raised", equals: "no", field: "religious-bodies-objections-raised-details" }
+                                ])) }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="screening-questions" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Performance</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="ofsted-inspection-status" href="ofsted-inspection">Ofsted</a>
+                                </span>
+                                {{ statusTag("ofsted-inspection-status", data | taskStatus(["ofsted-inspection-considered", "ofsted-inspection-leadership-education", "ofsted-inspection-evaluation-standard"])) }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="psed" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">PSED</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="psed-status" href="psed">Public Sector Equality Duty</a>
+                                </span>
+                                {{ statusTag("psed-status", data | taskStatus(["psed-considered", "psed-disproportionate-impact"])) }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="land-and-planning" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Land and planning</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="land-transaction-status" href="land-transaction">Land transaction</a>
+                                </span>
+                                {{ statusTag("land-transaction-status", data | taskStatus(["land-transaction-required", "land-transaction-team-consented"])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="planning-permission-status" href="planning-permission">Planning permission</a>
+                                </span>
+                                {{ statusTag("planning-permission-status", data | taskStatus(["planning-permission-required"])) }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="financials" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Financials</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="funding-status" href="funding">Funding</a>
+                                </span>
+                                {{ statusTag("funding-status", data | taskStatus(["funding-considered"])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="financial-health-assessment-status" href="financial-health-assessment">Financial Health Assessment</a>
+                                </span>
+                                {{ statusTag("financial-health-assessment-status", data | taskStatus(["financial-health-assessment-summary"])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="fha-outcomes-status" href="fha-outcomes">FHA Outcomes</a>
+                                </span>
+                                {{ statusTag("fha-outcomes-status", data | taskStatus(["fha-outcomes-recorded"])) }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="growth-applications" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">High Quality Trust Framework</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="high-quality-inclusive-education-status" href="high-quality-inclusive-education">HQTF consideration</a>
+                                </span>
+                                {{ statusTag("high-quality-inclusive-education-status", data | taskStatus(["hqie-supports"])) }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="recommendations" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">Recommendations</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="approve-status" href="approve">Recommendation</a>
+                                </span>
+                                {{ statusTag("approve-status", data | taskStatus(["recommendation"])) }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
+            </div>
+        </div>
+
+        <div class="app-task-jump-layout app-task-jump-layout--footer">
+            <p class="app-task-jump-layout__back-to-top">
+                <a class="govuk-link" href="#" onclick="window.scrollTo(0, 0); return false;">↑ Back to top</a>
+            </p>
+            <div class="app-task-jump-layout__content">
+                <a href="/202609v3/preview-document" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
+                    Preview
+                </a>
+            </div>
+        </div>
+    </main>
+</div>
+
+{% endblock %}

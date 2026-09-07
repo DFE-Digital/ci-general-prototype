@@ -1,0 +1,67 @@
+{% extends "202609v3/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Recommendation" %}
+{% set navActive = "significant-changes" %}
+{% set returnTo = "/202609v3/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v3/st-theresas") %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: returnTo
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    <h1 class="govuk-heading-l">Recommendation</h1>
+    <p class="govuk-body">Record a recommendation for this significant change.</p>
+
+    <form method="post" action="{{ returnTo }}">
+
+      {{ govukRadios({
+        name: "recommendation",
+        value: data['recommendation'],
+        fieldset: {
+          legend: {
+            text: "What is your recommendation?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "Approve", text: "Approve" },
+          { value: "Approve with conditions", text: "Approve with conditions" },
+          { value: "Defer", text: "Defer" },
+          { value: "Withdraw", text: "Withdraw" },
+          { value: "Decline", text: "Decline" }
+        ]
+      }) }}
+
+      {{ govukTextarea({
+        name: "approve-rationale",
+        id: "approve-rationale",
+        value: data['approve-rationale'],
+        label: {
+          text: "Provide a rationale for this recommendation",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      <input type="hidden" name="approve-complete" value="true">
+
+      {{ govukButton({
+        text: "Save and return"
+      }) }}
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}

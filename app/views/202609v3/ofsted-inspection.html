@@ -1,0 +1,158 @@
+{% extends "202609v3/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/date-input/macro.njk" import govukDateInput %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Ofsted" %}
+{% set navActive = "significant-changes" %}
+{% set returnTo = "/202609v3/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v3/st-theresas") %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: returnTo
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    <h1 class="govuk-heading-l">Ofsted</h1>
+    <p class="govuk-body">Record Ofsted inspection information relevant to this significant change.</p>
+    <p class="govuk-body">The date of the last Ofsted inspection was 2nd July 2025.</p>
+
+    <form method="post" action="{{ returnTo }}">
+
+      {{ govukDateInput({
+        id: "ofsted-inspection-date",
+        namePrefix: "ofsted-inspection-date",
+        fieldset: {
+          legend: {
+            text: "Date of most recent Ofsted inspection",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        hint: {
+          text: "For example, 15 9 2026"
+        },
+        items: [
+          {
+            name: "day",
+            classes: "govuk-input--width-2",
+            value: data['ofsted-inspection-date-day']
+          },
+          {
+            name: "month",
+            classes: "govuk-input--width-2",
+            value: data['ofsted-inspection-date-month']
+          },
+          {
+            name: "year",
+            classes: "govuk-input--width-4",
+            value: data['ofsted-inspection-date-year']
+          }
+        ]
+      }) }}
+
+      {{ govukRadios({
+        name: "ofsted-inspection-considered",
+        value: data['ofsted-inspection-considered'],
+        fieldset: {
+          legend: {
+            text: "Is the academy rated good or outstanding? (Pre 19th September 2024)",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "yes", text: "Yes" },
+          { value: "no", text: "No" },
+          { value: "not-applicable", text: "Not applicable" }
+        ]
+      }) }}
+
+      {{ govukRadios({
+        name: "ofsted-inspection-leadership-education",
+        value: data['ofsted-inspection-leadership-education'],
+        fieldset: {
+          legend: {
+            text: "Is the academy rated good or outstanding in leadership & management and quality of education? (19 sept 2024 to 9 Nov 2025)",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "yes", text: "Yes" },
+          { value: "no", text: "No" },
+          { value: "not-applicable", text: "Not applicable" }
+        ]
+      }) }}
+
+      {{ govukRadios({
+        name: "ofsted-inspection-evaluation-standard",
+        value: data['ofsted-inspection-evaluation-standard'],
+        fieldset: {
+          legend: {
+            text: "Is the academy meeting expected standard, strong standard or exceptional in all evaluation areas? (Post 9 Nov 2025)",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "yes", text: "Yes" },
+          { value: "no", text: "No" },
+          { value: "not-applicable", text: "Not applicable" }
+        ]
+      }) }}
+
+      {{ govukTextarea({
+        name: "ofsted-inspection-summary",
+        id: "ofsted-inspection-summary",
+        value: data['ofsted-inspection-summary'],
+        label: {
+          text: "Further information (optional)",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      {{ govukInput({
+        id: "ofsted-inspection-supporting-evidence",
+        name: "ofsted-inspection-supporting-evidence",
+        value: data['ofsted-inspection-supporting-evidence'] or "http://sharepoint.edu.gov.uk/.....",
+        label: {
+          text: "Supporting evidence",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      <input type="hidden" name="ofsted-inspection-complete" value="true">
+
+      {{ govukButton({
+        text: "Save and return"
+      }) }}
+
+    </form>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">
+        Useful information
+      </h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</div>
+
+{% endblock %}

@@ -42,10 +42,12 @@ router.use(function (req, res, next) {
     return next()
   }
 
-  const match = req.path.match(/^\/202608v2\/([^/]+)\/?$/)
-  if (!match || !sigChangeTaskPages.includes(match[1])) {
+  const match = req.path.match(/^\/(202608v2|202609v3)\/([^/]+)\/?$/)
+  if (!match || !sigChangeTaskPages.includes(match[2])) {
     return next()
   }
+
+  const version = match[1]
 
   // autoStoreData copies session into res.locals before routes run, so update both
   if (!req.session.data) {
@@ -57,7 +59,7 @@ router.use(function (req, res, next) {
 
   if (req.query.returnTo === 'preview') {
     const section = req.query.section ? ('?section=' + encodeURIComponent(req.query.section)) : ''
-    const returnUrl = '/202608v2/preview-document' + section
+    const returnUrl = '/' + version + '/preview-document' + section
     req.session.data['sig-change-return-to'] = returnUrl
     res.locals.data['sig-change-return-to'] = returnUrl
     req.session.data.returnTo = 'preview'
@@ -67,7 +69,7 @@ router.use(function (req, res, next) {
       res.locals.data.section = req.query.section
     }
   } else {
-    const returnUrl = '/202608v2/st-theresas'
+    const returnUrl = '/' + version + '/st-theresas'
     req.session.data['sig-change-return-to'] = returnUrl
     res.locals.data['sig-change-return-to'] = returnUrl
     // Clear query values that autoStoreData may have kept from a previous preview visit

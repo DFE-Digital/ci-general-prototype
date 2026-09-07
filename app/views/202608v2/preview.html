@@ -1,0 +1,458 @@
+{% extends "202608v2/layouts/main-prepare.html" %}
+
+{% set pageName = "Preview" %}
+{% set navActive = "significant-changes" %}
+{% set docsPreviewBack = "/202608v2/st-theresas" %}
+
+{% macro empty() %}<span class="empty">Empty</span>{% endmacro %}
+
+{% macro value(text) -%}
+  {%- if text -%}{{ text }}{%- else -%}{{ empty() }}{%- endif -%}
+{%- endmacro %}
+
+{% macro yesNo(text) -%}
+  {%- if text == "yes" -%}Yes
+  {%- elseif text == "no" -%}No
+  {%- elseif text == "not-applicable" -%}Not applicable
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro landTransactionRequired(text) -%}
+  {%- if text == "yes" -%}Yes
+  {%- elseif text == "not-applicable" -%}Not applicable
+  {%- elseif text == "no-further-information" -%}No
+  {%- elseif text == "no-landowner-to-submit" -%}No – landowner to submit land transaction application
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro landTransactionTeamConsented(text) -%}
+  {%- if text == "not-applicable" -%}Not applicable
+  {%- elseif text == "yes" -%}Yes
+  {%- elseif text == "awaiting-approval" -%}Awaiting approval from Land Transaction Team
+  {%- elseif text == "no" -%}No
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro planningPermissionSecured(text) -%}
+  {%- if text == "yes" -%}Yes
+  {%- elseif text == "not-applicable" -%}Not applicable
+  {%- elseif text == "no-awaiting-approval" -%}No - awaiting planning permission
+  {%- elseif text == "no" -%}No
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro psedOutcome(text) -%}
+  {%- if text == "unlikely" -%}Unlikely
+  {%- elseif text == "some-impact" -%}Some impact
+  {%- elseif text == "likely" -%}Likely
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro consultationCarriedOut(text) -%}
+  {%- if text == "yes" -%}Yes
+  {%- elseif text == "no" -%}No - evidence/rationale provided by the trust confirms satisfactory consultation carried out
+  {%- elseif text == "not-applicable" -%}No
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro stakeholderObjectionsRaised(text) -%}
+  {%- if text == "yes" -%}Yes - trust has confirmed they have addressed all objections
+  {%- elseif text == "no" -%}Yes - no further information provided
+  {%- elseif text == "not-applicable" -%}No
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro laObjectionsRaised(text) -%}
+  {%- if text == "yes" -%}Yes - however evidence confirms objections have been addressed
+  {%- elseif text == "no" -%}Yes - no further information provided
+  {%- elseif text == "not-applicable" -%}No
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro religiousBodiesObjectionsRaised(text) -%}
+  {%- if text == "not-applicable" -%}Not applicable
+  {%- elseif text == "no" -%}No
+  {%- elseif text == "yes" -%}Yes - evidence confirms objections addressed and consent obtained
+  {%- elseif text == "yes-no-further-info" -%}Yes - no further information provided
+  {%- elseif text -%}{{ text }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro dateValue(prefix) -%}
+  {%- set d = data[prefix + "-day"] -%}
+  {%- set m = data[prefix + "-month"] -%}
+  {%- set y = data[prefix + "-year"] -%}
+  {%- if d and m and y -%}{{ d }}/{{ m }}/{{ y }}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro listValue(items) -%}
+  {%- if items -%}
+    {%- if items is string -%}{{ items }}
+    {%- else -%}{{ items | join(", ") }}
+    {%- endif -%}
+  {%- else -%}{{ empty() }}
+  {%- endif -%}
+{%- endmacro %}
+
+{% macro changeLink(href, key, hidden, section) %}
+  {% set page = href | replace("/202608v2/", "") %}
+  {% set sectionLookup = {
+    "confirm-project-dates": "individual-information",
+    "admissions-variation": "admissions-variation",
+    "stakeholder-engagement": "consultation",
+    "la-objections": "consultation",
+    "consultation": "consultation",
+    "religious-bodies": "consultation",
+    "ofsted-inspection": "mandatory-legal-requirements",
+    "psed": "psed",
+    "land-transaction": "land-and-planning",
+    "planning-permission": "land-and-planning",
+    "funding": "financials",
+    "financial-health-assessment": "financials",
+    "fha-outcomes": "financials",
+    "high-quality-inclusive-education": "hqtf",
+    "approve": "recommendations"
+  } %}
+  {% set sectionId = section if section else sectionLookup[page] %}
+  {% set changeHref = href + "?returnTo=preview" + (("&section=" + sectionId) if sectionId else "") %}
+  <a class="app-docs-preview__change govuk-link" href="{{ changeHref }}">Change<span class="govuk-visually-hidden"> {{ hidden or key }}</span></a>
+{% endmacro %}
+
+{% macro row(key, href, hidden, section) %}
+  <div class="app-docs-preview__row">
+    <div class="app-docs-preview__row-head">
+      <p class="app-docs-preview__label">{{ key }}</p>
+      {% if href %}{{ changeLink(href, key, hidden, section) }}{% endif %}
+    </div>
+    <div class="app-docs-preview__value">{{ caller() }}</div>
+  </div>
+{% endmacro %}
+
+{% block beforeContent %}{% endblock %}
+
+{% block content %}
+
+<div class="app-docs-preview">
+  <div class="govuk-width-container app-docs-preview__workspace">
+    <nav class="app-docs-preview__outline" aria-label="Document outline">
+      <h2 class="govuk-heading-s govuk-!-margin-bottom-3">Jump to section</h2>
+      <ul class="app-docs-preview__outline-list">
+        <li><a class="app-docs-preview__outline-link" href="#individual-information">Proposed decision and change dates</a></li>
+        <li><a class="app-docs-preview__outline-link" href="#admissions-variation">Admissions variation</a></li>
+        <li><a class="app-docs-preview__outline-link" href="#consultation">Consultation</a></li>
+        <li><a class="app-docs-preview__outline-link" href="#mandatory-legal-requirements">Performance</a></li>
+        <li><a class="app-docs-preview__outline-link" href="#psed">PSED</a></li>
+        <li><a class="app-docs-preview__outline-link" href="#land-and-planning">Land and planning</a></li>
+        <li><a class="app-docs-preview__outline-link" href="#financials">Financials</a></li>
+        <li><a class="app-docs-preview__outline-link" href="#hqtf">High Quality Trust Framework</a></li>
+        <li><a class="app-docs-preview__outline-link" href="#recommendations">Recommendations</a></li>
+      </ul>
+    </nav>
+
+    <div class="app-docs-preview__canvas">
+      <article class="app-docs-preview__page">
+        <header class="app-docs-preview__doc-header">
+          <h1 class="app-docs-preview__doc-title">Significant change preview</h1>
+          <p class="app-docs-preview__doc-subtitle">St Theresa’s Catholic Primary School</p>
+        </header>
+
+        {# Proposed decision and change dates #}
+        <section id="individual-information" class="app-docs-preview__section">
+          <h2 class="app-docs-preview__heading">Proposed decision and change dates</h2>
+          {% call row("Proposed decision date", "/202608v2/confirm-project-dates", "proposed decision date") %}
+            {{ dateValue("proposed-decision-date") }}
+          {% endcall %}
+          {% call row("Proposed implementation date", "/202608v2/confirm-project-dates", "proposed implementation date") %}
+            {{ dateValue("proposed-implementation-date") }}
+          {% endcall %}
+        </section>
+
+        {# Admissions variation #}
+        <section id="admissions-variation" class="app-docs-preview__section">
+          <h2 class="app-docs-preview__heading">Admissions variation</h2>
+          {% call row("Is an admissions variation required?", "/202608v2/admissions-variation") %}
+            {{ yesNo(data["admissions-variation-required"]) }}
+          {% endcall %}
+          {% call row("Are the LA, Pupil Place Planning Team, and the Admissions Team supportive of the admissions variation?", "/202608v2/admissions-variation", "whether the LA, Pupil Place Planning Team, and the Admissions Team are supportive") %}
+            {{ yesNo(data["admissions-variation-teams-supportive"]) }}
+          {% endcall %}
+          {% call row("Further information (optional)", "/202608v2/admissions-variation", "further information") %}
+            {{ value(data["admissions-variation-details"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/admissions-variation", "admissions variation supporting evidence") %}
+            {{ value(data["admissions-variation-supporting-evidence"]) }}
+          {% endcall %}
+        </section>
+
+        {# Consultation #}
+        <section id="consultation" class="app-docs-preview__section">
+          <h2 class="app-docs-preview__heading">Consultation</h2>
+
+          <h3 class="app-docs-preview__subheading">Public consultation</h3>
+          {% call row("Has a 3 week minimum consultation been carried out?", "/202608v2/consultation") %}
+            {{ consultationCarriedOut(data["consultation-carried-out"]) }}
+          {% endcall %}
+          {% call row("Further information (optional)", "/202608v2/consultation", "further information") %}
+            {{ value(data["consultation-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/consultation", "consultation supporting evidence") %}
+            {{ value(data["consultation-supporting-evidence"]) }}
+          {% endcall %}
+
+          <h3 class="app-docs-preview__subheading">Stakeholder engagement</h3>
+          {% call row("Has the trust consulted stakeholders about the planned significant change?", "/202608v2/stakeholder-engagement") %}
+            {{ yesNo(data["stakeholder-engagement-carried-out"]) }}
+          {% endcall %}
+          {% call row("Were there any objections raised?", "/202608v2/stakeholder-engagement", "whether any objections were raised") %}
+            {{ stakeholderObjectionsRaised(data["stakeholder-engagement-objections-raised"]) }}
+          {% endcall %}
+          {% call row("Have the relevant stakeholder been notified of the admissions changes?", "/202608v2/stakeholder-engagement", "whether the relevant stakeholder have been notified of the admissions changes") %}
+            {{ yesNo(data["stakeholder-engagement-consultation-included-admissions-variation"]) }}
+          {% endcall %}
+          {% call row("Further information (optional)", "/202608v2/stakeholder-engagement", "further information") %}
+            {{ value(data["stakeholder-engagement-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/stakeholder-engagement", "stakeholder engagement supporting evidence") %}
+            {{ value(data["stakeholder-engagement-supporting-evidence"]) }}
+          {% endcall %}
+
+          <h3 class="app-docs-preview__subheading">Local authority objections</h3>
+          {% call row("Has the LA (local authority) or any bordering LAs raised objections to this change?", "/202608v2/la-objections") %}
+            {{ laObjectionsRaised(data["la-objections-raised"]) }}
+          {% endcall %}
+          {% call row("Further information (optional)", "/202608v2/la-objections", "further information") %}
+            {{ value(data["la-objections-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/la-objections", "LA objections supporting evidence") %}
+            {{ value(data["la-objections-supporting-evidence"]) }}
+          {% endcall %}
+
+          <h3 class="app-docs-preview__subheading">Religious bodies</h3>
+          {% call row("Have the relevant religious bodies been consulted?", "/202608v2/religious-bodies") %}
+            {{ yesNo(data["religious-bodies-consulted"]) }}
+          {% endcall %}
+          {% call row("Has the relevant religious body raised any objections?", "/202608v2/religious-bodies", "whether the relevant religious body raised any objections") %}
+            {{ religiousBodiesObjectionsRaised(data["religious-bodies-objections-raised"]) }}
+          {% endcall %}
+          {% call row("Further information (optional)", "/202608v2/religious-bodies", "further information") %}
+            {{ value(data["religious-bodies-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/religious-bodies", "religious bodies supporting evidence") %}
+            {{ value(data["religious-bodies-supporting-evidence"]) }}
+          {% endcall %}
+        </section>
+
+        {# Performance #}
+        <section id="mandatory-legal-requirements" class="app-docs-preview__section">
+          <h2 class="app-docs-preview__heading">Performance</h2>
+          {% call row("Date of most recent Ofsted inspection", "/202608v2/ofsted-inspection", "Ofsted inspection date") %}
+            {{ dateValue("ofsted-inspection-date") }}
+          {% endcall %}
+          {% call row("Is the academy rated good or outstanding? (Pre 19th September 2024)", "/202608v2/ofsted-inspection") %}
+            {{ yesNo(data["ofsted-inspection-considered"]) }}
+          {% endcall %}
+          {% call row("Is the academy rated good or outstanding in leadership & management and quality of education? (19 sept 2024 to 9 Nov 2025)", "/202608v2/ofsted-inspection", "Ofsted leadership and education") %}
+            {{ yesNo(data["ofsted-inspection-leadership-education"]) }}
+          {% endcall %}
+          {% call row("Is the academy meeting expected standard, strong standard or exceptional in all evaluation areas? (Post 9 Nov 2025)", "/202608v2/ofsted-inspection", "Ofsted evaluation standard") %}
+            {{ yesNo(data["ofsted-inspection-evaluation-standard"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/ofsted-inspection", "Ofsted inspection details") %}
+            {{ value(data["ofsted-inspection-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/ofsted-inspection", "Ofsted inspection supporting evidence") %}
+            {{ value(data["ofsted-inspection-supporting-evidence"]) }}
+          {% endcall %}
+        </section>
+
+        {# PSED #}
+        <section id="psed" class="app-docs-preview__section">
+          <h2 class="app-docs-preview__heading">PSED</h2>
+          {% call row("Has the Public Sector Equality Duty been considered and an Equalities Impact Assessment been completed?", "/202608v2/psed") %}
+            {{ yesNo(data["psed-considered"]) }}
+          {% endcall %}
+          {% call row("Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?", "/202608v2/psed", "disproportionate impact") %}
+            {{ psedOutcome(data["psed-disproportionate-impact"]) }}
+          {% endcall %}
+          {% call row("Summary", "/202608v2/psed", "PSED summary") %}
+            {{ value(data["psed-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/psed", "PSED supporting evidence") %}
+            {{ value(data["supporting-evidence"]) }}
+          {% endcall %}
+        </section>
+
+        {# Land and planning #}
+        <section id="land-and-planning" class="app-docs-preview__section">
+          <h2 class="app-docs-preview__heading">Land and planning</h2>
+
+          <h3 class="app-docs-preview__subheading">Land transaction</h3>
+          {% call row("Has the landowner submitted a land transaction application?", "/202608v2/land-transaction") %}
+            {{ landTransactionRequired(data["land-transaction-required"]) }}
+          {% endcall %}
+          {% call row("Have the Land Transaction Team consented to the change?", "/202608v2/land-transaction", "Land Transaction Team consent") %}
+            {{ landTransactionTeamConsented(data["land-transaction-team-consented"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/land-transaction", "land transaction details") %}
+            {{ value(data["land-transaction-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/land-transaction", "land transaction supporting evidence") %}
+            {{ value(data["land-transaction-supporting-evidence"]) }}
+          {% endcall %}
+
+          <h3 class="app-docs-preview__subheading">Planning permission</h3>
+          {% call row("Has planning permission been secured?", "/202608v2/planning-permission") %}
+            {{ planningPermissionSecured(data["planning-permission-required"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/planning-permission", "planning permission details") %}
+            {{ value(data["planning-permission-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/planning-permission", "planning permission supporting evidence") %}
+            {{ value(data["planning-permission-supporting-evidence"]) }}
+          {% endcall %}
+        </section>
+
+        {# Financials #}
+        <section id="financials" class="app-docs-preview__section">
+          <h2 class="app-docs-preview__heading">Financials</h2>
+
+          <h3 class="app-docs-preview__subheading">Funding</h3>
+          {% call row("Has funding been secured?", "/202608v2/funding") %}
+            {{ yesNo(data["funding-considered"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/funding", "funding details") %}
+            {{ value(data["funding-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/funding", "funding supporting evidence") %}
+            {{ value(data["funding-supporting-evidence"]) }}
+          {% endcall %}
+
+          <h3 class="app-docs-preview__subheading">Financial health assessment</h3>
+          {% call row("Can you provide an overview of your commission?", "/202608v2/financial-health-assessment") %}
+            {{ value(data["financial-health-assessment-summary"]) }}
+          {% endcall %}
+          {% call row("Have there been any risks or issues raised in the financial health assessment?", "/202608v2/fha-outcomes") %}
+            {{ yesNo(data["fha-outcomes-recorded"]) }}
+          {% endcall %}
+          {% call row("Details", "/202608v2/fha-outcomes", "FHA Outcomes details") %}
+            {{ value(data["fha-outcomes-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/fha-outcomes", "FHA Outcomes supporting evidence") %}
+            {{ value(data["fha-outcomes-supporting-evidence"]) }}
+          {% endcall %}
+        </section>
+
+        {# High Quality Trust Framework #}
+        <section id="hqtf" class="app-docs-preview__section">
+          <h2 class="app-docs-preview__heading">High Quality Trust Framework</h2>
+          <h3 class="app-docs-preview__subheading">HQTF consideration</h3>
+          {% call row("Have any issues or risks been identified with regards to the HQTF pillars - High Quality & Inclusive Education, School Improvement, Workforce, Finance & Operations, Governance & Leadership?", "/202608v2/high-quality-inclusive-education") %}
+            {%- if data["hqie-supports"] == "yes" -%}No issues or risks identified
+            {%- elseif data["hqie-supports"] == "no" -%}Risks or issues identified that are relevant to this significant change
+            {%- elseif data["hqie-supports"] == "not-relevant" -%}Risks or issues identified that are not relevant to this significant change
+            {%- else -%}{{ yesNo(data["hqie-supports"]) }}
+            {%- endif -%}
+          {% endcall %}
+          {% call row("Further information (optional)", "/202608v2/high-quality-inclusive-education", "HQTF consideration further information") %}
+            {{ value(data["high-quality-inclusive-education-summary"]) }}
+          {% endcall %}
+          {% call row("Supporting evidence", "/202608v2/high-quality-inclusive-education", "HQTF consideration supporting evidence") %}
+            {{ value(data["high-quality-inclusive-education-supporting-evidence"]) }}
+          {% endcall %}
+        </section>
+
+        {# Recommendations #}
+        <section id="recommendations" class="app-docs-preview__section">
+          <h2 class="app-docs-preview__heading">Recommendations</h2>
+          {% call row("Recommendation", "/202608v2/approve", "recommendation") %}
+            {{ value(data["recommendation"]) }}
+          {% endcall %}
+          {% call row("Rationale", "/202608v2/approve", "recommendation rationale") %}
+            {{ value(data["approve-rationale"]) }}
+          {% endcall %}
+        </section>
+      </article>
+    </div>
+  </div>
+</div>
+
+<script>
+  (function () {
+    var section = new URLSearchParams(window.location.search).get('section')
+    if (section) {
+      var target = document.getElementById(section)
+      if (target) {
+        target.scrollIntoView()
+      }
+    }
+
+    var links = document.querySelectorAll('.app-docs-preview__outline-link')
+    var sections = []
+
+    function setActiveLink(active) {
+      links.forEach(function (link) {
+        link.classList.remove('app-docs-preview__outline-link--active')
+      })
+      if (active) {
+        active.classList.add('app-docs-preview__outline-link--active')
+      }
+    }
+
+    links.forEach(function (link) {
+      var id = link.getAttribute('href').slice(1)
+      var el = document.getElementById(id)
+      if (el) {
+        sections.push({ el: el, link: link })
+      }
+      link.addEventListener('click', function () {
+        setActiveLink(link)
+      })
+    })
+
+    if (!('IntersectionObserver' in window) || !sections.length) {
+      return
+    }
+
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (!entry.isIntersecting) {
+          return
+        }
+        var match = sections.find(function (item) {
+          return item.el === entry.target
+        })
+        if (match) {
+          setActiveLink(match.link)
+        }
+      })
+    }, {
+      rootMargin: '-20% 0px -70% 0px',
+      threshold: 0
+    })
+
+    sections.forEach(function (item) {
+      observer.observe(item.el)
+    })
+  })()
+</script>
+
+{% endblock %}

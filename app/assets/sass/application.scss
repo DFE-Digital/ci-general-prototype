@@ -2084,3 +2084,239 @@ body:has(.app-word-doc-preview-only) footer {
 		border: 0;
 	}
 }
+
+// Google Docs / Word Online style preview
+.govuk-width-container:has(.app-docs-preview) {
+	max-width: none;
+	padding: 0;
+	margin: 0;
+}
+
+.govuk-main-wrapper:has(.app-docs-preview) {
+	padding: 0;
+}
+
+body:has(.app-docs-preview) .govuk-footer,
+body:has(.app-docs-preview) footer {
+	display: none;
+}
+
+.app-docs-preview-back {
+	background: #ffffff;
+	padding-top: 10px;
+	padding-bottom: 10px;
+
+	.govuk-back-link {
+		margin-top: 0;
+		margin-bottom: 0;
+	}
+}
+
+.app-docs-preview {
+	min-height: 100vh;
+	background: #f8f9fa;
+	overflow: visible;
+}
+
+.app-docs-preview__workspace {
+	display: flex;
+	align-items: flex-start;
+	padding-top: 24px;
+	padding-bottom: 80px;
+}
+
+.app-docs-preview__outline {
+	box-sizing: border-box;
+	flex: 0 0 13rem;
+	width: 13rem;
+	position: sticky;
+	top: 20px;
+	padding: 0;
+	margin-bottom: govuk-spacing(6);
+}
+
+@media (min-width: 75em) {
+	.app-docs-preview__outline {
+		margin-left: calc(-13rem - #{govuk-spacing(6)});
+		margin-right: govuk-spacing(6);
+		margin-bottom: 0;
+	}
+}
+
+.app-docs-preview__outline-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.app-docs-preview__outline-link {
+	display: block;
+	padding: 6px 10px;
+	border-left: 3px solid transparent;
+	border-radius: 0 4px 4px 0;
+	font-size: 13px;
+	line-height: 1.35;
+
+	&:link,
+	&:visited {
+		color: #3c4043;
+		text-decoration: none;
+	}
+
+	&:hover {
+		background: #e8eaed;
+		color: #202124;
+		text-decoration: none;
+	}
+
+	&:focus {
+		outline: 3px solid #fd0;
+		outline-offset: 0;
+		background: #fd0;
+		color: #0b0c0c;
+		text-decoration: none;
+	}
+
+	&--active:link,
+	&--active:visited {
+		border-left-color: #1a73e8;
+		background: #e8f0fe;
+		color: #174ea6;
+		font-weight: 700;
+		text-decoration: none;
+	}
+}
+
+.app-docs-preview__canvas {
+	flex: 1;
+	min-width: 0;
+	display: flex;
+	justify-content: flex-start;
+}
+
+.app-docs-preview__page {
+	box-sizing: border-box;
+	width: 100%;
+	min-height: 1056px;
+	padding: 96px 96px 120px;
+	background: #ffffff;
+	box-shadow: 0 1px 3px rgba(60, 64, 67, 0.3), 0 4px 8px 3px rgba(60, 64, 67, 0.15);
+	color: #202124;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14.67px; // 11pt
+	line-height: 1.4;
+}
+
+.app-docs-preview__doc-header {
+	margin-bottom: 40px;
+	padding-bottom: 16px;
+	border-bottom: 1px solid #dadce0;
+}
+
+.app-docs-preview__doc-title {
+	margin: 0 0 8px;
+	font-size: 26px;
+	font-weight: 400;
+	line-height: 1.25;
+	color: #202124;
+}
+
+.app-docs-preview__doc-subtitle {
+	margin: 0;
+	font-size: 14px;
+	color: #5f6368;
+}
+
+.app-docs-preview__section {
+	margin-bottom: 36px;
+	scroll-margin-top: 80px;
+}
+
+.app-docs-preview__heading {
+	margin: 0 0 16px;
+	padding-bottom: 4px;
+	font-size: 20px;
+	font-weight: 400;
+	line-height: 1.25;
+	color: #202124;
+	border-bottom: 1px solid #e8eaed;
+}
+
+.app-docs-preview__subheading {
+	margin: 24px 0 12px;
+	font-size: 16px;
+	font-weight: 700;
+	line-height: 1.25;
+	color: #202124;
+}
+
+.app-docs-preview__row {
+	margin: 0 0 14px;
+	padding: 6px 8px;
+	margin-left: -8px;
+	margin-right: -8px;
+	border-radius: 4px;
+
+	&:hover,
+	&:focus-within {
+		background: #f8f9fa;
+	}
+}
+
+.app-docs-preview__row-head {
+	display: flex;
+	align-items: baseline;
+	justify-content: space-between;
+	gap: 16px;
+}
+
+.app-docs-preview__label {
+	margin: 0;
+	font-weight: 700;
+	color: #202124;
+}
+
+.app-docs-preview__value {
+	margin-top: 4px;
+	color: #3c4043;
+}
+
+.app-docs-preview__change {
+	flex-shrink: 0;
+	font-size: 14px;
+}
+
+.app-docs-preview .empty {
+	border: 0;
+	margin: 0;
+	padding: 0;
+	background: transparent;
+	color: #80868b;
+	font-family: inherit;
+	font-size: inherit;
+	font-weight: 400;
+	font-style: italic;
+	letter-spacing: 0;
+	line-height: inherit;
+	text-transform: none;
+}
+
+@media (max-width: 40.0625em) {
+	.app-docs-preview__workspace {
+		display: block;
+		padding-top: 16px;
+		padding-bottom: 48px;
+	}
+
+	.app-docs-preview__outline {
+		width: auto;
+		position: static;
+		margin-bottom: 16px;
+		padding: 0 0 8px;
+	}
+
+	.app-docs-preview__page {
+		padding: 40px 24px 56px;
+		min-height: 0;
+	}
+}

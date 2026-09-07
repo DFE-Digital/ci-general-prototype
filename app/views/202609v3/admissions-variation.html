@@ -1,0 +1,127 @@
+{% extends "202609v3/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Admissions variation" %}
+{% set navActive = "significant-changes" %}
+{% set returnTo = "/202609v3/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v3/st-theresas") %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: returnTo
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    <h1 class="govuk-heading-l">Admissions variation</h1>
+    <p class="govuk-body">Record whether an admissions variation is required for this significant change and capture the details.</p>
+
+    <form method="post" action="{{ returnTo }}">
+
+      {{ govukRadios({
+        name: "admissions-variation-required",
+        value: data['admissions-variation-required'],
+        fieldset: {
+          legend: {
+            text: "Is an admissions variation required?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes"
+          },
+          {
+            value: "no",
+            text: "No"
+          },
+          {
+            value: "not-applicable",
+            text: "Not applicable"
+          }
+        ]
+      }) }}
+
+      {% set teamsNotSupportiveHtml %}
+      {{ govukTextarea({
+        name: "admissions-variation-teams-supportive-details",
+        id: "admissions-variation-teams-supportive-details",
+        value: data['admissions-variation-teams-supportive-details'],
+        label: {
+          text: "Give details"
+        }
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "admissions-variation-teams-supportive",
+        value: data['admissions-variation-teams-supportive'],
+        fieldset: {
+          legend: {
+            text: "Are the LA, Pupil Place Planning Team, and the Admissions Team supportive of the admissions variation?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes"
+          },
+          {
+            value: "no",
+            text: "No",
+            conditional: {
+              html: teamsNotSupportiveHtml
+            }
+          }
+        ]
+      }) }}
+
+      {{ govukInput({
+        id: "admissions-variation-supporting-evidence",
+        name: "admissions-variation-supporting-evidence",
+        value: data['admissions-variation-supporting-evidence'] or "http://sharepoint.edu.gov.uk/.....",
+        label: {
+          text: "Supporting evidence",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      <input type="hidden" name="admissions-variation-complete" value="true">
+
+      {{ govukButton({
+        text: "Save and return"
+      }) }}
+
+    </form>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">
+        Useful information
+      </h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</div>
+
+{% endblock %}
