@@ -183,7 +183,212 @@
 {# Overview #}
 <div id="overview" class="govuk-!-margin-bottom-9">
   <h2 class="govuk-heading-l">Overview</h2>
-  <p class="govuk-body">There are no problems with this application, this application is ready to be approved - this is placeholder text Mike, don't worry :)</p>
+  {% if data["proposed-decision-date-day"] or data["proposed-implementation-date-day"] or data["admissions-variation-required"] or data["admissions-variation-teams-supportive"] or data["consultation-carried-out"] or data["stakeholder-engagement-carried-out"] or data["stakeholder-engagement-objections-raised"] or data["stakeholder-engagement-consultation-included-admissions-variation"] or data["la-objections-raised"] or data["religious-bodies-consulted"] or data["religious-bodies-objections-raised"] or data["ofsted-inspection-considered"] or data["ofsted-inspection-leadership-education"] or data["ofsted-inspection-evaluation-standard"] or data["psed-considered"] or data["psed-disproportionate-impact"] or data["land-transaction-required"] or data["land-transaction-team-consented"] or data["planning-permission-required"] or data["funding-considered"] or data["fha-outcomes-recorded"] or data["hqie-supports"] or data["recommendation"] %}
+  <ul class="govuk-list govuk-list--bullet">
+    {% if data["proposed-decision-date-day"] and data["proposed-decision-date-month"] and data["proposed-decision-date-year"] and data["proposed-implementation-date-day"] and data["proposed-implementation-date-month"] and data["proposed-implementation-date-year"] %}
+    <li>The proposed decision date is {{ data["proposed-decision-date-day"] }}/{{ data["proposed-decision-date-month"] }}/{{ data["proposed-decision-date-year"] }} and the proposed implementation date is {{ data["proposed-implementation-date-day"] }}/{{ data["proposed-implementation-date-month"] }}/{{ data["proposed-implementation-date-year"] }}.</li>
+    {% elseif data["proposed-decision-date-day"] and data["proposed-decision-date-month"] and data["proposed-decision-date-year"] %}
+    <li>The proposed decision date is {{ data["proposed-decision-date-day"] }}/{{ data["proposed-decision-date-month"] }}/{{ data["proposed-decision-date-year"] }}.</li>
+    {% elseif data["proposed-implementation-date-day"] and data["proposed-implementation-date-month"] and data["proposed-implementation-date-year"] %}
+    <li>The proposed implementation date is {{ data["proposed-implementation-date-day"] }}/{{ data["proposed-implementation-date-month"] }}/{{ data["proposed-implementation-date-year"] }}.</li>
+    {% endif %}
+
+    {% if data["admissions-variation-required"] or data["admissions-variation-teams-supportive"] %}
+    <li>
+      {% if data["admissions-variation-teams-supportive"] == "no" %}
+        There is a problem with admissions variation. The local authority, Pupil Place Planning Team and Admissions Team are not supportive.
+      {% elseif data["admissions-variation-required"] == "yes" and data["admissions-variation-teams-supportive"] == "yes" %}
+        No problems with admissions variation. An admissions variation is required and the local authority, Pupil Place Planning Team and Admissions Team are supportive.
+      {% elseif data["admissions-variation-required"] == "yes" %}
+        An admissions variation is required.
+      {% elseif data["admissions-variation-required"] == "no" %}
+        No problems with admissions variation. An admissions variation is not required.
+      {% elseif data["admissions-variation-required"] == "not-applicable" %}
+        No problems with admissions variation. An admissions variation is not applicable.
+      {% elseif data["admissions-variation-teams-supportive"] == "yes" %}
+        No problems with admissions variation. The local authority, Pupil Place Planning Team and Admissions Team are supportive.
+      {% endif %}
+    </li>
+    {% endif %}
+
+    {% if data["consultation-carried-out"] %}
+    <li>
+      {% if data["consultation-carried-out"] == "yes" %}
+        No problems with consultation. A 3 week minimum consultation has been carried out.
+      {% elseif data["consultation-carried-out"] == "no" %}
+        A 3 week minimum consultation has not been carried out, but the trust has provided evidence that a satisfactory consultation took place.
+      {% else %}
+        There is a problem with consultation. A 3 week minimum consultation has not been carried out.
+      {% endif %}
+    </li>
+    {% endif %}
+
+    {% if data["stakeholder-engagement-carried-out"] or data["stakeholder-engagement-objections-raised"] or data["stakeholder-engagement-consultation-included-admissions-variation"] %}
+    <li>
+      {% if data["stakeholder-engagement-carried-out"] == "no" or data["stakeholder-engagement-objections-raised"] == "no" or data["stakeholder-engagement-consultation-included-admissions-variation"] == "no" %}
+        There is a problem with stakeholder engagement.
+        {% if data["stakeholder-engagement-carried-out"] == "no" %} The trust has not consulted stakeholders about the planned significant change.{% endif %}
+        {% if data["stakeholder-engagement-objections-raised"] == "no" %} Objections were raised and no further information has been provided.{% endif %}
+        {% if data["stakeholder-engagement-consultation-included-admissions-variation"] == "no" %} Relevant stakeholders have not been notified of the admissions changes.{% endif %}
+      {% elseif data["stakeholder-engagement-objections-raised"] == "yes" %}
+        Stakeholders raised objections and the trust has confirmed they have been addressed.
+      {% else %}
+        No problems with stakeholder engagement.
+        {% if data["stakeholder-engagement-carried-out"] == "yes" %} The trust has consulted stakeholders about the planned significant change.{% endif %}
+        {% if data["stakeholder-engagement-objections-raised"] == "not-applicable" %} No objections were raised.{% endif %}
+        {% if data["stakeholder-engagement-consultation-included-admissions-variation"] == "yes" %} Relevant stakeholders have been notified of the admissions changes.{% elseif data["stakeholder-engagement-consultation-included-admissions-variation"] == "not-applicable" %} Notifying stakeholders of admissions changes is not applicable.{% endif %}
+      {% endif %}
+    </li>
+    {% endif %}
+
+    {% if data["la-objections-raised"] %}
+    <li>
+      {% if data["la-objections-raised"] == "not-applicable" %}
+        No problems with local authority objections. The local authority has not raised objections to this change.
+      {% elseif data["la-objections-raised"] == "yes" %}
+        Local authority objections were raised and evidence confirms they have been addressed.
+      {% else %}
+        There is a problem with local authority objections. Objections were raised and no further information has been provided.
+      {% endif %}
+    </li>
+    {% endif %}
+
+    {% if data["religious-bodies-consulted"] or data["religious-bodies-objections-raised"] %}
+    <li>
+      {% if data["religious-bodies-consulted"] == "no" or data["religious-bodies-objections-raised"] == "yes-no-further-info" %}
+        There is a problem with religious bodies.
+        {% if data["religious-bodies-consulted"] == "no" %} Relevant religious bodies have not been consulted.{% endif %}
+        {% if data["religious-bodies-objections-raised"] == "yes-no-further-info" %} Objections were raised and no further information has been provided.{% endif %}
+      {% elseif data["religious-bodies-objections-raised"] == "yes" %}
+        Religious bodies raised objections. Evidence confirms the objections were addressed and consent obtained.
+      {% elseif data["religious-bodies-consulted"] == "not-applicable" %}
+        Religious body consultation is not applicable.
+      {% else %}
+        No problems with religious bodies.
+        {% if data["religious-bodies-consulted"] == "yes" %} Relevant religious bodies have been consulted.{% endif %}
+        {% if data["religious-bodies-objections-raised"] == "no" or data["religious-bodies-objections-raised"] == "not-applicable" %} No objections were raised.{% endif %}
+      {% endif %}
+    </li>
+    {% endif %}
+
+    {% if data["ofsted-inspection-considered"] or data["ofsted-inspection-leadership-education"] or data["ofsted-inspection-evaluation-standard"] %}
+    <li>
+      {% if data["ofsted-inspection-considered"] == "no" or data["ofsted-inspection-leadership-education"] == "no" or data["ofsted-inspection-evaluation-standard"] == "no" %}
+        There is a problem with Ofsted ratings.
+        {% if data["ofsted-inspection-considered"] == "no" %} The academy is not rated good or outstanding under the pre-19 September 2024 framework.{% endif %}
+        {% if data["ofsted-inspection-leadership-education"] == "no" %} The academy is not rated good or outstanding in leadership and management and quality of education.{% endif %}
+        {% if data["ofsted-inspection-evaluation-standard"] == "no" %} The academy is not meeting expected standard, strong standard or exceptional in all evaluation areas.{% endif %}
+      {% else %}
+        No problems with Ofsted ratings.
+      {% endif %}
+    </li>
+    {% endif %}
+
+    {% if data["psed-considered"] or data["psed-disproportionate-impact"] %}
+    <li>
+      {% if data["psed-considered"] == "no" or data["psed-disproportionate-impact"] == "likely" %}
+        There is a problem with the Public Sector Equality Duty.
+        {% if data["psed-considered"] == "no" %} It has not been considered.{% endif %}
+        {% if data["psed-disproportionate-impact"] == "likely" %} The decision is likely to disproportionately affect people who share protected characteristics.{% endif %}
+      {% elseif data["psed-disproportionate-impact"] == "some-impact" %}
+        The Public Sector Equality Duty has been considered. The decision may have some impact on people who share protected characteristics.
+      {% else %}
+        No problems with the Public Sector Equality Duty.
+        {% if data["psed-considered"] == "yes" %} It has been considered.{% endif %}
+        {% if data["psed-disproportionate-impact"] == "unlikely" %} The decision is unlikely to disproportionately affect people who share protected characteristics.{% endif %}
+      {% endif %}
+    </li>
+    {% endif %}
+
+    {% if data["land-transaction-required"] or data["land-transaction-team-consented"] %}
+    <li>
+      {% if data["land-transaction-required"] == "no-further-information" or data["land-transaction-team-consented"] == "no" %}
+        There is a problem with land transaction.
+        {% if data["land-transaction-required"] == "no-further-information" %} The landowner has not submitted a land transaction application.{% endif %}
+        {% if data["land-transaction-team-consented"] == "no" %} The Land Transaction Team has not consented to the change.{% endif %}
+      {% elseif data["land-transaction-required"] == "no-landowner-to-submit" %}
+        The landowner still needs to submit a land transaction application.
+      {% elseif data["land-transaction-team-consented"] == "awaiting-approval" %}
+        Land transaction consent is awaiting approval from the Land Transaction Team.
+      {% elseif data["land-transaction-required"] == "not-applicable" %}
+        No problems with land transaction. A land transaction is not applicable.
+      {% else %}
+        No problems with land transaction.
+        {% if data["land-transaction-required"] == "yes" %} A land transaction application has been submitted.{% endif %}
+        {% if data["land-transaction-team-consented"] == "yes" %} The Land Transaction Team has consented to the change.{% endif %}
+      {% endif %}
+    </li>
+    {% endif %}
+
+    {% if data["planning-permission-required"] %}
+    <li>
+      {% if data["planning-permission-required"] == "yes" %}
+        No problems with planning permission. Planning permission has been secured.
+      {% elseif data["planning-permission-required"] == "not-applicable" %}
+        No problems with planning permission. Planning permission is not applicable.
+      {% elseif data["planning-permission-required"] == "no-awaiting-approval" %}
+        Planning permission has not yet been secured and is awaiting approval.
+      {% else %}
+        There is a problem with planning permission. Planning permission has not been secured.
+      {% endif %}
+    </li>
+    {% endif %}
+
+    {% if data["funding-considered"] %}
+    <li>
+      {% if data["funding-considered"] == "yes" %}
+        No problems with funding. Funding has been secured.
+      {% elseif data["funding-considered"] == "not-applicable" %}
+        No problems with funding. Funding is not applicable.
+      {% else %}
+        There is a problem with funding. Funding has not been secured.
+      {% endif %}
+    </li>
+    {% endif %}
+
+    {% if data["fha-outcomes-recorded"] %}
+    <li>
+      {% if data["fha-outcomes-recorded"] == "no" %}
+        No problems with the financial health assessment. No risks or issues were raised.
+      {% else %}
+        There is a problem with the financial health assessment. Risks or issues were raised.
+      {% endif %}
+    </li>
+    {% endif %}
+
+    {% if data["hqie-supports"] %}
+    <li>
+      {% if data["hqie-supports"] == "yes" %}
+        No problems with the High Quality Trust Framework. No issues or risks have been identified.
+      {% elseif data["hqie-supports"] == "no" %}
+        There is a problem with the High Quality Trust Framework. Risks or issues have been identified that are relevant to this significant change.
+      {% elseif data["hqie-supports"] == "not-relevant" %}
+        Risks or issues have been identified in the High Quality Trust Framework, but they are not relevant to this significant change.
+      {% else %}
+        High Quality Trust Framework consideration is not applicable.
+      {% endif %}
+    </li>
+    {% endif %}
+
+    {% if data["recommendation"] %}
+    <li>
+      {% if data["recommendation"] == "Approve" %}
+        The recommendation is to approve this application.
+      {% elseif data["recommendation"] == "Approve with conditions" %}
+        The recommendation is to approve this application with conditions.
+      {% elseif data["recommendation"] == "Defer" %}
+        The recommendation is to defer this application.
+      {% elseif data["recommendation"] == "Withdraw" %}
+        The recommendation is to withdraw this application.
+      {% elseif data["recommendation"] == "Decline" %}
+        The recommendation is to decline this application.
+      {% endif %}
+    </li>
+    {% endif %}
+  </ul>
+  {% else %}
+  <p class="govuk-body">No task answers have been recorded yet.</p>
+  {% endif %}
 </div>
 
 {# Proposed decision and change dates #}
