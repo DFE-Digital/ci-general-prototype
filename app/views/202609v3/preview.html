@@ -10,6 +10,13 @@
   {%- if text -%}{{ text }}{%- else -%}{{ empty() }}{%- endif -%}
 {%- endmacro %}
 
+{% macro richValue(text) -%}
+  {%- set stripped = text | striptags | trim if text else "" -%}
+  {%- if stripped -%}
+    <div class="app-project-rationale-summary">{{ text | safe }}</div>
+  {%- else -%}{{ empty() }}{%- endif -%}
+{%- endmacro %}
+
 {% macro yesNo(text) -%}
   {%- if text == "yes" -%}Yes
   {%- elseif text == "no" -%}No
@@ -197,7 +204,7 @@
           {% endcall %}
           {% if data["admissions-variation-la-supportive"] == "no" %}
           {% call row("Give details", "/202609v3/admissions-variation", "why the LA is not supportive") %}
-            {{ value(data["admissions-variation-la-supportive-details"]) }}
+            {{ richValue(data["admissions-variation-la-supportive-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Is the Pupil Place Planning Team supportive of the admissions variation?", "/202609v3/admissions-variation", "whether the Pupil Place Planning Team is supportive") %}
@@ -205,7 +212,7 @@
           {% endcall %}
           {% if data["admissions-variation-pupil-place-planning-supportive"] == "no" %}
           {% call row("Give details", "/202609v3/admissions-variation", "why the Pupil Place Planning Team is not supportive") %}
-            {{ value(data["admissions-variation-pupil-place-planning-supportive-details"]) }}
+            {{ richValue(data["admissions-variation-pupil-place-planning-supportive-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Is the Admissions Team supportive of the admissions variation?", "/202609v3/admissions-variation", "whether the Admissions Team is supportive") %}
@@ -213,7 +220,7 @@
           {% endcall %}
           {% if data["admissions-variation-admissions-team-supportive"] == "no" %}
           {% call row("Give details", "/202609v3/admissions-variation", "why the Admissions Team is not supportive") %}
-            {{ value(data["admissions-variation-admissions-team-supportive-details"]) }}
+            {{ richValue(data["admissions-variation-admissions-team-supportive-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Supporting evidence", "/202609v3/admissions-variation", "admissions variation supporting evidence") %}
@@ -242,7 +249,7 @@
           {% endcall %}
           {% if data["stakeholder-engagement-carried-out"] == "no" %}
           {% call row("Give details", "/202609v3/stakeholder-engagement", "why the trust has not consulted stakeholders") %}
-            {{ value(data["stakeholder-engagement-carried-out-details"]) }}
+            {{ richValue(data["stakeholder-engagement-carried-out-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Were there any objections raised?", "/202609v3/stakeholder-engagement", "whether any objections were raised") %}
@@ -253,7 +260,7 @@
           {% endcall %}
           {% if data["stakeholder-engagement-consultation-included-admissions-variation"] == "no" %}
           {% call row("Give details", "/202609v3/stakeholder-engagement", "why the relevant stakeholder have not been notified of the admissions changes") %}
-            {{ value(data["stakeholder-engagement-consultation-included-admissions-variation-details"]) }}
+            {{ richValue(data["stakeholder-engagement-consultation-included-admissions-variation-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Supporting evidence", "/202609v3/stakeholder-engagement", "stakeholder engagement supporting evidence") %}
@@ -277,7 +284,7 @@
           {% endcall %}
           {% if data["religious-bodies-consulted"] == "no" %}
           {% call row("Give details", "/202609v3/religious-bodies", "why the relevant religious bodies have not been consulted") %}
-            {{ value(data["religious-bodies-consulted-details"]) }}
+            {{ richValue(data["religious-bodies-consulted-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Has the relevant religious body raised any objections?", "/202609v3/religious-bodies", "whether the relevant religious body raised any objections") %}
@@ -285,7 +292,7 @@
           {% endcall %}
           {% if data["religious-bodies-objections-raised"] == "no" %}
           {% call row("Give details", "/202609v3/religious-bodies", "why no objections were raised") %}
-            {{ value(data["religious-bodies-objections-raised-details"]) }}
+            {{ richValue(data["religious-bodies-objections-raised-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Supporting evidence", "/202609v3/religious-bodies", "religious bodies supporting evidence") %}

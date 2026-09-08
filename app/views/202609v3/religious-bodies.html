@@ -2,9 +2,9 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "202609v3/includes/rich-text-editor.html" import appRichTextEditor %}
 
 {% set pageName = "Religious bodies" %}
 {% set navActive = "significant-changes" %}
@@ -29,13 +29,11 @@
     <form method="post" action="">
 
       {% set religiousBodiesNotConsultedHtml %}
-      {{ govukTextarea({
+      {{ appRichTextEditor({
         name: "religious-bodies-consulted-details",
         id: "religious-bodies-consulted-details",
         value: data['religious-bodies-consulted-details'],
-        label: {
-          text: "Give details"
-        }
+        label: "Give details"
       }) }}
       {% endset %}
 
@@ -63,13 +61,11 @@
       }) }}
 
       {% set religiousBodiesNoObjectionsHtml %}
-      {{ govukTextarea({
+      {{ appRichTextEditor({
         name: "religious-bodies-objections-raised-details",
         id: "religious-bodies-objections-raised-details",
         value: data['religious-bodies-objections-raised-details'],
-        label: {
-          text: "Give details"
-        }
+        label: "Give details"
       }) }}
       {% endset %}
 

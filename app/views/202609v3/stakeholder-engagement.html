@@ -2,9 +2,9 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "202609v3/includes/rich-text-editor.html" import appRichTextEditor %}
 
 {% set pageName = "Stakeholder engagement" %}
 {% set navActive = "significant-changes" %}
@@ -29,13 +29,11 @@
     <form method="post" action="">
 
       {% set stakeholderNotConsultedHtml %}
-      {{ govukTextarea({
+      {{ appRichTextEditor({
         name: "stakeholder-engagement-carried-out-details",
         id: "stakeholder-engagement-carried-out-details",
         value: data['stakeholder-engagement-carried-out-details'],
-        label: {
-          text: "Give details"
-        }
+        label: "Give details"
       }) }}
       {% endset %}
 
@@ -91,13 +89,11 @@
       }) }}
 
       {% set admissionsNotNotifiedHtml %}
-      {{ govukTextarea({
+      {{ appRichTextEditor({
         name: "stakeholder-engagement-consultation-included-admissions-variation-details",
         id: "stakeholder-engagement-consultation-included-admissions-variation-details",
         value: data['stakeholder-engagement-consultation-included-admissions-variation-details'],
-        label: {
-          text: "Give details"
-        }
+        label: "Give details"
       }) }}
       {% endset %}
 

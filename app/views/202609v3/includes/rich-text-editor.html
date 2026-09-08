@@ -1,0 +1,27 @@
+{% macro appRichTextEditor(params) %}
+{% set fieldId = params.id or params.name %}
+{% set fieldName = params.name %}
+{% set labelText = params.label or "Give details" %}
+{% set fieldValue = params.value or "" %}
+<div class="govuk-form-group">
+  <label class="govuk-label" id="{{ fieldId }}-label" for="{{ fieldId }}">{{ labelText }}</label>
+  <div class="app-rich-text">
+    <div class="app-word-toolbar" role="toolbar" aria-label="Text formatting" aria-controls="{{ fieldId }}">
+      <div class="app-word-toolbar__group" role="group" aria-label="Text style">
+        <button type="button" class="app-word-toolbar__btn" id="{{ fieldId }}-bold" data-format="bold" title="Bold" aria-keyshortcuts="Control+B">B</button>
+        <button type="button" class="app-word-toolbar__btn app-word-toolbar__btn--italic" id="{{ fieldId }}-italic" data-format="italic" title="Italic" aria-keyshortcuts="Control+I">I</button>
+        <button type="button" class="app-word-toolbar__btn app-word-toolbar__btn--underline" id="{{ fieldId }}-underline" data-format="underline" title="Underline" aria-keyshortcuts="Control+U">U</button>
+      </div>
+      <div class="app-word-toolbar__group" role="group" aria-label="Lists">
+        <button type="button" class="app-word-toolbar__btn" id="{{ fieldId }}-bullet" data-format="bullet" title="Bulleted list">•</button>
+        <button type="button" class="app-word-toolbar__btn" id="{{ fieldId }}-numbered" data-format="numbered" title="Numbered list">1.</button>
+      </div>
+    </div>
+    <div class="app-rich-text__body">
+      <div class="govuk-textarea govuk-!-margin-top-0 app-rich-text-editor" id="{{ fieldId }}" data-store="{{ fieldId }}-data" contenteditable="true" role="textbox" aria-multiline="true" aria-labelledby="{{ fieldId }}-label" tabindex="0">{{ fieldValue | safe }}</div>
+    </div>
+    <span class="app-rich-text__resizer" aria-hidden="true"></span>
+  </div>
+  <textarea name="{{ fieldName }}" id="{{ fieldId }}-data" hidden>{{ fieldValue }}</textarea>
+</div>
+{% endmacro %}

@@ -668,6 +668,86 @@ window.GOVUKPrototypeKit.documentReady(() => {
     }
   }
 
+  // Give details rich text editors (bold, italic, underline, lists)
+  document.querySelectorAll('.app-rich-text').forEach(function(wrapper) {
+    var editor = wrapper.querySelector('.app-rich-text-editor');
+    var toolbar = wrapper.querySelector('.app-word-toolbar');
+    var storeId = editor && editor.getAttribute('data-store');
+    var store = storeId ? document.getElementById(storeId) : null;
+    if (!editor || !toolbar || !store) {
+      return;
+    }
+
+    function syncToStore() {
+      store.value = editor.innerHTML;
+    }
+
+    if (store.value) {
+      editor.innerHTML = store.value;
+    }
+
+    editor.addEventListener('input', syncToStore);
+    editor.addEventListener('blur', syncToStore);
+
+    var form = editor.closest('form');
+    if (form) {
+      form.addEventListener('submit', syncToStore);
+    }
+
+    toolbar.querySelectorAll('button').forEach(function(btn) {
+      btn.addEventListener('mousedown', function(e) {
+        e.preventDefault();
+      });
+    });
+
+    function runCommand(command) {
+      editor.focus();
+      try {
+        document.execCommand(command, false, null);
+      } catch (err) {
+        /* execCommand unsupported */
+      }
+      syncToStore();
+    }
+
+    toolbar.addEventListener('click', function(e) {
+      var btn = e.target.closest('[data-format]');
+      if (!btn) {
+        return;
+      }
+      e.preventDefault();
+      var format = btn.getAttribute('data-format');
+      if (format === 'bold') {
+        runCommand('bold');
+      } else if (format === 'italic') {
+        runCommand('italic');
+      } else if (format === 'underline') {
+        runCommand('underline');
+      } else if (format === 'bullet') {
+        runCommand('insertUnorderedList');
+      } else if (format === 'numbered') {
+        runCommand('insertOrderedList');
+      }
+    });
+
+    editor.addEventListener('keydown', function(e) {
+      if (!e.ctrlKey && !e.metaKey) {
+        return;
+      }
+      var key = e.key.toLowerCase();
+      if (key === 'b') {
+        e.preventDefault();
+        runCommand('bold');
+      } else if (key === 'i') {
+        e.preventDefault();
+        runCommand('italic');
+      } else if (key === 'u') {
+        e.preventDefault();
+        runCommand('underline');
+      }
+    });
+  });
+
   // Filter checkbox lists by typing (Project owner, Region, Tier, etc.)
   document.querySelectorAll('.govuk-accordion__section-content .govuk-input[placeholder^="Type to filter"]').forEach(function(searchInput) {
     const checkboxItems = searchInput
