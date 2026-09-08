@@ -10,6 +10,218 @@ const router = govukPrototypeKit.requests.setupRouter()
 // Add your routes here
 
 // Significant change tasks: remember whether to return to preview or the task list
+function hasRadioValue (value) {
+  if (value === undefined || value === null) {
+    return false
+  }
+  return String(value).trim() !== ''
+}
+
+const sigChangeRadioFields = {
+  'admissions-variation': [
+    { name: 'admissions-variation-required', text: 'Select whether an admissions variation is required' },
+    { name: 'admissions-variation-la-supportive', text: 'Select whether the LA is supportive of the admissions variation' },
+    { name: 'admissions-variation-pupil-place-planning-supportive', text: 'Select whether the Pupil Place Planning Team is supportive of the admissions variation' },
+    { name: 'admissions-variation-admissions-team-supportive', text: 'Select whether the Admissions Team is supportive of the admissions variation' }
+  ],
+  consultation: [
+    { name: 'consultation-carried-out', text: 'Select whether a 3 week minimum consultation has been carried out' }
+  ],
+  'stakeholder-engagement': [
+    { name: 'stakeholder-engagement-carried-out', text: 'Select whether the trust has consulted stakeholders about the planned significant change' },
+    { name: 'stakeholder-engagement-objections-raised', text: 'Select whether any objections were raised' },
+    { name: 'stakeholder-engagement-consultation-included-admissions-variation', text: 'Select whether the relevant stakeholders have been notified of the admissions changes' }
+  ],
+  'la-objections': [
+    { name: 'la-objections-raised', text: 'Select whether the LA or any bordering LAs have raised objections to this change' }
+  ],
+  'religious-bodies': [
+    { name: 'religious-bodies-consulted', text: 'Select whether the relevant religious bodies have been consulted' },
+    { name: 'religious-bodies-objections-raised', text: 'Select whether the relevant religious body has raised any objections' }
+  ],
+  'ofsted-inspection': [
+    { name: 'ofsted-inspection-considered', text: 'Select whether the academy is rated good or outstanding' },
+    { name: 'ofsted-inspection-leadership-education', text: 'Select whether the academy is rated good or outstanding in leadership and management and quality of education' },
+    { name: 'ofsted-inspection-evaluation-standard', text: 'Select whether the academy is meeting expected standard, strong standard or exceptional in all evaluation areas' }
+  ],
+  psed: [
+    { name: 'psed-considered', text: 'Select whether the Public Sector Equality Duty has been considered and an Equalities Impact Assessment has been completed' },
+    { name: 'psed-disproportionate-impact', text: 'Select how likely the decision is to disproportionately affect any particular person or group who share protected characteristics' }
+  ],
+  'land-transaction': [
+    { name: 'land-transaction-required', text: 'Select whether the landowner has submitted a land transaction application' },
+    { name: 'land-transaction-team-consented', text: 'Select whether the Land Transaction Team has consented to the change' }
+  ],
+  'land-transaction-team': [
+    { name: 'land-transaction-team-contacted', text: 'Select whether the Land transaction Team has been contacted' }
+  ],
+  'planning-permission': [
+    { name: 'planning-permission-required', text: 'Select whether planning permission has been secured' }
+  ],
+  funding: [
+    { name: 'funding-considered', text: 'Select whether funding has been secured' }
+  ],
+  'fha-outcomes': [
+    { name: 'fha-outcomes-recorded', text: 'Select whether any risks or issues have been raised in the financial health assessment' }
+  ],
+  'high-quality-inclusive-education': [
+    { name: 'hqie-supports', text: 'Select whether any issues or risks have been identified with regards to the HQTF pillars' }
+  ],
+  'school-improvement': [
+    { name: 'school-improvement-supports', text: 'Select whether the proposal supports school improvement' }
+  ],
+  workforce: [
+    { name: 'workforce-considered', text: 'Select whether workforce implications have been considered' }
+  ],
+  'finance-and-operations': [
+    { name: 'finance-and-operations-considered', text: 'Select whether finance and operations have been considered' }
+  ],
+  'governance-and-leadership': [
+    { name: 'governance-and-leadership-considered', text: 'Select whether governance and leadership have been considered' }
+  ],
+  approve: [
+    { name: 'recommendation', text: 'Select a recommendation' }
+  ],
+  'approve-with-conditions': [
+    { name: 'approve-with-conditions-recommendation', text: 'Select whether you recommend that this application is approved with conditions' }
+  ],
+  defer: [
+    { name: 'defer-recommendation', text: 'Select whether you recommend that this application is deferred' }
+  ],
+  withdraw: [
+    { name: 'withdraw-recommendation', text: 'Select whether you recommend that this application is withdrawn' }
+  ],
+  decline: [
+    { name: 'decline-recommendation', text: 'Select whether you recommend that this application is declined' }
+  ],
+  'record-the-decision': [
+    { name: 'recorded-decision', text: 'Select a decision' }
+  ]
+}
+
+function taskPageUrl (req, page) {
+  let url = '/202609v3/' + page
+  if (req.session.data && req.session.data.returnTo === 'preview') {
+    url += '?returnTo=preview'
+    if (req.session.data.section) {
+      url += '&section=' + encodeURIComponent(req.session.data.section)
+    }
+  }
+  return url
+}
+
+function radioErrorList (body, fields) {
+  return fields
+    .filter(function (field) {
+      return !hasRadioValue(body[field.name])
+    })
+    .map(function (field) {
+      return {
+        text: field.text,
+        href: '#' + field.name,
+        name: field.name
+      }
+    })
+}
+
+function dateParts (body, prefix) {
+  return {
+    day: String(body[prefix + '-day'] || '').trim(),
+    month: String(body[prefix + '-month'] || '').trim(),
+    year: String(body[prefix + '-year'] || '').trim()
+  }
+}
+
+function isRealDate (day, month, year) {
+  const d = parseInt(day, 10)
+  const m = parseInt(month, 10)
+  const y = parseInt(year, 10)
+  if (!Number.isInteger(d) || !Number.isInteger(m) || !Number.isInteger(y)) {
+    return false
+  }
+  if (String(y).length !== 4) {
+    return false
+  }
+  const date = new Date(y, m - 1, d)
+  return date.getFullYear() === y && date.getMonth() === m - 1 && date.getDate() === d
+}
+
+function dateFieldError (body, prefix, label) {
+  const parts = dateParts(body, prefix)
+  const missing = []
+  if (!parts.day) {
+    missing.push('day')
+  }
+  if (!parts.month) {
+    missing.push('month')
+  }
+  if (!parts.year) {
+    missing.push('year')
+  }
+
+  if (missing.length === 3) {
+    return {
+      name: prefix,
+      text: 'Enter the ' + label,
+      href: '#' + prefix + '-day',
+      missing: missing
+    }
+  }
+
+  if (missing.length) {
+    let missingText
+    if (missing.length === 1) {
+      missingText = 'a ' + missing[0]
+    } else {
+      missingText = 'a ' + missing[0] + ' and ' + missing[1]
+    }
+    return {
+      name: prefix,
+      text: 'The ' + label + ' must include ' + missingText,
+      href: '#' + prefix + '-' + missing[0],
+      missing: missing
+    }
+  }
+
+  if (!isRealDate(parts.day, parts.month, parts.year)) {
+    return {
+      name: prefix,
+      text: 'The ' + label + ' must be a real date',
+      href: '#' + prefix + '-day',
+      missing: ['day', 'month', 'year']
+    }
+  }
+
+  return null
+}
+
+function confirmProjectDatesErrors (body) {
+  return [
+    dateFieldError(body, 'proposed-decision-date', 'proposed decision date'),
+    dateFieldError(body, 'proposed-implementation-date', 'proposed implementation date')
+  ].filter(Boolean)
+}
+
+function storeRadioErrors (req, page, errorList) {
+  const errors = {}
+  errorList.forEach(function (item) {
+    errors[item.name] = { text: item.text, missing: item.missing }
+  })
+  req.session.data['radio-errors'] = {
+    page: page,
+    errorList: errorList,
+    errors: errors
+  }
+}
+
+function clearRadioErrors (req, page) {
+  const current = req.session.data['radio-errors']
+  if (current && current.page === page) {
+    delete req.session.data['radio-errors']
+  }
+}
+
+// Significant change tasks: remember whether to return to preview or the task list
 const sigChangeTaskPages = [
   'confirm-project-dates',
   'select-change-type',
@@ -80,6 +292,72 @@ router.use(function (req, res, next) {
   }
 
   next()
+})
+
+router.use(function (req, res, next) {
+  const match = req.path.match(/^\/202609v3\/([^/]+)\/?$/)
+  const page = match ? match[1] : null
+  const errorsState = req.session.data && req.session.data['radio-errors']
+
+  if (errorsState && page === errorsState.page) {
+    res.locals.errorList = errorsState.errorList
+    res.locals.errors = errorsState.errors
+  } else {
+    res.locals.errorList = []
+    res.locals.errors = {}
+  }
+
+  next()
+})
+
+router.post('/202609v3/decision', function (req, res) {
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+
+  const errorList = radioErrorList(req.body, sigChangeRadioFields['record-the-decision'])
+  if (errorList.length) {
+    storeRadioErrors(req, 'record-the-decision', errorList)
+    return res.redirect('/202609v3/record-the-decision')
+  }
+  clearRadioErrors(req, 'record-the-decision')
+
+  if (req.body['recorded-decision'] && !req.session.data['recorded-decision-date']) {
+    const today = new Date()
+    const months = [
+      'January', 'February', 'March', 'April', 'May', 'June',
+      'July', 'August', 'September', 'October', 'November', 'December'
+    ]
+    req.session.data['recorded-decision-date'] =
+      today.getDate() + ' ' + months[today.getMonth()] + ' ' + today.getFullYear()
+  }
+
+  res.redirect('/202609v3/decision')
+})
+
+router.post('/202609v3/:page', function (req, res, next) {
+  const page = req.params.page
+  const fields = sigChangeRadioFields[page]
+  if (!fields && page !== 'confirm-project-dates') {
+    return next()
+  }
+
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+
+  const errorList = page === 'confirm-project-dates'
+    ? confirmProjectDatesErrors(req.body)
+    : radioErrorList(req.body, fields)
+
+  if (errorList.length) {
+    storeRadioErrors(req, page, errorList)
+    return res.redirect(taskPageUrl(req, page))
+  }
+
+  clearRadioErrors(req, page)
+  const returnTo = req.session.data['sig-change-return-to'] || '/202609v3/st-theresas'
+  res.redirect(returnTo)
 })
 
 router.get('/202605-b/download-project-template', function (req, res) {

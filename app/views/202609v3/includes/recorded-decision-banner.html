@@ -1,0 +1,35 @@
+{% if data['recorded-decision'] %}
+{% from "govuk/components/notification-banner/macro.njk" import govukNotificationBanner %}
+{% set decision = data['recorded-decision'] %}
+{% set decisionDate = data['recorded-decision-date'] or "8 September 2026" %}
+{% if decision == "Approve" or decision == "Approved" %}
+  {% set decisionTitle = "Project approved" %}
+  {% set decisionVerb = "approved" %}
+{% elseif decision == "Approve with conditions" %}
+  {% set decisionTitle = "Project approved with conditions" %}
+  {% set decisionVerb = "approved with conditions" %}
+{% elseif decision == "Decline" or decision == "Declined" %}
+  {% set decisionTitle = "Project declined" %}
+  {% set decisionVerb = "declined" %}
+{% elseif decision == "Defer" or decision == "Deferred" %}
+  {% set decisionTitle = "Project deferred" %}
+  {% set decisionVerb = "deferred" %}
+{% elseif decision == "Withdraw" or decision == "Withdrawn" %}
+  {% set decisionTitle = "Project withdrawn" %}
+  {% set decisionVerb = "withdrawn" %}
+{% else %}
+  {% set decisionTitle = "Project decision recorded" %}
+  {% set decisionVerb = "decided" %}
+{% endif %}
+{% set bannerHtml %}
+  <h3 class="govuk-notification-banner__heading">{{ decisionTitle }}</h3>
+  <p class="govuk-body">This project was {{ decisionVerb }} on {{ decisionDate }}.</p>
+  <p class="govuk-body">You cannot make changes to this project in Prepare.</p>
+{% endset %}
+<div class="govuk-!-margin-top-4 govuk-!-margin-bottom-2">
+{{ govukNotificationBanner({
+  titleText: "Important",
+  html: bannerHtml
+}) }}
+</div>
+{% endif %}

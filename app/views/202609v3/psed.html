@@ -21,13 +21,17 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-three-quarters">
+    {% include "202609v3/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Public Sector Equality Duty (PSED)</h1>
-    <p class="govuk-body">The Public Sector Equality Duty (PSED), under Section 149 of the Equality Act 2010, requires public authorities to have “due regard” to eliminating unlawful discrimination, advancing equality of opportunity, and fostering good relations between people with and without protected characteristics in their day-to-day public functions.</p>
+    <p class="govuk-body">The Public Sector Equality Duty (PSED), under Section 149 of the Equality Act 2010, requires public authorities to have â€œdue regardâ€ to eliminating unlawful discrimination, advancing equality of opportunity, and fostering good relations between people with and without protected characteristics in their day-to-day public functions.</p>
 
-    <form method="post" action="{{ returnTo }}">
+    <form method="post" action="">
 
       {{ govukRadios({
         name: "psed-considered",
+        errorMessage: errors['psed-considered'],
+        value: data['psed-considered'],
         fieldset: {
           legend: {
             text: "Has the Public Sector Equality Duty been considered and an Equalities Impact Assessment been completed?",
@@ -48,6 +52,7 @@
 
       {{ govukRadios({
         name: "psed-disproportionate-impact",
+        errorMessage: errors['psed-disproportionate-impact'],
         value: data['psed-disproportionate-impact'],
         fieldset: {
           legend: {
@@ -109,6 +114,11 @@
           <li>
             <p class="govuk-body-s">
               <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
             </p>
           </li>
         </ul>

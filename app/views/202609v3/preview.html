@@ -172,7 +172,7 @@
       <article class="app-docs-preview__page">
         <header class="app-docs-preview__doc-header">
           <h1 class="app-docs-preview__doc-title">Significant change preview</h1>
-          <p class="app-docs-preview__doc-subtitle">St Theresa’s Catholic Primary School</p>
+          <p class="app-docs-preview__doc-subtitle">St Theresa's Catholic Primary School</p>
         </header>
 
         {# Proposed decision and change dates #}
@@ -192,12 +192,28 @@
           {% call row("Is an admissions variation required?", "/202609v3/admissions-variation") %}
             {{ yesNo(data["admissions-variation-required"]) }}
           {% endcall %}
-          {% call row("Are the LA, Pupil Place Planning Team, and the Admissions Team supportive of the admissions variation?", "/202609v3/admissions-variation", "whether the LA, Pupil Place Planning Team, and the Admissions Team are supportive") %}
-            {{ yesNo(data["admissions-variation-teams-supportive"]) }}
+          {% call row("Is the LA supportive of the admissions variation?", "/202609v3/admissions-variation", "whether the LA is supportive") %}
+            {{ yesNo(data["admissions-variation-la-supportive"]) }}
           {% endcall %}
-          {% if data["admissions-variation-teams-supportive"] == "no" %}
-          {% call row("Give details", "/202609v3/admissions-variation", "why the LA, Pupil Place Planning Team, and the Admissions Team are not supportive") %}
-            {{ value(data["admissions-variation-teams-supportive-details"]) }}
+          {% if data["admissions-variation-la-supportive"] == "no" %}
+          {% call row("Give details", "/202609v3/admissions-variation", "why the LA is not supportive") %}
+            {{ value(data["admissions-variation-la-supportive-details"]) }}
+          {% endcall %}
+          {% endif %}
+          {% call row("Is the Pupil Place Planning Team supportive of the admissions variation?", "/202609v3/admissions-variation", "whether the Pupil Place Planning Team is supportive") %}
+            {{ yesNo(data["admissions-variation-pupil-place-planning-supportive"]) }}
+          {% endcall %}
+          {% if data["admissions-variation-pupil-place-planning-supportive"] == "no" %}
+          {% call row("Give details", "/202609v3/admissions-variation", "why the Pupil Place Planning Team is not supportive") %}
+            {{ value(data["admissions-variation-pupil-place-planning-supportive-details"]) }}
+          {% endcall %}
+          {% endif %}
+          {% call row("Is the Admissions Team supportive of the admissions variation?", "/202609v3/admissions-variation", "whether the Admissions Team is supportive") %}
+            {{ yesNo(data["admissions-variation-admissions-team-supportive"]) }}
+          {% endcall %}
+          {% if data["admissions-variation-admissions-team-supportive"] == "no" %}
+          {% call row("Give details", "/202609v3/admissions-variation", "why the Admissions Team is not supportive") %}
+            {{ value(data["admissions-variation-admissions-team-supportive-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Supporting evidence", "/202609v3/admissions-variation", "admissions variation supporting evidence") %}

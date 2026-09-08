@@ -21,11 +21,12 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    {% include "202609v3/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Religious bodies</h1>
     <p class="govuk-body">Record engagement with religious bodies for this significant change.</p>
 
-    <form method="post" action="{{ returnTo }}">
+    <form method="post" action="">
 
       {% set religiousBodiesNotConsultedHtml %}
       {{ govukTextarea({
@@ -40,6 +41,7 @@
 
       {{ govukRadios({
         name: "religious-bodies-consulted",
+        errorMessage: errors['religious-bodies-consulted'],
         value: data['religious-bodies-consulted'],
         fieldset: {
           legend: {
@@ -73,6 +75,7 @@
 
       {{ govukRadios({
         name: "religious-bodies-objections-raised",
+        errorMessage: errors['religious-bodies-objections-raised'],
         value: data['religious-bodies-objections-raised'],
         fieldset: {
           legend: {
@@ -123,6 +126,11 @@
           <li>
             <p class="govuk-body-s">
               <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
             </p>
           </li>
         </ul>

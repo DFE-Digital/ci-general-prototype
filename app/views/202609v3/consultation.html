@@ -22,14 +22,17 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
+    {% include "202609v3/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Consultation</h1>
     <p class="govuk-body">A three week consultation is a statutory requirement. An application cannot be approved until it is completed.</p>
     <p class="govuk-body">You should not progress until you have a plan for a consultation. Suggest contacting RTM/DO for more help or another signpost to the guidance.</p>
 
-    <form method="post" action="{{ returnTo }}">
+    <form method="post" action="">
 
       {{ govukRadios({
         name: "consultation-carried-out",
+        errorMessage: errors['consultation-carried-out'],
         value: data['consultation-carried-out'],
         fieldset: {
           legend: {
@@ -120,6 +123,28 @@
         }
       ]
     }) }}
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">
+        Useful information
+      </h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
   </div>
 </div>
 

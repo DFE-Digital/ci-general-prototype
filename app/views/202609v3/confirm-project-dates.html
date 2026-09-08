@@ -17,17 +17,24 @@
 
 {% block content %}
 
+{% set decisionDateError = errors['proposed-decision-date'] %}
+{% set implementationDateError = errors['proposed-implementation-date'] %}
+{% set decisionMissing = decisionDateError.missing if decisionDateError else [] %}
+{% set implementationMissing = implementationDateError.missing if implementationDateError else [] %}
+
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    {% include "202609v3/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Confirm project dates</h1>
     <p class="govuk-body">Enter or confirm the key dates for this significant change project.</p>
 
-    <form method="post" action="{{ returnTo }}">
+    <form method="post" action="">
 
       {{ govukDateInput({
         id: "proposed-decision-date",
         namePrefix: "proposed-decision-date",
+        errorMessage: decisionDateError,
         fieldset: {
           legend: {
             text: "Proposed decision date",
@@ -40,17 +47,17 @@
         items: [
           {
             name: "day",
-            classes: "govuk-input--width-2",
+            classes: "govuk-input--width-2" + (" govuk-input--error" if decisionDateError and ('day' in decisionMissing) else ""),
             value: data['proposed-decision-date-day']
           },
           {
             name: "month",
-            classes: "govuk-input--width-2",
+            classes: "govuk-input--width-2" + (" govuk-input--error" if decisionDateError and ('month' in decisionMissing) else ""),
             value: data['proposed-decision-date-month']
           },
           {
             name: "year",
-            classes: "govuk-input--width-4",
+            classes: "govuk-input--width-4" + (" govuk-input--error" if decisionDateError and ('year' in decisionMissing) else ""),
             value: data['proposed-decision-date-year']
           }
         ]
@@ -59,6 +66,7 @@
       {{ govukDateInput({
         id: "proposed-implementation-date",
         namePrefix: "proposed-implementation-date",
+        errorMessage: implementationDateError,
         fieldset: {
           legend: {
             text: "Proposed implementation date",
@@ -71,17 +79,17 @@
         items: [
           {
             name: "day",
-            classes: "govuk-input--width-2",
+            classes: "govuk-input--width-2" + (" govuk-input--error" if implementationDateError and ('day' in implementationMissing) else ""),
             value: data['proposed-implementation-date-day']
           },
           {
             name: "month",
-            classes: "govuk-input--width-2",
+            classes: "govuk-input--width-2" + (" govuk-input--error" if implementationDateError and ('month' in implementationMissing) else ""),
             value: data['proposed-implementation-date-month']
           },
           {
             name: "year",
-            classes: "govuk-input--width-4",
+            classes: "govuk-input--width-4" + (" govuk-input--error" if implementationDateError and ('year' in implementationMissing) else ""),
             value: data['proposed-implementation-date-year']
           }
         ]
@@ -106,6 +114,11 @@
           <li>
             <p class="govuk-body-s">
               <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
             </p>
           </li>
         </ul>

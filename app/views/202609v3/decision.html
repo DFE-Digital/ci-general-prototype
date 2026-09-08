@@ -1,0 +1,104 @@
+{% extends "202609v3/layouts/main-prepare.html" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Decision" %}
+{% set navActive = "significant-changes" %}
+{% if data['change-type'] %}
+  {% if data['change-type'] is string %}
+    {% set changeTypeLabel = data['change-type'] %}
+  {% else %}
+    {% set changeTypeLabel = data['change-type'] | join(", ") %}
+  {% endif %}
+{% else %}
+  {% set changeTypeLabel = "Testing tiers" %}
+{% endif %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+    <a class="govuk-back-link" href="significant-changes">Back</a>
+
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <span class="govuk-caption-xl" data-cy=".govuk-caption-xl">URN: 101335</span>
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" data-cy="select-heading">
+                    St Theresa's Catholic Primary School
+                </h1>
+                {% include "202609v3/includes/recorded-decision-banner.html" %}
+            </div>
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body govuk-!-margin-bottom-1">
+                    Trust: Appleby Grammar School (10059089)
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-1">
+                    Tier: 1
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-1">
+                    Type: {{ changeTypeLabel }}
+                    <a class="govuk-link govuk-!-padding-left-50" href="select-change-type">Change</a>
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-5">
+                    Project owner:
+                    <span data-id="assigned-user">Your name</span>
+                    <a class="govuk-link govuk-!-padding-left-50" href="#">Change</a>
+                </p>
+                <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-5">
+                    {% include "202609v3/includes/project-status-tag.html" %}
+                </p>
+            </div>
+
+            <div class="govuk-grid-column-full">
+                <nav class="moj-sub-navigation" aria-label="Sub navigation">
+                    <ul class="moj-sub-navigation__list govuk-!-margin-top-6">
+                        <li class="moj-sub-navigation__item">
+                            <a class="moj-sub-navigation__link" href="st-theresas">
+                                Project details
+                            </a>
+                        </li>
+                        <li class="moj-sub-navigation__item">
+                            <a class="moj-sub-navigation__link" href="application-form">
+                                School application form
+                            </a>
+                        </li>
+                        <li class="moj-sub-navigation__item" data-cy="record_decision_menu">
+                            <a class="moj-sub-navigation__link" aria-current="page" href="decision">
+                                Decision
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                {% if data['recorded-decision'] %}
+                <h2 class="govuk-heading-l">Record a decision</h2>
+                <p class="govuk-body">A decision of {{ data['recorded-decision'] | lower }} has been recorded for this project.</p>
+                {% else %}
+                <h2 class="govuk-heading-l">Record a decision</h2>
+                <p class="govuk-body">You have not recorded a decision for this project.</p>
+                <p class="govuk-body">You can record an Approved decision only when the:</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>project has been assigned to somebody</li>
+                    <li>proposed decision date has been entered</li>
+                    <li>proposed conversion date has been entered</li>
+                    <li>trust name is entered for Form a MAT projects</li>
+                    <li>trust reference number is entered for Form a MAT projects</li>
+                    <li>decision has been made</li>
+                </ul>
+
+                {{ govukButton({
+                  text: "Record a decision",
+                  href: "record-the-decision"
+                }) }}
+                {% endif %}
+            </div>
+        </div>
+    </main>
+</div>
+
+{% endblock %}

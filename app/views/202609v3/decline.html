@@ -20,14 +20,16 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    {% include "202609v3/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Decline</h1>
     <p class="govuk-body">Record a decline recommendation for this significant change.</p>
 
-    <form method="post" action="{{ returnTo }}">
+    <form method="post" action="">
 
       {{ govukRadios({
         name: "decline-recommendation",
+        errorMessage: errors['decline-recommendation'],
         value: data['decline-recommendation'],
         fieldset: {
           legend: {

@@ -1,6 +1,6 @@
 {% extends "202609v3/layouts/main-prepare.html" %}
 
-{% set pageName = "St Theresa’s Catholic Primary School" %}
+{% set pageName = "St Theresa's Catholic Primary School" %}
 {% set navActive = "significant-changes" %}
 {% if data['change-type'] %}
   {% if data['change-type'] is string %}
@@ -15,8 +15,6 @@
 {% macro statusTag(id, status) %}
   {% if status == "completed" %}
   <strong class="govuk-tag app-task-list__tag app-task-list__tag--completed" id="{{ id }}">Completed</strong>
-  {% elseif status == "in-progress" %}
-  <strong class="govuk-tag govuk-tag--blue app-task-list__tag" id="{{ id }}">In progress</strong>
   {% else %}
   <strong class="govuk-tag govuk-tag--grey app-task-list__tag" id="{{ id }}">Not started</strong>
   {% endif %}
@@ -33,8 +31,9 @@
             <div class="govuk-grid-column-full">
                 <span class="govuk-caption-xl" data-cy=".govuk-caption-xl">URN: 101335</span>
                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" data-cy="select-heading">
-                    St Theresa’s Catholic Primary School
+                    St Theresa's Catholic Primary School
                 </h1>
+                {% include "202609v3/includes/recorded-decision-banner.html" %}
             </div>
             <div class="govuk-grid-column-full">
                 <p class="govuk-body govuk-!-margin-bottom-1">
@@ -53,7 +52,7 @@
                     <a class="govuk-link govuk-!-padding-left-50" href="#">Change</a>
                 </p>
                 <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-5">
-                    <strong class="govuk-tag govuk-tag--yellow" id="project-status-101335">Pre decision</strong>
+                    {% include "202609v3/includes/project-status-tag.html" %}
                 </p>
             </div>
 
@@ -66,12 +65,12 @@
                             </a>
                         </li>
                         <li class="moj-sub-navigation__item">
-                            <a class="moj-sub-navigation__link" href="#">
+                            <a class="moj-sub-navigation__link" href="application-form">
                                 School application form
                             </a>
                         </li>
                         <li class="moj-sub-navigation__item" data-cy="record_decision_menu">
-                            <a class="moj-sub-navigation__link" href="#">
+                            <a class="moj-sub-navigation__link" href="decision">
                                 Decision
                             </a>
                         </li>
@@ -80,23 +79,8 @@
             </div>
         </div>
 
-        <div class="app-task-jump-layout">
-            <nav class="app-jump-nav" aria-label="Jump to section">
-                    <h2 class="govuk-heading-s govuk-!-margin-bottom-3">Jump to section</h2>
-                    <ul class="govuk-list">
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#add-dfe-information">Proposed decision and change dates</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#admissions-variation">Admissions variation</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#consultation">Consultation</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#screening-questions">Performance</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#psed">PSED</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#land-and-planning">Land and planning</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#financials">Financials</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#growth-applications">High Quality Trust Framework</a></li>
-                        <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#recommendations">Recommendations</a></li>
-                    </ul>
-            </nav>
-
-            <div class="app-task-jump-layout__content">
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
 
                 <section id="add-dfe-information" class="govuk-!-margin-bottom-8">
                     <h2 class="app-task-list__section">Proposed decision and change dates</h2>
@@ -125,8 +109,9 @@
                                 </span>
                                 {{ statusTag("admissions-variation-status", data | taskStatus([
                                   "admissions-variation-required",
-                                  "admissions-variation-teams-supportive",
-                                  { when: "admissions-variation-teams-supportive", equals: "no", field: "admissions-variation-teams-supportive-details" }
+                                  "admissions-variation-la-supportive",
+                                  "admissions-variation-pupil-place-planning-supportive",
+                                  "admissions-variation-admissions-team-supportive"
                                 ])) }}
                             </li>
                         </ul>
@@ -150,9 +135,7 @@
                                 {{ statusTag("stakeholder-engagement-status", data | taskStatus([
                                   "stakeholder-engagement-carried-out",
                                   "stakeholder-engagement-objections-raised",
-                                  "stakeholder-engagement-consultation-included-admissions-variation",
-                                  { when: "stakeholder-engagement-carried-out", equals: "no", field: "stakeholder-engagement-carried-out-details" },
-                                  { when: "stakeholder-engagement-consultation-included-admissions-variation", equals: "no", field: "stakeholder-engagement-consultation-included-admissions-variation-details" }
+                                  "stakeholder-engagement-consultation-included-admissions-variation"
                                 ])) }}
                             </li>
                             <li class="app-task-list__item">
@@ -167,9 +150,7 @@
                                 </span>
                                 {{ statusTag("religious-bodies-status", data | taskStatus([
                                   "religious-bodies-consulted",
-                                  "religious-bodies-objections-raised",
-                                  { when: "religious-bodies-consulted", equals: "no", field: "religious-bodies-consulted-details" },
-                                  { when: "religious-bodies-objections-raised", equals: "no", field: "religious-bodies-objections-raised-details" }
+                                  "religious-bodies-objections-raised"
                                 ])) }}
                             </li>
                         </ul>
@@ -184,7 +165,11 @@
                                 <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="ofsted-inspection-status" href="ofsted-inspection">Ofsted</a>
                                 </span>
-                                {{ statusTag("ofsted-inspection-status", data | taskStatus(["ofsted-inspection-considered", "ofsted-inspection-leadership-education", "ofsted-inspection-evaluation-standard"])) }}
+                                {{ statusTag("ofsted-inspection-status", data | taskStatus([
+                                  "ofsted-inspection-considered",
+                                  "ofsted-inspection-leadership-education",
+                                  "ofsted-inspection-evaluation-standard"
+                                ])) }}
                             </li>
                         </ul>
                     </div>
@@ -212,7 +197,10 @@
                                 <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="land-transaction-status" href="land-transaction">Land transaction</a>
                                 </span>
-                                {{ statusTag("land-transaction-status", data | taskStatus(["land-transaction-required", "land-transaction-team-consented"])) }}
+                                {{ statusTag("land-transaction-status", data | taskStatus([
+                                  "land-transaction-required",
+                                  "land-transaction-team-consented"
+                                ])) }}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
@@ -238,7 +226,7 @@
                                 <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="financial-health-assessment-status" href="financial-health-assessment">Financial Health Assessment</a>
                                 </span>
-                                {{ statusTag("financial-health-assessment-status", data | taskStatus(["financial-health-assessment-summary"])) }}
+                                {{ statusTag("financial-health-assessment-status", data | taskStatus(["financial-health-assessment-complete"])) }}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
@@ -278,14 +266,6 @@
                     </div>
                 </section>
 
-            </div>
-        </div>
-
-        <div class="app-task-jump-layout app-task-jump-layout--footer">
-            <p class="app-task-jump-layout__back-to-top">
-                <a class="govuk-link" href="#" onclick="window.scrollTo(0, 0); return false;">↑ Back to top</a>
-            </p>
-            <div class="app-task-jump-layout__content">
                 <a href="/202609v3/preview-document" role="button" draggable="false" class="govuk-button govuk-button--secondary" data-module="govuk-button">
                     Preview
                 </a>

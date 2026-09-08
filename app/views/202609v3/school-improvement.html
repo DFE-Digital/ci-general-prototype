@@ -21,14 +21,16 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    {% include "202609v3/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">School improvement</h1>
     <p class="govuk-body">Assess school improvement for this GROWTH application.</p>
 
-    <form method="post" action="{{ returnTo }}">
+    <form method="post" action="">
 
       {{ govukRadios({
         name: "school-improvement-supports",
+        errorMessage: errors['school-improvement-supports'],
         value: data['school-improvement-supports'],
         fieldset: {
           legend: {
@@ -82,6 +84,11 @@
           <li>
             <p class="govuk-body-s">
               <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
             </p>
           </li>
         </ul>

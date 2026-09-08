@@ -59,12 +59,9 @@ addFilter('taskStatus', function (data, keys) {
     }
   })
 
-  if (filled === 0) {
-    return 'not-started'
+  if (filled === required && required > 0) {
+    return 'completed'
   }
-  if (filled < required) {
-    return 'in-progress'
-  }
-  return 'completed'
+  return 'not-started'
 })
 

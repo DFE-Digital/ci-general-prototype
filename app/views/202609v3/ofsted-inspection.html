@@ -22,12 +22,13 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    {% include "202609v3/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Ofsted</h1>
     <p class="govuk-body">Record Ofsted inspection information relevant to this significant change.</p>
     <p class="govuk-body">The date of the last Ofsted inspection was 2nd July 2025.</p>
 
-    <form method="post" action="{{ returnTo }}">
+    <form method="post" action="">
 
       {{ govukDateInput({
         id: "ofsted-inspection-date",
@@ -62,6 +63,7 @@
 
       {{ govukRadios({
         name: "ofsted-inspection-considered",
+        errorMessage: errors['ofsted-inspection-considered'],
         value: data['ofsted-inspection-considered'],
         fieldset: {
           legend: {
@@ -78,6 +80,7 @@
 
       {{ govukRadios({
         name: "ofsted-inspection-leadership-education",
+        errorMessage: errors['ofsted-inspection-leadership-education'],
         value: data['ofsted-inspection-leadership-education'],
         fieldset: {
           legend: {
@@ -94,6 +97,7 @@
 
       {{ govukRadios({
         name: "ofsted-inspection-evaluation-standard",
+        errorMessage: errors['ofsted-inspection-evaluation-standard'],
         value: data['ofsted-inspection-evaluation-standard'],
         fieldset: {
           legend: {
@@ -147,6 +151,11 @@
           <li>
             <p class="govuk-body-s">
               <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
             </p>
           </li>
         </ul>

@@ -21,11 +21,12 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    {% include "202609v3/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Stakeholder engagement</h1>
     <p class="govuk-body">Record the stakeholder engagement carried out for this significant change.</p>
 
-    <form method="post" action="{{ returnTo }}">
+    <form method="post" action="">
 
       {% set stakeholderNotConsultedHtml %}
       {{ govukTextarea({
@@ -40,6 +41,7 @@
 
       {{ govukRadios({
         name: "stakeholder-engagement-carried-out",
+        errorMessage: errors['stakeholder-engagement-carried-out'],
         value: data['stakeholder-engagement-carried-out'],
         fieldset: {
           legend: {
@@ -64,6 +66,7 @@
 
       {{ govukRadios({
         name: "stakeholder-engagement-objections-raised",
+        errorMessage: errors['stakeholder-engagement-objections-raised'],
         value: data['stakeholder-engagement-objections-raised'],
         fieldset: {
           legend: {
@@ -100,6 +103,7 @@
 
       {{ govukRadios({
         name: "stakeholder-engagement-consultation-included-admissions-variation",
+        errorMessage: errors['stakeholder-engagement-consultation-included-admissions-variation'],
         value: data['stakeholder-engagement-consultation-included-admissions-variation'],
         fieldset: {
           legend: {
@@ -155,6 +159,11 @@
           <li>
             <p class="govuk-body-s">
               <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
             </p>
           </li>
         </ul>

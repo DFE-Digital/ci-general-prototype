@@ -1060,7 +1060,7 @@
                     <td class="govuk-table__cell">
                         <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
                             <strong>
-                                <a id="school-name-0" class="govuk-link" href="st-theresas">St Theresa’s Catholic Primary School</a>
+                                <a id="school-name-0" class="govuk-link" href="st-theresas">St Theresa's Catholic Primary School</a>
                             </strong>
                         </div>
                         <div class="govuk-!-margin-top-1">
@@ -1105,7 +1105,8 @@
                             <span>Your name</span>
                         </div>
                         <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
-                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-0">Pre decision</strong>
+                            {% set projectStatusTagId = "project-status-0" %}
+                            {% include "202609v3/includes/project-status-tag.html" %}
                         </div>
                     </td>
                 </tr>

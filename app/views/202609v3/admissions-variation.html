@@ -21,14 +21,16 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    {% include "202609v3/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Admissions variation</h1>
     <p class="govuk-body">Record whether an admissions variation is required for this significant change and capture the details.</p>
 
-    <form method="post" action="{{ returnTo }}">
+    <form method="post" action="">
 
       {{ govukRadios({
         name: "admissions-variation-required",
+        errorMessage: errors['admissions-variation-required'],
         value: data['admissions-variation-required'],
         fieldset: {
           legend: {
@@ -52,11 +54,11 @@
         ]
       }) }}
 
-      {% set teamsNotSupportiveHtml %}
+      {% set laNotSupportiveHtml %}
       {{ govukTextarea({
-        name: "admissions-variation-teams-supportive-details",
-        id: "admissions-variation-teams-supportive-details",
-        value: data['admissions-variation-teams-supportive-details'],
+        name: "admissions-variation-la-supportive-details",
+        id: "admissions-variation-la-supportive-details",
+        value: data['admissions-variation-la-supportive-details'],
         label: {
           text: "Give details"
         }
@@ -64,11 +66,12 @@
       {% endset %}
 
       {{ govukRadios({
-        name: "admissions-variation-teams-supportive",
-        value: data['admissions-variation-teams-supportive'],
+        name: "admissions-variation-la-supportive",
+        errorMessage: errors['admissions-variation-la-supportive'],
+        value: data['admissions-variation-la-supportive'],
         fieldset: {
           legend: {
-            text: "Are the LA, Pupil Place Planning Team, and the Admissions Team supportive of the admissions variation?",
+            text: "Is the LA supportive of the admissions variation?",
             classes: "govuk-fieldset__legend--m"
           }
         },
@@ -81,7 +84,79 @@
             value: "no",
             text: "No",
             conditional: {
-              html: teamsNotSupportiveHtml
+              html: laNotSupportiveHtml
+            }
+          }
+        ]
+      }) }}
+
+      {% set pupilPlacePlanningNotSupportiveHtml %}
+      {{ govukTextarea({
+        name: "admissions-variation-pupil-place-planning-supportive-details",
+        id: "admissions-variation-pupil-place-planning-supportive-details",
+        value: data['admissions-variation-pupil-place-planning-supportive-details'],
+        label: {
+          text: "Give details"
+        }
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "admissions-variation-pupil-place-planning-supportive",
+        errorMessage: errors['admissions-variation-pupil-place-planning-supportive'],
+        value: data['admissions-variation-pupil-place-planning-supportive'],
+        fieldset: {
+          legend: {
+            text: "Is the Pupil Place Planning Team supportive of the admissions variation?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes"
+          },
+          {
+            value: "no",
+            text: "No",
+            conditional: {
+              html: pupilPlacePlanningNotSupportiveHtml
+            }
+          }
+        ]
+      }) }}
+
+      {% set admissionsTeamNotSupportiveHtml %}
+      {{ govukTextarea({
+        name: "admissions-variation-admissions-team-supportive-details",
+        id: "admissions-variation-admissions-team-supportive-details",
+        value: data['admissions-variation-admissions-team-supportive-details'],
+        label: {
+          text: "Give details"
+        }
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "admissions-variation-admissions-team-supportive",
+        errorMessage: errors['admissions-variation-admissions-team-supportive'],
+        value: data['admissions-variation-admissions-team-supportive'],
+        fieldset: {
+          legend: {
+            text: "Is the Admissions Team supportive of the admissions variation?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes"
+          },
+          {
+            value: "no",
+            text: "No",
+            conditional: {
+              html: admissionsTeamNotSupportiveHtml
             }
           }
         ]
@@ -116,6 +191,11 @@
           <li>
             <p class="govuk-body-s">
               <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
             </p>
           </li>
         </ul>

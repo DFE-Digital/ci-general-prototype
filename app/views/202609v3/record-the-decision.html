@@ -1,0 +1,52 @@
+{% extends "202609v3/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Record the decision" %}
+{% set navActive = "significant-changes" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: "/202609v3/decision"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "202609v3/includes/radio-error-summary.html" %}
+    <form method="post" action="/202609v3/decision">
+
+      {{ govukRadios({
+        name: "recorded-decision",
+        errorMessage: errors['recorded-decision'],
+        value: data['recorded-decision'],
+        fieldset: {
+          legend: {
+            html: '<span class="govuk-caption-l">Record the decision</span> Record the decision',
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          { value: "Approve", text: "Approve" },
+          { value: "Approve with conditions", text: "Approve with conditions" },
+          { value: "Defer", text: "Defer" },
+          { value: "Withdraw", text: "Withdraw" },
+          { value: "Decline", text: "Decline" }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}

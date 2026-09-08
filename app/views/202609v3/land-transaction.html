@@ -21,14 +21,16 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    {% include "202609v3/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Land transaction</h1>
     <p class="govuk-body">Record whether a land transaction is required for this significant change.</p>
 
-    <form method="post" action="{{ returnTo }}">
+    <form method="post" action="">
 
       {{ govukRadios({
         name: "land-transaction-required",
+        errorMessage: errors['land-transaction-required'],
         value: data['land-transaction-required'],
         fieldset: {
           legend: {
@@ -40,12 +42,13 @@
           { value: "yes", text: "Yes" },
           { value: "not-applicable", text: "Not applicable" },
           { value: "no-further-information", text: "No" },
-          { value: "no-landowner-to-submit", text: "No – landowner to submit land transaction application" }
+          { value: "no-landowner-to-submit", text: "No â€“ landowner to submit land transaction application" }
         ]
       }) }}
 
       {{ govukRadios({
         name: "land-transaction-team-consented",
+        errorMessage: errors['land-transaction-team-consented'],
         value: data['land-transaction-team-consented'],
         fieldset: {
           legend: {
@@ -100,6 +103,11 @@
           <li>
             <p class="govuk-body-s">
               <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
             </p>
           </li>
         </ul>

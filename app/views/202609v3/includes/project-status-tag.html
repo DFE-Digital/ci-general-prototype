@@ -1,0 +1,14 @@
+{% set tagId = projectStatusTagId or "project-status-101335" %}
+{% if data['recorded-decision'] == "Approve" or data['recorded-decision'] == "Approved" %}
+<strong class="govuk-tag govuk-tag--green" id="{{ tagId }}">Approved</strong>
+{% elseif data['recorded-decision'] == "Approve with conditions" %}
+<strong class="govuk-tag govuk-tag--green" id="{{ tagId }}">Approved with conditions</strong>
+{% elseif data['recorded-decision'] == "Decline" or data['recorded-decision'] == "Declined" %}
+<strong class="govuk-tag govuk-tag--red" id="{{ tagId }}">Declined</strong>
+{% elseif data['recorded-decision'] == "Defer" or data['recorded-decision'] == "Deferred" %}
+<strong class="govuk-tag govuk-tag--yellow" id="{{ tagId }}">Deferred</strong>
+{% elseif data['recorded-decision'] == "Withdraw" or data['recorded-decision'] == "Withdrawn" %}
+<strong class="govuk-tag govuk-tag--grey" id="{{ tagId }}">Withdrawn</strong>
+{% else %}
+<strong class="govuk-tag govuk-tag--yellow" id="{{ tagId }}">Pre decision</strong>
+{% endif %}

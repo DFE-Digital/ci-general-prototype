@@ -20,14 +20,16 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l">St Theresa’s Catholic Primary School</span>
+    {% include "202609v3/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Defer</h1>
     <p class="govuk-body">Record a defer recommendation for this significant change.</p>
 
-    <form method="post" action="{{ returnTo }}">
+    <form method="post" action="">
 
       {{ govukRadios({
         name: "defer-recommendation",
+        errorMessage: errors['defer-recommendation'],
         value: data['defer-recommendation'],
         fieldset: {
           legend: {
