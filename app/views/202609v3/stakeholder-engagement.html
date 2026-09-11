@@ -74,16 +74,16 @@
         },
         items: [
           {
-            value: "not-applicable",
-            text: "No"
-          },
-          {
             value: "yes",
-            text: "Yes - trust has confirmed they have addressed all objections"
+            text: "Yes, trust has confirmed they have addressed all objections"
           },
           {
             value: "no",
-            text: "Yes - no further information provided"
+            text: "Yes, further information has not been provided"
+          },
+          {
+            value: "not-applicable",
+            text: "No"
           }
         ]
       }) }}
@@ -103,15 +103,11 @@
         value: data['stakeholder-engagement-consultation-included-admissions-variation'],
         fieldset: {
           legend: {
-            text: "Have the relevant stakeholder been notified of the admissions changes?",
+            text: "Have the relevant stakeholders been notified of the admissions changes?",
             classes: "govuk-fieldset__legend--m"
           }
         },
         items: [
-          {
-            value: "not-applicable",
-            text: "Not applicable"
-          },
           {
             value: "yes",
             text: "Yes"
@@ -122,6 +118,10 @@
             conditional: {
               html: admissionsNotNotifiedHtml
             }
+          },
+          {
+            value: "not-applicable",
+            text: "Not applicable"
           }
         ]
       }) }}

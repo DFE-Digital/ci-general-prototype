@@ -4,7 +4,7 @@
 {% from "govuk/components/date-input/macro.njk" import govukDateInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
-{% set pageName = "Confirm project dates" %}
+{% set pageName = "Decision and implementation dates" %}
 {% set navActive = "significant-changes" %}
 {% set returnTo = "/202609v3/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v3/st-theresas") %}
 
@@ -26,8 +26,8 @@
   <div class="govuk-grid-column-two-thirds">
     {% include "202609v3/includes/radio-error-summary.html" %}
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
-    <h1 class="govuk-heading-l">Confirm project dates</h1>
-    <p class="govuk-body">Enter or confirm the key dates for this significant change project.</p>
+    <h1 class="govuk-heading-l">Decision and implementation dates</h1>
+    <p class="govuk-body">Enter the key dates for this significant change project.</p>
 
     <form method="post" action="">
 

@@ -2,9 +2,9 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "202609v3/includes/rich-text-editor.html" import appRichTextEditor %}
 
 {% set pageName = "HQTF consideration" %}
 {% set navActive = "significant-changes" %}
@@ -27,32 +27,55 @@
 
     <form method="post" action="">
 
+      {% set hqieRelevantHtml %}
+      {{ appRichTextEditor({
+        name: "hqie-supports-details",
+        id: "hqie-supports-details",
+        value: data['hqie-supports-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {% set hqieNotRelevantHtml %}
+      {{ appRichTextEditor({
+        name: "hqie-supports-not-relevant-details",
+        id: "hqie-supports-not-relevant-details",
+        value: data['hqie-supports-not-relevant-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
       {{ govukRadios({
         name: "hqie-supports",
         errorMessage: errors['hqie-supports'],
         value: data['hqie-supports'],
         fieldset: {
           legend: {
-            text: "Have any issues or risks been identified with regards to the HQTF pillars - High Quality & Inclusive Education, School Improvement, Workforce, Finance & Operations, Governance & Leadership?",
+            text: "Have any issues or risks been identified with regards to the HQTF pillars?",
             classes: "govuk-fieldset__legend--m"
           }
         },
+        hint: {
+          text: "The HQTF pillars are High Quality & Inclusive Education, School Improvement, Workforce, Finance & Operations, Governance and Leadership"
+        },
         items: [
-          { value: "yes", text: "No issues or risks identified" },
-          { value: "no", text: "Risks or issues identified that are relevant to this significant change" },
-          { value: "not-relevant", text: "Risks or issues identified that are not relevant to this significant change" },
+          {
+            value: "no",
+            text: "Yes, risks or issues identified that are relevant to this significant change",
+            conditional: {
+              html: hqieRelevantHtml
+            }
+          },
+          {
+            value: "not-relevant",
+            text: "Yes, risks or issues identified that are not relevant to this significant change",
+            conditional: {
+              html: hqieNotRelevantHtml
+            }
+          },
+          { value: "yes", text: "No" },
           { value: "not-applicable", text: "Not applicable" }
         ]
-      }) }}
-
-      {{ govukTextarea({
-        name: "high-quality-inclusive-education-summary",
-        id: "high-quality-inclusive-education-summary",
-        value: data['high-quality-inclusive-education-summary'],
-        label: {
-          text: "Further information (optional)",
-          classes: "govuk-label--m"
-        }
       }) }}
 
       {{ govukInput({

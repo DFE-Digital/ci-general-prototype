@@ -2,11 +2,11 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "202609v3/includes/rich-text-editor.html" import appRichTextEditor %}
 
-{% set pageName = "Public Sector Equality Duty (PSED)" %}
+{% set pageName = "Public Sector Equality Duty" %}
 {% set navActive = "significant-changes" %}
 {% set returnTo = "/202609v3/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v3/st-theresas") %}
 
@@ -23,10 +23,18 @@
   <div class="govuk-grid-column-three-quarters">
     {% include "202609v3/includes/radio-error-summary.html" %}
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
-    <h1 class="govuk-heading-l">Public Sector Equality Duty (PSED)</h1>
-    <p class="govuk-body">The Public Sector Equality Duty (PSED), under Section 149 of the Equality Act 2010, requires public authorities to have â€œdue regardâ€ to eliminating unlawful discrimination, advancing equality of opportunity, and fostering good relations between people with and without protected characteristics in their day-to-day public functions.</p>
+    <h1 class="govuk-heading-l">Public Sector Equality Duty</h1>
 
     <form method="post" action="">
+
+      {% set psedNotConsideredHtml %}
+      {{ appRichTextEditor({
+        name: "psed-considered-details",
+        id: "psed-considered-details",
+        value: data['psed-considered-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
 
       {{ govukRadios({
         name: "psed-considered",
@@ -45,7 +53,10 @@
           },
           {
             value: "no",
-            text: "No"
+            text: "No",
+            conditional: {
+              html: psedNotConsideredHtml
+            }
           }
         ]
       }) }}
@@ -74,15 +85,6 @@
             text: "Likely"
           }
         ]
-      }) }}
-
-      {{ govukTextarea({
-        name: "psed-summary",
-        id: "psed-summary",
-        label: {
-          text: "Enter anything notable about the protected characteristics of the pupil demographic at the school/academy",
-          classes: "govuk-label--m"
-        }
       }) }}
 
       {{ govukInput({

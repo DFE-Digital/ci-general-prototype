@@ -2,10 +2,10 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "202609v3/includes/rich-text-editor.html" import appRichTextEditor %}
 
 {% set pageName = "Consultation" %}
 {% set navActive = "significant-changes" %}
@@ -25,10 +25,17 @@
     {% include "202609v3/includes/radio-error-summary.html" %}
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Consultation</h1>
-    <p class="govuk-body">A three week consultation is a statutory requirement. An application cannot be approved until it is completed.</p>
-    <p class="govuk-body">You should not progress until you have a plan for a consultation. Suggest contacting RTM/DO for more help or another signpost to the guidance.</p>
 
     <form method="post" action="">
+
+      {% set consultationNoHtml %}
+      {{ appRichTextEditor({
+        name: "consultation-carried-out-details",
+        id: "consultation-carried-out-details",
+        value: data['consultation-carried-out-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
 
       {{ govukRadios({
         name: "consultation-carried-out",
@@ -36,7 +43,7 @@
         value: data['consultation-carried-out'],
         fieldset: {
           legend: {
-            text: "Has a 3 week minimum consultation been carried out?",
+            text: "Has a 3 week consultation been completed?",
             classes: "govuk-fieldset__legend--m"
           }
         },
@@ -51,19 +58,12 @@
           },
           {
             value: "not-applicable",
-            text: "No"
+            text: "No",
+            conditional: {
+              html: consultationNoHtml
+            }
           }
         ]
-      }) }}
-
-      {{ govukTextarea({
-        name: "consultation-summary",
-        id: "consultation-summary",
-        value: data['consultation-summary'],
-        label: {
-          text: "Further information (optional)",
-          classes: "govuk-label--m"
-        }
       }) }}
 
       {{ govukInput({

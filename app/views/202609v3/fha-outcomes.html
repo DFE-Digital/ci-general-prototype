@@ -2,11 +2,11 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "202609v3/includes/rich-text-editor.html" import appRichTextEditor %}
 
-{% set pageName = "FHA Outcomes" %}
+{% set pageName = "Financial Health Assessment (FHA) outcomes" %}
 {% set navActive = "significant-changes" %}
 {% set returnTo = "/202609v3/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v3/st-theresas") %}
 
@@ -23,10 +23,19 @@
   <div class="govuk-grid-column-two-thirds">
     {% include "202609v3/includes/radio-error-summary.html" %}
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
-    <h1 class="govuk-heading-l">FHA Outcomes</h1>
+    <h1 class="govuk-heading-l">Financial Health Assessment (FHA) outcomes</h1>
     <p class="govuk-body">Record the outcomes of the Financial Health Assessment.</p>
 
     <form method="post" action="">
+
+      {% set fhaOutcomesYesHtml %}
+      {{ appRichTextEditor({
+        name: "fha-outcomes-recorded-details",
+        id: "fha-outcomes-recorded-details",
+        value: data['fha-outcomes-recorded-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
 
       {{ govukRadios({
         name: "fha-outcomes-recorded",
@@ -34,24 +43,20 @@
         value: data['fha-outcomes-recorded'],
         fieldset: {
           legend: {
-            text: "Have there been any risks or issues raised in the financial health assessment?",
+            text: "Have there been any risks or issues raised in the FHA?",
             classes: "govuk-fieldset__legend--m"
           }
         },
         items: [
-          { value: "yes", text: "Yes" },
+          {
+            value: "yes",
+            text: "Yes",
+            conditional: {
+              html: fhaOutcomesYesHtml
+            }
+          },
           { value: "no", text: "No" }
         ]
-      }) }}
-
-      {{ govukTextarea({
-        name: "fha-outcomes-summary",
-        id: "fha-outcomes-summary",
-        value: data['fha-outcomes-summary'],
-        label: {
-          text: "Further information (optional)",
-          classes: "govuk-label--m"
-        }
       }) }}
 
       {{ govukInput({

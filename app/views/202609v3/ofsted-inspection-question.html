@@ -6,14 +6,32 @@
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "202609v3/includes/rich-text-editor.html" import appRichTextEditor %}
 
-{% set pageName = "Planning permission" %}
+{% set framework = data['ofsted-inspection-framework'] %}
+{% if framework == "pre-2024-09-19" %}
+  {% set questionName = "ofsted-inspection-considered" %}
+  {% set questionText = "Is the academy rated good or outstanding?" %}
+  {% set detailsName = "ofsted-inspection-considered-details" %}
+{% elseif framework == "2024-09-19-to-2025-11-09" %}
+  {% set questionName = "ofsted-inspection-leadership-education" %}
+  {% set questionText = "Is the academy rated good or outstanding in leadership and management and quality of education?" %}
+  {% set detailsName = "ofsted-inspection-leadership-education-details" %}
+{% else %}
+  {% set questionName = "ofsted-inspection-evaluation-standard" %}
+  {% set questionText = "Is the academy meeting expected standard, strong standard or exceptional in all evaluation areas?" %}
+  {% set detailsName = "ofsted-inspection-evaluation-standard-details" %}
+{% endif %}
+
+{% set pageName = questionText %}
 {% set navActive = "significant-changes" %}
+{% set datePage = "/202609v3/ofsted-inspection" + (("?returnTo=preview&section=" + (data.section if data.section else "mandatory-legal-requirements")) if data.returnTo == "preview" else "") %}
 {% set returnTo = "/202609v3/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v3/st-theresas") %}
+{% set monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
+{% set monthIndex = (data['ofsted-inspection-date-month'] | int) - 1 %}
 
 {% block beforeContent %}
 {{ govukBackLink({
   text: "Back",
-  href: returnTo
+  href: datePage
 }) }}
 {% endblock %}
 
@@ -23,29 +41,31 @@
   <div class="govuk-grid-column-two-thirds">
     {% include "202609v3/includes/radio-error-summary.html" %}
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
-    <h1 class="govuk-heading-l">Planning permission</h1>
-    <p class="govuk-body">Enter details of planning permission if it is required for the significant change.</p>
 
     <form method="post" action="">
 
-      {% set planningPermissionNoHtml %}
+      {% set ofstedNoHtml %}
       {{ appRichTextEditor({
-        name: "planning-permission-required-details",
-        id: "planning-permission-required-details",
-        value: data['planning-permission-required-details'],
+        name: detailsName,
+        id: detailsName,
+        value: data[detailsName],
         label: "Give details"
       }) }}
       {% endset %}
 
       {{ govukRadios({
-        name: "planning-permission-required",
-        errorMessage: errors['planning-permission-required'],
-        value: data['planning-permission-required'],
+        name: questionName,
+        errorMessage: errors[questionName],
+        value: data[questionName],
         fieldset: {
           legend: {
-            text: "Has planning permission been secured?",
-            classes: "govuk-fieldset__legend--m"
+            text: questionText,
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
           }
+        },
+        hint: {
+          text: "The most recent Ofsted inspection was " + data['ofsted-inspection-date-day'] + " " + monthNames[monthIndex] + " " + data['ofsted-inspection-date-year'] + "."
         },
         items: [
           { value: "yes", text: "Yes" },
@@ -53,25 +73,23 @@
             value: "no",
             text: "No",
             conditional: {
-              html: planningPermissionNoHtml
+              html: ofstedNoHtml
             }
-          },
-          { value: "no-awaiting-approval", text: "No, applied for and awaiting decision" },
-          { value: "not-applicable", text: "Not applicable" }
+          }
         ]
       }) }}
 
       {{ govukInput({
-        id: "planning-permission-supporting-evidence",
-        name: "planning-permission-supporting-evidence",
-        value: data['planning-permission-supporting-evidence'] or "sharepoint.edu.gov.uk/evidence",
+        id: "ofsted-inspection-supporting-evidence",
+        name: "ofsted-inspection-supporting-evidence",
+        value: data['ofsted-inspection-supporting-evidence'] or "sharepoint.edu.gov.uk/evidence",
         label: {
           text: "Supporting evidence",
           classes: "govuk-label--m"
         }
       }) }}
 
-      <input type="hidden" name="planning-permission-complete" value="true">
+      <input type="hidden" name="ofsted-inspection-complete" value="true">
 
       {{ govukButton({
         text: "Save and return"

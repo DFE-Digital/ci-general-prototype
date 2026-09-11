@@ -2,11 +2,11 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "202609v3/includes/rich-text-editor.html" import appRichTextEditor %}
 
-{% set pageName = "LA objections" %}
+{% set pageName = "Local authority objections" %}
 {% set navActive = "significant-changes" %}
 {% set returnTo = "/202609v3/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v3/st-theresas") %}
 
@@ -23,10 +23,19 @@
   <div class="govuk-grid-column-two-thirds">
     {% include "202609v3/includes/radio-error-summary.html" %}
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
-    <h1 class="govuk-heading-l">LA objections</h1>
-    <p class="govuk-body">Record whether the local authority has raised any objections to this significant change.</p>
+    <h1 class="govuk-heading-l">Local authority objections</h1>
+    <p class="govuk-body">Record whether a local authority has raised any objections to this significant change.</p>
 
     <form method="post" action="">
+
+      {% set laObjectionsNoHtml %}
+      {{ appRichTextEditor({
+        name: "la-objections-raised-details",
+        id: "la-objections-raised-details",
+        value: data['la-objections-raised-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
 
       {{ govukRadios({
         name: "la-objections-raised",
@@ -34,25 +43,21 @@
         value: data['la-objections-raised'],
         fieldset: {
           legend: {
-            text: "Has the LA (local authority) or any bordering LAs raised objections to this change?",
+            text: "Has a LA raised any objections?",
             classes: "govuk-fieldset__legend--m"
           }
         },
         items: [
-          { value: "not-applicable", text: "No" },
-          { value: "yes", text: "Yes - however evidence confirms objections have been addressed" },
-          { value: "no", text: "Yes - no further information provided" }
+          { value: "yes", text: "Yes, evidence confirms objections have been addressed" },
+          { value: "no", text: "Yes, further information has not been provided" },
+          {
+            value: "not-applicable",
+            text: "No",
+            conditional: {
+              html: laObjectionsNoHtml
+            }
+          }
         ]
-      }) }}
-
-      {{ govukTextarea({
-        name: "la-objections-summary",
-        id: "la-objections-summary",
-        value: data['la-objections-summary'],
-        label: {
-          text: "Further information (optional)",
-          classes: "govuk-label--m"
-        }
       }) }}
 
       {{ govukInput({

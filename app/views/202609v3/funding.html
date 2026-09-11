@@ -2,9 +2,9 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "202609v3/includes/rich-text-editor.html" import appRichTextEditor %}
 
 {% set pageName = "Funding" %}
 {% set navActive = "significant-changes" %}
@@ -24,9 +24,18 @@
     {% include "202609v3/includes/radio-error-summary.html" %}
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Funding</h1>
-    <p class="govuk-body">Record funding considerations for this significant change.</p>
+    <p class="govuk-body">Enter funding details for this significant change.</p>
 
     <form method="post" action="">
+
+      {% set fundingNoHtml %}
+      {{ appRichTextEditor({
+        name: "funding-considered-details",
+        id: "funding-considered-details",
+        value: data['funding-considered-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
 
       {{ govukRadios({
         name: "funding-considered",
@@ -40,19 +49,15 @@
         },
         items: [
           { value: "yes", text: "Yes" },
-          { value: "no", text: "No" },
+          {
+            value: "no",
+            text: "No",
+            conditional: {
+              html: fundingNoHtml
+            }
+          },
           { value: "not-applicable", text: "Not applicable" }
         ]
-      }) }}
-
-      {{ govukTextarea({
-        name: "funding-summary",
-        id: "funding-summary",
-        value: data['funding-summary'],
-        label: {
-          text: "Further information (optional)",
-          classes: "govuk-label--m"
-        }
       }) }}
 
       {{ govukInput({

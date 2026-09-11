@@ -83,12 +83,12 @@
             <div class="govuk-grid-column-two-thirds">
 
                 <section id="add-dfe-information" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Proposed decision and change dates</h2>
+                    <h2 class="app-task-list__section">Key project dates</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="confirm-project-dates-status" href="confirm-project-dates">Confirm project dates</a>
+                                    <a class="govuk-link" aria-describedby="confirm-project-dates-status" href="confirm-project-dates">Decision and implementation dates</a>
                                 </span>
                                 {{ statusTag("confirm-project-dates-status", data | taskStatus([
                                   ["proposed-decision-date-day", "proposed-decision-date-month", "proposed-decision-date-year"],
@@ -119,7 +119,7 @@
                 </section>
 
                 <section id="consultation" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Consultation</h2>
+                    <h2 class="app-task-list__section">Consultation details</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
@@ -140,7 +140,7 @@
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="la-objections-status" href="la-objections">LA objections</a>
+                                    <a class="govuk-link" aria-describedby="la-objections-status" href="la-objections">Local authority objections</a>
                                 </span>
                                 {{ statusTag("la-objections-status", data | taskStatus(["la-objections-raised"])) }}
                             </li>
@@ -158,7 +158,7 @@
                 </section>
 
                 <section id="screening-questions" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Performance</h2>
+                    <h2 class="app-task-list__section">Academy performance</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
@@ -166,9 +166,10 @@
                                     <a class="govuk-link" aria-describedby="ofsted-inspection-status" href="ofsted-inspection">Ofsted</a>
                                 </span>
                                 {{ statusTag("ofsted-inspection-status", data | taskStatus([
-                                  "ofsted-inspection-considered",
-                                  "ofsted-inspection-leadership-education",
-                                  "ofsted-inspection-evaluation-standard"
+                                  ["ofsted-inspection-date-day", "ofsted-inspection-date-month", "ofsted-inspection-date-year"],
+                                  { when: "ofsted-inspection-framework", equals: "pre-2024-09-19", field: "ofsted-inspection-considered" },
+                                  { when: "ofsted-inspection-framework", equals: "2024-09-19-to-2025-11-09", field: "ofsted-inspection-leadership-education" },
+                                  { when: "ofsted-inspection-framework", equals: "post-2025-11-09", field: "ofsted-inspection-evaluation-standard" }
                                 ])) }}
                             </li>
                         </ul>
@@ -176,7 +177,7 @@
                 </section>
 
                 <section id="psed" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">PSED</h2>
+                    <h2 class="app-task-list__section">Public Sector Equality Duty</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
@@ -190,12 +191,12 @@
                 </section>
 
                 <section id="land-and-planning" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Land and planning</h2>
+                    <h2 class="app-task-list__section">Land transaction application and planning permission</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="land-transaction-status" href="land-transaction">Land transaction</a>
+                                    <a class="govuk-link" aria-describedby="land-transaction-status" href="land-transaction">Land transaction application</a>
                                 </span>
                                 {{ statusTag("land-transaction-status", data | taskStatus([
                                   "land-transaction-required",
@@ -213,7 +214,7 @@
                 </section>
 
                 <section id="financials" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Financials</h2>
+                    <h2 class="app-task-list__section">Financial details</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
@@ -230,7 +231,7 @@
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="fha-outcomes-status" href="fha-outcomes">FHA Outcomes</a>
+                                    <a class="govuk-link" aria-describedby="fha-outcomes-status" href="fha-outcomes">Financial Health Assessment (FHA) outcomes</a>
                                 </span>
                                 {{ statusTag("fha-outcomes-status", data | taskStatus(["fha-outcomes-recorded"])) }}
                             </li>
@@ -253,7 +254,7 @@
                 </section>
 
                 <section id="recommendations" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Recommendations</h2>
+                    <h2 class="app-task-list__section">Recommendation on how to proceed</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">

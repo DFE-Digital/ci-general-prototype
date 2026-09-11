@@ -25,7 +25,7 @@ const sigChangeRadioFields = {
     { name: 'admissions-variation-admissions-team-supportive', text: 'Select whether the Admissions Team is supportive of the admissions variation' }
   ],
   consultation: [
-    { name: 'consultation-carried-out', text: 'Select whether a 3 week minimum consultation has been carried out' }
+    { name: 'consultation-carried-out', text: 'Select whether a 3 week consultation has been completed' }
   ],
   'stakeholder-engagement': [
     { name: 'stakeholder-engagement-carried-out', text: 'Select whether the trust has consulted stakeholders about the planned significant change' },
@@ -33,16 +33,11 @@ const sigChangeRadioFields = {
     { name: 'stakeholder-engagement-consultation-included-admissions-variation', text: 'Select whether the relevant stakeholders have been notified of the admissions changes' }
   ],
   'la-objections': [
-    { name: 'la-objections-raised', text: 'Select whether the LA or any bordering LAs have raised objections to this change' }
+    { name: 'la-objections-raised', text: 'Select whether a LA has raised any objections' }
   ],
   'religious-bodies': [
     { name: 'religious-bodies-consulted', text: 'Select whether the relevant religious bodies have been consulted' },
     { name: 'religious-bodies-objections-raised', text: 'Select whether the relevant religious body has raised any objections' }
-  ],
-  'ofsted-inspection': [
-    { name: 'ofsted-inspection-considered', text: 'Select whether the academy is rated good or outstanding' },
-    { name: 'ofsted-inspection-leadership-education', text: 'Select whether the academy is rated good or outstanding in leadership and management and quality of education' },
-    { name: 'ofsted-inspection-evaluation-standard', text: 'Select whether the academy is meeting expected standard, strong standard or exceptional in all evaluation areas' }
   ],
   psed: [
     { name: 'psed-considered', text: 'Select whether the Public Sector Equality Duty has been considered and an Equalities Impact Assessment has been completed' },
@@ -62,7 +57,7 @@ const sigChangeRadioFields = {
     { name: 'funding-considered', text: 'Select whether funding has been secured' }
   ],
   'fha-outcomes': [
-    { name: 'fha-outcomes-recorded', text: 'Select whether any risks or issues have been raised in the financial health assessment' }
+    { name: 'fha-outcomes-recorded', text: 'Select whether any risks or issues have been raised in the FHA' }
   ],
   'high-quality-inclusive-education': [
     { name: 'hqie-supports', text: 'Select whether any issues or risks have been identified with regards to the HQTF pillars' }
@@ -202,6 +197,58 @@ function confirmProjectDatesErrors (body) {
   ].filter(Boolean)
 }
 
+const ofstedRadioFields = {
+  'pre-2024-09-19': {
+    name: 'ofsted-inspection-considered',
+    details: 'ofsted-inspection-considered-details',
+    text: 'Select whether the academy is rated good or outstanding'
+  },
+  '2024-09-19-to-2025-11-09': {
+    name: 'ofsted-inspection-leadership-education',
+    details: 'ofsted-inspection-leadership-education-details',
+    text: 'Select whether the academy is rated good or outstanding in leadership and management and quality of education'
+  },
+  'post-2025-11-09': {
+    name: 'ofsted-inspection-evaluation-standard',
+    details: 'ofsted-inspection-evaluation-standard-details',
+    text: 'Select whether the academy is meeting expected standard, strong standard or exceptional in all evaluation areas'
+  }
+}
+
+function ofstedFrameworkFromParts (day, month, year) {
+  if (!isRealDate(day, month, year)) {
+    return null
+  }
+  const date = new Date(parseInt(year, 10), parseInt(month, 10) - 1, parseInt(day, 10))
+  const firstFrameworkEnd = new Date(2024, 8, 19)
+  const secondFrameworkEnd = new Date(2025, 10, 9)
+  if (date < firstFrameworkEnd) {
+    return 'pre-2024-09-19'
+  }
+  if (date <= secondFrameworkEnd) {
+    return '2024-09-19-to-2025-11-09'
+  }
+  return 'post-2025-11-09'
+}
+
+function ofstedFrameworkFromData (data) {
+  const source = data || {}
+  return ofstedFrameworkFromParts(
+    source['ofsted-inspection-date-day'],
+    source['ofsted-inspection-date-month'],
+    source['ofsted-inspection-date-year']
+  )
+}
+
+function clearOtherOfstedAnswers (data, framework) {
+  Object.keys(ofstedRadioFields).forEach(function (key) {
+    if (key !== framework) {
+      delete data[ofstedRadioFields[key].name]
+      delete data[ofstedRadioFields[key].details]
+    }
+  })
+}
+
 function storeRadioErrors (req, page, errorList) {
   const errors = {}
   errorList.forEach(function (item) {
@@ -231,6 +278,7 @@ const sigChangeTaskPages = [
   'la-objections',
   'religious-bodies',
   'ofsted-inspection',
+  'ofsted-inspection-question',
   'psed',
   'land-transaction',
   'planning-permission',
@@ -333,6 +381,61 @@ router.post('/202609v3/decision', function (req, res) {
   }
 
   res.redirect('/202609v3/decision')
+})
+
+router.get('/202609v3/ofsted-inspection-question', function (req, res, next) {
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+  const framework = req.session.data['ofsted-inspection-framework'] || ofstedFrameworkFromData(req.session.data)
+  if (!framework) {
+    return res.redirect(taskPageUrl(req, 'ofsted-inspection'))
+  }
+  req.session.data['ofsted-inspection-framework'] = framework
+  if (res.locals.data) {
+    res.locals.data['ofsted-inspection-framework'] = framework
+  }
+  next()
+})
+
+router.post('/202609v3/ofsted-inspection', function (req, res) {
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+
+  const error = dateFieldError(req.body, 'ofsted-inspection-date', 'date of the most recent Ofsted inspection')
+  if (error) {
+    storeRadioErrors(req, 'ofsted-inspection', [error])
+    return res.redirect(taskPageUrl(req, 'ofsted-inspection'))
+  }
+
+  clearRadioErrors(req, 'ofsted-inspection')
+  const framework = ofstedFrameworkFromData(req.body)
+  req.session.data['ofsted-inspection-framework'] = framework
+  clearOtherOfstedAnswers(req.session.data, framework)
+  res.redirect(taskPageUrl(req, 'ofsted-inspection-question'))
+})
+
+router.post('/202609v3/ofsted-inspection-question', function (req, res) {
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+
+  const framework = req.session.data['ofsted-inspection-framework'] || ofstedFrameworkFromData(req.session.data)
+  const field = ofstedRadioFields[framework]
+  if (!framework || !field) {
+    return res.redirect(taskPageUrl(req, 'ofsted-inspection'))
+  }
+
+  const errorList = radioErrorList(req.body, [field])
+  if (errorList.length) {
+    storeRadioErrors(req, 'ofsted-inspection-question', errorList)
+    return res.redirect(taskPageUrl(req, 'ofsted-inspection-question'))
+  }
+
+  clearRadioErrors(req, 'ofsted-inspection-question')
+  const returnTo = req.session.data['sig-change-return-to'] || '/202609v3/st-theresas'
+  res.redirect(returnTo)
 })
 
 router.post('/202609v3/:page', function (req, res, next) {
