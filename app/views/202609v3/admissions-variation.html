@@ -28,32 +28,6 @@
 
     <form method="post" action="">
 
-      {{ govukRadios({
-        name: "admissions-variation-required",
-        errorMessage: errors['admissions-variation-required'],
-        value: data['admissions-variation-required'],
-        fieldset: {
-          legend: {
-            text: "Is an admissions variation required?",
-            classes: "govuk-fieldset__legend--m"
-          }
-        },
-        items: [
-          {
-            value: "yes",
-            text: "Yes"
-          },
-          {
-            value: "no",
-            text: "No"
-          },
-          {
-            value: "not-applicable",
-            text: "Not applicable"
-          }
-        ]
-      }) }}
-
       {% set laNotSupportiveHtml %}
       {{ appRichTextEditor({
         name: "admissions-variation-la-supportive-details",
@@ -63,6 +37,25 @@
       }) }}
       {% endset %}
 
+      {% set pupilPlacePlanningNotSupportiveHtml %}
+      {{ appRichTextEditor({
+        name: "admissions-variation-pupil-place-planning-supportive-details",
+        id: "admissions-variation-pupil-place-planning-supportive-details",
+        value: data['admissions-variation-pupil-place-planning-supportive-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {% set admissionsTeamNotSupportiveHtml %}
+      {{ appRichTextEditor({
+        name: "admissions-variation-admissions-team-supportive-details",
+        id: "admissions-variation-admissions-team-supportive-details",
+        value: data['admissions-variation-admissions-team-supportive-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {% set admissionsRequiredYesHtml %}
       {{ govukRadios({
         name: "admissions-variation-la-supportive",
         errorMessage: errors['admissions-variation-la-supportive'],
@@ -87,15 +80,6 @@
           }
         ]
       }) }}
-
-      {% set pupilPlacePlanningNotSupportiveHtml %}
-      {{ appRichTextEditor({
-        name: "admissions-variation-pupil-place-planning-supportive-details",
-        id: "admissions-variation-pupil-place-planning-supportive-details",
-        value: data['admissions-variation-pupil-place-planning-supportive-details'],
-        label: "Give details"
-      }) }}
-      {% endset %}
 
       {{ govukRadios({
         name: "admissions-variation-pupil-place-planning-supportive",
@@ -122,15 +106,6 @@
         ]
       }) }}
 
-      {% set admissionsTeamNotSupportiveHtml %}
-      {{ appRichTextEditor({
-        name: "admissions-variation-admissions-team-supportive-details",
-        id: "admissions-variation-admissions-team-supportive-details",
-        value: data['admissions-variation-admissions-team-supportive-details'],
-        label: "Give details"
-      }) }}
-      {% endset %}
-
       {{ govukRadios({
         name: "admissions-variation-admissions-team-supportive",
         errorMessage: errors['admissions-variation-admissions-team-supportive'],
@@ -152,6 +127,32 @@
             conditional: {
               html: admissionsTeamNotSupportiveHtml
             }
+          }
+        ]
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "admissions-variation-required",
+        errorMessage: errors['admissions-variation-required'],
+        value: data['admissions-variation-required'],
+        fieldset: {
+          legend: {
+            text: "Is an admissions variation required?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes",
+            conditional: {
+              html: admissionsRequiredYesHtml
+            }
+          },
+          {
+            value: "no",
+            text: "No"
           }
         ]
       }) }}

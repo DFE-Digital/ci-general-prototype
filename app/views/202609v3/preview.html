@@ -200,6 +200,7 @@
           {% call row("Is an admissions variation required?", "/202609v3/admissions-variation") %}
             {{ yesNo(data["admissions-variation-required"]) }}
           {% endcall %}
+          {% if data["admissions-variation-required"] == "yes" %}
           {% call row("Is the Local authority supportive of the admissions variation?", "/202609v3/admissions-variation", "whether the Local authority is supportive") %}
             {{ yesNo(data["admissions-variation-la-supportive"]) }}
           {% endcall %}
@@ -223,6 +224,7 @@
           {% call row("Give details", "/202609v3/admissions-variation", "why the Admissions Team is not supportive") %}
             {{ richValue(data["admissions-variation-admissions-team-supportive-details"]) }}
           {% endcall %}
+          {% endif %}
           {% endif %}
           {% call row("Supporting evidence", "/202609v3/admissions-variation", "admissions variation supporting evidence") %}
             {{ value(data["admissions-variation-supporting-evidence"]) }}

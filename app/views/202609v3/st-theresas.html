@@ -109,9 +109,9 @@
                                 </span>
                                 {{ statusTag("admissions-variation-status", data | taskStatus([
                                   "admissions-variation-required",
-                                  "admissions-variation-la-supportive",
-                                  "admissions-variation-pupil-place-planning-supportive",
-                                  "admissions-variation-admissions-team-supportive"
+                                  { when: "admissions-variation-required", equals: "yes", field: "admissions-variation-la-supportive" },
+                                  { when: "admissions-variation-required", equals: "yes", field: "admissions-variation-pupil-place-planning-supportive" },
+                                  { when: "admissions-variation-required", equals: "yes", field: "admissions-variation-admissions-team-supportive" }
                                 ])) }}
                             </li>
                         </ul>

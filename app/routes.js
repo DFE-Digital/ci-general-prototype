@@ -20,9 +20,9 @@ function hasRadioValue (value) {
 const sigChangeRadioFields = {
   'admissions-variation': [
     { name: 'admissions-variation-required', text: 'Select whether an admissions variation is required' },
-    { name: 'admissions-variation-la-supportive', text: 'Select whether the LA is supportive of the admissions variation' },
-    { name: 'admissions-variation-pupil-place-planning-supportive', text: 'Select whether the Pupil Place Planning Team is supportive of the admissions variation' },
-    { name: 'admissions-variation-admissions-team-supportive', text: 'Select whether the Admissions Team is supportive of the admissions variation' }
+    { name: 'admissions-variation-la-supportive', text: 'Select whether the LA is supportive of the admissions variation', when: 'admissions-variation-required', equals: 'yes' },
+    { name: 'admissions-variation-pupil-place-planning-supportive', text: 'Select whether the Pupil Place Planning Team is supportive of the admissions variation', when: 'admissions-variation-required', equals: 'yes' },
+    { name: 'admissions-variation-admissions-team-supportive', text: 'Select whether the Admissions Team is supportive of the admissions variation', when: 'admissions-variation-required', equals: 'yes' }
   ],
   consultation: [
     { name: 'consultation-carried-out', text: 'Select whether a 3 week consultation has been completed' }
@@ -108,6 +108,9 @@ function taskPageUrl (req, page) {
 function radioErrorList (body, fields) {
   return fields
     .filter(function (field) {
+      if (field.when && body[field.when] !== field.equals) {
+        return false
+      }
       return !hasRadioValue(body[field.name])
     })
     .map(function (field) {
@@ -459,6 +462,20 @@ router.post('/202609v3/:page', function (req, res, next) {
   }
 
   clearRadioErrors(req, page)
+
+  if (page === 'admissions-variation' && req.body['admissions-variation-required'] !== 'yes') {
+    ;[
+      'admissions-variation-la-supportive',
+      'admissions-variation-la-supportive-details',
+      'admissions-variation-pupil-place-planning-supportive',
+      'admissions-variation-pupil-place-planning-supportive-details',
+      'admissions-variation-admissions-team-supportive',
+      'admissions-variation-admissions-team-supportive-details'
+    ].forEach(function (name) {
+      delete req.session.data[name]
+    })
+  }
+
   const returnTo = req.session.data['sig-change-return-to'] || '/202609v3/st-theresas'
   res.redirect(returnTo)
 })

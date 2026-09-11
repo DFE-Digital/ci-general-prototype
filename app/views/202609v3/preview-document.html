@@ -220,7 +220,9 @@
 
     {% if data["admissions-variation-required"] or data["admissions-variation-la-supportive"] or data["admissions-variation-pupil-place-planning-supportive"] or data["admissions-variation-admissions-team-supportive"] %}
     <li>
-      {% if data["admissions-variation-la-supportive"] == "no" or data["admissions-variation-pupil-place-planning-supportive"] == "no" or data["admissions-variation-admissions-team-supportive"] == "no" %}
+      {% if data["admissions-variation-required"] == "no" %}
+        No problems with admissions variation. An admissions variation is not required.
+      {% elseif data["admissions-variation-required"] == "yes" and (data["admissions-variation-la-supportive"] == "no" or data["admissions-variation-pupil-place-planning-supportive"] == "no" or data["admissions-variation-admissions-team-supportive"] == "no") %}
         There is a problem with admissions variation.
         {% if data["admissions-variation-la-supportive"] == "no" %} The local authority is not supportive.{{ overviewDetail(data["admissions-variation-la-supportive-details"]) }}{% endif %}
         {% if data["admissions-variation-pupil-place-planning-supportive"] == "no" %} The Pupil Place Planning Team is not supportive.{{ overviewDetail(data["admissions-variation-pupil-place-planning-supportive-details"]) }}{% endif %}
@@ -229,12 +231,6 @@
         No problems with admissions variation. An admissions variation is required and the local authority, Pupil Place Planning Team and Admissions Team are supportive.
       {% elseif data["admissions-variation-required"] == "yes" %}
         An admissions variation is required.
-      {% elseif data["admissions-variation-required"] == "no" %}
-        No problems with admissions variation. An admissions variation is not required.
-      {% elseif data["admissions-variation-required"] == "not-applicable" %}
-        No problems with admissions variation. An admissions variation is not applicable.
-      {% elseif data["admissions-variation-la-supportive"] == "yes" and data["admissions-variation-pupil-place-planning-supportive"] == "yes" and data["admissions-variation-admissions-team-supportive"] == "yes" %}
-        No problems with admissions variation. The local authority, Pupil Place Planning Team and Admissions Team are supportive.
       {% endif %}
     </li>
     {% endif %}
@@ -430,6 +426,7 @@
           {% call row("Is an admissions variation required?", "/202609v3/admissions-variation") %}
             {{ yesNo(data["admissions-variation-required"]) }}
           {% endcall %}
+          {% if data["admissions-variation-required"] == "yes" %}
           {% call row("Is the Local authority supportive of the admissions variation?", "/202609v3/admissions-variation", "whether the Local authority is supportive") %}
             {{ yesNo(data["admissions-variation-la-supportive"]) }}
           {% endcall %}
@@ -453,6 +450,7 @@
           {% call row("Give details", "/202609v3/admissions-variation", "why the Admissions Team is not supportive") %}
             {{ richValue(data["admissions-variation-admissions-team-supportive-details"]) }}
           {% endcall %}
+          {% endif %}
           {% endif %}
           {% call row("Supporting evidence", "/202609v3/admissions-variation", "admissions variation supporting evidence") %}
             {{ value(data["admissions-variation-supporting-evidence"]) }}
