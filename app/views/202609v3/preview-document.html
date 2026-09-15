@@ -68,8 +68,7 @@
 
 {% macro consultationCarriedOut(text) -%}
   {%- if text == "yes" -%}Yes
-  {%- elseif text == "no" -%}No - evidence/rationale provided by the trust confirms satisfactory consultation carried out
-  {%- elseif text == "not-applicable" -%}No
+  {%- elseif text == "no" or text == "not-applicable" -%}No
   {%- elseif text -%}{{ text }}
   {%- else -%}{{ empty() }}
   {%- endif -%}
@@ -96,8 +95,8 @@
 {% macro religiousBodiesObjectionsRaised(text) -%}
   {%- if text == "not-applicable" -%}Not applicable
   {%- elseif text == "no" -%}No
-  {%- elseif text == "yes" -%}Yes - evidence confirms objections addressed and consent obtained
-  {%- elseif text == "yes-no-further-info" -%}Yes - no further information provided
+  {%- elseif text == "yes" -%}Yes, evidence confirms objections addressed and consent obtained
+  {%- elseif text == "yes-no-further-info" -%}Yes, no further information provided
   {%- elseif text -%}{{ text }}
   {%- else -%}{{ empty() }}
   {%- endif -%}
@@ -131,6 +130,7 @@
               {% set sectionLookup = {
                 "confirm-project-dates": "individual-information",
                 "admissions-variation": "admissions-variation",
+    "admissions-variation-question": "admissions-variation",
                 "stakeholder-engagement": "consultation",
                 "la-objections": "consultation",
                 "consultation": "consultation",
@@ -239,8 +239,6 @@
     <li>
       {% if data["consultation-carried-out"] == "yes" %}
         No problems with consultation. A 3 week minimum consultation has been carried out.
-      {% elseif data["consultation-carried-out"] == "no" %}
-        A 3 week minimum consultation has not been carried out, but the trust has provided evidence that a satisfactory consultation took place.
       {% else %}
         There is a problem with consultation. A 3 week minimum consultation has not been carried out.{{ overviewDetail(data["consultation-carried-out-details"]) }}
       {% endif %}
@@ -252,10 +250,10 @@
       {% if data["stakeholder-engagement-carried-out"] == "no" or data["stakeholder-engagement-objections-raised"] == "no" or data["stakeholder-engagement-consultation-included-admissions-variation"] == "no" %}
         There is a problem with stakeholder engagement.
         {% if data["stakeholder-engagement-carried-out"] == "no" %} The trust has not consulted stakeholders about the planned significant change.{{ overviewDetail(data["stakeholder-engagement-carried-out-details"]) }}{% endif %}
-        {% if data["stakeholder-engagement-objections-raised"] == "no" %} Objections were raised and no further information has been provided.{% endif %}
+        {% if data["stakeholder-engagement-objections-raised"] == "no" %} Objections were raised and no further information has been provided.{{ overviewDetail(data["stakeholder-engagement-objections-raised-no-details"]) }}{% endif %}
         {% if data["stakeholder-engagement-consultation-included-admissions-variation"] == "no" %} Relevant stakeholders have not been notified of the admissions changes.{{ overviewDetail(data["stakeholder-engagement-consultation-included-admissions-variation-details"]) }}{% endif %}
       {% elseif data["stakeholder-engagement-objections-raised"] == "yes" %}
-        Stakeholders raised objections and the trust has confirmed they have been addressed.
+        Stakeholders raised objections and the trust has confirmed they have been addressed.{{ overviewDetail(data["stakeholder-engagement-objections-raised-details"]) }}
       {% else %}
         No problems with stakeholder engagement.
         {% if data["stakeholder-engagement-carried-out"] == "yes" %} The trust has consulted stakeholders about the planned significant change.{% endif %}
@@ -268,11 +266,11 @@
     {% if data["la-objections-raised"] %}
     <li>
       {% if data["la-objections-raised"] == "not-applicable" %}
-        No problems with local authority objections. The local authority has not raised objections to this change.{{ overviewDetail(data["la-objections-raised-details"]) }}
+        No problems with local authority objections. The local authority has not raised objections to this change.
       {% elseif data["la-objections-raised"] == "yes" %}
-        Local authority objections were raised and evidence confirms they have been addressed.
+        Local authority objections were raised and evidence confirms they have been addressed.{{ overviewDetail(data["la-objections-raised-yes-details"]) }}
       {% else %}
-        There is a problem with local authority objections. Objections were raised and no further information has been provided.
+        There is a problem with local authority objections. Objections were raised and no further information has been provided.{{ overviewDetail(data["la-objections-raised-no-details"]) }}
       {% endif %}
     </li>
     {% endif %}
@@ -282,15 +280,15 @@
       {% if data["religious-bodies-consulted"] == "no" or data["religious-bodies-objections-raised"] == "yes-no-further-info" %}
         There is a problem with religious bodies.
         {% if data["religious-bodies-consulted"] == "no" %} Relevant religious bodies have not been consulted.{{ overviewDetail(data["religious-bodies-consulted-details"]) }}{% endif %}
-        {% if data["religious-bodies-objections-raised"] == "yes-no-further-info" %} Objections were raised and no further information has been provided.{% endif %}
+        {% if data["religious-bodies-objections-raised"] == "yes-no-further-info" %} Objections were raised and no further information has been provided.{{ overviewDetail(data["religious-bodies-objections-raised-no-further-info-details"]) }}{% endif %}
       {% elseif data["religious-bodies-objections-raised"] == "yes" %}
-        Religious bodies raised objections. Evidence confirms the objections were addressed and consent obtained.
+        Religious bodies raised objections. Evidence confirms the objections were addressed and consent obtained.{{ overviewDetail(data["religious-bodies-objections-raised-details"]) }}
       {% elseif data["religious-bodies-consulted"] == "not-applicable" %}
         Religious body consultation is not applicable.
       {% else %}
         No problems with religious bodies.
         {% if data["religious-bodies-consulted"] == "yes" %} Relevant religious bodies have been consulted.{% endif %}
-        {% if data["religious-bodies-objections-raised"] == "no" or data["religious-bodies-objections-raised"] == "not-applicable" %} No objections were raised.{{ overviewDetail(data["religious-bodies-objections-raised-details"]) }}{% endif %}
+        {% if data["religious-bodies-objections-raised"] == "no" or data["religious-bodies-objections-raised"] == "not-applicable" %} No objections were raised.{% endif %}
       {% endif %}
     </li>
     {% endif %}
@@ -427,27 +425,27 @@
             {{ yesNo(data["admissions-variation-required"]) }}
           {% endcall %}
           {% if data["admissions-variation-required"] == "yes" %}
-          {% call row("Is the Local authority supportive of the admissions variation?", "/202609v3/admissions-variation", "whether the Local authority is supportive") %}
+          {% call row("Is the Local authority supportive of the admissions variation?", "/202609v3/admissions-variation-question", "whether the Local authority is supportive") %}
             {{ yesNo(data["admissions-variation-la-supportive"]) }}
           {% endcall %}
           {% if data["admissions-variation-la-supportive"] == "no" %}
-          {% call row("Give details", "/202609v3/admissions-variation", "why the LA is not supportive") %}
+          {% call row("Give details", "/202609v3/admissions-variation-question", "why the LA is not supportive") %}
             {{ richValue(data["admissions-variation-la-supportive-details"]) }}
           {% endcall %}
           {% endif %}
-          {% call row("Is the Pupil Place Planning Team supportive of the admissions variation?", "/202609v3/admissions-variation", "whether the Pupil Place Planning Team is supportive") %}
+          {% call row("Is the Pupil Place Planning Team supportive of the admissions variation?", "/202609v3/admissions-variation-question", "whether the Pupil Place Planning Team is supportive") %}
             {{ yesNo(data["admissions-variation-pupil-place-planning-supportive"]) }}
           {% endcall %}
           {% if data["admissions-variation-pupil-place-planning-supportive"] == "no" %}
-          {% call row("Give details", "/202609v3/admissions-variation", "why the Pupil Place Planning Team is not supportive") %}
+          {% call row("Give details", "/202609v3/admissions-variation-question", "why the Pupil Place Planning Team is not supportive") %}
             {{ richValue(data["admissions-variation-pupil-place-planning-supportive-details"]) }}
           {% endcall %}
           {% endif %}
-          {% call row("Is the Admissions Team supportive of the admissions variation?", "/202609v3/admissions-variation", "whether the Admissions Team is supportive") %}
+          {% call row("Is the Admissions Team supportive of the admissions variation?", "/202609v3/admissions-variation-question", "whether the Admissions Team is supportive") %}
             {{ yesNo(data["admissions-variation-admissions-team-supportive"]) }}
           {% endcall %}
           {% if data["admissions-variation-admissions-team-supportive"] == "no" %}
-          {% call row("Give details", "/202609v3/admissions-variation", "why the Admissions Team is not supportive") %}
+          {% call row("Give details", "/202609v3/admissions-variation-question", "why the Admissions Team is not supportive") %}
             {{ richValue(data["admissions-variation-admissions-team-supportive-details"]) }}
           {% endcall %}
           {% endif %}
@@ -470,7 +468,7 @@
           {% call row("Has a 3 week consultation been completed?", "/202609v3/consultation") %}
             {{ consultationCarriedOut(data["consultation-carried-out"]) }}
           {% endcall %}
-          {% if data["consultation-carried-out"] == "not-applicable" %}
+          {% if data["consultation-carried-out"] == "no" or data["consultation-carried-out"] == "not-applicable" %}
           {% call row("Give details", "/202609v3/consultation", "why a 3 week consultation has not been completed") %}
             {{ richValue(data["consultation-carried-out-details"]) }}
           {% endcall %}
@@ -496,6 +494,11 @@
           {% call row("Were there any objections raised?", "/202609v3/stakeholder-engagement", "whether any objections were raised") %}
             {{ stakeholderObjectionsRaised(data["stakeholder-engagement-objections-raised"]) }}
           {% endcall %}
+          {% if data["stakeholder-engagement-objections-raised"] == "yes" or data["stakeholder-engagement-objections-raised"] == "no" %}
+          {% call row("Give details", "/202609v3/stakeholder-engagement", "stakeholder objections details") %}
+            {{ richValue(data["stakeholder-engagement-objections-raised-details"] if data["stakeholder-engagement-objections-raised"] == "yes" else data["stakeholder-engagement-objections-raised-no-details"]) }}
+          {% endcall %}
+          {% endif %}
           {% call row("Have the relevant stakeholders been notified of the admissions changes?", "/202609v3/stakeholder-engagement", "whether the relevant stakeholders have been notified of the admissions changes") %}
             {{ yesNo(data["stakeholder-engagement-consultation-included-admissions-variation"]) }}
           {% endcall %}
@@ -517,9 +520,9 @@
           {% call row("Has a LA raised any objections?", "/202609v3/la-objections") %}
             {{ laObjectionsRaised(data["la-objections-raised"]) }}
           {% endcall %}
-          {% if data["la-objections-raised"] == "not-applicable" %}
-          {% call row("Give details", "/202609v3/la-objections", "why no local authority objections were raised") %}
-            {{ richValue(data["la-objections-raised-details"]) }}
+          {% if data["la-objections-raised"] == "yes" or data["la-objections-raised"] == "no" %}
+          {% call row("Give details", "/202609v3/la-objections", "local authority objections details") %}
+            {{ richValue(data["la-objections-raised-yes-details"] if data["la-objections-raised"] == "yes" else data["la-objections-raised-no-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Supporting evidence", "/202609v3/la-objections", "Local authority objections supporting evidence") %}
@@ -543,9 +546,9 @@
           {% call row("Has the relevant religious body raised any objections?", "/202609v3/religious-bodies", "whether the relevant religious body raised any objections") %}
             {{ religiousBodiesObjectionsRaised(data["religious-bodies-objections-raised"]) }}
           {% endcall %}
-          {% if data["religious-bodies-objections-raised"] == "no" %}
-          {% call row("Give details", "/202609v3/religious-bodies", "why no objections were raised") %}
-            {{ richValue(data["religious-bodies-objections-raised-details"]) }}
+          {% if data["religious-bodies-objections-raised"] == "yes" or data["religious-bodies-objections-raised"] == "yes-no-further-info" %}
+          {% call row("Give details", "/202609v3/religious-bodies", "religious body objections details") %}
+            {{ richValue(data["religious-bodies-objections-raised-details"] if data["religious-bodies-objections-raised"] == "yes" else data["religious-bodies-objections-raised-no-further-info-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Supporting evidence", "/202609v3/religious-bodies", "religious bodies supporting evidence") %}

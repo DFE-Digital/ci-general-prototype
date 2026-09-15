@@ -19,10 +19,12 @@ function hasRadioValue (value) {
 
 const sigChangeRadioFields = {
   'admissions-variation': [
-    { name: 'admissions-variation-required', text: 'Select whether an admissions variation is required' },
-    { name: 'admissions-variation-la-supportive', text: 'Select whether the LA is supportive of the admissions variation', when: 'admissions-variation-required', equals: 'yes' },
-    { name: 'admissions-variation-pupil-place-planning-supportive', text: 'Select whether the Pupil Place Planning Team is supportive of the admissions variation', when: 'admissions-variation-required', equals: 'yes' },
-    { name: 'admissions-variation-admissions-team-supportive', text: 'Select whether the Admissions Team is supportive of the admissions variation', when: 'admissions-variation-required', equals: 'yes' }
+    { name: 'admissions-variation-required', text: 'Select whether an admissions variation is required' }
+  ],
+  'admissions-variation-question': [
+    { name: 'admissions-variation-la-supportive', text: 'Select whether the LA is supportive of the admissions variation' },
+    { name: 'admissions-variation-pupil-place-planning-supportive', text: 'Select whether the Pupil Place Planning Team is supportive of the admissions variation' },
+    { name: 'admissions-variation-admissions-team-supportive', text: 'Select whether the Admissions Team is supportive of the admissions variation' }
   ],
   consultation: [
     { name: 'consultation-carried-out', text: 'Select whether a 3 week consultation has been completed' }
@@ -276,6 +278,7 @@ const sigChangeTaskPages = [
   'confirm-project-dates',
   'select-change-type',
   'admissions-variation',
+  'admissions-variation-question',
   'consultation',
   'stakeholder-engagement',
   'la-objections',
@@ -419,6 +422,35 @@ router.post('/202609v3/ofsted-inspection', function (req, res) {
   res.redirect(taskPageUrl(req, 'ofsted-inspection-question'))
 })
 
+router.get('/202609v3/admissions-variation-question', function (req, res, next) {
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+  if (req.session.data['admissions-variation-required'] !== 'yes') {
+    return res.redirect(taskPageUrl(req, 'admissions-variation'))
+  }
+  next()
+})
+
+router.post('/202609v3/admissions-variation-question', function (req, res) {
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+  if (req.session.data['admissions-variation-required'] !== 'yes') {
+    return res.redirect(taskPageUrl(req, 'admissions-variation'))
+  }
+
+  const errorList = radioErrorList(req.body, sigChangeRadioFields['admissions-variation-question'])
+  if (errorList.length) {
+    storeRadioErrors(req, 'admissions-variation-question', errorList)
+    return res.redirect(taskPageUrl(req, 'admissions-variation-question'))
+  }
+
+  clearRadioErrors(req, 'admissions-variation-question')
+  const returnTo = req.session.data['sig-change-return-to'] || '/202609v3/st-theresas'
+  res.redirect(returnTo)
+})
+
 router.post('/202609v3/ofsted-inspection-question', function (req, res) {
   if (!req.session.data) {
     req.session.data = {}
@@ -463,17 +495,23 @@ router.post('/202609v3/:page', function (req, res, next) {
 
   clearRadioErrors(req, page)
 
-  if (page === 'admissions-variation' && req.body['admissions-variation-required'] !== 'yes') {
-    ;[
-      'admissions-variation-la-supportive',
-      'admissions-variation-la-supportive-details',
-      'admissions-variation-pupil-place-planning-supportive',
-      'admissions-variation-pupil-place-planning-supportive-details',
-      'admissions-variation-admissions-team-supportive',
-      'admissions-variation-admissions-team-supportive-details'
-    ].forEach(function (name) {
-      delete req.session.data[name]
-    })
+  if (page === 'admissions-variation') {
+    if (req.body['admissions-variation-required'] !== 'yes') {
+      ;[
+        'admissions-variation-la-supportive',
+        'admissions-variation-la-supportive-details',
+        'admissions-variation-pupil-place-planning-supportive',
+        'admissions-variation-pupil-place-planning-supportive-details',
+        'admissions-variation-admissions-team-supportive',
+        'admissions-variation-admissions-team-supportive-details'
+      ].forEach(function (name) {
+        delete req.session.data[name]
+      })
+      req.session.data['admissions-variation-complete'] = 'true'
+      const returnTo = req.session.data['sig-change-return-to'] || '/202609v3/st-theresas'
+      return res.redirect(returnTo)
+    }
+    return res.redirect(taskPageUrl(req, 'admissions-variation-question'))
   }
 
   const returnTo = req.session.data['sig-change-return-to'] || '/202609v3/st-theresas'

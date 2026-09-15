@@ -28,11 +28,20 @@
 
     <form method="post" action="">
 
-      {% set laObjectionsNoHtml %}
+      {% set laObjectionsAddressedHtml %}
       {{ appRichTextEditor({
-        name: "la-objections-raised-details",
-        id: "la-objections-raised-details",
-        value: data['la-objections-raised-details'],
+        name: "la-objections-raised-yes-details",
+        id: "la-objections-raised-yes-details",
+        value: data['la-objections-raised-yes-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {% set laObjectionsNoFurtherInfoHtml %}
+      {{ appRichTextEditor({
+        name: "la-objections-raised-no-details",
+        id: "la-objections-raised-no-details",
+        value: data['la-objections-raised-no-details'],
         label: "Give details"
       }) }}
       {% endset %}
@@ -48,14 +57,23 @@
           }
         },
         items: [
-          { value: "yes", text: "Yes, evidence confirms objections have been addressed" },
-          { value: "no", text: "Yes, further information has not been provided" },
+          {
+            value: "yes",
+            text: "Yes, evidence confirms objections have been addressed",
+            conditional: {
+              html: laObjectionsAddressedHtml
+            }
+          },
+          {
+            value: "no",
+            text: "Yes, further information has not been provided",
+            conditional: {
+              html: laObjectionsNoFurtherInfoHtml
+            }
+          },
           {
             value: "not-applicable",
-            text: "No",
-            conditional: {
-              html: laObjectionsNoHtml
-            }
+            text: "No"
           }
         ]
       }) }}

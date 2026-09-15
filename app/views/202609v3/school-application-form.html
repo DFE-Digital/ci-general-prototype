@@ -8,7 +8,7 @@
 {% block content %}
 
 <div class="govuk-grid-row">
-  <div class="govuk-grid-column-two-thirds">
+  <div class="govuk-grid-column-full">
     <span class="govuk-caption-l">URN: 101335</span>
     <h1 class="govuk-heading-xl">School application form</h1>
     <p class="govuk-body-l">St Theresa's Catholic Primary School</p>
@@ -27,14 +27,70 @@
         {
           key: { text: "Trust" },
           value: { text: "Appleby Grammar School (10059089)" }
+        }
+      ]
+    }) }}
+
+    <h2 class="govuk-heading-m">Individual details</h2>
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "What is your role?" },
+          value: { text: "Chair of the academy trust" }
         },
         {
-          key: { text: "Tier" },
-          value: { text: "1" }
+          key: { text: "What is your full name?" },
+          value: { text: "Winston Gibbons" }
         },
         {
-          key: { text: "Type" },
-          value: { text: "Testing tiers" }
+          key: { text: "What is your email address?" },
+          value: { text: "winston.gibbons@school.gov.uk" }
+        },
+        {
+          key: { text: "What is your phone number?" },
+          value: { text: "07946015379" }
+        }
+      ]
+    }) }}
+
+    <h2 class="govuk-heading-m">About the significant change</h2>
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "Has the significant change already been made?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "Which change do you want to make?" },
+          value: { text: "Add or remove a boarding provision" }
+        },
+        {
+          key: { text: "What do you plan to do?" },
+          value: { text: "Add a boarding provision" }
+        },
+        {
+          key: { text: "Give details on the change that is being made" },
+          value: { text: "n/a" }
+        },
+        {
+          key: { text: "Explain why the change is being made" },
+          value: { text: "n/a" }
+        },
+        {
+          key: { text: "Explain what will be achieved by making this change" },
+          value: { text: "n/a" }
+        },
+        {
+          key: { text: "Explain how the trust has the appropriate experience and governance arrangements in place to support this change" },
+          value: { text: "n/a" }
+        },
+        {
+          key: { text: "Provide details of any leadership or governance changes proposed to facilitate this change" },
+          value: { text: "n/a" }
+        },
+        {
+          key: { text: "Will this change have an impact on SEN provision?" },
+          value: { text: "No" }
         }
       ]
     }) }}
@@ -55,30 +111,50 @@
           value: { text: "30/04/2026" }
         },
         {
-          key: { text: "Provide a brief summary of the consultation responses." },
-          value: { text: "None" }
+          key: { text: "What is the effective date of the change?" },
+          value: { text: "30/10/2026" }
+        },
+        {
+          key: { text: "Summary of the consultation outcomes" },
+          value: { text: "All is fine - will add more info" }
         }
       ]
     }) }}
 
-    <h2 class="govuk-heading-m">Public Sector Equality Duty</h2>
+    <h2 class="govuk-heading-m">Further details</h2>
     {{ govukSummaryList({
       rows: [
         {
-          key: { text: "Has the Public Sector Equality Duty been considered?" },
-          value: { text: "Yes" }
-        },
-        {
-          key: { text: "Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?" },
+          key: { text: "Has a local authority raised any objections to the significant change or changes?" },
           value: { text: "No" }
         },
         {
-          key: { text: "What date was the equality assessment completed?" },
-          value: { text: "15/02/2026" }
+          key: { text: "Is funding required to make the change or changes?" },
+          value: { text: "No" }
         },
         {
-          key: { text: "Provide a brief summary of the Public Sector Equality Duty consideration" },
-          value: { text: "The decision is unlikely to disproportionately affect any particular person or group who share protected characteristics" }
+          key: { text: "Is consent from a religious body required?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "Is planning permission or a land transaction required?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "Do you need to request an admissions variation?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "Has the academy had an Ofsted inspection in the last 2 months?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "Is the academy eligible for intervention measures?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "PSED - Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?" },
+          value: { text: "Unlikely" }
         }
       ]
     }) }}

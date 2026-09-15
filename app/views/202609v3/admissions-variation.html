@@ -4,7 +4,6 @@
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
-{% from "202609v3/includes/rich-text-editor.html" import appRichTextEditor %}
 
 {% set pageName = "Admissions variation" %}
 {% set navActive = "significant-changes" %}
@@ -28,110 +27,6 @@
 
     <form method="post" action="">
 
-      {% set laNotSupportiveHtml %}
-      {{ appRichTextEditor({
-        name: "admissions-variation-la-supportive-details",
-        id: "admissions-variation-la-supportive-details",
-        value: data['admissions-variation-la-supportive-details'],
-        label: "Give details"
-      }) }}
-      {% endset %}
-
-      {% set pupilPlacePlanningNotSupportiveHtml %}
-      {{ appRichTextEditor({
-        name: "admissions-variation-pupil-place-planning-supportive-details",
-        id: "admissions-variation-pupil-place-planning-supportive-details",
-        value: data['admissions-variation-pupil-place-planning-supportive-details'],
-        label: "Give details"
-      }) }}
-      {% endset %}
-
-      {% set admissionsTeamNotSupportiveHtml %}
-      {{ appRichTextEditor({
-        name: "admissions-variation-admissions-team-supportive-details",
-        id: "admissions-variation-admissions-team-supportive-details",
-        value: data['admissions-variation-admissions-team-supportive-details'],
-        label: "Give details"
-      }) }}
-      {% endset %}
-
-      {% set admissionsRequiredYesHtml %}
-      {{ govukRadios({
-        name: "admissions-variation-la-supportive",
-        errorMessage: errors['admissions-variation-la-supportive'],
-        value: data['admissions-variation-la-supportive'],
-        fieldset: {
-          legend: {
-            text: "Is the Local authority supportive of the admissions variation?",
-            classes: "govuk-fieldset__legend--m"
-          }
-        },
-        items: [
-          {
-            value: "yes",
-            text: "Yes"
-          },
-          {
-            value: "no",
-            text: "No",
-            conditional: {
-              html: laNotSupportiveHtml
-            }
-          }
-        ]
-      }) }}
-
-      {{ govukRadios({
-        name: "admissions-variation-pupil-place-planning-supportive",
-        errorMessage: errors['admissions-variation-pupil-place-planning-supportive'],
-        value: data['admissions-variation-pupil-place-planning-supportive'],
-        fieldset: {
-          legend: {
-            text: "Is the Pupil Place Planning Team supportive of the admissions variation?",
-            classes: "govuk-fieldset__legend--m"
-          }
-        },
-        items: [
-          {
-            value: "yes",
-            text: "Yes"
-          },
-          {
-            value: "no",
-            text: "No",
-            conditional: {
-              html: pupilPlacePlanningNotSupportiveHtml
-            }
-          }
-        ]
-      }) }}
-
-      {{ govukRadios({
-        name: "admissions-variation-admissions-team-supportive",
-        errorMessage: errors['admissions-variation-admissions-team-supportive'],
-        value: data['admissions-variation-admissions-team-supportive'],
-        fieldset: {
-          legend: {
-            text: "Is the Admissions Team supportive of the admissions variation?",
-            classes: "govuk-fieldset__legend--m"
-          }
-        },
-        items: [
-          {
-            value: "yes",
-            text: "Yes"
-          },
-          {
-            value: "no",
-            text: "No",
-            conditional: {
-              html: admissionsTeamNotSupportiveHtml
-            }
-          }
-        ]
-      }) }}
-      {% endset %}
-
       {{ govukRadios({
         name: "admissions-variation-required",
         errorMessage: errors['admissions-variation-required'],
@@ -145,10 +40,7 @@
         items: [
           {
             value: "yes",
-            text: "Yes",
-            conditional: {
-              html: admissionsRequiredYesHtml
-            }
+            text: "Yes"
           },
           {
             value: "no",
@@ -167,10 +59,8 @@
         }
       }) }}
 
-      <input type="hidden" name="admissions-variation-complete" value="true">
-
       {{ govukButton({
-        text: "Save and return"
+        text: "Continue"
       }) }}
 
     </form>

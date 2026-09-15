@@ -2,18 +2,18 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
-{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "202609v3/includes/rich-text-editor.html" import appRichTextEditor %}
 
-{% set pageName = "Religious bodies" %}
+{% set pageName = "Admissions variation" %}
 {% set navActive = "significant-changes" %}
+{% set firstPage = "/202609v3/admissions-variation" + (("?returnTo=preview&section=" + (data.section if data.section else "admissions-variation")) if data.returnTo == "preview" else "") %}
 {% set returnTo = "/202609v3/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v3/st-theresas") %}
 
 {% block beforeContent %}
 {{ govukBackLink({
   text: "Back",
-  href: returnTo
+  href: firstPage
 }) }}
 {% endblock %}
 
@@ -23,102 +23,113 @@
   <div class="govuk-grid-column-two-thirds">
     {% include "202609v3/includes/radio-error-summary.html" %}
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
-    <h1 class="govuk-heading-l">Religious bodies</h1>
-    <p class="govuk-body">Record engagement with religious bodies for this significant change.</p>
+    <h1 class="govuk-heading-l">Admissions variation</h1>
 
     <form method="post" action="">
 
-      {% set religiousBodiesNotConsultedHtml %}
+      {% set laNotSupportiveHtml %}
       {{ appRichTextEditor({
-        name: "religious-bodies-consulted-details",
-        id: "religious-bodies-consulted-details",
-        value: data['religious-bodies-consulted-details'],
+        name: "admissions-variation-la-supportive-details",
+        id: "admissions-variation-la-supportive-details",
+        value: data['admissions-variation-la-supportive-details'],
         label: "Give details"
       }) }}
       {% endset %}
 
       {{ govukRadios({
-        name: "religious-bodies-consulted",
-        errorMessage: errors['religious-bodies-consulted'],
-        value: data['religious-bodies-consulted'],
+        name: "admissions-variation-la-supportive",
+        errorMessage: errors['admissions-variation-la-supportive'],
+        value: data['admissions-variation-la-supportive'],
         fieldset: {
           legend: {
-            text: "Have the relevant religious bodies been consulted?",
-            classes: "govuk-fieldset__legend--m"
-          }
-        },
-        items: [
-          { value: "yes", text: "Yes" },
-          {
-            value: "no",
-            text: "No",
-            conditional: {
-              html: religiousBodiesNotConsultedHtml
-            }
-          },
-          { value: "not-applicable", text: "Not applicable" }
-        ]
-      }) }}
-
-      {% set religiousBodiesObjectionsAddressedHtml %}
-      {{ appRichTextEditor({
-        name: "religious-bodies-objections-raised-details",
-        id: "religious-bodies-objections-raised-details",
-        value: data['religious-bodies-objections-raised-details'],
-        label: "Give details"
-      }) }}
-      {% endset %}
-
-      {% set religiousBodiesObjectionsNoFurtherInfoHtml %}
-      {{ appRichTextEditor({
-        name: "religious-bodies-objections-raised-no-further-info-details",
-        id: "religious-bodies-objections-raised-no-further-info-details",
-        value: data['religious-bodies-objections-raised-no-further-info-details'],
-        label: "Give details"
-      }) }}
-      {% endset %}
-
-      {{ govukRadios({
-        name: "religious-bodies-objections-raised",
-        errorMessage: errors['religious-bodies-objections-raised'],
-        value: data['religious-bodies-objections-raised'],
-        fieldset: {
-          legend: {
-            text: "Has the relevant religious body raised any objections?",
+            text: "Is the Local authority supportive of the admissions variation?",
             classes: "govuk-fieldset__legend--m"
           }
         },
         items: [
           {
             value: "yes",
-            text: "Yes, evidence confirms objections addressed and consent obtained",
-            conditional: {
-              html: religiousBodiesObjectionsAddressedHtml
-            }
+            text: "Yes"
           },
           {
-            value: "yes-no-further-info",
-            text: "Yes, no further information provided",
+            value: "no",
+            text: "No",
             conditional: {
-              html: religiousBodiesObjectionsNoFurtherInfoHtml
+              html: laNotSupportiveHtml
             }
-          },
-          { value: "no", text: "No" },
-          { value: "not-applicable", text: "Not applicable" }
+          }
         ]
       }) }}
 
-      {{ govukInput({
-        id: "religious-bodies-supporting-evidence",
-        name: "religious-bodies-supporting-evidence",
-        value: data['religious-bodies-supporting-evidence'] or "sharepoint.edu.gov.uk/evidence",
-        label: {
-          text: "Supporting evidence",
-          classes: "govuk-label--m"
-        }
+      {% set pupilPlacePlanningNotSupportiveHtml %}
+      {{ appRichTextEditor({
+        name: "admissions-variation-pupil-place-planning-supportive-details",
+        id: "admissions-variation-pupil-place-planning-supportive-details",
+        value: data['admissions-variation-pupil-place-planning-supportive-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "admissions-variation-pupil-place-planning-supportive",
+        errorMessage: errors['admissions-variation-pupil-place-planning-supportive'],
+        value: data['admissions-variation-pupil-place-planning-supportive'],
+        fieldset: {
+          legend: {
+            text: "Is the Pupil Place Planning Team supportive of the admissions variation?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes"
+          },
+          {
+            value: "no",
+            text: "No",
+            conditional: {
+              html: pupilPlacePlanningNotSupportiveHtml
+            }
+          }
+        ]
       }) }}
 
-      <input type="hidden" name="religious-bodies-complete" value="true">
+      {% set admissionsTeamNotSupportiveHtml %}
+      {{ appRichTextEditor({
+        name: "admissions-variation-admissions-team-supportive-details",
+        id: "admissions-variation-admissions-team-supportive-details",
+        value: data['admissions-variation-admissions-team-supportive-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "admissions-variation-admissions-team-supportive",
+        errorMessage: errors['admissions-variation-admissions-team-supportive'],
+        value: data['admissions-variation-admissions-team-supportive'],
+        fieldset: {
+          legend: {
+            text: "Is the Admissions Team supportive of the admissions variation?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes"
+          },
+          {
+            value: "no",
+            text: "No",
+            conditional: {
+              html: admissionsTeamNotSupportiveHtml
+            }
+          }
+        ]
+      }) }}
+
+      <input type="hidden" name="admissions-variation-complete" value="true">
 
       {{ govukButton({
         text: "Save and return"

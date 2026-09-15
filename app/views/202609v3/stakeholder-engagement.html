@@ -62,6 +62,24 @@
         ]
       }) }}
 
+      {% set objectionsAddressedHtml %}
+      {{ appRichTextEditor({
+        name: "stakeholder-engagement-objections-raised-details",
+        id: "stakeholder-engagement-objections-raised-details",
+        value: data['stakeholder-engagement-objections-raised-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {% set objectionsNoFurtherInfoHtml %}
+      {{ appRichTextEditor({
+        name: "stakeholder-engagement-objections-raised-no-details",
+        id: "stakeholder-engagement-objections-raised-no-details",
+        value: data['stakeholder-engagement-objections-raised-no-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
       {{ govukRadios({
         name: "stakeholder-engagement-objections-raised",
         errorMessage: errors['stakeholder-engagement-objections-raised'],
@@ -75,11 +93,17 @@
         items: [
           {
             value: "yes",
-            text: "Yes, trust has confirmed they have addressed all objections"
+            text: "Yes, trust has confirmed they have addressed all objections",
+            conditional: {
+              html: objectionsAddressedHtml
+            }
           },
           {
             value: "no",
-            text: "Yes, further information has not been provided"
+            text: "Yes, further information has not been provided",
+            conditional: {
+              html: objectionsNoFurtherInfoHtml
+            }
           },
           {
             value: "not-applicable",
