@@ -23,7 +23,6 @@
     {% include "202609v3/includes/radio-error-summary.html" %}
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Admissions variation</h1>
-    <p class="govuk-body">Enter whether an admissions variation is required for this significant change and capture the details.</p>
 
     <form method="post" action="">
 
@@ -33,7 +32,7 @@
         value: data['admissions-variation-required'],
         fieldset: {
           legend: {
-            text: "Is an admissions variation required?",
+            text: "Is an admissions variation required for this significant change?",
             classes: "govuk-fieldset__legend--m"
           }
         },
@@ -75,7 +74,7 @@
         <ul class="govuk-list govuk-!-font-size-16">
           <li>
             <p class="govuk-body-s">
-              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">Application form (opens in a new tab)</a>
             </p>
           </li>
           <li>

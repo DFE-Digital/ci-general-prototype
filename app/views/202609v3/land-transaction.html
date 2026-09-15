@@ -24,7 +24,6 @@
     {% include "202609v3/includes/radio-error-summary.html" %}
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Land transaction application</h1>
-    <p class="govuk-body">Record whether a land transaction is required for this significant change.</p>
 
     <form method="post" action="">
 
@@ -50,13 +49,12 @@
         items: [
           { value: "yes", text: "Yes" },
           {
-            value: "no-further-information",
+            value: "no",
             text: "No",
             conditional: {
               html: landTransactionNotSubmittedHtml
             }
           },
-          { value: "no-landowner-to-submit", text: "No, landowner to submit land transaction application" },
           { value: "not-applicable", text: "Not applicable" }
         ]
       }) }}
@@ -89,7 +87,6 @@
               html: landTransactionNotConsentedHtml
             }
           },
-          { value: "awaiting-approval", text: "No, awaiting approval from the Land Transaction Team" },
           { value: "not-applicable", text: "Not applicable" }
         ]
       }) }}
@@ -122,7 +119,7 @@
         <ul class="govuk-list govuk-!-font-size-16">
           <li>
             <p class="govuk-body-s">
-              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">Application form (opens in a new tab)</a>
             </p>
           </li>
           <li>

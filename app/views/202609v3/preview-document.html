@@ -1,6 +1,7 @@
 {% extends "202609v3/layouts/main-prepare.html" %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set pageName = "Preview" %}
 {% set navActive = "significant-changes" %}
@@ -29,19 +30,17 @@
 
 {% macro landTransactionRequired(text) -%}
   {%- if text == "yes" -%}Yes
+  {%- elseif text == "no" or text == "no-further-information" or text == "no-landowner-to-submit" -%}No
   {%- elseif text == "not-applicable" -%}Not applicable
-  {%- elseif text == "no-further-information" -%}No
-  {%- elseif text == "no-landowner-to-submit" -%}No, landowner to submit land transaction application
   {%- elseif text -%}{{ text }}
   {%- else -%}{{ empty() }}
   {%- endif -%}
 {%- endmacro %}
 
 {% macro landTransactionTeamConsented(text) -%}
-  {%- if text == "not-applicable" -%}Not applicable
-  {%- elseif text == "yes" -%}Yes
-  {%- elseif text == "awaiting-approval" -%}No, awaiting approval from the Land Transaction Team
-  {%- elseif text == "no" -%}No
+  {%- if text == "yes" -%}Yes
+  {%- elseif text == "no" or text == "awaiting-approval" -%}No
+  {%- elseif text == "not-applicable" -%}Not applicable
   {%- elseif text -%}{{ text }}
   {%- else -%}{{ empty() }}
   {%- endif -%}
@@ -49,9 +48,8 @@
 
 {% macro planningPermissionSecured(text) -%}
   {%- if text == "yes" -%}Yes
+  {%- elseif text == "no" or text == "no-awaiting-approval" -%}No
   {%- elseif text == "not-applicable" -%}Not applicable
-  {%- elseif text == "no-awaiting-approval" -%}No, applied for and awaiting decision
-  {%- elseif text == "no" -%}No
   {%- elseif text -%}{{ text }}
   {%- else -%}{{ empty() }}
   {%- endif -%}
@@ -75,28 +73,25 @@
 {%- endmacro %}
 
 {% macro stakeholderObjectionsRaised(text) -%}
-  {%- if text == "yes" -%}Yes, trust has confirmed they have addressed all objections
-  {%- elseif text == "no" -%}Yes, further information has not been provided
-  {%- elseif text == "not-applicable" -%}No
+  {%- if text == "yes" -%}Yes
+  {%- elseif text == "no" or text == "not-applicable" -%}No
   {%- elseif text -%}{{ text }}
   {%- else -%}{{ empty() }}
   {%- endif -%}
 {%- endmacro %}
 
 {% macro laObjectionsRaised(text) -%}
-  {%- if text == "yes" -%}Yes, evidence confirms objections have been addressed
-  {%- elseif text == "no" -%}Yes, further information has not been provided
-  {%- elseif text == "not-applicable" -%}No
+  {%- if text == "yes" -%}Yes
+  {%- elseif text == "no" or text == "not-applicable" -%}No
   {%- elseif text -%}{{ text }}
   {%- else -%}{{ empty() }}
   {%- endif -%}
 {%- endmacro %}
 
 {% macro religiousBodiesObjectionsRaised(text) -%}
-  {%- if text == "not-applicable" -%}Not applicable
+  {%- if text == "yes" or text == "yes-no-further-info" -%}Yes
   {%- elseif text == "no" -%}No
-  {%- elseif text == "yes" -%}Yes, evidence confirms objections addressed and consent obtained
-  {%- elseif text == "yes-no-further-info" -%}Yes, no further information provided
+  {%- elseif text == "not-applicable" -%}Not applicable
   {%- elseif text -%}{{ text }}
   {%- else -%}{{ empty() }}
   {%- endif -%}
@@ -166,7 +161,15 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
-    <h1 class="govuk-heading-xl">Preview</h1>
+    <div class="app-title-with-action">
+      <h1 class="govuk-heading-xl">Preview</h1>
+      {% if not data['recorded-decision'] %}
+      {{ govukButton({
+        text: "Record a decision",
+        href: "/202609v3/record-the-decision"
+      }) }}
+      {% endif %}
+    </div>
   </div>
 </div>
 
@@ -192,7 +195,7 @@
 {% macro overviewDetail(text) %}{% if text and (text | striptags | trim) %} {{ text | trim | safe }}{% endif %}{% endmacro %}
 <div id="overview" class="govuk-!-margin-bottom-9">
   <h2 class="govuk-heading-l">Overview</h2>
-  {% if data["proposed-decision-date-day"] or data["proposed-implementation-date-day"] or data["admissions-variation-required"] or data["admissions-variation-la-supportive"] or data["admissions-variation-pupil-place-planning-supportive"] or data["admissions-variation-admissions-team-supportive"] or data["consultation-carried-out"] or data["stakeholder-engagement-carried-out"] or data["stakeholder-engagement-objections-raised"] or data["stakeholder-engagement-consultation-included-admissions-variation"] or data["la-objections-raised"] or data["religious-bodies-consulted"] or data["religious-bodies-objections-raised"] or data["ofsted-inspection-considered"] or data["ofsted-inspection-leadership-education"] or data["ofsted-inspection-evaluation-standard"] or data["psed-considered"] or data["psed-disproportionate-impact"] or data["land-transaction-required"] or data["land-transaction-team-consented"] or data["planning-permission-required"] or data["funding-considered"] or data["fha-outcomes-recorded"] or data["hqie-supports"] or data["recommendation"] %}
+  {% if data["proposed-decision-date-day"] or data["proposed-implementation-date-day"] or data["admissions-variation-required"] or data["admissions-variation-la-supportive"] or data["admissions-variation-pupil-place-planning-supportive"] or data["admissions-variation-admissions-team-supportive"] or data["consultation-carried-out"] or data["stakeholder-engagement-carried-out"] or data["stakeholder-engagement-objections-raised"] or data["stakeholder-engagement-consultation-included-admissions-variation"] or data["la-objections-raised"] or data["religious-bodies-consulted"] or data["religious-bodies-objections-raised"] or data["religious-bodies-consent-granted"] or data["ofsted-inspection-considered"] or data["ofsted-inspection-leadership-education"] or data["ofsted-inspection-evaluation-standard"] or data["psed-considered"] or data["psed-disproportionate-impact"] or data["land-transaction-required"] or data["land-transaction-team-consented"] or data["planning-permission-required"] or data["funding-considered"] or data["fha-outcomes-recorded"] or data["hqie-supports"] or data["recommendation"] %}
   <ul class="govuk-list govuk-list--bullet">
     {% if data["recommendation"] %}
     <li>
@@ -247,17 +250,17 @@
 
     {% if data["stakeholder-engagement-carried-out"] or data["stakeholder-engagement-objections-raised"] or data["stakeholder-engagement-consultation-included-admissions-variation"] %}
     <li>
-      {% if data["stakeholder-engagement-carried-out"] == "no" or data["stakeholder-engagement-objections-raised"] == "no" or data["stakeholder-engagement-consultation-included-admissions-variation"] == "no" %}
+      {% if data["stakeholder-engagement-carried-out"] == "no" or data["stakeholder-engagement-consultation-included-admissions-variation"] == "no" %}
         There is a problem with stakeholder engagement.
         {% if data["stakeholder-engagement-carried-out"] == "no" %} The trust has not consulted stakeholders about the planned significant change.{{ overviewDetail(data["stakeholder-engagement-carried-out-details"]) }}{% endif %}
-        {% if data["stakeholder-engagement-objections-raised"] == "no" %} Objections were raised and no further information has been provided.{{ overviewDetail(data["stakeholder-engagement-objections-raised-no-details"]) }}{% endif %}
+        {% if data["stakeholder-engagement-objections-raised"] == "yes" %} Objections were raised.{{ overviewDetail(data["stakeholder-engagement-objections-raised-details"]) }}{% endif %}
         {% if data["stakeholder-engagement-consultation-included-admissions-variation"] == "no" %} Relevant stakeholders have not been notified of the admissions changes.{{ overviewDetail(data["stakeholder-engagement-consultation-included-admissions-variation-details"]) }}{% endif %}
       {% elseif data["stakeholder-engagement-objections-raised"] == "yes" %}
-        Stakeholders raised objections and the trust has confirmed they have been addressed.{{ overviewDetail(data["stakeholder-engagement-objections-raised-details"]) }}
+        Stakeholders raised objections.{{ overviewDetail(data["stakeholder-engagement-objections-raised-details"]) }}
       {% else %}
         No problems with stakeholder engagement.
         {% if data["stakeholder-engagement-carried-out"] == "yes" %} The trust has consulted stakeholders about the planned significant change.{% endif %}
-        {% if data["stakeholder-engagement-objections-raised"] == "not-applicable" %} No objections were raised.{% endif %}
+        {% if data["stakeholder-engagement-objections-raised"] == "no" %} No objections were raised.{% endif %}
         {% if data["stakeholder-engagement-consultation-included-admissions-variation"] == "yes" %} Relevant stakeholders have been notified of the admissions changes.{% elseif data["stakeholder-engagement-consultation-included-admissions-variation"] == "not-applicable" %} Notifying stakeholders of admissions changes is not applicable.{% endif %}
       {% endif %}
     </li>
@@ -265,30 +268,30 @@
 
     {% if data["la-objections-raised"] %}
     <li>
-      {% if data["la-objections-raised"] == "not-applicable" %}
+      {% if data["la-objections-raised"] == "no" %}
         No problems with local authority objections. The local authority has not raised objections to this change.
       {% elseif data["la-objections-raised"] == "yes" %}
-        Local authority objections were raised and evidence confirms they have been addressed.{{ overviewDetail(data["la-objections-raised-yes-details"]) }}
-      {% else %}
-        There is a problem with local authority objections. Objections were raised and no further information has been provided.{{ overviewDetail(data["la-objections-raised-no-details"]) }}
+        Local authority objections were raised.{{ overviewDetail(data["la-objections-raised-yes-details"]) }}
       {% endif %}
     </li>
     {% endif %}
 
-    {% if data["religious-bodies-consulted"] or data["religious-bodies-objections-raised"] %}
+    {% if data["religious-bodies-consulted"] or data["religious-bodies-objections-raised"] or data["religious-bodies-consent-granted"] %}
     <li>
-      {% if data["religious-bodies-consulted"] == "no" or data["religious-bodies-objections-raised"] == "yes-no-further-info" %}
+      {% if data["religious-bodies-consulted"] == "no" or data["religious-bodies-consent-granted"] == "no" %}
         There is a problem with religious bodies.
         {% if data["religious-bodies-consulted"] == "no" %} Relevant religious bodies have not been consulted.{{ overviewDetail(data["religious-bodies-consulted-details"]) }}{% endif %}
-        {% if data["religious-bodies-objections-raised"] == "yes-no-further-info" %} Objections were raised and no further information has been provided.{{ overviewDetail(data["religious-bodies-objections-raised-no-further-info-details"]) }}{% endif %}
+        {% if data["religious-bodies-objections-raised"] == "yes" %} A religious body raised an objection.{{ overviewDetail(data["religious-bodies-objections-raised-details"]) }}{% endif %}
+        {% if data["religious-bodies-consent-granted"] == "no" %} Consent has not been granted by relevant religious bodies.{{ overviewDetail(data["religious-bodies-consent-granted-details"]) }}{% endif %}
       {% elseif data["religious-bodies-objections-raised"] == "yes" %}
-        Religious bodies raised objections. Evidence confirms the objections were addressed and consent obtained.{{ overviewDetail(data["religious-bodies-objections-raised-details"]) }}
+        A religious body raised an objection.{{ overviewDetail(data["religious-bodies-objections-raised-details"]) }}
       {% elseif data["religious-bodies-consulted"] == "not-applicable" %}
         Religious body consultation is not applicable.
       {% else %}
         No problems with religious bodies.
         {% if data["religious-bodies-consulted"] == "yes" %} Relevant religious bodies have been consulted.{% endif %}
-        {% if data["religious-bodies-objections-raised"] == "no" or data["religious-bodies-objections-raised"] == "not-applicable" %} No objections were raised.{% endif %}
+        {% if data["religious-bodies-objections-raised"] == "no" %} No objections were raised.{% elseif data["religious-bodies-objections-raised"] == "not-applicable" %} Religious body objections are not applicable.{% endif %}
+        {% if data["religious-bodies-consent-granted"] == "yes" %} Consent has been granted by relevant religious bodies.{% elseif data["religious-bodies-consent-granted"] == "not-applicable" %} Religious body consent is not applicable.{% endif %}
       {% endif %}
     </li>
     {% endif %}
@@ -324,20 +327,16 @@
 
     {% if data["land-transaction-required"] or data["land-transaction-team-consented"] %}
     <li>
-      {% if data["land-transaction-required"] == "no-further-information" or data["land-transaction-team-consented"] == "no" %}
+      {% if data["land-transaction-required"] == "no" or data["land-transaction-required"] == "no-further-information" or data["land-transaction-team-consented"] == "no" %}
         There is a problem with land transaction.
-        {% if data["land-transaction-required"] == "no-further-information" %} The landowner has not submitted a land transaction application.{{ overviewDetail(data["land-transaction-required-details"]) }}{% endif %}
+        {% if data["land-transaction-required"] == "no" or data["land-transaction-required"] == "no-further-information" %} The landowner has not submitted a land transaction application.{{ overviewDetail(data["land-transaction-required-details"]) }}{% endif %}
         {% if data["land-transaction-team-consented"] == "no" %} The Land Transaction Team has not consented to the change.{{ overviewDetail(data["land-transaction-team-consented-details"]) }}{% endif %}
-      {% elseif data["land-transaction-required"] == "no-landowner-to-submit" %}
-        The landowner still needs to submit a land transaction application.
-      {% elseif data["land-transaction-team-consented"] == "awaiting-approval" %}
-        Land transaction consent is awaiting approval from the Land Transaction Team.
       {% elseif data["land-transaction-required"] == "not-applicable" %}
         No problems with land transaction. A land transaction is not applicable.
       {% else %}
         No problems with land transaction.
         {% if data["land-transaction-required"] == "yes" %} A land transaction application has been submitted.{% endif %}
-        {% if data["land-transaction-team-consented"] == "yes" %} The Land Transaction Team has consented to the change.{% endif %}
+        {% if data["land-transaction-team-consented"] == "yes" %} The Land Transaction Team has consented to the change.{% elseif data["land-transaction-team-consented"] == "not-applicable" %} Land Transaction Team consent is not applicable.{% endif %}
       {% endif %}
     </li>
     {% endif %}
@@ -348,8 +347,6 @@
         No problems with planning permission. Planning permission has been secured.
       {% elseif data["planning-permission-required"] == "not-applicable" %}
         No problems with planning permission. Planning permission is not applicable.
-      {% elseif data["planning-permission-required"] == "no-awaiting-approval" %}
-        Planning permission has not yet been secured and is awaiting approval.
       {% else %}
         There is a problem with planning permission. Planning permission has not been secured.{{ overviewDetail(data["planning-permission-required-details"]) }}
       {% endif %}
@@ -380,12 +377,10 @@
 
     {% if data["hqie-supports"] %}
     <li>
-      {% if data["hqie-supports"] == "yes" %}
+      {% if data["hqie-supports"] == "no" %}
         No problems with the High Quality Trust Framework. No issues or risks have been identified.
-      {% elseif data["hqie-supports"] == "no" %}
-        There is a problem with the High Quality Trust Framework. Risks or issues have been identified that are relevant to this significant change.{{ overviewDetail(data["hqie-supports-details"]) }}
-      {% elseif data["hqie-supports"] == "not-relevant" %}
-        Risks or issues have been identified in the High Quality Trust Framework, but they are not relevant to this significant change.{{ overviewDetail(data["hqie-supports-not-relevant-details"]) }}
+      {% elseif data["hqie-supports"] == "yes" %}
+        There is a problem with the High Quality Trust Framework. Issues or risks have been identified with regards to the HQTF pillars.{{ overviewDetail(data["hqie-supports-details"]) }}
       {% else %}
         High Quality Trust Framework consideration is not applicable.
       {% endif %}
@@ -421,11 +416,11 @@
     <div class="app-summary-card">
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Is an admissions variation required?", "/202609v3/admissions-variation") %}
+          {% call row("Is an admissions variation required for this significant change?", "/202609v3/admissions-variation") %}
             {{ yesNo(data["admissions-variation-required"]) }}
           {% endcall %}
           {% if data["admissions-variation-required"] == "yes" %}
-          {% call row("Is the Local authority supportive of the admissions variation?", "/202609v3/admissions-variation-question", "whether the Local authority is supportive") %}
+          {% call row("Is the local authority supportive of the admissions variation?", "/202609v3/admissions-variation-question", "whether the local authority is supportive") %}
             {{ yesNo(data["admissions-variation-la-supportive"]) }}
           {% endcall %}
           {% if data["admissions-variation-la-supportive"] == "no" %}
@@ -494,9 +489,9 @@
           {% call row("Were there any objections raised?", "/202609v3/stakeholder-engagement", "whether any objections were raised") %}
             {{ stakeholderObjectionsRaised(data["stakeholder-engagement-objections-raised"]) }}
           {% endcall %}
-          {% if data["stakeholder-engagement-objections-raised"] == "yes" or data["stakeholder-engagement-objections-raised"] == "no" %}
+          {% if data["stakeholder-engagement-objections-raised"] == "yes" %}
           {% call row("Give details", "/202609v3/stakeholder-engagement", "stakeholder objections details") %}
-            {{ richValue(data["stakeholder-engagement-objections-raised-details"] if data["stakeholder-engagement-objections-raised"] == "yes" else data["stakeholder-engagement-objections-raised-no-details"]) }}
+            {{ richValue(data["stakeholder-engagement-objections-raised-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Have the relevant stakeholders been notified of the admissions changes?", "/202609v3/stakeholder-engagement", "whether the relevant stakeholders have been notified of the admissions changes") %}
@@ -517,12 +512,12 @@
     <div class="app-summary-card">
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Has a LA raised any objections?", "/202609v3/la-objections") %}
+          {% call row("Has a local authority raised any objections to the significant change?", "/202609v3/la-objections") %}
             {{ laObjectionsRaised(data["la-objections-raised"]) }}
           {% endcall %}
-          {% if data["la-objections-raised"] == "yes" or data["la-objections-raised"] == "no" %}
+          {% if data["la-objections-raised"] == "yes" %}
           {% call row("Give details", "/202609v3/la-objections", "local authority objections details") %}
-            {{ richValue(data["la-objections-raised-yes-details"] if data["la-objections-raised"] == "yes" else data["la-objections-raised-no-details"]) }}
+            {{ richValue(data["la-objections-raised-yes-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Supporting evidence", "/202609v3/la-objections", "Local authority objections supporting evidence") %}
@@ -535,7 +530,7 @@
     <div class="app-summary-card">
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
-          {% call row("Have the relevant religious bodies been consulted?", "/202609v3/religious-bodies") %}
+          {% call row("Have any relevant religious bodies been consulted about this significant change?", "/202609v3/religious-bodies") %}
             {{ yesNo(data["religious-bodies-consulted"]) }}
           {% endcall %}
           {% if data["religious-bodies-consulted"] == "no" %}
@@ -543,12 +538,20 @@
             {{ richValue(data["religious-bodies-consulted-details"]) }}
           {% endcall %}
           {% endif %}
-          {% call row("Has the relevant religious body raised any objections?", "/202609v3/religious-bodies", "whether the relevant religious body raised any objections") %}
+          {% call row("Has a religious body raised an objection to this significant change?", "/202609v3/religious-bodies", "whether a religious body raised an objection") %}
             {{ religiousBodiesObjectionsRaised(data["religious-bodies-objections-raised"]) }}
           {% endcall %}
-          {% if data["religious-bodies-objections-raised"] == "yes" or data["religious-bodies-objections-raised"] == "yes-no-further-info" %}
+          {% if data["religious-bodies-objections-raised"] == "yes" %}
           {% call row("Give details", "/202609v3/religious-bodies", "religious body objections details") %}
-            {{ richValue(data["religious-bodies-objections-raised-details"] if data["religious-bodies-objections-raised"] == "yes" else data["religious-bodies-objections-raised-no-further-info-details"]) }}
+            {{ richValue(data["religious-bodies-objections-raised-details"]) }}
+          {% endcall %}
+          {% endif %}
+          {% call row("Has consent been granted by relevant religious bodies?", "/202609v3/religious-bodies", "whether consent has been granted by relevant religious bodies") %}
+            {{ yesNo(data["religious-bodies-consent-granted"]) }}
+          {% endcall %}
+          {% if data["religious-bodies-consent-granted"] == "no" %}
+          {% call row("Give details", "/202609v3/religious-bodies", "why consent has not been granted by relevant religious bodies") %}
+            {{ richValue(data["religious-bodies-consent-granted-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Supporting evidence", "/202609v3/religious-bodies", "religious bodies supporting evidence") %}
@@ -639,7 +642,7 @@
           {% call row("Has the landowner submitted a land transaction application?", "/202609v3/land-transaction") %}
             {{ landTransactionRequired(data["land-transaction-required"]) }}
           {% endcall %}
-          {% if data["land-transaction-required"] == "no-further-information" %}
+          {% if data["land-transaction-required"] == "no" or data["land-transaction-required"] == "no-further-information" %}
           {% call row("Give details", "/202609v3/land-transaction", "why the landowner has not submitted a land transaction application") %}
             {{ richValue(data["land-transaction-required-details"]) }}
           {% endcall %}
@@ -737,15 +740,11 @@
       <div class="app-summary-card__content">
         <dl class="govuk-summary-list govuk-!-margin-bottom-0">
           {% call row("Have any issues or risks been identified with regards to the HQTF pillars?", "/202609v3/high-quality-inclusive-education") %}
-            {%- if data["hqie-supports"] == "yes" -%}No
-            {%- elseif data["hqie-supports"] == "no" -%}Yes, risks or issues identified that are relevant to this significant change
-            {%- elseif data["hqie-supports"] == "not-relevant" -%}Yes, risks or issues identified that are not relevant to this significant change
-            {%- else -%}{{ yesNo(data["hqie-supports"]) }}
-            {%- endif -%}
+            {{ yesNo(data["hqie-supports"]) }}
           {% endcall %}
-          {% if data["hqie-supports"] == "no" or data["hqie-supports"] == "not-relevant" %}
+          {% if data["hqie-supports"] == "yes" %}
           {% call row("Give details", "/202609v3/high-quality-inclusive-education", "HQTF consideration details") %}
-            {{ richValue(data["hqie-supports-details"] if data["hqie-supports"] == "no" else data["hqie-supports-not-relevant-details"]) }}
+            {{ richValue(data["hqie-supports-details"]) }}
           {% endcall %}
           {% endif %}
           {% call row("Supporting evidence", "/202609v3/high-quality-inclusive-education", "HQTF consideration supporting evidence") %}
@@ -772,6 +771,14 @@
         </dl>
       </div>
     </div>
+
+    {% if not data['recorded-decision'] %}
+    {{ govukButton({
+      text: "Record a decision",
+      href: "/202609v3/record-the-decision",
+      classes: "govuk-!-margin-top-4"
+    }) }}
+    {% endif %}
 </div>
 
   </div>

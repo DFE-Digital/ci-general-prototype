@@ -2378,3 +2378,20 @@ body:has(.app-docs-preview) footer {
 		min-height: 0;
 	}
 }
+
+.app-title-with-action {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-wrap: wrap;
+	gap: 15px;
+	margin-bottom: 30px;
+}
+
+.app-title-with-action .govuk-heading-xl {
+	margin-bottom: 0;
+}
+
+.app-title-with-action .govuk-button {
+	margin-bottom: 0;
+}

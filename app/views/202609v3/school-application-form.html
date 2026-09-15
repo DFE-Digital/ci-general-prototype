@@ -2,7 +2,7 @@
 
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
-{% set pageName = "School application form" %}
+{% set pageName = "Application form" %}
 {% set navActive = "significant-changes" %}
 
 {% block content %}
@@ -10,14 +10,14 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-full">
     <span class="govuk-caption-l">URN: 101335</span>
-    <h1 class="govuk-heading-xl">School application form</h1>
+    <h1 class="govuk-heading-xl">Application form</h1>
     <p class="govuk-body-l">St Theresa's Catholic Primary School</p>
 
-    <h2 class="govuk-heading-m">School and trust details</h2>
+    <h2 class="govuk-heading-m">Trust and academy details</h2>
     {{ govukSummaryList({
       rows: [
         {
-          key: { text: "School name" },
+          key: { text: "Academy name" },
           value: { text: "St Theresa's Catholic Primary School" }
         },
         {

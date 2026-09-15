@@ -44,12 +44,16 @@
                 </p>
                 <p class="govuk-body govuk-!-margin-bottom-1">
                     Type: {{ changeTypeLabel }}
+                    {% if not data['recorded-decision'] %}
                     <a class="govuk-link govuk-!-padding-left-50" href="select-change-type">Change</a>
+                    {% endif %}
                 </p>
                 <p class="govuk-body govuk-!-margin-bottom-5">
                     Project owner:
                     <span data-id="assigned-user">Your name</span>
+                    {% if not data['recorded-decision'] %}
                     <a class="govuk-link govuk-!-padding-left-50" href="#">Change</a>
+                    {% endif %}
                 </p>
                 <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-5">
                     {% include "202609v3/includes/project-status-tag.html" %}
@@ -66,7 +70,7 @@
                         </li>
                         <li class="moj-sub-navigation__item">
                             <a class="moj-sub-navigation__link" href="application-form">
-                                School application form
+                                Application form
                             </a>
                         </li>
                         <li class="moj-sub-navigation__item" data-cy="record_decision_menu">
@@ -150,7 +154,8 @@
                                 </span>
                                 {{ statusTag("religious-bodies-status", data | taskStatus([
                                   "religious-bodies-consulted",
-                                  "religious-bodies-objections-raised"
+                                  "religious-bodies-objections-raised",
+                                  "religious-bodies-consent-granted"
                                 ])) }}
                             </li>
                         </ul>

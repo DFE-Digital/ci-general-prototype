@@ -39,7 +39,8 @@ const sigChangeRadioFields = {
   ],
   'religious-bodies': [
     { name: 'religious-bodies-consulted', text: 'Select whether the relevant religious bodies have been consulted' },
-    { name: 'religious-bodies-objections-raised', text: 'Select whether the relevant religious body has raised any objections' }
+    { name: 'religious-bodies-objections-raised', text: 'Select whether the relevant religious body has raised any objections' },
+    { name: 'religious-bodies-consent-granted', text: 'Select whether consent has been granted by relevant religious bodies' }
   ],
   psed: [
     { name: 'psed-considered', text: 'Select whether the Public Sector Equality Duty has been considered and an Equalities Impact Assessment has been completed' },
@@ -77,7 +78,8 @@ const sigChangeRadioFields = {
     { name: 'governance-and-leadership-considered', text: 'Select whether governance and leadership have been considered' }
   ],
   approve: [
-    { name: 'recommendation', text: 'Select a recommendation' }
+    { name: 'recommendation', text: 'Select a recommendation' },
+    { name: 'approve-rationale', text: 'Enter a rationale for this recommendation' }
   ],
   'approve-with-conditions': [
     { name: 'approve-with-conditions-recommendation', text: 'Select whether you recommend that this application is approved with conditions' }
@@ -92,7 +94,8 @@ const sigChangeRadioFields = {
     { name: 'decline-recommendation', text: 'Select whether you recommend that this application is declined' }
   ],
   'record-the-decision': [
-    { name: 'recorded-decision', text: 'Select a decision' }
+    { name: 'recorded-decision', text: 'Select a decision' },
+    { name: 'recorded-decision-rationale', text: 'Enter a rationale for this decision' }
   ]
 }
 

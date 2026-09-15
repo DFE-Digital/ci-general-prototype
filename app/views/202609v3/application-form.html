@@ -2,7 +2,7 @@
 
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
-{% set pageName = "School application form" %}
+{% set pageName = "Application form" %}
 {% set navActive = "significant-changes" %}
 {% if data['change-type'] %}
   {% if data['change-type'] is string %}
@@ -38,12 +38,16 @@
                 </p>
                 <p class="govuk-body govuk-!-margin-bottom-1">
                     Type: {{ changeTypeLabel }}
+                    {% if not data['recorded-decision'] %}
                     <a class="govuk-link govuk-!-padding-left-50" href="select-change-type">Change</a>
+                    {% endif %}
                 </p>
                 <p class="govuk-body govuk-!-margin-bottom-5">
                     Project owner:
                     <span data-id="assigned-user">Your name</span>
+                    {% if not data['recorded-decision'] %}
                     <a class="govuk-link govuk-!-padding-left-50" href="#">Change</a>
+                    {% endif %}
                 </p>
                 <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-5">
                     {% include "202609v3/includes/project-status-tag.html" %}
@@ -60,7 +64,7 @@
                         </li>
                         <li class="moj-sub-navigation__item">
                             <a class="moj-sub-navigation__link" aria-current="page" href="application-form">
-                                School application form
+                                Application form
                             </a>
                         </li>
                         <li class="moj-sub-navigation__item" data-cy="record_decision_menu">
@@ -75,11 +79,11 @@
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
-                <h2 class="govuk-heading-m">School and trust details</h2>
+                <h2 class="govuk-heading-m">Trust and academy details</h2>
                 {{ govukSummaryList({
                   rows: [
                     {
-                      key: { text: "School name" },
+                      key: { text: "Academy name" },
                       value: { text: "St Theresa's Catholic Primary School" }
                     },
                     {

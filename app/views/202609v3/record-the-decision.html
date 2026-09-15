@@ -2,6 +2,7 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/textarea/macro.njk" import govukTextarea %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 
 {% set pageName = "Record the decision" %}
@@ -39,6 +40,17 @@
           { value: "Withdraw", text: "Withdraw" },
           { value: "Decline", text: "Decline" }
         ]
+      }) }}
+
+      {{ govukTextarea({
+        name: "recorded-decision-rationale",
+        id: "recorded-decision-rationale",
+        value: data['recorded-decision-rationale'],
+        errorMessage: errors['recorded-decision-rationale'],
+        label: {
+          text: "Provide a rationale for this decision",
+          classes: "govuk-label--m"
+        }
       }) }}
 
       {{ govukButton({

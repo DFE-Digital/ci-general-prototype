@@ -24,7 +24,6 @@
     {% include "202609v3/includes/radio-error-summary.html" %}
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Religious bodies</h1>
-    <p class="govuk-body">Record engagement with religious bodies for this significant change.</p>
 
     <form method="post" action="">
 
@@ -43,7 +42,7 @@
         value: data['religious-bodies-consulted'],
         fieldset: {
           legend: {
-            text: "Have the relevant religious bodies been consulted?",
+            text: "Have any relevant religious bodies been consulted about this significant change?",
             classes: "govuk-fieldset__legend--m"
           }
         },
@@ -60,20 +59,11 @@
         ]
       }) }}
 
-      {% set religiousBodiesObjectionsAddressedHtml %}
+      {% set religiousBodiesObjectionsRaisedHtml %}
       {{ appRichTextEditor({
         name: "religious-bodies-objections-raised-details",
         id: "religious-bodies-objections-raised-details",
         value: data['religious-bodies-objections-raised-details'],
-        label: "Give details"
-      }) }}
-      {% endset %}
-
-      {% set religiousBodiesObjectionsNoFurtherInfoHtml %}
-      {{ appRichTextEditor({
-        name: "religious-bodies-objections-raised-no-further-info-details",
-        id: "religious-bodies-objections-raised-no-further-info-details",
-        value: data['religious-bodies-objections-raised-no-further-info-details'],
         label: "Give details"
       }) }}
       {% endset %}
@@ -84,26 +74,51 @@
         value: data['religious-bodies-objections-raised'],
         fieldset: {
           legend: {
-            text: "Has the relevant religious body raised any objections?",
+            text: "Has a religious body raised an objection to this significant change?",
             classes: "govuk-fieldset__legend--m"
           }
         },
         items: [
           {
             value: "yes",
-            text: "Yes, evidence confirms objections addressed and consent obtained",
+            text: "Yes",
             conditional: {
-              html: religiousBodiesObjectionsAddressedHtml
-            }
-          },
-          {
-            value: "yes-no-further-info",
-            text: "Yes, no further information provided",
-            conditional: {
-              html: religiousBodiesObjectionsNoFurtherInfoHtml
+              html: religiousBodiesObjectionsRaisedHtml
             }
           },
           { value: "no", text: "No" },
+          { value: "not-applicable", text: "Not applicable" }
+        ]
+      }) }}
+
+      {% set religiousBodiesConsentNotGrantedHtml %}
+      {{ appRichTextEditor({
+        name: "religious-bodies-consent-granted-details",
+        id: "religious-bodies-consent-granted-details",
+        value: data['religious-bodies-consent-granted-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "religious-bodies-consent-granted",
+        errorMessage: errors['religious-bodies-consent-granted'],
+        value: data['religious-bodies-consent-granted'],
+        fieldset: {
+          legend: {
+            text: "Has consent been granted by relevant religious bodies?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "yes", text: "Yes" },
+          {
+            value: "no",
+            text: "No",
+            conditional: {
+              html: religiousBodiesConsentNotGrantedHtml
+            }
+          },
           { value: "not-applicable", text: "Not applicable" }
         ]
       }) }}
@@ -136,7 +151,7 @@
         <ul class="govuk-list govuk-!-font-size-16">
           <li>
             <p class="govuk-body-s">
-              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">Application form (opens in a new tab)</a>
             </p>
           </li>
           <li>

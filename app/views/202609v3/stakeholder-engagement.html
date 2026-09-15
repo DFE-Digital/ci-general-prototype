@@ -24,7 +24,6 @@
     {% include "202609v3/includes/radio-error-summary.html" %}
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Stakeholder engagement</h1>
-    <p class="govuk-body">Record the stakeholder engagement carried out for this significant change.</p>
 
     <form method="post" action="">
 
@@ -62,20 +61,11 @@
         ]
       }) }}
 
-      {% set objectionsAddressedHtml %}
+      {% set objectionsRaisedHtml %}
       {{ appRichTextEditor({
         name: "stakeholder-engagement-objections-raised-details",
         id: "stakeholder-engagement-objections-raised-details",
         value: data['stakeholder-engagement-objections-raised-details'],
-        label: "Give details"
-      }) }}
-      {% endset %}
-
-      {% set objectionsNoFurtherInfoHtml %}
-      {{ appRichTextEditor({
-        name: "stakeholder-engagement-objections-raised-no-details",
-        id: "stakeholder-engagement-objections-raised-no-details",
-        value: data['stakeholder-engagement-objections-raised-no-details'],
         label: "Give details"
       }) }}
       {% endset %}
@@ -93,20 +83,13 @@
         items: [
           {
             value: "yes",
-            text: "Yes, trust has confirmed they have addressed all objections",
+            text: "Yes",
             conditional: {
-              html: objectionsAddressedHtml
+              html: objectionsRaisedHtml
             }
           },
           {
             value: "no",
-            text: "Yes, further information has not been provided",
-            conditional: {
-              html: objectionsNoFurtherInfoHtml
-            }
-          },
-          {
-            value: "not-applicable",
             text: "No"
           }
         ]
@@ -178,7 +161,7 @@
         <ul class="govuk-list govuk-!-font-size-16">
           <li>
             <p class="govuk-body-s">
-              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">Application form (opens in a new tab)</a>
             </p>
           </li>
           <li>

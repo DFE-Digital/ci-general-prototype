@@ -27,20 +27,11 @@
 
     <form method="post" action="">
 
-      {% set hqieRelevantHtml %}
+      {% set hqieIssuesIdentifiedHtml %}
       {{ appRichTextEditor({
         name: "hqie-supports-details",
         id: "hqie-supports-details",
         value: data['hqie-supports-details'],
-        label: "Give details"
-      }) }}
-      {% endset %}
-
-      {% set hqieNotRelevantHtml %}
-      {{ appRichTextEditor({
-        name: "hqie-supports-not-relevant-details",
-        id: "hqie-supports-not-relevant-details",
-        value: data['hqie-supports-not-relevant-details'],
         label: "Give details"
       }) }}
       {% endset %}
@@ -60,20 +51,13 @@
         },
         items: [
           {
-            value: "no",
-            text: "Yes, risks or issues identified that are relevant to this significant change",
+            value: "yes",
+            text: "Yes",
             conditional: {
-              html: hqieRelevantHtml
+              html: hqieIssuesIdentifiedHtml
             }
           },
-          {
-            value: "not-relevant",
-            text: "Yes, risks or issues identified that are not relevant to this significant change",
-            conditional: {
-              html: hqieNotRelevantHtml
-            }
-          },
-          { value: "yes", text: "No" },
+          { value: "no", text: "No" },
           { value: "not-applicable", text: "Not applicable" }
         ]
       }) }}
@@ -106,7 +90,7 @@
         <ul class="govuk-list govuk-!-font-size-16">
           <li>
             <p class="govuk-body-s">
-              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">School application form (opens in a new tab)</a>
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">Application form (opens in a new tab)</a>
             </p>
           </li>
           <li>
