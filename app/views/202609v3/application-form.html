@@ -4,15 +4,7 @@
 
 {% set pageName = "Application form" %}
 {% set navActive = "significant-changes" %}
-{% if data['change-type'] %}
-  {% if data['change-type'] is string %}
-    {% set changeTypeLabel = data['change-type'] %}
-  {% else %}
-    {% set changeTypeLabel = data['change-type'] | join(", ") %}
-  {% endif %}
-{% else %}
-  {% set changeTypeLabel = "Testing tiers" %}
-{% endif %}
+{% set changeTypeLabel = data['change-type'] | changeTypeLabel %}
 
 {% block content %}
 

@@ -43,6 +43,16 @@ function isItemFilled (data, key) {
   return isFilled(data, key)
 }
 
+addFilter('changeTypeLabel', function (value) {
+  const fallback = 'Add or remove a boarding provision'
+  if (value === undefined || value === null || value === '') {
+    return fallback
+  }
+  const text = Array.isArray(value) ? value.join(', ') : String(value)
+  const replaced = text.replace(/Testing tiers/g, fallback)
+  return replaced.trim() || fallback
+})
+
 addFilter('taskStatus', function (data, keys) {
   const session = data || {}
   const list = Array.isArray(keys) ? keys : [keys]

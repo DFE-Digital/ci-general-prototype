@@ -1085,15 +1085,7 @@
                         <div id="route-0" class="govuk-!-margin-top-1">
                             <strong>Type:</strong>
                             <span>
-                              {% if data['change-type'] %}
-                                {% if data['change-type'] is string %}
-                                  {{ data['change-type'] }}
-                                {% else %}
-                                  {{ data['change-type'] | join(", ") }}
-                                {% endif %}
-                              {% else %}
-                                Testing tiers
-                              {% endif %}
+                              {{ data['change-type'] | changeTypeLabel }}
                             </span>
                         </div>
                         <div id="proposed-decision-date-0" class="govuk-!-margin-top-1">
