@@ -314,7 +314,7 @@
       {% if data["psed-considered"] == "no" or data["psed-disproportionate-impact"] == "likely" %}
         There is a problem with the Public Sector Equality Duty.
         {% if data["psed-considered"] == "no" %} It has not been considered.{{ overviewDetail(data["psed-considered-details"]) }}{% endif %}
-        {% if data["psed-disproportionate-impact"] == "likely" %} The decision is likely to disproportionately affect people who share protected characteristics.{% endif %}
+        {% if data["psed-disproportionate-impact"] == "likely" %} The decision is likely to disproportionately affect people who share protected characteristics.{{ overviewDetail(data["psed-disproportionate-impact-details"]) }}{% endif %}
       {% elseif data["psed-disproportionate-impact"] == "some-impact" %}
         The Public Sector Equality Duty has been considered. The decision may have some impact on people who share protected characteristics.
       {% else %}
@@ -624,6 +624,11 @@
           {% call row("Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?", "/202609v3/psed", "disproportionate impact") %}
             {{ psedOutcome(data["psed-disproportionate-impact"]) }}
           {% endcall %}
+          {% if data["psed-disproportionate-impact"] == "likely" %}
+          {% call row("Give details", "/202609v3/psed", "why the decision is likely to disproportionately affect people who share protected characteristics") %}
+            {{ richValue(data["psed-disproportionate-impact-details"]) }}
+          {% endcall %}
+          {% endif %}
           {% call row("Supporting evidence", "/202609v3/psed", "Public Sector Equality Duty supporting evidence") %}
             {{ value(data["supporting-evidence"]) }}
           {% endcall %}

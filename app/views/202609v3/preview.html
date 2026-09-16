@@ -367,6 +367,11 @@
           {% call row("Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?", "/202609v3/psed", "disproportionate impact") %}
             {{ psedOutcome(data["psed-disproportionate-impact"]) }}
           {% endcall %}
+          {% if data["psed-disproportionate-impact"] == "likely" %}
+          {% call row("Give details", "/202609v3/psed", "why the decision is likely to disproportionately affect people who share protected characteristics") %}
+            {{ richValue(data["psed-disproportionate-impact-details"]) }}
+          {% endcall %}
+          {% endif %}
           {% call row("Supporting evidence", "/202609v3/psed", "Public Sector Equality Duty supporting evidence") %}
             {{ value(data["supporting-evidence"]) }}
           {% endcall %}

@@ -61,6 +61,15 @@
         ]
       }) }}
 
+      {% set psedLikelyHtml %}
+      {{ appRichTextEditor({
+        name: "psed-disproportionate-impact-details",
+        id: "psed-disproportionate-impact-details",
+        value: data['psed-disproportionate-impact-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
       {{ govukRadios({
         name: "psed-disproportionate-impact",
         errorMessage: errors['psed-disproportionate-impact'],
@@ -82,7 +91,10 @@
           },
           {
             value: "likely",
-            text: "Likely"
+            text: "Likely",
+            conditional: {
+              html: psedLikelyHtml
+            }
           }
         ]
       }) }}
