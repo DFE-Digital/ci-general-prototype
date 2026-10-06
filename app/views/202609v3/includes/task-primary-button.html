@@ -1,0 +1,6 @@
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% if not data['recorded-decision'] %}
+{{ govukButton({
+  text: primaryButtonText or "Save and return"
+}) }}
+{% endif %}

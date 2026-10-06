@@ -1,0 +1,166 @@
+{% extends "202609v4/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{% set pageName = "Check your answers before recording this decision" %}
+{% set navActive = "significant-changes" %}
+
+{% macro empty() %}<span class="empty">Empty</span>{% endmacro %}
+{% macro answer(text) %}{% if text %}{{ text }}{% else %}{{ empty() }}{% endif %}{% endmacro %}
+{% macro richAnswer(text) %}
+  {%- set stripped = text | striptags | trim if text else "" -%}
+  {%- if stripped -%}
+    <div class="app-project-rationale-summary">{{ text | safe }}</div>
+  {%- else -%}{{ empty() }}{%- endif -%}
+{% endmacro %}
+{% set conditionsText = "Yes" if data['were-any-conditions-set'] == "yes" else ("No" if data['were-any-conditions-set'] == "no" else "") %}
+{% set decisionText = data['pending-recorded-decision'] or data['recorded-decision'] %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: "/202609v4/approve-decision-date"
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <span class="govuk-caption-l">Record the decision</span>
+    <h1 class="govuk-heading-l">Check your answers before recording this decision</h1>
+
+    {{ govukWarningText({
+      text: "You cannot make changes to this project in Prepare after you record a decision.",
+      iconFallbackText: "Warning"
+    }) }}
+
+    <form method="post" action="/202609v4/approve-check-answers">
+      {% set decisionRow = {
+        key: { text: "Decision" },
+        value: { html: answer(decisionText) },
+        actions: {
+          items: [{
+            href: "/202609v4/record-the-decision?returnTo=check",
+            text: "Change",
+            visuallyHiddenText: "decision"
+          }]
+        }
+      } %}
+      {% set roleRow = {
+        key: { text: "Decision maker's role" },
+        value: { html: answer(data['who-made-this-decision']) },
+        actions: {
+          items: [{
+            href: "/202609v4/approve-decision-maker?returnTo=check",
+            text: "Change",
+            visuallyHiddenText: "decision maker's role"
+          }]
+        }
+      } %}
+      {% set nameRow = {
+        key: { text: "Decision maker's name" },
+        value: { html: answer(data['decision-maker-name']) },
+        actions: {
+          items: [{
+            href: "/202609v4/approve-decision-maker-name?returnTo=check",
+            text: "Change",
+            visuallyHiddenText: "decision maker's name"
+          }]
+        }
+      } %}
+      {% set dateRow = {
+        key: { text: "Date of decision" },
+        value: { html: answer(data['recorded-decision-date']) },
+        actions: {
+          items: [{
+            href: "/202609v4/approve-decision-date?returnTo=check",
+            text: "Change",
+            visuallyHiddenText: "date of decision"
+          }]
+        }
+      } %}
+      {% if decisionText == "Decline" %}
+        {{ govukSummaryList({
+          rows: [
+            decisionRow,
+            {
+              key: { text: "Why was this project declined?" },
+              value: { html: richAnswer(data['decline-reason']) },
+              actions: {
+                items: [{
+                  href: "/202609v4/decline-reason?returnTo=check",
+                  text: "Change",
+                  visuallyHiddenText: "why this project was declined"
+                }]
+              }
+            },
+            roleRow,
+            nameRow,
+            dateRow
+          ]
+        }) }}
+      {% elseif decisionText == "Withdraw" %}
+        {{ govukSummaryList({
+          rows: [
+            decisionRow,
+            {
+              key: { text: "Why was this project withdrawn?" },
+              value: { html: richAnswer(data['withdraw-reason']) },
+              actions: {
+                items: [{
+                  href: "/202609v4/withdraw-reason?returnTo=check",
+                  text: "Change",
+                  visuallyHiddenText: "why this project was withdrawn"
+                }]
+              }
+            },
+            roleRow,
+            nameRow,
+            dateRow
+          ]
+        }) }}
+      {% else %}
+        {{ govukSummaryList({
+          rows: [
+            decisionRow,
+            {
+              key: { text: "Conditions" },
+              value: { html: answer(conditionsText) },
+              actions: {
+                items: [{
+                  href: "/202609v4/approve-conditions?returnTo=check",
+                  text: "Change",
+                  visuallyHiddenText: "conditions"
+                }]
+              }
+            },
+            {
+              key: { text: "Conditions details" },
+              value: { html: richAnswer(data['were-any-conditions-set-details']) },
+              actions: {
+                items: [{
+                  href: "/202609v4/approve-conditions?returnTo=check",
+                  text: "Change",
+                  visuallyHiddenText: "conditions details"
+                }]
+              }
+            },
+            roleRow,
+            nameRow,
+            dateRow
+          ]
+        }) }}
+      {% endif %}
+
+      {{ govukButton({
+        text: "Record this decision"
+      }) }}
+    </form>
+  </div>
+</div>
+
+{% endblock %}

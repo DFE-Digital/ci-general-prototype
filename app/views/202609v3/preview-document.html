@@ -116,11 +116,12 @@
 {%- endmacro %}
 
 {% macro row(key, href, hidden, section) %}
-          <div class="govuk-summary-list__row">
+          {% set showChange = href and not data['recorded-decision'] %}
+          <div class="govuk-summary-list__row{% if not showChange %} govuk-summary-list__row--no-actions{% endif %}">
             <dt class="govuk-summary-list__key">{{ key }}</dt>
             <dd class="govuk-summary-list__value">{{ caller() }}</dd>
+            {% if showChange %}
             <dd class="govuk-summary-list__actions">
-              {% if href %}
               {% set page = href | replace("/202609v3/", "") %}
               {% set sectionLookup = {
                 "confirm-project-dates": "individual-information",
@@ -144,8 +145,8 @@
               {% set sectionId = section if section else sectionLookup[page] %}
               {% set changeHref = href + "?returnTo=preview" + (("&section=" + sectionId) if sectionId else "") %}
               <a class="govuk-link" href="{{ changeHref }}">Change<span class="govuk-visually-hidden"> {{ hidden or key }}</span></a>
-              {% endif %}
             </dd>
+            {% endif %}
           </div>
 {% endmacro %}
 
@@ -170,6 +171,7 @@
       }) }}
       {% endif %}
     </div>
+    {% include "202609v3/includes/recorded-decision-banner.html" %}
   </div>
 </div>
 
@@ -202,13 +204,13 @@
       {% if data["recommendation"] == "Approve" %}
         The recommendation is to approve this application.{{ overviewDetail(data["approve-rationale"]) }}
       {% elseif data["recommendation"] == "Approve with conditions" %}
-        The recommendation is to approve this application with conditions.{{ overviewDetail(data["approve-with-conditions-rationale"]) }}
+        The recommendation is to approve this application with conditions.{{ overviewDetail(data["approve-rationale"]) }}
       {% elseif data["recommendation"] == "Defer" %}
-        The recommendation is to defer this application.{{ overviewDetail(data["defer-rationale"]) }}
+        The recommendation is to defer this application.{{ overviewDetail(data["approve-rationale"]) }}
       {% elseif data["recommendation"] == "Withdraw" %}
-        The recommendation is to withdraw this application.{{ overviewDetail(data["withdraw-rationale"]) }}
+        The recommendation is to withdraw this application.{{ overviewDetail(data["approve-rationale"]) }}
       {% elseif data["recommendation"] == "Decline" %}
-        The recommendation is to decline this application.{{ overviewDetail(data["decline-rationale"]) }}
+        The recommendation is to decline this application.{{ overviewDetail(data["approve-rationale"]) }}
       {% endif %}
     </li>
     {% endif %}

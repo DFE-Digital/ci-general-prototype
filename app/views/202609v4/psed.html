@@ -1,0 +1,155 @@
+{% extends "202609v4/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "202609v4/includes/rich-text-editor.html" import appRichTextEditor %}
+
+{% set pageName = "Public Sector Equality Duty" %}
+{% set navActive = "significant-changes" %}
+{% set returnTo = "/202609v4/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v4/st-theresas") %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: returnTo
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-three-quarters">
+    {% include "202609v4/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
+    <h1 class="govuk-heading-l">Public Sector Equality Duty</h1>
+
+    <form method="post" action="">
+
+      {% set psedNotConsideredHtml %}
+      {{ appRichTextEditor({
+        name: "psed-considered-details",
+        id: "psed-considered-details",
+        value: data['psed-considered-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "psed-considered",
+        errorMessage: errors['psed-considered'],
+        value: data['psed-considered'],
+        fieldset: {
+          legend: {
+            text: "Has the Public Sector Equality Duty been considered and an Equalities Impact Assessment been completed?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes"
+          },
+          {
+            value: "no",
+            text: "No",
+            conditional: {
+              html: psedNotConsideredHtml
+            }
+          }
+        ]
+      }) }}
+
+      {% set psedSomeImpactHtml %}
+      {{ appRichTextEditor({
+        name: "psed-some-impact-details",
+        id: "psed-some-impact-details",
+        value: data['psed-some-impact-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {% set psedLikelyHtml %}
+      {{ appRichTextEditor({
+        name: "psed-disproportionate-impact-details",
+        id: "psed-disproportionate-impact-details",
+        value: data['psed-disproportionate-impact-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "psed-disproportionate-impact",
+        errorMessage: errors['psed-disproportionate-impact'],
+        value: data['psed-disproportionate-impact'],
+        fieldset: {
+          legend: {
+            text: "Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "unlikely",
+            text: "Unlikely"
+          },
+          {
+            value: "some-impact",
+            text: "Some impact",
+            conditional: {
+              html: psedSomeImpactHtml
+            }
+          },
+          {
+            value: "likely",
+            text: "Likely",
+            conditional: {
+              html: psedLikelyHtml
+            }
+          }
+        ]
+      }) }}
+
+      {{ govukInput({
+        id: "supporting-evidence",
+        name: "supporting-evidence",
+        value: "sharepoint.edu.gov.uk/evidence",
+        label: {
+          text: "Supporting evidence",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      <input type="hidden" name="psed-complete" value="true">
+
+      {% set primaryButtonText = "Save and return" %}
+      {% include "202609v4/includes/task-primary-button.html" %}
+
+    </form>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">
+        Useful information
+      </h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">Application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</div>
+
+{% endblock %}

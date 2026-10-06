@@ -1,0 +1,167 @@
+{% extends "202609v4/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "202609v4/includes/rich-text-editor.html" import appRichTextEditor %}
+
+{% set pageName = "Religious bodies" %}
+{% set navActive = "significant-changes" %}
+{% set returnTo = "/202609v4/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v4/st-theresas") %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: returnTo
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "202609v4/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
+    <h1 class="govuk-heading-l">Religious bodies</h1>
+
+    <form method="post" action="">
+
+      {% set religiousBodiesNotConsultedHtml %}
+      {{ appRichTextEditor({
+        name: "religious-bodies-consulted-details",
+        id: "religious-bodies-consulted-details",
+        value: data['religious-bodies-consulted-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "religious-bodies-consulted",
+        errorMessage: errors['religious-bodies-consulted'],
+        value: data['religious-bodies-consulted'],
+        fieldset: {
+          legend: {
+            text: "Have any relevant religious bodies been consulted about this significant change?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "yes", text: "Yes" },
+          {
+            value: "no",
+            text: "No",
+            conditional: {
+              html: religiousBodiesNotConsultedHtml
+            }
+          },
+          { value: "not-applicable", text: "Not applicable" }
+        ]
+      }) }}
+
+      {% set religiousBodiesObjectionsRaisedHtml %}
+      {{ appRichTextEditor({
+        name: "religious-bodies-objections-raised-details",
+        id: "religious-bodies-objections-raised-details",
+        value: data['religious-bodies-objections-raised-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "religious-bodies-objections-raised",
+        errorMessage: errors['religious-bodies-objections-raised'],
+        value: data['religious-bodies-objections-raised'],
+        fieldset: {
+          legend: {
+            text: "Has a religious body raised an objection to this significant change?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          {
+            value: "yes",
+            text: "Yes",
+            conditional: {
+              html: religiousBodiesObjectionsRaisedHtml
+            }
+          },
+          { value: "no", text: "No" },
+          { value: "not-applicable", text: "Not applicable" }
+        ]
+      }) }}
+
+      {% set religiousBodiesConsentNotGrantedHtml %}
+      {{ appRichTextEditor({
+        name: "religious-bodies-consent-granted-details",
+        id: "religious-bodies-consent-granted-details",
+        value: data['religious-bodies-consent-granted-details'],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "religious-bodies-consent-granted",
+        errorMessage: errors['religious-bodies-consent-granted'],
+        value: data['religious-bodies-consent-granted'],
+        fieldset: {
+          legend: {
+            text: "Has consent been granted by relevant religious bodies?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "yes", text: "Yes" },
+          {
+            value: "no",
+            text: "No",
+            conditional: {
+              html: religiousBodiesConsentNotGrantedHtml
+            }
+          },
+          { value: "not-applicable", text: "Not applicable" }
+        ]
+      }) }}
+
+      {{ govukInput({
+        id: "religious-bodies-supporting-evidence",
+        name: "religious-bodies-supporting-evidence",
+        value: data['religious-bodies-supporting-evidence'] or "sharepoint.edu.gov.uk/evidence",
+        label: {
+          text: "Supporting evidence",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      <input type="hidden" name="religious-bodies-complete" value="true">
+
+      {% set primaryButtonText = "Save and return" %}
+      {% include "202609v4/includes/task-primary-button.html" %}
+
+    </form>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">
+        Useful information
+      </h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">Application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</div>
+
+{% endblock %}

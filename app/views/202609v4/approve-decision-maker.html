@@ -1,0 +1,55 @@
+{% extends "202609v4/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Who made this decision?" %}
+{% set navActive = "significant-changes" %}
+
+{% set backHref = "/202609v4/approve-check-answers" if data['approve-return-to-check'] else ("/202609v4/decline-reason" if data['pending-recorded-decision'] == "Decline" else ("/202609v4/withdraw-reason" if data['pending-recorded-decision'] == "Withdraw" else "/202609v4/approve-conditions")) %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: backHref
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "202609v4/includes/radio-error-summary.html" %}
+    <form method="post" action="/202609v4/approve-decision-maker">
+
+      {{ govukRadios({
+        name: "who-made-this-decision",
+        errorMessage: errors['who-made-this-decision'],
+        value: data['who-made-this-decision'],
+        fieldset: {
+          legend: {
+            html: '<span class="govuk-caption-l">Record the decision</span> Who made this decision?',
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        items: [
+          { value: "Regional Director for the region", text: "Regional Director for the region" },
+          { value: "A different Regional Director", text: "A different Regional Director" },
+          { value: "Minister", text: "Minister" },
+          { value: "Director General", text: "Director General" },
+          { value: "Deputy Director", text: "Deputy Director" },
+          { value: "Grade 6", text: "Grade 6" }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}

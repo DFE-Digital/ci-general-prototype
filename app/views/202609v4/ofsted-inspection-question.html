@@ -1,0 +1,123 @@
+{% extends "202609v4/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "202609v4/includes/rich-text-editor.html" import appRichTextEditor %}
+
+{% set framework = data['ofsted-inspection-framework'] %}
+{% if framework == "pre-2024-09-19" %}
+  {% set questionName = "ofsted-inspection-considered" %}
+  {% set questionText = "Is the academy rated good or outstanding?" %}
+  {% set detailsName = "ofsted-inspection-considered-details" %}
+{% elseif framework == "2024-09-19-to-2025-11-09" %}
+  {% set questionName = "ofsted-inspection-leadership-education" %}
+  {% set questionText = "Is the academy rated good or outstanding in leadership and management and quality of education?" %}
+  {% set detailsName = "ofsted-inspection-leadership-education-details" %}
+{% else %}
+  {% set questionName = "ofsted-inspection-evaluation-standard" %}
+  {% set questionText = "Is the academy meeting expected standard, strong standard or exceptional in all evaluation areas?" %}
+  {% set detailsName = "ofsted-inspection-evaluation-standard-details" %}
+{% endif %}
+
+{% set pageName = questionText %}
+{% set navActive = "significant-changes" %}
+{% set datePage = "/202609v4/ofsted-inspection" + (("?returnTo=preview&section=" + (data.section if data.section else "mandatory-legal-requirements")) if data.returnTo == "preview" else "") %}
+{% set returnTo = "/202609v4/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v4/st-theresas") %}
+{% set monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"] %}
+{% set monthIndex = (data['ofsted-inspection-date-month'] | int) - 1 %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: datePage
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "202609v4/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
+
+    <form method="post" action="">
+
+      {% set ofstedNoHtml %}
+      {{ appRichTextEditor({
+        name: detailsName,
+        id: detailsName,
+        value: data[detailsName],
+        label: "Give details"
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: questionName,
+        errorMessage: errors[questionName],
+        value: data[questionName],
+        fieldset: {
+          legend: {
+            text: questionText,
+            isPageHeading: true,
+            classes: "govuk-fieldset__legend--l"
+          }
+        },
+        hint: {
+          text: "The most recent Ofsted inspection was " + data['ofsted-inspection-date-day'] + " " + monthNames[monthIndex] + " " + data['ofsted-inspection-date-year'] + "."
+        },
+        items: [
+          { value: "yes", text: "Yes" },
+          {
+            value: "no",
+            text: "No",
+            conditional: {
+              html: ofstedNoHtml
+            }
+          }
+        ]
+      }) }}
+
+      {{ govukInput({
+        id: "ofsted-inspection-supporting-evidence",
+        name: "ofsted-inspection-supporting-evidence",
+        value: data['ofsted-inspection-supporting-evidence'] or "sharepoint.edu.gov.uk/evidence",
+        label: {
+          text: "Supporting evidence",
+          classes: "govuk-label--m"
+        }
+      }) }}
+
+      <input type="hidden" name="ofsted-inspection-complete" value="true">
+
+      {% set primaryButtonText = "Save and return" %}
+      {% include "202609v4/includes/task-primary-button.html" %}
+
+    </form>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">
+        Useful information
+      </h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">Application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</div>
+
+{% endblock %}

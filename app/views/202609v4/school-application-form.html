@@ -1,0 +1,164 @@
+{% extends "202609v4/layouts/main-prepare.html" %}
+
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set pageName = "Application form" %}
+{% set navActive = "significant-changes" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-full">
+    <span class="govuk-caption-l">URN: 101335</span>
+    <h1 class="govuk-heading-xl">Application form</h1>
+    <p class="govuk-body-l">St Theresa's Catholic Primary School</p>
+
+    <h2 class="govuk-heading-m">Trust and academy details</h2>
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "Academy name" },
+          value: { text: "St Theresa's Catholic Primary School" }
+        },
+        {
+          key: { text: "URN" },
+          value: { text: "101335" }
+        },
+        {
+          key: { text: "Trust" },
+          value: { text: "Appleby Grammar School (10059089)" }
+        }
+      ]
+    }) }}
+
+    <h2 class="govuk-heading-m">Individual details</h2>
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "What is your role?" },
+          value: { text: "Chair of the academy trust" }
+        },
+        {
+          key: { text: "What is your full name?" },
+          value: { text: "Winston Gibbons" }
+        },
+        {
+          key: { text: "What is your email address?" },
+          value: { text: "winston.gibbons@school.gov.uk" }
+        },
+        {
+          key: { text: "What is your phone number?" },
+          value: { text: "07946015379" }
+        }
+      ]
+    }) }}
+
+    <h2 class="govuk-heading-m">About the significant change</h2>
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "Has the significant change already been made?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "Which change do you want to make?" },
+          value: { text: "Add or remove a boarding provision" }
+        },
+        {
+          key: { text: "What do you plan to do?" },
+          value: { text: "Add a boarding provision" }
+        },
+        {
+          key: { text: "Give details on the change that is being made" },
+          value: { text: "n/a" }
+        },
+        {
+          key: { text: "Explain why the change is being made" },
+          value: { text: "n/a" }
+        },
+        {
+          key: { text: "Explain what will be achieved by making this change" },
+          value: { text: "n/a" }
+        },
+        {
+          key: { text: "Explain how the trust has the appropriate experience and governance arrangements in place to support this change" },
+          value: { text: "n/a" }
+        },
+        {
+          key: { text: "Provide details of any leadership or governance changes proposed to facilitate this change" },
+          value: { text: "n/a" }
+        },
+        {
+          key: { text: "Will this change have an impact on SEN provision?" },
+          value: { text: "No" }
+        }
+      ]
+    }) }}
+
+    <h2 class="govuk-heading-m">Consultation</h2>
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "Has a 3 week minimum consultation been carried out?" },
+          value: { text: "Yes" }
+        },
+        {
+          key: { text: "What date did the consultation start?" },
+          value: { text: "01/03/2026" }
+        },
+        {
+          key: { text: "What date did the consultation end?" },
+          value: { text: "30/04/2026" }
+        },
+        {
+          key: { text: "What is the effective date of the change?" },
+          value: { text: "30/10/2026" }
+        },
+        {
+          key: { text: "Summary of the consultation outcomes" },
+          value: { text: "All is fine - will add more info" }
+        }
+      ]
+    }) }}
+
+    <h2 class="govuk-heading-m">Further details</h2>
+    {{ govukSummaryList({
+      rows: [
+        {
+          key: { text: "Has a local authority raised any objections to the significant change or changes?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "Is funding required to make the change or changes?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "Is consent from a religious body required?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "Is planning permission or a land transaction required?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "Do you need to request an admissions variation?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "Has the academy had an Ofsted inspection in the last 2 months?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "Is the academy eligible for intervention measures?" },
+          value: { text: "No" }
+        },
+        {
+          key: { text: "PSED - Is the decision likely to disproportionately affect any particular person or group who share protected characteristics?" },
+          value: { text: "Unlikely" }
+        }
+      ]
+    }) }}
+  </div>
+</div>
+
+{% endblock %}

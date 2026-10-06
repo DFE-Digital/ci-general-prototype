@@ -97,9 +97,8 @@
 
       <input type="hidden" name="confirm-project-dates-complete" value="true">
 
-      {{ govukButton({
-        text: "Save and return"
-      }) }}
+      {% set primaryButtonText = "Save and return" %}
+      {% include "202609v3/includes/task-primary-button.html" %}
 
     </form>
   </div>

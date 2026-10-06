@@ -14,6 +14,11 @@ function hasRadioValue (value) {
   if (value === undefined || value === null) {
     return false
   }
+  if (Array.isArray(value)) {
+    return value.some(function (item) {
+      return hasRadioValue(item)
+    })
+  }
   return String(value).trim() !== ''
 }
 
@@ -94,11 +99,49 @@ const sigChangeRadioFields = {
   ],
   'record-the-decision': [
     { name: 'recorded-decision', text: 'Select a decision' }
+  ],
+  'approve-conditions': [
+    { name: 'were-any-conditions-set', text: 'Select whether any conditions were set' },
+    { name: 'were-any-conditions-set-details', text: 'Enter the conditions that were set', when: 'were-any-conditions-set', equals: 'yes', richText: true }
+  ],
+  'approve-decision-maker': [
+    { name: 'who-made-this-decision', text: 'Select who made this decision' }
+  ],
+  'approve-decision-maker-name': [
+    { name: 'decision-maker-name', text: 'Enter the name of the person who made the decision' }
+  ],
+  'decline-reason': [
+    { name: 'decline-reason', text: 'Enter details', richText: true }
+  ],
+  'withdraw-reason': [
+    { name: 'withdraw-reason', text: 'Enter details', richText: true }
   ]
 }
 
+const v4ApproveRadioFields = [
+  { name: 'recommendation', text: 'Select a recommendation' },
+  { name: 'approve-with-conditions-rationale', text: 'Enter details', when: 'recommendation', equals: 'Approve with conditions', richText: true },
+  { name: 'withdraw-rationale', text: 'Enter details', when: 'recommendation', equals: 'Withdraw', richText: true },
+  { name: 'decline-rationale', text: 'Enter details', when: 'recommendation', equals: 'Decline', richText: true }
+]
+
+const v4AdmissionsVariationRecommendationRadioFields = [
+  { name: 'admissions-variation-recommendation', text: 'Select a recommendation' },
+  { name: 'admissions-variation-approve-with-conditions-rationale', text: 'Enter details', when: 'admissions-variation-recommendation', equals: 'Approve with conditions', richText: true },
+  { name: 'admissions-variation-withdraw-rationale', text: 'Enter details', when: 'admissions-variation-recommendation', equals: 'Withdraw', richText: true },
+  { name: 'admissions-variation-decline-rationale', text: 'Enter details', when: 'admissions-variation-recommendation', equals: 'Decline', richText: true }
+]
+
+function requestVersion (req) {
+  if (req.params && req.params.version) {
+    return req.params.version
+  }
+  const match = String(req.path || '').match(/^\/(202608v2|202609v3|202609v4)(?:\/|$)/)
+  return match ? match[1] : '202609v3'
+}
+
 function taskPageUrl (req, page) {
-  let url = '/202609v3/' + page
+  let url = '/' + requestVersion(req) + '/' + page
   if (req.session.data && req.session.data.returnTo === 'preview') {
     url += '?returnTo=preview'
     if (req.session.data.section) {
@@ -108,11 +151,21 @@ function taskPageUrl (req, page) {
   return url
 }
 
+function hasRichTextValue (value) {
+  if (value === undefined || value === null) {
+    return false
+  }
+  return String(value).replace(/<[^>]*>/g, '').replace(/&nbsp;/gi, ' ').trim() !== ''
+}
+
 function radioErrorList (body, fields) {
   return fields
     .filter(function (field) {
       if (field.when && body[field.when] !== field.equals) {
         return false
+      }
+      if (field.richText) {
+        return !hasRichTextValue(body[field.name])
       }
       return !hasRadioValue(body[field.name])
     })
@@ -274,12 +327,35 @@ function clearRadioErrors (req, page) {
   }
 }
 
+function setRecordedDecisionDate (req) {
+  if (req.session.data['recorded-decision-date']) {
+    return
+  }
+  const today = new Date()
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ]
+  const day = today.getDate()
+  req.session.data['recorded-decision-date'] =
+    (day < 10 ? '0' + day : String(day)) + ' ' + months[today.getMonth()] + ' ' + today.getFullYear()
+}
+
+function approveDecisionRedirect (req, defaultUrl) {
+  if (req.session.data && req.session.data['approve-return-to-check']) {
+    delete req.session.data['approve-return-to-check']
+    return '/202609v4/approve-check-answers'
+  }
+  return defaultUrl
+}
+
 // Significant change tasks: remember whether to return to preview or the task list
 const sigChangeTaskPages = [
   'confirm-project-dates',
   'select-change-type',
   'admissions-variation',
   'admissions-variation-question',
+  'admissions-variation-recommendation',
   'consultation',
   'stakeholder-engagement',
   'la-objections',
@@ -309,7 +385,7 @@ router.use(function (req, res, next) {
     return next()
   }
 
-  const match = req.path.match(/^\/(202608v2|202609v3)\/([^/]+)\/?$/)
+  const match = req.path.match(/^\/(202608v2|202609v3|202609v4)\/([^/]+)\/?$/)
   if (!match || !sigChangeTaskPages.includes(match[2])) {
     return next()
   }
@@ -350,8 +426,35 @@ router.use(function (req, res, next) {
 })
 
 router.use(function (req, res, next) {
-  const match = req.path.match(/^\/202609v3\/([^/]+)\/?$/)
-  const page = match ? match[1] : null
+  if (req.method !== 'GET') {
+    return next()
+  }
+
+  const match = req.path.match(/^\/202609v4\/(record-the-decision|approve-conditions|decline-reason|withdraw-reason|approve-decision-maker|approve-decision-date|approve-decision-maker-name)\/?$/)
+  if (!match) {
+    return next()
+  }
+
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+  if (!res.locals.data) {
+    res.locals.data = {}
+  }
+
+  if (req.query.returnTo === 'check') {
+    req.session.data['approve-return-to-check'] = true
+    res.locals.data['approve-return-to-check'] = true
+  } else if (req.session.data['approve-return-to-check']) {
+    res.locals.data['approve-return-to-check'] = true
+  }
+
+  next()
+})
+
+router.use(function (req, res, next) {
+  const match = req.path.match(/^\/(202609v3|202609v4)\/([^/]+)\/?$/)
+  const page = match ? match[2] : null
   const errorsState = req.session.data && req.session.data['radio-errors']
 
   if (errorsState && page === errorsState.page) {
@@ -365,7 +468,10 @@ router.use(function (req, res, next) {
   next()
 })
 
-router.post('/202609v3/decision', function (req, res) {
+router.post('/:version/decision', function (req, res, next) {
+  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+    return next()
+  }
   if (!req.session.data) {
     req.session.data = {}
   }
@@ -373,24 +479,181 @@ router.post('/202609v3/decision', function (req, res) {
   const errorList = radioErrorList(req.body, sigChangeRadioFields['record-the-decision'])
   if (errorList.length) {
     storeRadioErrors(req, 'record-the-decision', errorList)
-    return res.redirect('/202609v3/record-the-decision')
+    return res.redirect('/' + req.params.version + '/record-the-decision')
   }
   clearRadioErrors(req, 'record-the-decision')
 
-  if (req.body['recorded-decision'] && !req.session.data['recorded-decision-date']) {
-    const today = new Date()
-    const months = [
-      'January', 'February', 'March', 'April', 'May', 'June',
-      'July', 'August', 'September', 'October', 'November', 'December'
-    ]
-    req.session.data['recorded-decision-date'] =
-      today.getDate() + ' ' + months[today.getMonth()] + ' ' + today.getFullYear()
+  if (req.params.version === '202609v4' && req.body['recorded-decision'] === 'Approve') {
+    req.session.data['pending-recorded-decision'] = 'Approve'
+    delete req.session.data['recorded-decision']
+    return res.redirect(approveDecisionRedirect(req, '/202609v4/approve-conditions'))
   }
 
-  res.redirect('/202609v3/decision')
+  if (req.params.version === '202609v4' && req.body['recorded-decision'] === 'Decline') {
+    req.session.data['pending-recorded-decision'] = 'Decline'
+    delete req.session.data['recorded-decision']
+    return res.redirect(approveDecisionRedirect(req, '/202609v4/decline-reason'))
+  }
+
+  if (req.params.version === '202609v4' && req.body['recorded-decision'] === 'Withdraw') {
+    req.session.data['pending-recorded-decision'] = 'Withdraw'
+    delete req.session.data['recorded-decision']
+    return res.redirect(approveDecisionRedirect(req, '/202609v4/withdraw-reason'))
+  }
+
+  delete req.session.data['pending-recorded-decision']
+  setRecordedDecisionDate(req)
+
+  res.redirect('/' + req.params.version + '/decision')
 })
 
-router.get('/202609v3/ofsted-inspection-question', function (req, res, next) {
+router.post('/:version/approve-conditions', function (req, res, next) {
+  if (req.params.version !== '202609v4') {
+    return next()
+  }
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+
+  const errorList = radioErrorList(req.body, sigChangeRadioFields['approve-conditions'])
+  if (errorList.length) {
+    storeRadioErrors(req, 'approve-conditions', errorList)
+    return res.redirect('/202609v4/approve-conditions')
+  }
+  clearRadioErrors(req, 'approve-conditions')
+
+  if (req.body['were-any-conditions-set'] !== 'yes') {
+    delete req.session.data['were-any-conditions-set-details']
+  }
+
+  res.redirect(approveDecisionRedirect(req, '/202609v4/approve-decision-maker'))
+})
+
+router.post('/:version/decline-reason', function (req, res, next) {
+  if (req.params.version !== '202609v4') {
+    return next()
+  }
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+
+  const errorList = radioErrorList(req.body, sigChangeRadioFields['decline-reason'])
+  if (errorList.length) {
+    storeRadioErrors(req, 'decline-reason', errorList)
+    return res.redirect('/202609v4/decline-reason')
+  }
+  clearRadioErrors(req, 'decline-reason')
+
+  res.redirect(approveDecisionRedirect(req, '/202609v4/approve-decision-maker'))
+})
+
+router.post('/:version/withdraw-reason', function (req, res, next) {
+  if (req.params.version !== '202609v4') {
+    return next()
+  }
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+
+  const errorList = radioErrorList(req.body, sigChangeRadioFields['withdraw-reason'])
+  if (errorList.length) {
+    storeRadioErrors(req, 'withdraw-reason', errorList)
+    return res.redirect('/202609v4/withdraw-reason')
+  }
+  clearRadioErrors(req, 'withdraw-reason')
+
+  res.redirect(approveDecisionRedirect(req, '/202609v4/approve-decision-maker'))
+})
+
+router.post('/:version/approve-decision-maker', function (req, res, next) {
+  if (req.params.version !== '202609v4') {
+    return next()
+  }
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+
+  const errorList = radioErrorList(req.body, sigChangeRadioFields['approve-decision-maker'])
+  if (errorList.length) {
+    storeRadioErrors(req, 'approve-decision-maker', errorList)
+    return res.redirect('/202609v4/approve-decision-maker')
+  }
+  clearRadioErrors(req, 'approve-decision-maker')
+
+  res.redirect(approveDecisionRedirect(req, '/202609v4/approve-decision-maker-name'))
+})
+
+router.post('/:version/approve-decision-date', function (req, res, next) {
+  if (req.params.version !== '202609v4') {
+    return next()
+  }
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+
+  const error = dateFieldError(req.body, 'date-of-decision', 'date of decision')
+  if (error) {
+    storeRadioErrors(req, 'approve-decision-date', [error])
+    return res.redirect('/202609v4/approve-decision-date')
+  }
+  clearRadioErrors(req, 'approve-decision-date')
+
+  const parts = dateParts(req.body, 'date-of-decision')
+  const months = [
+    'January', 'February', 'March', 'April', 'May', 'June',
+    'July', 'August', 'September', 'October', 'November', 'December'
+  ]
+  const day = parseInt(parts.day, 10)
+  req.session.data['recorded-decision-date'] =
+    (day < 10 ? '0' + day : String(day)) + ' ' + months[parseInt(parts.month, 10) - 1] + ' ' + parts.year
+
+  res.redirect(approveDecisionRedirect(req, '/202609v4/approve-check-answers'))
+})
+
+router.post('/:version/approve-decision-maker-name', function (req, res, next) {
+  if (req.params.version !== '202609v4') {
+    return next()
+  }
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+
+  const errorList = radioErrorList(req.body, sigChangeRadioFields['approve-decision-maker-name'])
+  if (errorList.length) {
+    storeRadioErrors(req, 'approve-decision-maker-name', errorList)
+    return res.redirect('/202609v4/approve-decision-maker-name')
+  }
+  clearRadioErrors(req, 'approve-decision-maker-name')
+
+  res.redirect(approveDecisionRedirect(req, '/202609v4/approve-decision-date'))
+})
+
+router.post('/:version/approve-check-answers', function (req, res, next) {
+  if (req.params.version !== '202609v4') {
+    return next()
+  }
+  if (!req.session.data) {
+    req.session.data = {}
+  }
+
+  let decision = req.session.data['pending-recorded-decision'] || 'Approve'
+  if (decision === 'Approve' && req.session.data['were-any-conditions-set'] === 'yes') {
+    decision = 'Approved with conditions'
+  }
+  req.session.data['recorded-decision'] = decision
+  delete req.session.data['pending-recorded-decision']
+  delete req.session.data['approve-return-to-check']
+  if (!req.session.data['recorded-decision-date']) {
+    setRecordedDecisionDate(req)
+  }
+
+  res.redirect('/202609v4/decision')
+})
+
+router.get('/:version/ofsted-inspection-question', function (req, res, next) {
+  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+    return next()
+  }
   if (!req.session.data) {
     req.session.data = {}
   }
@@ -405,7 +668,10 @@ router.get('/202609v3/ofsted-inspection-question', function (req, res, next) {
   next()
 })
 
-router.post('/202609v3/ofsted-inspection', function (req, res) {
+router.post('/:version/ofsted-inspection', function (req, res, next) {
+  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+    return next()
+  }
   if (!req.session.data) {
     req.session.data = {}
   }
@@ -423,7 +689,10 @@ router.post('/202609v3/ofsted-inspection', function (req, res) {
   res.redirect(taskPageUrl(req, 'ofsted-inspection-question'))
 })
 
-router.get('/202609v3/admissions-variation-question', function (req, res, next) {
+router.get('/:version/admissions-variation-question', function (req, res, next) {
+  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+    return next()
+  }
   if (!req.session.data) {
     req.session.data = {}
   }
@@ -433,7 +702,10 @@ router.get('/202609v3/admissions-variation-question', function (req, res, next) 
   next()
 })
 
-router.post('/202609v3/admissions-variation-question', function (req, res) {
+router.post('/:version/admissions-variation-question', function (req, res, next) {
+  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+    return next()
+  }
   if (!req.session.data) {
     req.session.data = {}
   }
@@ -448,11 +720,14 @@ router.post('/202609v3/admissions-variation-question', function (req, res) {
   }
 
   clearRadioErrors(req, 'admissions-variation-question')
-  const returnTo = req.session.data['sig-change-return-to'] || '/202609v3/st-theresas'
+  const returnTo = req.session.data['sig-change-return-to'] || '/' + req.params.version + '/st-theresas'
   res.redirect(returnTo)
 })
 
-router.post('/202609v3/ofsted-inspection-question', function (req, res) {
+router.post('/:version/ofsted-inspection-question', function (req, res, next) {
+  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+    return next()
+  }
   if (!req.session.data) {
     req.session.data = {}
   }
@@ -470,13 +745,20 @@ router.post('/202609v3/ofsted-inspection-question', function (req, res) {
   }
 
   clearRadioErrors(req, 'ofsted-inspection-question')
-  const returnTo = req.session.data['sig-change-return-to'] || '/202609v3/st-theresas'
+  const returnTo = req.session.data['sig-change-return-to'] || '/' + req.params.version + '/st-theresas'
   res.redirect(returnTo)
 })
 
-router.post('/202609v3/:page', function (req, res, next) {
+router.post('/:version/:page', function (req, res, next) {
+  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+    return next()
+  }
   const page = req.params.page
-  const fields = sigChangeRadioFields[page]
+  const fields = (page === 'approve' && req.params.version === '202609v4')
+    ? v4ApproveRadioFields
+    : (page === 'admissions-variation-recommendation' && req.params.version === '202609v4')
+      ? v4AdmissionsVariationRecommendationRadioFields
+      : sigChangeRadioFields[page]
   if (!fields && page !== 'confirm-project-dates') {
     return next()
   }
@@ -509,13 +791,13 @@ router.post('/202609v3/:page', function (req, res, next) {
         delete req.session.data[name]
       })
       req.session.data['admissions-variation-complete'] = 'true'
-      const returnTo = req.session.data['sig-change-return-to'] || '/202609v3/st-theresas'
+      const returnTo = req.session.data['sig-change-return-to'] || '/' + req.params.version + '/st-theresas'
       return res.redirect(returnTo)
     }
     return res.redirect(taskPageUrl(req, 'admissions-variation-question'))
   }
 
-  const returnTo = req.session.data['sig-change-return-to'] || '/202609v3/st-theresas'
+  const returnTo = req.session.data['sig-change-return-to'] || '/' + req.params.version + '/st-theresas'
   res.redirect(returnTo)
 })
 

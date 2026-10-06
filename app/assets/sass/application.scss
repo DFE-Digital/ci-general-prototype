@@ -2395,3 +2395,66 @@ body:has(.app-docs-preview) footer {
 .app-title-with-action .govuk-button {
 	margin-bottom: 0;
 }
+
+.app-do-dont {
+	border: 1px solid #b1b4b6;
+	background: #ffffff;
+	padding: 24px 20px 8px;
+	margin: 40px 0;
+	overflow: visible;
+}
+
+.app-do-dont .govuk-list {
+	margin-bottom: 8px;
+}
+
+.app-do-dont .govuk-list p {
+	margin-top: 8px;
+	margin-bottom: 0;
+}
+
+.app-do-dont__label {
+	display: inline-block;
+	background: #1d70b8;
+	color: #ffffff;
+	font-weight: 700;
+	font-size: 24px;
+	line-height: 1.25;
+	padding: 8px 32px;
+	margin: -33px 0 16px -21px;
+}
+
+.app-do-dont__list {
+	list-style: none;
+	padding-left: 0;
+	margin: 0 0 8px;
+}
+
+.app-do-dont__item {
+	position: relative;
+	padding-left: 40px;
+	margin-bottom: 16px;
+	font-size: 19px;
+	line-height: 1.31579;
+}
+
+.app-do-dont__icon {
+	position: absolute;
+	left: 0;
+	top: 2px;
+	width: 28px;
+	height: 28px;
+}
+
+.app-do-dont__item p {
+	margin-top: 8px;
+	margin-bottom: 0;
+}
+
+.app-do-dont__icon--tick path {
+	stroke: #00703c;
+}
+
+.app-do-dont__icon--cross {
+	fill: #d4351c;
+}

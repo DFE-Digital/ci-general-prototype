@@ -1,0 +1,60 @@
+{% extends "202609v4/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/warning-text/macro.njk" import govukWarningText %}
+
+{% set pageName = "Record the decision" %}
+{% set navActive = "significant-changes" %}
+
+{% set backHref = "/202609v4/approve-check-answers" if data['approve-return-to-check'] else "/202609v4/preview-document" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: backHref
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "202609v4/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">Record the decision</span>
+    <h1 class="govuk-heading-l">Record the decision</h1>
+
+    {{ govukWarningText({
+      text: "You cannot make changes to this project in Prepare after you record a decision.",
+      iconFallbackText: "Warning"
+    }) }}
+
+    <form method="post" action="/202609v4/decision">
+
+      {{ govukRadios({
+        name: "recorded-decision",
+        errorMessage: errors['recorded-decision'],
+        value: data['recorded-decision'] or data['pending-recorded-decision'],
+        fieldset: {
+          legend: {
+            text: "Record the decision",
+            classes: "govuk-visually-hidden"
+          }
+        },
+        items: [
+          { value: "Approve", text: "Approve" },
+          { value: "Withdraw", text: "Withdraw" },
+          { value: "Decline", text: "Decline" }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}

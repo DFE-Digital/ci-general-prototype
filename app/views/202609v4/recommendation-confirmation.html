@@ -1,0 +1,45 @@
+{% extends "202609v4/layouts/main-prepare.html" %}
+
+{% from "govuk/components/panel/macro.njk" import govukPanel %}
+
+{% set pageName = "Recommendation confirmation" %}
+{% set navActive = "significant-changes" %}
+
+{% if data['recommendation'] == "Approve" %}
+  {% set recommendationOutcome = "approved" %}
+{% elseif data['recommendation'] == "Approve with conditions" %}
+  {% set recommendationOutcome = "approved with conditions" %}
+{% elseif data['recommendation'] == "Withdraw" %}
+  {% set recommendationOutcome = "withdrawn" %}
+{% elseif data['recommendation'] == "Decline" %}
+  {% set recommendationOutcome = "declined" %}
+{% else %}
+  {% set recommendationOutcome = (data['recommendation'] or "recorded") | lower %}
+{% endif %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {{ govukPanel({
+      titleText: "Recommendation recorded",
+      html: "You recommended that this significant change should be " ~ recommendationOutcome ~ "."
+    }) }}
+
+    <h2 class="govuk-heading-m">Next steps</h2>
+    <p class="govuk-body">You can preview the document or record a decision for this project.</p>
+    <ul class="govuk-list govuk-list--bullet">
+      <li>
+        <a class="govuk-link" href="/202609v4/preview-document">Preview the document</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="/202609v4/decision">Record a decision</a>
+      </li>
+      <li>
+        <a class="govuk-link" href="/202609v4/st-theresas">Return to the project</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+{% endblock %}

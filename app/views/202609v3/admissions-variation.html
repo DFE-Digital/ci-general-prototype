@@ -58,9 +58,8 @@
         }
       }) }}
 
-      {{ govukButton({
-        text: "Continue"
-      }) }}
+      {% set primaryButtonText = "Continue" %}
+      {% include "202609v3/includes/task-primary-button.html" %}
 
     </form>
   </div>
