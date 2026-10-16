@@ -40,11 +40,33 @@
                     <a class="govuk-link govuk-!-padding-left-50" href="select-change-type">Change</a>
                     {% endif %}
                 </p>
-                <p class="govuk-body govuk-!-margin-bottom-5">
+                <p class="govuk-body govuk-!-margin-bottom-1">
                     Project owner:
                     <span data-id="assigned-user">Your name</span>
                     {% if not data['recorded-decision'] %}
                     <a class="govuk-link govuk-!-padding-left-50" href="#">Change</a>
+                    {% endif %}
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-1">
+                    Regions Group clearance:
+                    {% if data['clearance-details-1'] %}
+                    {{ data['clearance-details-1'] }}
+                    {% else %}
+                    <span class="empty">Empty</span>
+                    {% endif %}
+                    {% if not data['recorded-decision'] %}
+                    <a class="govuk-link govuk-!-padding-left-50" href="clearance-details">Change</a>
+                    {% endif %}
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-5">
+                    Trust Regulation (formerly known as SFSO) clearance:
+                    {% if data['clearance-details-2'] %}
+                    {{ data['clearance-details-2'] }}
+                    {% else %}
+                    <span class="empty">Empty</span>
+                    {% endif %}
+                    {% if not data['recorded-decision'] %}
+                    <a class="govuk-link govuk-!-padding-left-50" href="clearance-details">Change</a>
                     {% endif %}
                 </p>
                 <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-5">
@@ -217,12 +239,6 @@
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="financial-health-assessment-status" href="financial-health-assessment">Financial Health Assessment (FHA)</a>
-                                </span>
-                                {{ statusTag("financial-health-assessment-status", data | taskStatus(["financial-health-assessment-complete"])) }}
-                            </li>
-                            <li class="app-task-list__item">
-                                <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="fha-outcomes-status" href="fha-outcomes">Financial Health Assessment (FHA) outcomes</a>
                                 </span>
                                 {{ statusTag("fha-outcomes-status", data | taskStatus(["fha-outcomes-recorded"])) }}
@@ -246,7 +262,7 @@
                 </section>
 
                 <section id="recommendations" class="govuk-!-margin-bottom-8">
-                    <h2 class="app-task-list__section">Recommendation on how to proceed</h2>
+                    <h2 class="app-task-list__section">Recommendation and clearance</h2>
                     <div class="app-task-list">
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
@@ -260,6 +276,12 @@
                                     <a class="govuk-link" aria-describedby="admissions-variation-recommendation-status" href="/202609v4/admissions-variation-recommendation">Admissions variation recommendation</a>
                                 </span>
                                 {{ statusTag("admissions-variation-recommendation-status", data | taskStatus(["admissions-variation-recommendation"])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="clearance-details-status" href="/202609v4/clearance-details">Clearance details</a>
+                                </span>
+                                {{ statusTag("clearance-details-status", data | taskStatus(["clearance-details-1", "clearance-details-2"])) }}
                             </li>
                         </ul>
                     </div>

@@ -133,7 +133,8 @@
     "fha-outcomes": "financials",
     "high-quality-inclusive-education": "hqtf",
     "approve": "recommendations",
-    "admissions-variation-recommendation": "recommendations"
+    "admissions-variation-recommendation": "recommendations",
+    "clearance-details": "recommendations"
   } %}
   {% set sectionId = section if section else sectionLookup[page] %}
   {% set changeHref = href + "?returnTo=preview" + (("&section=" + sectionId) if sectionId else "") %}
@@ -167,7 +168,7 @@
         <li><a class="app-docs-preview__outline-link" href="#land-and-planning">Land transaction application and planning permission</a></li>
         <li><a class="app-docs-preview__outline-link" href="#financials">Financial details</a></li>
         <li><a class="app-docs-preview__outline-link" href="#hqtf">High Quality Trust Framework</a></li>
-        <li><a class="app-docs-preview__outline-link" href="#recommendations">Recommendation on how to proceed</a></li>
+        <li><a class="app-docs-preview__outline-link" href="#recommendations">Recommendation and clearance</a></li>
       </ul>
     </nav>
 
@@ -476,9 +477,9 @@
           {% endcall %}
         </section>
 
-        {# Recommendation on how to proceed #}
+        {# Recommendation and clearance #}
         <section id="recommendations" class="app-docs-preview__section">
-          <h2 class="app-docs-preview__heading">Recommendation on how to proceed</h2>
+          <h2 class="app-docs-preview__heading">Recommendation and clearance</h2>
           {% call row("Significant change recommendation", "/202609v4/approve", "recommendation") %}
             {{ value(data["recommendation"]) }}
           {% endcall %}
@@ -496,7 +497,7 @@
           {% call row("Admissions variation recommendation", "/202609v4/admissions-variation-recommendation", "admissions variation recommendation") %}
             {{ value(data["admissions-variation-recommendation"]) }}
           {% endcall %}
-          {% if data["admissions-variation-recommendation"] and data["admissions-variation-recommendation"] != "Approve" %}
+          {% if data["admissions-variation-recommendation"] and data["admissions-variation-recommendation"] != "Approve" and data["admissions-variation-recommendation"] != "Not applicable" %}
           {% call row("Give details", "/202609v4/admissions-variation-recommendation", "admissions variation recommendation details") %}
             {% if data["admissions-variation-recommendation"] == "Approve with conditions" %}
               {{ richValue(data["admissions-variation-approve-with-conditions-rationale"]) }}
@@ -507,6 +508,12 @@
             {% endif %}
           {% endcall %}
           {% endif %}
+          {% call row("Enter who cleared the significant change in Regions Group", "/202609v4/clearance-details", "Regions Group clearance") %}
+            {{ value(data["clearance-details-1"]) }}
+          {% endcall %}
+          {% call row("Enter who cleared the significant change from Trust Regulation (formerly known as SFSO)", "/202609v4/clearance-details", "Trust Regulation clearance") %}
+            {{ value(data["clearance-details-2"]) }}
+          {% endcall %}
         </section>
       </article>
     </div>

@@ -132,6 +132,11 @@ const v4AdmissionsVariationRecommendationRadioFields = [
   { name: 'admissions-variation-decline-rationale', text: 'Enter details', when: 'admissions-variation-recommendation', equals: 'Decline', richText: true }
 ]
 
+const v4ClearanceDetailsRadioFields = [
+  { name: 'clearance-details-1', text: 'Enter who cleared the significant change in Regions Group' },
+  { name: 'clearance-details-2', text: 'Enter who cleared the significant change from Trust Regulation (formerly known as SFSO)' }
+]
+
 function requestVersion (req) {
   if (req.params && req.params.version) {
     return req.params.version
@@ -356,6 +361,7 @@ const sigChangeTaskPages = [
   'admissions-variation',
   'admissions-variation-question',
   'admissions-variation-recommendation',
+  'clearance-details',
   'consultation',
   'stakeholder-engagement',
   'la-objections',
@@ -758,7 +764,9 @@ router.post('/:version/:page', function (req, res, next) {
     ? v4ApproveRadioFields
     : (page === 'admissions-variation-recommendation' && req.params.version === '202609v4')
       ? v4AdmissionsVariationRecommendationRadioFields
-      : sigChangeRadioFields[page]
+      : (page === 'clearance-details' && req.params.version === '202609v4')
+        ? v4ClearanceDetailsRadioFields
+        : sigChangeRadioFields[page]
   if (!fields && page !== 'confirm-project-dates') {
     return next()
   }

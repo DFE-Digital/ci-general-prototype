@@ -141,7 +141,8 @@
                 "fha-outcomes": "financials",
                 "high-quality-inclusive-education": "hqtf",
                 "approve": "recommendations",
-                "admissions-variation-recommendation": "recommendations"
+                "admissions-variation-recommendation": "recommendations",
+                "clearance-details": "recommendations"
               } %}
               {% set sectionId = section if section else sectionLookup[page] %}
               {% set changeHref = href + "?returnTo=preview" + (("&section=" + sectionId) if sectionId else "") %}
@@ -189,7 +190,7 @@
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#land-and-planning">Land transaction application and planning permission</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#financials">Financial details</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#hqtf">High Quality Trust Framework</a></li>
-      <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#recommendations">Recommendation on how to proceed</a></li>
+      <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#recommendations">Recommendation and clearance</a></li>
     </ul>
   </nav>
   <div class="app-jump-layout__content">
@@ -215,7 +216,7 @@
 {% endmacro %}
 <div id="overview" class="govuk-!-margin-bottom-9">
   <h2 class="govuk-heading-l">Overview</h2>
-  {% if data["proposed-decision-date-day"] or data["proposed-implementation-date-day"] or data["admissions-variation-required"] or data["admissions-variation-la-supportive"] or data["admissions-variation-pupil-place-planning-supportive"] or data["admissions-variation-admissions-team-supportive"] or data["consultation-carried-out"] or data["stakeholder-engagement-carried-out"] or data["stakeholder-engagement-objections-raised"] or data["stakeholder-engagement-consultation-included-admissions-variation"] or data["la-objections-raised"] or data["religious-bodies-consulted"] or data["religious-bodies-objections-raised"] or data["religious-bodies-consent-granted"] or data["ofsted-inspection-considered"] or data["ofsted-inspection-leadership-education"] or data["ofsted-inspection-evaluation-standard"] or data["psed-considered"] or data["psed-disproportionate-impact"] or data["land-transaction-required"] or data["land-transaction-team-consented"] or data["planning-permission-required"] or data["funding-considered"] or data["fha-outcomes-recorded"] or data["hqie-supports"] or data["recommendation"] or data["admissions-variation-recommendation"] %}
+  {% if data["proposed-decision-date-day"] or data["proposed-implementation-date-day"] or data["admissions-variation-required"] or data["admissions-variation-la-supportive"] or data["admissions-variation-pupil-place-planning-supportive"] or data["admissions-variation-admissions-team-supportive"] or data["consultation-carried-out"] or data["stakeholder-engagement-carried-out"] or data["stakeholder-engagement-objections-raised"] or data["stakeholder-engagement-consultation-included-admissions-variation"] or data["la-objections-raised"] or data["religious-bodies-consulted"] or data["religious-bodies-objections-raised"] or data["religious-bodies-consent-granted"] or data["ofsted-inspection-considered"] or data["ofsted-inspection-leadership-education"] or data["ofsted-inspection-evaluation-standard"] or data["psed-considered"] or data["psed-disproportionate-impact"] or data["land-transaction-required"] or data["land-transaction-team-consented"] or data["planning-permission-required"] or data["funding-considered"] or data["fha-outcomes-recorded"] or data["hqie-supports"] or data["recommendation"] or data["admissions-variation-recommendation"] or data["clearance-details-1"] or data["clearance-details-2"] %}
   {% set recommendationHtml %}
   <ul class="govuk-list govuk-list--bullet">
     {% if data["recommendation"] %}
@@ -241,8 +242,16 @@
         The admissions variation recommendation is to withdraw this application.{{ overviewDetail(data["admissions-variation-withdraw-rationale"]) }}
       {% elseif data["admissions-variation-recommendation"] == "Decline" %}
         The admissions variation recommendation is to decline this application.{{ overviewDetail(data["admissions-variation-decline-rationale"]) }}
+      {% elseif data["admissions-variation-recommendation"] == "Not applicable" %}
+        An admissions variation recommendation is not applicable.
       {% endif %}
     </li>
+    {% endif %}
+    {% if data["clearance-details-1"] %}
+    <li>The significant change was cleared in Regions Group by {{ data["clearance-details-1"] }}.</li>
+    {% endif %}
+    {% if data["clearance-details-2"] %}
+    <li>The significant change was cleared from Trust Regulation (formerly known as SFSO) by {{ data["clearance-details-2"] }}.</li>
     {% endif %}
   </ul>
   {% endset %}
@@ -814,9 +823,9 @@
     </div>
 </div>
 
-{# Recommendation on how to proceed #}
+{# Recommendation and clearance #}
 <div id="recommendations" class="govuk-!-margin-bottom-9">
-  <h2 class="govuk-heading-l">Recommendation on how to proceed</h2>
+  <h2 class="govuk-heading-l">Recommendation and clearance</h2>
 
     <div class="app-summary-card">
       <div class="app-summary-card__content">
@@ -838,7 +847,7 @@
           {% call row("Admissions variation recommendation", "/202609v4/admissions-variation-recommendation", "admissions variation recommendation") %}
             {{ value(data["admissions-variation-recommendation"]) }}
           {% endcall %}
-          {% if data["admissions-variation-recommendation"] and data["admissions-variation-recommendation"] != "Approve" %}
+          {% if data["admissions-variation-recommendation"] and data["admissions-variation-recommendation"] != "Approve" and data["admissions-variation-recommendation"] != "Not applicable" %}
           {% call row("Give details", "/202609v4/admissions-variation-recommendation", "admissions variation recommendation details") %}
             {% if data["admissions-variation-recommendation"] == "Approve with conditions" %}
               {{ richValue(data["admissions-variation-approve-with-conditions-rationale"]) }}
@@ -849,6 +858,12 @@
             {% endif %}
           {% endcall %}
           {% endif %}
+          {% call row("Enter who cleared the significant change in Regions Group", "/202609v4/clearance-details", "Regions Group clearance") %}
+            {{ value(data["clearance-details-1"]) }}
+          {% endcall %}
+          {% call row("Enter who cleared the significant change from Trust Regulation (formerly known as SFSO)", "/202609v4/clearance-details", "Trust Regulation clearance") %}
+            {{ value(data["clearance-details-2"]) }}
+          {% endcall %}
         </dl>
       </div>
     </div>

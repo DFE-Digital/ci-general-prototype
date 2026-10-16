@@ -1,0 +1,80 @@
+{% extends "202609v4/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Clearance details" %}
+{% set navActive = "significant-changes" %}
+{% set returnTo = "/202609v4/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v4/st-theresas") %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: returnTo
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "202609v4/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
+    <h1 class="govuk-heading-l">Clearance details</h1>
+    <p class="govuk-body">Enter clearance details for this significant change.</p>
+
+    <form method="post" action="/202609v4/clearance-details">
+
+      {{ govukInput({
+        id: "clearance-details-1",
+        name: "clearance-details-1",
+        value: data['clearance-details-1'],
+        errorMessage: errors['clearance-details-1'],
+        label: {
+          text: "Enter who cleared the significant change in Regions Group"
+        }
+      }) }}
+
+      {{ govukInput({
+        id: "clearance-details-2",
+        name: "clearance-details-2",
+        value: data['clearance-details-2'],
+        errorMessage: errors['clearance-details-2'],
+        label: {
+          text: "Enter who cleared the significant change from Trust Regulation (formerly known as SFSO)"
+        }
+      }) }}
+
+      <input type="hidden" name="clearance-details-complete" value="true">
+
+      {% set primaryButtonText = "Save and return" %}
+      {% include "202609v4/includes/task-primary-button.html" %}
+
+    </form>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">
+        Useful information
+      </h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">Application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</div>
+
+{% endblock %}
