@@ -433,13 +433,13 @@
   {% endif %}
   {% if doHtml | striptags | trim %}
   <div class="app-do-dont">
-    <h3 class="app-do-dont__label">Good</h3>
+    <h3 class="app-do-dont__label">No risks</h3>
     {{ doHtml | safe }}
   </div>
   {% endif %}
   {% if dontHtml | striptags | trim %}
   <div class="app-do-dont">
-    <h3 class="app-do-dont__label">Bad</h3>
+    <h3 class="app-do-dont__label">Risks</h3>
     {{ dontHtml | safe }}
   </div>
   {% endif %}
