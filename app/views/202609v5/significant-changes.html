@@ -1,0 +1,1787 @@
+{% extends "202609v5/layouts/main-prepare.html" %}
+
+{% set pageName = "Significant change projects" %}
+{% set navActive = "significant-changes" %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+    <div class="govuk-grid-column-full">
+        <div class="govuk-notification-banner govuk-notification-banner--success" id="projects-filtered-banner" role="alert" aria-labelledby="projects-filtered-banner-title" data-module="govuk-notification-banner" hidden>
+            <div class="govuk-notification-banner__header">
+                <h2 class="govuk-notification-banner__title" id="projects-filtered-banner-title">
+                    Success
+                </h2>
+            </div>
+            <div class="govuk-notification-banner__content">
+                <h3 class="govuk-notification-banner__heading">Projects filtered.</h3>
+            </div>
+        </div>
+
+        <h1 class="govuk-heading-xl govuk-!-margin-bottom-3" data-cy="select-heading">Significant change projects</h1>
+        <p class="govuk-body-l">Find and manage existing significant change projects.</p>
+    </div>
+        <div class="govuk-grid-column-one-third">
+    
+            <div class="moj-filter">
+    
+        <div class="moj-filter__header">
+    
+            <div class="moj-filter__header-title">
+                <h2 class="govuk-heading-m">Filter</h2>
+            </div>
+    
+            <div class="moj-filter__header-action">
+            </div>
+    
+        </div>
+    
+        <div class="moj-filter__content">
+
+            <div class="moj-filter__selected" id="project-selected-filters" hidden>
+                <div class="moj-filter__selected-heading">
+                    <div class="moj-filter__heading-title">
+                        <h2 class="govuk-heading-m">Selected filters</h2>
+                    </div>
+                    <div class="moj-filter__heading-action">
+                        <p>
+                            <a class="govuk-link govuk-link--no-visited-state" href="#" data-cy="select-projectlist-filter-clear">Clear filters</a>
+                        </p>
+                    </div>
+                </div>
+                <div id="project-selected-filters-list"></div>
+            </div>
+    
+            <div class="moj-filter__options">
+                <form method="get" class="form">
+                    <div class="govuk-button-group">
+                        <button type="submit" class="govuk-button" data-module="govuk-button" data-test-id="submit-button" data-cy="select-projectlist-filter-apply">
+                            Apply filters
+                        </button>
+                    </div>
+    
+                    <div class="govuk-form-group">
+                        <h2 class="govuk-label govuk-label--m govuk-!-margin-top-0" for="projects">
+                            Search for projects
+                        </h2>
+                        <span class="govuk-hint" id="filter-project-title-hint">You can search by school name, trust name, URN and UKPRN</span>
+                        <input id="Title" title="search by school name, trust name, URN and UKPRN" aria-label="Search for projects" name="Title" type="text" class="govuk-input" aria-describedby="filter-project-title-hint" data-cy="select-projectlist-filter-title" value="">
+    
+                    </div>
+    
+                    <div class="govuk-form-group">
+    
+                        <fieldset class="govuk-fieldset">
+                            <div class="govuk-accordion" data-module="govuk-accordion" id="accordion-default">
+                                <div class="govuk-accordion__section">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
+                                            
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-1">Project owner</span></h2>
+                                    </div>
+                                    <div class="govuk-accordion__section-content" aria-labelledby="accordion-officers-heading" role="region" id="accordion-default-content-1">
+                                        <input type="text" class="govuk-input govuk-!-margin-bottom-2" id="filter-officers" placeholder="Type to filter officers..." aria-label="Type to filter officers...">
+                                        <div class="govuk-checkboxes govuk-checkboxes--small">
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-your-name" name="selectedOfficers" type="checkbox" value="Your Name" data-cy="select-projectlist-filter-officer-Your Name">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-your-name">
+                                                        Your Name
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-aaron-singh" name="selectedOfficers" type="checkbox" value="Aaron Singh" data-cy="select-projectlist-filter-officer-Aaron Singh">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-aaron-singh">
+                                                        Aaron Singh
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-aisha-rahman" name="selectedOfficers" type="checkbox" value="Aisha Rahman" data-cy="select-projectlist-filter-officer-Aisha Rahman">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-aisha-rahman">
+                                                        Aisha Rahman
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-amira-khan" name="selectedOfficers" type="checkbox" value="Amira Khan" data-cy="select-projectlist-filter-officer-Amira Khan">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-amira-khan">
+                                                        Amira Khan
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-callum-wright" name="selectedOfficers" type="checkbox" value="Callum Wright" data-cy="select-projectlist-filter-officer-Callum Wright">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-callum-wright">
+                                                        Callum Wright
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-chloe-martin" name="selectedOfficers" type="checkbox" value="Chloe Martin" data-cy="select-projectlist-filter-officer-Chloe Martin">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-chloe-martin">
+                                                        Chloe Martin
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-daniel-okoye" name="selectedOfficers" type="checkbox" value="Daniel Okoye" data-cy="select-projectlist-filter-officer-Daniel Okoye">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-daniel-okoye">
+                                                        Daniel Okoye
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-elias-ward" name="selectedOfficers" type="checkbox" value="Elias Ward" data-cy="select-projectlist-filter-officer-Elias Ward">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-elias-ward">
+                                                        Elias Ward
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-emily-hart" name="selectedOfficers" type="checkbox" value="Emily Hart" data-cy="select-projectlist-filter-officer-Emily Hart">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-emily-hart">
+                                                        Emily Hart
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-felix-turner" name="selectedOfficers" type="checkbox" value="Felix Turner" data-cy="select-projectlist-filter-officer-Felix Turner">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-felix-turner">
+                                                        Felix Turner
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-freya-patel" name="selectedOfficers" type="checkbox" value="Freya Patel" data-cy="select-projectlist-filter-officer-Freya Patel">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-freya-patel">
+                                                        Freya Patel
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-grace-okonkwo" name="selectedOfficers" type="checkbox" value="Grace Okonkwo" data-cy="select-projectlist-filter-officer-Grace Okonkwo">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-grace-okonkwo">
+                                                        Grace Okonkwo
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-hannah-brooks" name="selectedOfficers" type="checkbox" value="Hannah Brooks" data-cy="select-projectlist-filter-officer-Hannah Brooks">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-hannah-brooks">
+                                                        Hannah Brooks
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-henry-cole" name="selectedOfficers" type="checkbox" value="Henry Cole" data-cy="select-projectlist-filter-officer-Henry Cole">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-henry-cole">
+                                                        Henry Cole
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-isla-morgan" name="selectedOfficers" type="checkbox" value="Isla Morgan" data-cy="select-projectlist-filter-officer-Isla Morgan">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-isla-morgan">
+                                                        Isla Morgan
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-jacob-nguyen" name="selectedOfficers" type="checkbox" value="Jacob Nguyen" data-cy="select-projectlist-filter-officer-Jacob Nguyen">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-jacob-nguyen">
+                                                        Jacob Nguyen
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-jonah-ellis" name="selectedOfficers" type="checkbox" value="Jonah Ellis" data-cy="select-projectlist-filter-officer-Jonah Ellis">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-jonah-ellis">
+                                                        Jonah Ellis
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-leo-fischer" name="selectedOfficers" type="checkbox" value="Leo Fischer" data-cy="select-projectlist-filter-officer-Leo Fischer">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-leo-fischer">
+                                                        Leo Fischer
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-lily-fraser" name="selectedOfficers" type="checkbox" value="Lily Fraser" data-cy="select-projectlist-filter-officer-Lily Fraser">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-lily-fraser">
+                                                        Lily Fraser
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-marcus-hale" name="selectedOfficers" type="checkbox" value="Marcus Hale" data-cy="select-projectlist-filter-officer-Marcus Hale">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-marcus-hale">
+                                                        Marcus Hale
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-megan-doyle" name="selectedOfficers" type="checkbox" value="Megan Doyle" data-cy="select-projectlist-filter-officer-Megan Doyle">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-megan-doyle">
+                                                        Megan Doyle
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-nina-petrov" name="selectedOfficers" type="checkbox" value="Nina Petrov" data-cy="select-projectlist-filter-officer-Nina Petrov">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-nina-petrov">
+                                                        Nina Petrov
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-noah-bennett" name="selectedOfficers" type="checkbox" value="Noah Bennett" data-cy="select-projectlist-filter-officer-Noah Bennett">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-noah-bennett">
+                                                        Noah Bennett
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-oliver-grant" name="selectedOfficers" type="checkbox" value="Oliver Grant" data-cy="select-projectlist-filter-officer-Oliver Grant">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-oliver-grant">
+                                                        Oliver Grant
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-owen-blake" name="selectedOfficers" type="checkbox" value="Owen Blake" data-cy="select-projectlist-filter-officer-Owen Blake">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-owen-blake">
+                                                        Owen Blake
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-priya-shah" name="selectedOfficers" type="checkbox" value="Priya Shah" data-cy="select-projectlist-filter-officer-Priya Shah">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-priya-shah">
+                                                        Priya Shah
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-ruby-ahmed" name="selectedOfficers" type="checkbox" value="Ruby Ahmed" data-cy="select-projectlist-filter-officer-Ruby Ahmed">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-ruby-ahmed">
+                                                        Ruby Ahmed
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-samuel-reed" name="selectedOfficers" type="checkbox" value="Samuel Reed" data-cy="select-projectlist-filter-officer-Samuel Reed">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-samuel-reed">
+                                                        Samuel Reed
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-sofia-alvarez" name="selectedOfficers" type="checkbox" value="Sofia Alvarez" data-cy="select-projectlist-filter-officer-Sofia Alvarez">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-sofia-alvarez">
+                                                        Sofia Alvarez
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-delivery-officer-theo-clarke" name="selectedOfficers" type="checkbox" value="Theo Clarke" data-cy="select-projectlist-filter-officer-Theo Clarke">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-delivery-officer-theo-clarke">
+                                                        Theo Clarke
+                                                    </label>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="govuk-accordion__section">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
+                                            
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-2">Region</span></h2>
+                                    </div>
+                                    <div class="govuk-accordion__section-content" aria-labelledby="accordion-regions-heading" role="region" id="accordion-default-content-2">
+                                        <input type="text" class="govuk-input govuk-!-margin-bottom-2" id="filter-regions" placeholder="Type to filter regions..." aria-label="Type to filter regions...">
+                                        <div class="govuk-checkboxes govuk-checkboxes--small">
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-region-east-midlands" name="selectedRegions" type="checkbox" value="East Midlands" data-cy="select-projectlist-filter-region-East Midlands">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-region-east-midlands">
+                                                        East Midlands
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-region-east-of-england" name="selectedRegions" type="checkbox" value="East of England" data-cy="select-projectlist-filter-region-East of England">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-region-east-of-england">
+                                                        East of England
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-region-london" name="selectedRegions" type="checkbox" value="London" data-cy="select-projectlist-filter-region-London">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-region-london">
+                                                        London
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-region-north-east" name="selectedRegions" type="checkbox" value="North East" data-cy="select-projectlist-filter-region-North East">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-region-north-east">
+                                                        North East
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-region-north-west" name="selectedRegions" type="checkbox" value="North West" data-cy="select-projectlist-filter-region-North West">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-region-north-west">
+                                                        North West
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-region-south-east" name="selectedRegions" type="checkbox" value="South East" data-cy="select-projectlist-filter-region-South East">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-region-south-east">
+                                                        South East
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-region-south-west" name="selectedRegions" type="checkbox" value="South West" data-cy="select-projectlist-filter-region-South West">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-region-south-west">
+                                                        South West
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-region-west-midlands" name="selectedRegions" type="checkbox" value="West Midlands" data-cy="select-projectlist-filter-region-West Midlands">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-region-west-midlands">
+                                                        West Midlands
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-region-yorkshire-and-the-humber" name="selectedRegions" type="checkbox" value="Yorkshire and the Humber" data-cy="select-projectlist-filter-region-Yorkshire and the Humber">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-region-yorkshire-and-the-humber">
+                                                        Yorkshire and the Humber
+                                                    </label>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="govuk-accordion__section">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
+                                            
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-3">Local authority</span></h2>
+                                    </div>
+                                    <div class="govuk-accordion__section-content" aria-labelledby="accordion-local-authorities-heading" role="region" id="accordion-default-content-3">
+                                        <input type="text" class="govuk-input govuk-!-margin-bottom-2" id="filter-local-authorities" placeholder="Type to filter local authorities..." aria-label="Type to filter local authorities...">
+                                        <div class="govuk-checkboxes govuk-checkboxes--small">
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-barnet" name="selectedLocalAuthorities" type="checkbox" value="Barnet" data-cy="select-projectlist-filter-local-authority-Barnet">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-barnet">
+                                                        Barnet
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-birmingham" name="selectedLocalAuthorities" type="checkbox" value="Birmingham" data-cy="select-projectlist-filter-local-authority-Birmingham">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-birmingham">
+                                                        Birmingham
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-bolton" name="selectedLocalAuthorities" type="checkbox" value="Bolton" data-cy="select-projectlist-filter-local-authority-Bolton">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-bolton">
+                                                        Bolton
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-brighton-and-hove" name="selectedLocalAuthorities" type="checkbox" value="Brighton and Hove" data-cy="select-projectlist-filter-local-authority-Brighton and Hove">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-brighton-and-hove">
+                                                        Brighton and Hove
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-bristol--city-of" name="selectedLocalAuthorities" type="checkbox" value="Bristol, City of" data-cy="select-projectlist-filter-local-authority-Bristol, City of">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-bristol--city-of">
+                                                        Bristol, City of
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-bromley" name="selectedLocalAuthorities" type="checkbox" value="Bromley" data-cy="select-projectlist-filter-local-authority-Bromley">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-bromley">
+                                                        Bromley
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-bury" name="selectedLocalAuthorities" type="checkbox" value="Bury" data-cy="select-projectlist-filter-local-authority-Bury">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-bury">
+                                                        Bury
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-cambridgeshire" name="selectedLocalAuthorities" type="checkbox" value="Cambridgeshire" data-cy="select-projectlist-filter-local-authority-Cambridgeshire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-cambridgeshire">
+                                                        Cambridgeshire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-camden" name="selectedLocalAuthorities" type="checkbox" value="Camden" data-cy="select-projectlist-filter-local-authority-Camden">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-camden">
+                                                        Camden
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-central-bedfordshire" name="selectedLocalAuthorities" type="checkbox" value="Central Bedfordshire" data-cy="select-projectlist-filter-local-authority-Central Bedfordshire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-central-bedfordshire">
+                                                        Central Bedfordshire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-city-of-london" name="selectedLocalAuthorities" type="checkbox" value="City of London" data-cy="select-projectlist-filter-local-authority-City of London">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-city-of-london">
+                                                        City of London
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-cornwall" name="selectedLocalAuthorities" type="checkbox" value="Cornwall" data-cy="select-projectlist-filter-local-authority-Cornwall">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-cornwall">
+                                                        Cornwall
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-county-durham" name="selectedLocalAuthorities" type="checkbox" value="County Durham" data-cy="select-projectlist-filter-local-authority-County Durham">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-county-durham">
+                                                        County Durham
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-coventry" name="selectedLocalAuthorities" type="checkbox" value="Coventry" data-cy="select-projectlist-filter-local-authority-Coventry">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-coventry">
+                                                        Coventry
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-derbyshire" name="selectedLocalAuthorities" type="checkbox" value="Derbyshire" data-cy="select-projectlist-filter-local-authority-Derbyshire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-derbyshire">
+                                                        Derbyshire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-devon" name="selectedLocalAuthorities" type="checkbox" value="Devon" data-cy="select-projectlist-filter-local-authority-Devon">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-devon">
+                                                        Devon
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-dudley" name="selectedLocalAuthorities" type="checkbox" value="Dudley" data-cy="select-projectlist-filter-local-authority-Dudley">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-dudley">
+                                                        Dudley
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-ealing" name="selectedLocalAuthorities" type="checkbox" value="Ealing" data-cy="select-projectlist-filter-local-authority-Ealing">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-ealing">
+                                                        Ealing
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-gateshead" name="selectedLocalAuthorities" type="checkbox" value="Gateshead" data-cy="select-projectlist-filter-local-authority-Gateshead">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-gateshead">
+                                                        Gateshead
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-greenwich" name="selectedLocalAuthorities" type="checkbox" value="Greenwich" data-cy="select-projectlist-filter-local-authority-Greenwich">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-greenwich">
+                                                        Greenwich
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-hackney" name="selectedLocalAuthorities" type="checkbox" value="Hackney" data-cy="select-projectlist-filter-local-authority-Hackney">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-hackney">
+                                                        Hackney
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-hammersmith-and-fulham" name="selectedLocalAuthorities" type="checkbox" value="Hammersmith and Fulham" data-cy="select-projectlist-filter-local-authority-Hammersmith and Fulham">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-hammersmith-and-fulham">
+                                                        Hammersmith and Fulham
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-hampshire" name="selectedLocalAuthorities" type="checkbox" value="Hampshire" data-cy="select-projectlist-filter-local-authority-Hampshire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-hampshire">
+                                                        Hampshire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-haringey" name="selectedLocalAuthorities" type="checkbox" value="Haringey" data-cy="select-projectlist-filter-local-authority-Haringey">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-haringey">
+                                                        Haringey
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-hertfordshire" name="selectedLocalAuthorities" type="checkbox" value="Hertfordshire" data-cy="select-projectlist-filter-local-authority-Hertfordshire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-hertfordshire">
+                                                        Hertfordshire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-hillingdon" name="selectedLocalAuthorities" type="checkbox" value="Hillingdon" data-cy="select-projectlist-filter-local-authority-Hillingdon">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-hillingdon">
+                                                        Hillingdon
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-islington" name="selectedLocalAuthorities" type="checkbox" value="Islington" data-cy="select-projectlist-filter-local-authority-Islington">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-islington">
+                                                        Islington
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-kensington-and-chelsea" name="selectedLocalAuthorities" type="checkbox" value="Kensington and Chelsea" data-cy="select-projectlist-filter-local-authority-Kensington and Chelsea">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-kensington-and-chelsea">
+                                                        Kensington and Chelsea
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-kent" name="selectedLocalAuthorities" type="checkbox" value="Kent" data-cy="select-projectlist-filter-local-authority-Kent">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-kent">
+                                                        Kent
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-lambeth" name="selectedLocalAuthorities" type="checkbox" value="Lambeth" data-cy="select-projectlist-filter-local-authority-Lambeth">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-lambeth">
+                                                        Lambeth
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-lancashire" name="selectedLocalAuthorities" type="checkbox" value="Lancashire" data-cy="select-projectlist-filter-local-authority-Lancashire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-lancashire">
+                                                        Lancashire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-leeds" name="selectedLocalAuthorities" type="checkbox" value="Leeds" data-cy="select-projectlist-filter-local-authority-Leeds">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-leeds">
+                                                        Leeds
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-leicestershire" name="selectedLocalAuthorities" type="checkbox" value="Leicestershire" data-cy="select-projectlist-filter-local-authority-Leicestershire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-leicestershire">
+                                                        Leicestershire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-lewisham" name="selectedLocalAuthorities" type="checkbox" value="Lewisham" data-cy="select-projectlist-filter-local-authority-Lewisham">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-lewisham">
+                                                        Lewisham
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-lincolnshire" name="selectedLocalAuthorities" type="checkbox" value="Lincolnshire" data-cy="select-projectlist-filter-local-authority-Lincolnshire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-lincolnshire">
+                                                        Lincolnshire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-liverpool" name="selectedLocalAuthorities" type="checkbox" value="Liverpool" data-cy="select-projectlist-filter-local-authority-Liverpool">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-liverpool">
+                                                        Liverpool
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-manchester" name="selectedLocalAuthorities" type="checkbox" value="Manchester" data-cy="select-projectlist-filter-local-authority-Manchester">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-manchester">
+                                                        Manchester
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-milton-keynes" name="selectedLocalAuthorities" type="checkbox" value="Milton Keynes" data-cy="select-projectlist-filter-local-authority-Milton Keynes">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-milton-keynes">
+                                                        Milton Keynes
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-newham" name="selectedLocalAuthorities" type="checkbox" value="Newham" data-cy="select-projectlist-filter-local-authority-Newham">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-newham">
+                                                        Newham
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-north-tyneside" name="selectedLocalAuthorities" type="checkbox" value="North Tyneside" data-cy="select-projectlist-filter-local-authority-North Tyneside">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-north-tyneside">
+                                                        North Tyneside
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-northumberland" name="selectedLocalAuthorities" type="checkbox" value="Northumberland" data-cy="select-projectlist-filter-local-authority-Northumberland">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-northumberland">
+                                                        Northumberland
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-oxfordshire" name="selectedLocalAuthorities" type="checkbox" value="Oxfordshire" data-cy="select-projectlist-filter-local-authority-Oxfordshire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-oxfordshire">
+                                                        Oxfordshire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-plymouth" name="selectedLocalAuthorities" type="checkbox" value="Plymouth" data-cy="select-projectlist-filter-local-authority-Plymouth">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-plymouth">
+                                                        Plymouth
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-reading" name="selectedLocalAuthorities" type="checkbox" value="Reading" data-cy="select-projectlist-filter-local-authority-Reading">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-reading">
+                                                        Reading
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-redcar-and-cleveland" name="selectedLocalAuthorities" type="checkbox" value="Redcar and Cleveland" data-cy="select-projectlist-filter-local-authority-Redcar and Cleveland">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-redcar-and-cleveland">
+                                                        Redcar and Cleveland
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-sheffield" name="selectedLocalAuthorities" type="checkbox" value="Sheffield" data-cy="select-projectlist-filter-local-authority-Sheffield">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-sheffield">
+                                                        Sheffield
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-shropshire" name="selectedLocalAuthorities" type="checkbox" value="Shropshire" data-cy="select-projectlist-filter-local-authority-Shropshire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-shropshire">
+                                                        Shropshire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-somerset" name="selectedLocalAuthorities" type="checkbox" value="Somerset" data-cy="select-projectlist-filter-local-authority-Somerset">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-somerset">
+                                                        Somerset
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-south-gloucestershire" name="selectedLocalAuthorities" type="checkbox" value="South Gloucestershire" data-cy="select-projectlist-filter-local-authority-South Gloucestershire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-south-gloucestershire">
+                                                        South Gloucestershire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-southampton" name="selectedLocalAuthorities" type="checkbox" value="Southampton" data-cy="select-projectlist-filter-local-authority-Southampton">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-southampton">
+                                                        Southampton
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-southend-on-sea" name="selectedLocalAuthorities" type="checkbox" value="Southend-on-Sea" data-cy="select-projectlist-filter-local-authority-Southend-on-Sea">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-southend-on-sea">
+                                                        Southend-on-Sea
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-southwark" name="selectedLocalAuthorities" type="checkbox" value="Southwark" data-cy="select-projectlist-filter-local-authority-Southwark">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-southwark">
+                                                        Southwark
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-staffordshire" name="selectedLocalAuthorities" type="checkbox" value="Staffordshire" data-cy="select-projectlist-filter-local-authority-Staffordshire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-staffordshire">
+                                                        Staffordshire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-stockport" name="selectedLocalAuthorities" type="checkbox" value="Stockport" data-cy="select-projectlist-filter-local-authority-Stockport">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-stockport">
+                                                        Stockport
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-stockton-on-tees" name="selectedLocalAuthorities" type="checkbox" value="Stockton-on-Tees" data-cy="select-projectlist-filter-local-authority-Stockton-on-Tees">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-stockton-on-tees">
+                                                        Stockton-on-Tees
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-suffolk" name="selectedLocalAuthorities" type="checkbox" value="Suffolk" data-cy="select-projectlist-filter-local-authority-Suffolk">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-suffolk">
+                                                        Suffolk
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-surrey" name="selectedLocalAuthorities" type="checkbox" value="Surrey" data-cy="select-projectlist-filter-local-authority-Surrey">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-surrey">
+                                                        Surrey
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-swindon" name="selectedLocalAuthorities" type="checkbox" value="Swindon" data-cy="select-projectlist-filter-local-authority-Swindon">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-swindon">
+                                                        Swindon
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-tameside" name="selectedLocalAuthorities" type="checkbox" value="Tameside" data-cy="select-projectlist-filter-local-authority-Tameside">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-tameside">
+                                                        Tameside
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-telford-and-wrekin" name="selectedLocalAuthorities" type="checkbox" value="Telford and Wrekin" data-cy="select-projectlist-filter-local-authority-Telford and Wrekin">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-telford-and-wrekin">
+                                                        Telford and Wrekin
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-tower-hamlets" name="selectedLocalAuthorities" type="checkbox" value="Tower Hamlets" data-cy="select-projectlist-filter-local-authority-Tower Hamlets">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-tower-hamlets">
+                                                        Tower Hamlets
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-trafford" name="selectedLocalAuthorities" type="checkbox" value="Trafford" data-cy="select-projectlist-filter-local-authority-Trafford">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-trafford">
+                                                        Trafford
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-wakefield" name="selectedLocalAuthorities" type="checkbox" value="Wakefield" data-cy="select-projectlist-filter-local-authority-Wakefield">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-wakefield">
+                                                        Wakefield
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-wandsworth" name="selectedLocalAuthorities" type="checkbox" value="Wandsworth" data-cy="select-projectlist-filter-local-authority-Wandsworth">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-wandsworth">
+                                                        Wandsworth
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-west-northamptonshire" name="selectedLocalAuthorities" type="checkbox" value="West Northamptonshire" data-cy="select-projectlist-filter-local-authority-West Northamptonshire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-west-northamptonshire">
+                                                        West Northamptonshire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-west-sussex" name="selectedLocalAuthorities" type="checkbox" value="West Sussex" data-cy="select-projectlist-filter-local-authority-West Sussex">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-west-sussex">
+                                                        West Sussex
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-wiltshire" name="selectedLocalAuthorities" type="checkbox" value="Wiltshire" data-cy="select-projectlist-filter-local-authority-Wiltshire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-wiltshire">
+                                                        Wiltshire
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-wokingham" name="selectedLocalAuthorities" type="checkbox" value="Wokingham" data-cy="select-projectlist-filter-local-authority-Wokingham">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-wokingham">
+                                                        Wokingham
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-local-authority-worcestershire" name="selectedLocalAuthorities" type="checkbox" value="Worcestershire" data-cy="select-projectlist-filter-local-authority-Worcestershire">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-local-authority-worcestershire">
+                                                        Worcestershire
+                                                    </label>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="govuk-accordion__section">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
+                                            
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-4">Tier</span></h2>
+                                    </div>
+                                    <div class="govuk-accordion__section-content" aria-labelledby="accordion-tiers-heading" role="region" id="accordion-default-content-4">
+                                        <input type="text" class="govuk-input govuk-!-margin-bottom-2" id="filter-tiers" placeholder="Type to filter tiers..." aria-label="Type to filter tiers...">
+                                        <div class="govuk-checkboxes govuk-checkboxes--small">
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-tier-1" name="selectedTiers" type="checkbox" value="1" data-cy="select-projectlist-filter-tier-1">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-tier-1">
+                                                        1
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-tier-2" name="selectedTiers" type="checkbox" value="2" data-cy="select-projectlist-filter-tier-2">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-tier-2">
+                                                        2
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-tier-3" name="selectedTiers" type="checkbox" value="3" data-cy="select-projectlist-filter-tier-3">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-tier-3">
+                                                        3
+                                                    </label>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="govuk-accordion__section">
+                                    <div class="govuk-accordion__section-header">
+                                        <h2 class="govuk-accordion__section-heading">
+                                            
+                                        <span class="govuk-accordion__section-button" id="accordion-default-heading-6">Project Status</span></h2>
+                                    </div>
+                                    <div class="govuk-accordion__section-content" aria-labelledby="accordion-project-statuses-heading" role="region" id="accordion-default-content-6">
+                                        <input type="text" class="govuk-input govuk-!-margin-bottom-2" id="filter-project-statuses" placeholder="Type to filter project statuses..." aria-label="Type to filter project statuses...">
+                                        <div class="govuk-checkboxes govuk-checkboxes--small">
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-status-active" name="selectedStatuses" type="checkbox" value="Active" data-cy="select-projectlist-filter-status-Active">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-status-active">
+                                                        Active
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-status-approved" name="selectedStatuses" type="checkbox" value="Approved" data-cy="select-projectlist-filter-status-Approved">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-status-approved">
+                                                        Approved
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-status-approved-with-conditions" name="selectedStatuses" type="checkbox" value="Approved with conditions" data-cy="select-projectlist-filter-status-Approved with conditions">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-status-approved-with-conditions">
+                                                        Approved with conditions
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-status-declined" name="selectedStatuses" type="checkbox" value="Declined" data-cy="select-projectlist-filter-status-Declined">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-status-declined">
+                                                        Declined
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-status-deferred" name="selectedStatuses" type="checkbox" value="Deferred" data-cy="select-projectlist-filter-status-Deferred">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-status-deferred">
+                                                        Deferred
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-status-pre-decision" name="selectedStatuses" type="checkbox" value="Pre decision" data-cy="select-projectlist-filter-status-Pre decision">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-status-pre-decision">
+                                                        Pre decision
+                                                    </label>
+                                                </div>
+                                                <div class="govuk-checkboxes__item">
+                                                    <input class="govuk-checkboxes__input" id="filter-project-status-withdrawn" name="selectedStatuses" type="checkbox" value="Withdrawn" data-cy="select-projectlist-filter-status-Withdrawn">
+                                                    <label class="govuk-label govuk-checkboxes__label" for="filter-project-status-withdrawn">
+                                                        Withdrawn
+                                                    </label>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+    
+                            </div>
+                        </fieldset>
+    
+                    </div>
+    
+                    <div class="govuk-button-group govuk-!-margin-top-6">
+                        <button type="submit" class="govuk-button" data-module="govuk-button" data-test-id="submit-button" data-cy="select-projectlist-filter-apply">
+                            Apply filters
+                        </button>
+                    </div>
+                </form>
+            </div>
+    
+        </div>
+    
+    </div>
+    
+        </div>
+
+        <div class="govuk-grid-column-two-thirds">
+
+            <h2 class="govuk-heading-l" test-id="projectCount" data-cy="select-projectlist-filter-count">20 projects found</h2>
+        <div class="sort-component">
+            <nav class="govuk-body sort-component__nav" aria-label="sort-by">
+                <span class="govuk-!-font-weight-bold">Sorted by:</span> Project created date
+            </nav>
+        </div>
+
+        <table class="govuk-table" data-cy="significant-changes-project-list" data-page-size="10">
+            <caption class="govuk-table__caption govuk-table__caption--m govuk-visually-hidden">Projects (20)</caption>
+            <thead class="govuk-table__head">
+                <tr class="govuk-table__row">
+                    <th class="govuk-table__header govuk-visually-hidden app-!-width-three-fifths">Application information</th>
+                </tr>
+            </thead>
+            <tbody class="govuk-table__body">
+
+                
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-1" class="govuk-link" href="#">Anvil Alley Primary</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-1"><strong>URN:</strong> 897902</span>
+                        </div>
+                        <div id="trust-1" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>United Learning Trust (10012345)</span>
+                        </div>
+                        <div id="local-authority-1" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Sheffield</span>
+                        </div>
+                        <div id="region-1" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>Yorkshire and the Humber</span>
+                        </div>
+                        <div id="tier-1" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-1" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>3 new classes</span>
+                        </div>
+                        <div id="proposed-decision-date-1" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>12 June 2026</span>
+                        </div>
+                        <div id="assigned-to-1" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span class="empty">Unassigned</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-1">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-2" class="govuk-link" href="#">Banana Peel High</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-2"><strong>URN:</strong> 886047</span>
+                        </div>
+                        <div id="trust-2" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Diocese of Westminster Academy Trust (10067890)</span>
+                        </div>
+                        <div id="local-authority-2" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Leeds</span>
+                        </div>
+                        <div id="region-2" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>Yorkshire and the Humber</span>
+                        </div>
+                        <div id="tier-2" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-2" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Move location</span>
+                        </div>
+                        <div id="proposed-decision-date-2" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>10 October 2029</span>
+                        </div>
+                        <div id="assigned-to-2" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span class="empty">Unassigned</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-2">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-3" class="govuk-link" href="#">Bubblegum Bay Academy</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-3"><strong>URN:</strong> 581653</span>
+                        </div>
+                        <div id="trust-3" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Oasis Community Learning (10045678)</span>
+                        </div>
+                        <div id="local-authority-3" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>North Tyneside</span>
+                        </div>
+                        <div id="region-3" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>North East</span>
+                        </div>
+                        <div id="tier-3" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-3" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Change school name</span>
+                        </div>
+                        <div id="proposed-decision-date-3" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>3 March 2030</span>
+                        </div>
+                        <div id="assigned-to-3" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span class="empty">Unassigned</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-3">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-4" class="govuk-link" href="#">Cartoon Cove Community School</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-4"><strong>URN:</strong> 852990</span>
+                        </div>
+                        <div id="trust-4" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>The Harmony Trust (10023456)</span>
+                        </div>
+                        <div id="local-authority-4" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Bristol, City of</span>
+                        </div>
+                        <div id="region-4" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>South West</span>
+                        </div>
+                        <div id="tier-4" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-4" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Double the school size</span>
+                        </div>
+                        <div id="proposed-decision-date-4" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>21 December 2027</span>
+                        </div>
+                        <div id="assigned-to-4" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span>Tristan Collen</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-4">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+<tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-0" class="govuk-link" href="st-theresas">Doodle Drive Primary</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-0"><strong>URN:</strong> 202915</span>
+                        </div>
+                        <div id="trust-0" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Appleby Grammar School (10059089)</span>
+                        </div>
+                        <div id="local-authority-0" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Barnet</span>
+                        </div>
+                        <div id="region-0" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>London</span>
+                        </div>
+                        <div id="tier-0" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-0" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>
+                              {{ data['change-type'] | changeTypeLabel }}
+                            </span>
+                        </div>
+                        <div id="proposed-decision-date-0" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>1 January 2026</span>
+                        </div>
+                        <div id="assigned-to-0" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span>Your name</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            {% set projectStatusTagId = "project-status-0" %}
+                            {% include "202609v5/includes/project-status-tag.html" %}
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-5" class="govuk-link" href="#">Firecracker Fields School</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-5"><strong>URN:</strong> 923923</span>
+                        </div>
+                        <div id="trust-5" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Appleby Grammar School (10059089)</span>
+                        </div>
+                        <div id="local-authority-5" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Cambridgeshire</span>
+                        </div>
+                        <div id="region-5" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>East of England</span>
+                        </div>
+                        <div id="tier-5" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-5" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>4 new swimming pool</span>
+                        </div>
+                        <div id="proposed-decision-date-5" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>1 February 2029</span>
+                        </div>
+                        <div id="assigned-to-5" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span>Tristan Collen</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-5">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-6" class="govuk-link" href="#">Giggle Grove Primary</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-6"><strong>URN:</strong> 223750</span>
+                        </div>
+                        <div id="trust-6" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>United Learning Trust (10012345)</span>
+                        </div>
+                        <div id="local-authority-6" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Birmingham</span>
+                        </div>
+                        <div id="region-6" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>West Midlands</span>
+                        </div>
+                        <div id="tier-6" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-6" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Age range change</span>
+                        </div>
+                        <div id="proposed-decision-date-6" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>12 June 2026</span>
+                        </div>
+                        <div id="assigned-to-6" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span>Lucy Collins</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-6">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-7" class="govuk-link" href="#">Honk Honk High</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-7"><strong>URN:</strong> 853754</span>
+                        </div>
+                        <div id="trust-7" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Oasis Community Learning (10045678)</span>
+                        </div>
+                        <div id="local-authority-7" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Newham</span>
+                        </div>
+                        <div id="region-7" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>London</span>
+                        </div>
+                        <div id="tier-7" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-7" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>PAN increase</span>
+                        </div>
+                        <div id="proposed-decision-date-7" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>8 August 2025</span>
+                        </div>
+                        <div id="assigned-to-7" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span>Paul Lockwood</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-7">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-8" class="govuk-link" href="#">Jellybean Junior School</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-8"><strong>URN:</strong> 232787</span>
+                        </div>
+                        <div id="trust-8" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>The Harmony Trust (10023456)</span>
+                        </div>
+                        <div id="local-authority-8" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Liverpool</span>
+                        </div>
+                        <div id="region-8" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>North West</span>
+                        </div>
+                        <div id="tier-8" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-8" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Add sixth form</span>
+                        </div>
+                        <div id="proposed-decision-date-8" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>1 January 2027</span>
+                        </div>
+                        <div id="assigned-to-8" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span class="empty">Unassigned</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-8">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-9" class="govuk-link" href="#">Kite Tail Academy</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-9"><strong>URN:</strong> 677556</span>
+                        </div>
+                        <div id="trust-9" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Diocese of Westminster Academy Trust (10067890)</span>
+                        </div>
+                        <div id="local-authority-9" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Hampshire</span>
+                        </div>
+                        <div id="region-9" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>South East</span>
+                        </div>
+                        <div id="tier-9" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-9" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Change of site</span>
+                        </div>
+                        <div id="proposed-decision-date-9" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>22 September 2025</span>
+                        </div>
+                        <div id="assigned-to-9" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span>Sophie Knight</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-9">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row" style="display: none;">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-10" class="govuk-link" href="#">Laugh Lane School</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-10"><strong>URN:</strong> 829780</span>
+                        </div>
+                        <div id="trust-10" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Appleby Grammar School (10059089)</span>
+                        </div>
+                        <div id="local-authority-10" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Cornwall</span>
+                        </div>
+                        <div id="region-10" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>South West</span>
+                        </div>
+                        <div id="tier-10" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-10" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Expand capacity</span>
+                        </div>
+                        <div id="proposed-decision-date-10" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>14 April 2025</span>
+                        </div>
+                        <div id="assigned-to-10" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span>Ben Memmott</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-10">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row" style="display: none;">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-11" class="govuk-link" href="#">Marble Run Primary</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-11"><strong>URN:</strong> 324243</span>
+                        </div>
+                        <div id="trust-11" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>United Learning Trust (10012345)</span>
+                        </div>
+                        <div id="local-authority-11" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Manchester</span>
+                        </div>
+                        <div id="region-11" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>North West</span>
+                        </div>
+                        <div id="tier-11" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-11" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Faith designation change</span>
+                        </div>
+                        <div id="proposed-decision-date-11" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>5 May 2024</span>
+                        </div>
+                        <div id="assigned-to-11" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span class="empty">Unassigned</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-11">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row" style="display: none;">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-12" class="govuk-link" href="#">Noodle Nook School</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-12"><strong>URN:</strong> 183709</span>
+                        </div>
+                        <div id="trust-12" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Oasis Community Learning (10045678)</span>
+                        </div>
+                        <div id="local-authority-12" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Leicestershire</span>
+                        </div>
+                        <div id="region-12" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>East Midlands</span>
+                        </div>
+                        <div id="tier-12" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-12" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Remove boarding</span>
+                        </div>
+                        <div id="proposed-decision-date-12" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>18 November 2024</span>
+                        </div>
+                        <div id="assigned-to-12" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span>Tristan Collen</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-12">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row" style="display: none;">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-13" class="govuk-link" href="#">Pogo Stick Primary</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-13"><strong>URN:</strong> 192256</span>
+                        </div>
+                        <div id="trust-13" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>The Harmony Trust (10023456)</span>
+                        </div>
+                        <div id="local-authority-13" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Kent</span>
+                        </div>
+                        <div id="region-13" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>South East</span>
+                        </div>
+                        <div id="tier-13" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-13" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Open nursery</span>
+                        </div>
+                        <div id="proposed-decision-date-13" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>30 October 2025</span>
+                        </div>
+                        <div id="assigned-to-13" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span>Jo Holmes</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-13">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row" style="display: none;">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-14" class="govuk-link" href="#">Quack Pond Academy</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-14"><strong>URN:</strong> 560648</span>
+                        </div>
+                        <div id="trust-14" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Diocese of Westminster Academy Trust (10067890)</span>
+                        </div>
+                        <div id="local-authority-14" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Lambeth</span>
+                        </div>
+                        <div id="region-14" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>London</span>
+                        </div>
+                        <div id="tier-14" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-14" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Merge with another school</span>
+                        </div>
+                        <div id="proposed-decision-date-14" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>11 January 2026</span>
+                        </div>
+                        <div id="assigned-to-14" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span>Lucy Collins</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-14">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row" style="display: none;">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-15" class="govuk-link" href="#">Rubber Band High</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-15"><strong>URN:</strong> 578365</span>
+                        </div>
+                        <div id="trust-15" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Appleby Grammar School (10059089)</span>
+                        </div>
+                        <div id="local-authority-15" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Gateshead</span>
+                        </div>
+                        <div id="region-15" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>North East</span>
+                        </div>
+                        <div id="tier-15" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-15" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Change admissions policy</span>
+                        </div>
+                        <div id="proposed-decision-date-15" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>7 July 2025</span>
+                        </div>
+                        <div id="assigned-to-15" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span class="empty">Unassigned</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-15">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row" style="display: none;">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-16" class="govuk-link" href="#">Sprocket Springs School</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-16"><strong>URN:</strong> 647862</span>
+                        </div>
+                        <div id="trust-16" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>United Learning Trust (10012345)</span>
+                        </div>
+                        <div id="local-authority-16" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Derbyshire</span>
+                        </div>
+                        <div id="region-16" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>East Midlands</span>
+                        </div>
+                        <div id="tier-16" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-16" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Add SEN unit</span>
+                        </div>
+                        <div id="proposed-decision-date-16" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>2 February 2027</span>
+                        </div>
+                        <div id="assigned-to-16" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span>Sophie Knight</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-16">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row" style="display: none;">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-17" class="govuk-link" href="#">Sketchbook Town Primary</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-17"><strong>URN:</strong> 732353</span>
+                        </div>
+                        <div id="trust-17" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Oasis Community Learning (10045678)</span>
+                        </div>
+                        <div id="local-authority-17" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Southwark</span>
+                        </div>
+                        <div id="region-17" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>London</span>
+                        </div>
+                        <div id="tier-17" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-17" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Close satellite site</span>
+                        </div>
+                        <div id="proposed-decision-date-17" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>19 December 2025</span>
+                        </div>
+                        <div id="assigned-to-17" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span>Paul Lockwood</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-17">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row" style="display: none;">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-18" class="govuk-link" href="#">Whoopee Woods Academy</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-18"><strong>URN:</strong> 629287</span>
+                        </div>
+                        <div id="trust-18" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>The Harmony Trust (10023456)</span>
+                        </div>
+                        <div id="local-authority-18" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Wakefield</span>
+                        </div>
+                        <div id="region-18" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>Yorkshire and the Humber</span>
+                        </div>
+                        <div id="tier-18" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-18" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Change school day</span>
+                        </div>
+                        <div id="proposed-decision-date-18" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>28 June 2029</span>
+                        </div>
+                        <div id="assigned-to-18" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span>Dan Good</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-18">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+                <tr class="govuk-table__row" data-cy="select-projectlist-filter-row" style="display: none;">
+                    <td class="govuk-table__cell">
+                        <div class="govuk-!-margin-top-1 govuk-!-margin-bottom-2">
+                            <strong>
+                                <a id="school-name-19" class="govuk-link" href="#">Yo-Yo Yard Infants</a>
+                            </strong>
+                        </div>
+                        <div class="govuk-!-margin-top-1">
+                            <span id="urn-19"><strong>URN:</strong> 652121</span>
+                        </div>
+                        <div id="trust-19" class="govuk-!-margin-top-1">
+                            <strong>Trust:</strong>
+                            <span>Diocese of Westminster Academy Trust (10067890)</span>
+                        </div>
+                        <div id="local-authority-19" class="govuk-!-margin-top-1">
+                            <strong>Local authority:</strong>
+                            <span>Suffolk</span>
+                        </div>
+                        <div id="region-19" class="govuk-!-margin-top-1">
+                            <strong>Region:</strong>
+                            <span>East of England</span>
+                        </div>
+                        <div id="tier-19" class="govuk-!-margin-top-1">
+                            <strong>Tier:</strong>
+                            <span>1</span>
+                        </div>
+                        <div id="route-19" class="govuk-!-margin-top-1">
+                            <strong>Type:</strong>
+                            <span>Increase year groups</span>
+                        </div>
+                        <div id="proposed-decision-date-19" class="govuk-!-margin-top-1">
+                            <strong>Proposed decision date:</strong>
+                            <span>4 January 2028</span>
+                        </div>
+                        <div id="assigned-to-19" class="do govuk-!-margin-top-1">
+                            <strong>Project owner:</strong>
+                            <span class="empty">Unassigned</span>
+                        </div>
+                        <div class="govuk-!-margin-top-2 govuk-!-margin-bottom-3">
+                            <strong class="govuk-tag govuk-tag--yellow" id="project-status-19">Pre decision</strong>
+                        </div>
+                    </td>
+                </tr>
+
+            </tbody>
+        </table>
+
+        <nav class="moj-pagination" id="pagination-label" aria-label="pagination" data-cy="project-pagination">
+            <p class="govuk-visually-hidden" aria-labelledby="pagination-label">Pagination navigation</p>
+            <ul class="moj-pagination__list" id="project-pagination-list">
+                <li class="moj-pagination__item moj-pagination__item--active">
+                    <a class="moj-pagination__link" href="#" data-page="1" aria-label="Current page, page 1" aria-current="page">1</a>
+                </li>
+                <li class="moj-pagination__item">
+                    <a class="moj-pagination__link" href="#" data-page="2" aria-label="Go to page 2">2</a>
+                </li>
+                <li class="moj-pagination__item moj-pagination__item--next">
+                    <a class="moj-pagination__link" href="#" data-page="next" test-id="nextPage">Next<span class="govuk-visually-hidden"> page</span></a>
+                </li>
+            </ul>
+        </nav>
+
+            </div>
+        </div>
+
+{% endblock %}

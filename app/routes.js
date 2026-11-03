@@ -137,11 +137,22 @@ const v4ClearanceDetailsRadioFields = [
   { name: 'clearance-details-2', text: 'Enter who cleared the significant change from Trust Regulation (formerly known as SFSO)' }
 ]
 
+const sigChangeVersions = ['202609v3', '202609v4', '202609v5']
+const v4FlowVersions = ['202609v4', '202609v5']
+
+function isV4Flow (version) {
+  return v4FlowVersions.includes(version)
+}
+
+function versionPage (req, page) {
+  return '/' + req.params.version + '/' + page
+}
+
 function requestVersion (req) {
   if (req.params && req.params.version) {
     return req.params.version
   }
-  const match = String(req.path || '').match(/^\/(202608v2|202609v3|202609v4)(?:\/|$)/)
+  const match = String(req.path || '').match(/^\/(202608v2|202609v3|202609v4|202609v5)(?:\/|$)/)
   return match ? match[1] : '202609v3'
 }
 
@@ -346,12 +357,13 @@ function setRecordedDecisionDate (req) {
     (day < 10 ? '0' + day : String(day)) + ' ' + months[today.getMonth()] + ' ' + today.getFullYear()
 }
 
-function approveDecisionRedirect (req, defaultUrl) {
+function approveDecisionRedirect (req, page) {
+  const version = (req.params && req.params.version) || requestVersion(req)
   if (req.session.data && req.session.data['approve-return-to-check']) {
     delete req.session.data['approve-return-to-check']
-    return '/202609v4/approve-check-answers'
+    return '/' + version + '/approve-check-answers'
   }
-  return defaultUrl
+  return '/' + version + '/' + page
 }
 
 // Significant change tasks: remember whether to return to preview or the task list
@@ -391,7 +403,7 @@ router.use(function (req, res, next) {
     return next()
   }
 
-  const match = req.path.match(/^\/(202608v2|202609v3|202609v4)\/([^/]+)\/?$/)
+  const match = req.path.match(/^\/(202608v2|202609v3|202609v4|202609v5)\/([^/]+)\/?$/)
   if (!match || !sigChangeTaskPages.includes(match[2])) {
     return next()
   }
@@ -436,7 +448,7 @@ router.use(function (req, res, next) {
     return next()
   }
 
-  const match = req.path.match(/^\/202609v4\/(record-the-decision|approve-conditions|decline-reason|withdraw-reason|approve-decision-maker|approve-decision-date|approve-decision-maker-name)\/?$/)
+  const match = req.path.match(/^\/(202609v4|202609v5)\/(record-the-decision|approve-conditions|decline-reason|withdraw-reason|approve-decision-maker|approve-decision-date|approve-decision-maker-name)\/?$/)
   if (!match) {
     return next()
   }
@@ -459,7 +471,7 @@ router.use(function (req, res, next) {
 })
 
 router.use(function (req, res, next) {
-  const match = req.path.match(/^\/(202609v3|202609v4)\/([^/]+)\/?$/)
+  const match = req.path.match(/^\/(202609v3|202609v4|202609v5)\/([^/]+)\/?$/)
   const page = match ? match[2] : null
   const errorsState = req.session.data && req.session.data['radio-errors']
 
@@ -475,7 +487,7 @@ router.use(function (req, res, next) {
 })
 
 router.post('/:version/decision', function (req, res, next) {
-  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+  if (!sigChangeVersions.includes(req.params.version)) {
     return next()
   }
   if (!req.session.data) {
@@ -489,22 +501,22 @@ router.post('/:version/decision', function (req, res, next) {
   }
   clearRadioErrors(req, 'record-the-decision')
 
-  if (req.params.version === '202609v4' && req.body['recorded-decision'] === 'Approve') {
+  if (isV4Flow(req.params.version) && req.body['recorded-decision'] === 'Approve') {
     req.session.data['pending-recorded-decision'] = 'Approve'
     delete req.session.data['recorded-decision']
-    return res.redirect(approveDecisionRedirect(req, '/202609v4/approve-conditions'))
+    return res.redirect(approveDecisionRedirect(req, 'approve-conditions'))
   }
 
-  if (req.params.version === '202609v4' && req.body['recorded-decision'] === 'Decline') {
+  if (isV4Flow(req.params.version) && req.body['recorded-decision'] === 'Decline') {
     req.session.data['pending-recorded-decision'] = 'Decline'
     delete req.session.data['recorded-decision']
-    return res.redirect(approveDecisionRedirect(req, '/202609v4/decline-reason'))
+    return res.redirect(approveDecisionRedirect(req, 'decline-reason'))
   }
 
-  if (req.params.version === '202609v4' && req.body['recorded-decision'] === 'Withdraw') {
+  if (isV4Flow(req.params.version) && req.body['recorded-decision'] === 'Withdraw') {
     req.session.data['pending-recorded-decision'] = 'Withdraw'
     delete req.session.data['recorded-decision']
-    return res.redirect(approveDecisionRedirect(req, '/202609v4/withdraw-reason'))
+    return res.redirect(approveDecisionRedirect(req, 'withdraw-reason'))
   }
 
   delete req.session.data['pending-recorded-decision']
@@ -514,7 +526,7 @@ router.post('/:version/decision', function (req, res, next) {
 })
 
 router.post('/:version/approve-conditions', function (req, res, next) {
-  if (req.params.version !== '202609v4') {
+  if (!isV4Flow(req.params.version)) {
     return next()
   }
   if (!req.session.data) {
@@ -524,7 +536,7 @@ router.post('/:version/approve-conditions', function (req, res, next) {
   const errorList = radioErrorList(req.body, sigChangeRadioFields['approve-conditions'])
   if (errorList.length) {
     storeRadioErrors(req, 'approve-conditions', errorList)
-    return res.redirect('/202609v4/approve-conditions')
+    return res.redirect(versionPage(req, 'approve-conditions'))
   }
   clearRadioErrors(req, 'approve-conditions')
 
@@ -532,11 +544,11 @@ router.post('/:version/approve-conditions', function (req, res, next) {
     delete req.session.data['were-any-conditions-set-details']
   }
 
-  res.redirect(approveDecisionRedirect(req, '/202609v4/approve-decision-maker'))
+  res.redirect(approveDecisionRedirect(req, 'approve-decision-maker'))
 })
 
 router.post('/:version/decline-reason', function (req, res, next) {
-  if (req.params.version !== '202609v4') {
+  if (!isV4Flow(req.params.version)) {
     return next()
   }
   if (!req.session.data) {
@@ -546,15 +558,15 @@ router.post('/:version/decline-reason', function (req, res, next) {
   const errorList = radioErrorList(req.body, sigChangeRadioFields['decline-reason'])
   if (errorList.length) {
     storeRadioErrors(req, 'decline-reason', errorList)
-    return res.redirect('/202609v4/decline-reason')
+    return res.redirect(versionPage(req, 'decline-reason'))
   }
   clearRadioErrors(req, 'decline-reason')
 
-  res.redirect(approveDecisionRedirect(req, '/202609v4/approve-decision-maker'))
+  res.redirect(approveDecisionRedirect(req, 'approve-decision-maker'))
 })
 
 router.post('/:version/withdraw-reason', function (req, res, next) {
-  if (req.params.version !== '202609v4') {
+  if (!isV4Flow(req.params.version)) {
     return next()
   }
   if (!req.session.data) {
@@ -564,15 +576,15 @@ router.post('/:version/withdraw-reason', function (req, res, next) {
   const errorList = radioErrorList(req.body, sigChangeRadioFields['withdraw-reason'])
   if (errorList.length) {
     storeRadioErrors(req, 'withdraw-reason', errorList)
-    return res.redirect('/202609v4/withdraw-reason')
+    return res.redirect(versionPage(req, 'withdraw-reason'))
   }
   clearRadioErrors(req, 'withdraw-reason')
 
-  res.redirect(approveDecisionRedirect(req, '/202609v4/approve-decision-maker'))
+  res.redirect(approveDecisionRedirect(req, 'approve-decision-maker'))
 })
 
 router.post('/:version/approve-decision-maker', function (req, res, next) {
-  if (req.params.version !== '202609v4') {
+  if (!isV4Flow(req.params.version)) {
     return next()
   }
   if (!req.session.data) {
@@ -582,15 +594,15 @@ router.post('/:version/approve-decision-maker', function (req, res, next) {
   const errorList = radioErrorList(req.body, sigChangeRadioFields['approve-decision-maker'])
   if (errorList.length) {
     storeRadioErrors(req, 'approve-decision-maker', errorList)
-    return res.redirect('/202609v4/approve-decision-maker')
+    return res.redirect(versionPage(req, 'approve-decision-maker'))
   }
   clearRadioErrors(req, 'approve-decision-maker')
 
-  res.redirect(approveDecisionRedirect(req, '/202609v4/approve-decision-maker-name'))
+  res.redirect(approveDecisionRedirect(req, 'approve-decision-maker-name'))
 })
 
 router.post('/:version/approve-decision-date', function (req, res, next) {
-  if (req.params.version !== '202609v4') {
+  if (!isV4Flow(req.params.version)) {
     return next()
   }
   if (!req.session.data) {
@@ -600,7 +612,7 @@ router.post('/:version/approve-decision-date', function (req, res, next) {
   const error = dateFieldError(req.body, 'date-of-decision', 'date of decision')
   if (error) {
     storeRadioErrors(req, 'approve-decision-date', [error])
-    return res.redirect('/202609v4/approve-decision-date')
+    return res.redirect(versionPage(req, 'approve-decision-date'))
   }
   clearRadioErrors(req, 'approve-decision-date')
 
@@ -613,11 +625,11 @@ router.post('/:version/approve-decision-date', function (req, res, next) {
   req.session.data['recorded-decision-date'] =
     (day < 10 ? '0' + day : String(day)) + ' ' + months[parseInt(parts.month, 10) - 1] + ' ' + parts.year
 
-  res.redirect(approveDecisionRedirect(req, '/202609v4/approve-check-answers'))
+  res.redirect(approveDecisionRedirect(req, 'approve-check-answers'))
 })
 
 router.post('/:version/approve-decision-maker-name', function (req, res, next) {
-  if (req.params.version !== '202609v4') {
+  if (!isV4Flow(req.params.version)) {
     return next()
   }
   if (!req.session.data) {
@@ -627,15 +639,15 @@ router.post('/:version/approve-decision-maker-name', function (req, res, next) {
   const errorList = radioErrorList(req.body, sigChangeRadioFields['approve-decision-maker-name'])
   if (errorList.length) {
     storeRadioErrors(req, 'approve-decision-maker-name', errorList)
-    return res.redirect('/202609v4/approve-decision-maker-name')
+    return res.redirect(versionPage(req, 'approve-decision-maker-name'))
   }
   clearRadioErrors(req, 'approve-decision-maker-name')
 
-  res.redirect(approveDecisionRedirect(req, '/202609v4/approve-decision-date'))
+  res.redirect(approveDecisionRedirect(req, 'approve-decision-date'))
 })
 
 router.post('/:version/approve-check-answers', function (req, res, next) {
-  if (req.params.version !== '202609v4') {
+  if (!isV4Flow(req.params.version)) {
     return next()
   }
   if (!req.session.data) {
@@ -653,11 +665,11 @@ router.post('/:version/approve-check-answers', function (req, res, next) {
     setRecordedDecisionDate(req)
   }
 
-  res.redirect('/202609v4/decision')
+  res.redirect(versionPage(req, 'decision'))
 })
 
 router.get('/:version/ofsted-inspection-question', function (req, res, next) {
-  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+  if (!sigChangeVersions.includes(req.params.version)) {
     return next()
   }
   if (!req.session.data) {
@@ -675,7 +687,7 @@ router.get('/:version/ofsted-inspection-question', function (req, res, next) {
 })
 
 router.post('/:version/ofsted-inspection', function (req, res, next) {
-  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+  if (!sigChangeVersions.includes(req.params.version)) {
     return next()
   }
   if (!req.session.data) {
@@ -696,7 +708,7 @@ router.post('/:version/ofsted-inspection', function (req, res, next) {
 })
 
 router.get('/:version/admissions-variation-question', function (req, res, next) {
-  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+  if (!sigChangeVersions.includes(req.params.version)) {
     return next()
   }
   if (!req.session.data) {
@@ -709,7 +721,7 @@ router.get('/:version/admissions-variation-question', function (req, res, next) 
 })
 
 router.post('/:version/admissions-variation-question', function (req, res, next) {
-  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+  if (!sigChangeVersions.includes(req.params.version)) {
     return next()
   }
   if (!req.session.data) {
@@ -731,7 +743,7 @@ router.post('/:version/admissions-variation-question', function (req, res, next)
 })
 
 router.post('/:version/ofsted-inspection-question', function (req, res, next) {
-  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+  if (!sigChangeVersions.includes(req.params.version)) {
     return next()
   }
   if (!req.session.data) {
@@ -756,15 +768,15 @@ router.post('/:version/ofsted-inspection-question', function (req, res, next) {
 })
 
 router.post('/:version/:page', function (req, res, next) {
-  if (!['202609v3', '202609v4'].includes(req.params.version)) {
+  if (!sigChangeVersions.includes(req.params.version)) {
     return next()
   }
   const page = req.params.page
-  const fields = (page === 'approve' && req.params.version === '202609v4')
+  const fields = (page === 'approve' && isV4Flow(req.params.version))
     ? v4ApproveRadioFields
-    : (page === 'admissions-variation-recommendation' && req.params.version === '202609v4')
+    : (page === 'admissions-variation-recommendation' && isV4Flow(req.params.version))
       ? v4AdmissionsVariationRecommendationRadioFields
-      : (page === 'clearance-details' && req.params.version === '202609v4')
+      : (page === 'clearance-details' && isV4Flow(req.params.version))
         ? v4ClearanceDetailsRadioFields
         : sigChangeRadioFields[page]
   if (!fields && page !== 'confirm-project-dates') {
