@@ -40,7 +40,7 @@ const sigChangeRadioFields = {
     { name: 'stakeholder-engagement-consultation-included-admissions-variation', text: 'Select whether the relevant stakeholders have been notified of the admissions changes' }
   ],
   'la-objections': [
-    { name: 'la-objections-raised', text: 'Select whether a LA has raised any objections' }
+    { name: 'la-objections-raised', text: 'Select whether a local authority has raised any objections' }
   ],
   'religious-bodies': [
     { name: 'religious-bodies-consulted', text: 'Select whether the relevant religious bodies have been consulted' },
@@ -114,7 +114,31 @@ const sigChangeRadioFields = {
     { name: 'decline-reason', text: 'Enter details', richText: true }
   ],
   'withdraw-reason': [
-    { name: 'withdraw-reason', text: 'Enter details', richText: true }
+    { name: 'withdraw-reason', text: 'Enter why this project was withdrawn', richText: true }
+  ],
+  'impact-on-send-provision': [
+    { name: 'impact-on-send-provision', text: 'Enter details', richText: true }
+  ],
+  'local-send-plans': [
+    { name: 'local-send-plans', text: 'Enter details', richText: true }
+  ],
+  'satellite-site-arrangement': [
+    { name: 'satellite-site-arrangement', text: 'Enter details', richText: true }
+  ],
+  'special-school-satellite-considerations': [
+    { name: 'special-school-satellite-considerations', text: 'Enter details', richText: true }
+  ],
+  'mainstream-school-satellite-considerations': [
+    { name: 'mainstream-school-satellite-considerations', text: 'Enter details', richText: true }
+  ],
+  'trust-experience-and-governance': [
+    { name: 'trust-experience-and-governance', text: 'Enter details', richText: true }
+  ],
+  'specialist-base-considerations': [
+    { name: 'specialist-base-considerations', text: 'Enter details', richText: true }
+  ],
+  'academy-performance-concerns': [
+    { name: 'academy-performance-concerns', text: 'Enter details', richText: true }
   ]
 }
 
@@ -380,6 +404,14 @@ const sigChangeTaskPages = [
   'religious-bodies',
   'ofsted-inspection',
   'ofsted-inspection-question',
+  'impact-on-send-provision',
+  'local-send-plans',
+  'satellite-site-arrangement',
+  'special-school-satellite-considerations',
+  'mainstream-school-satellite-considerations',
+  'trust-experience-and-governance',
+  'specialist-base-considerations',
+  'academy-performance-concerns',
   'psed',
   'land-transaction',
   'planning-permission',

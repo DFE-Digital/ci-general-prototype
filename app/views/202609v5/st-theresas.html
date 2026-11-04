@@ -190,6 +190,62 @@
                     </div>
                 </section>
 
+                <section id="sen-and-alternative-provision" class="govuk-!-margin-bottom-8">
+                    <h2 class="app-task-list__section">SEN and alternative provision considerations</h2>
+                    <div class="app-task-list">
+                        <ul class="app-task-list__items govuk-!-padding-left-0">
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="impact-on-send-provision-status" href="impact-on-send-provision">Impact on SEND provision</a>
+                                </span>
+                                {{ statusTag("impact-on-send-provision-status", data | taskStatus(["impact-on-send-provision"])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="local-send-plans-status" href="local-send-plans">Local SEND plans</a>
+                                </span>
+                                {{ statusTag("local-send-plans-status", data | taskStatus(["local-send-plans"])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="satellite-site-arrangement-status" href="satellite-site-arrangement">Satellite site arrangement</a>
+                                </span>
+                                {{ statusTag("satellite-site-arrangement-status", data | taskStatus(["satellite-site-arrangement"])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="special-school-satellite-considerations-status" href="special-school-satellite-considerations">Special school satellite site considerations</a>
+                                </span>
+                                {{ statusTag("special-school-satellite-considerations-status", data | taskStatus(["special-school-satellite-considerations"])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="mainstream-school-satellite-considerations-status" href="mainstream-school-satellite-considerations">Mainstream school satellite considerations</a>
+                                </span>
+                                {{ statusTag("mainstream-school-satellite-considerations-status", data | taskStatus(["mainstream-school-satellite-considerations"])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="trust-experience-and-governance-status" href="trust-experience-and-governance">Trust experience and governance</a>
+                                </span>
+                                {{ statusTag("trust-experience-and-governance-status", data | taskStatus(["trust-experience-and-governance"])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="specialist-base-considerations-status" href="specialist-base-considerations">Specialist base considerations</a>
+                                </span>
+                                {{ statusTag("specialist-base-considerations-status", data | taskStatus(["specialist-base-considerations"])) }}
+                            </li>
+                            <li class="app-task-list__item">
+                                <span class="app-task-list__task-name">
+                                    <a class="govuk-link" aria-describedby="academy-performance-concerns-status" href="academy-performance-concerns">Academy performance concerns</a>
+                                </span>
+                                {{ statusTag("academy-performance-concerns-status", data | taskStatus(["academy-performance-concerns"])) }}
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+
                 <section id="psed" class="govuk-!-margin-bottom-8">
                     <h2 class="app-task-list__section">Public Sector Equality Duty</h2>
                     <div class="app-task-list">

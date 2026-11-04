@@ -1,0 +1,42 @@
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "202609v5/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
+    <h1 class="govuk-heading-l">{{ pageName }}</h1>
+
+    <form method="post" action="">
+      {{ appRichTextEditor({
+        name: fieldName,
+        id: fieldName,
+        value: data[fieldName],
+        label: "Give details",
+        errorMessage: errors[fieldName]
+      }) }}
+
+      {% set primaryButtonText = "Save and return" %}
+      {% include "202609v5/includes/task-primary-button.html" %}
+    </form>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">
+        Useful information
+      </h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">Application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</div>
