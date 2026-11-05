@@ -133,6 +133,14 @@
                 "religious-bodies": "consultation",
                 "ofsted-inspection": "mandatory-legal-requirements",
                 "ofsted-inspection-question": "mandatory-legal-requirements",
+                "impact-on-sen-provision": "sen-and-alternative-provision",
+                "local-sen-plans": "sen-and-alternative-provision",
+                "satellite-site-arrangement": "sen-and-alternative-provision",
+                "special-school-satellite-considerations": "sen-and-alternative-provision",
+                "mainstream-school-satellite-considerations": "sen-and-alternative-provision",
+                "trust-experience-and-governance": "sen-and-alternative-provision",
+                "specialist-base-considerations": "sen-and-alternative-provision",
+                "academy-performance-concerns": "sen-and-alternative-provision",
                 "psed": "psed",
                 "land-transaction": "land-and-planning",
                 "planning-permission": "land-and-planning",
@@ -186,6 +194,7 @@
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#admissions-variation">Admissions variation</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#consultation">Consultation</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#mandatory-legal-requirements">Academy performance</a></li>
+      <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#sen-and-alternative-provision">SEN and alternative provision considerations</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#psed">Public Sector Equality Duty</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#land-and-planning">Land transaction application and planning permission</a></li>
       <li class="govuk-!-margin-bottom-2"><a class="govuk-link" href="#financials">Financial details</a></li>
@@ -660,6 +669,88 @@
         </dl>
       </div>
     </div>
+</div>
+
+{# SEN and alternative provision considerations #}
+<div id="sen-and-alternative-provision" class="govuk-!-margin-bottom-9">
+  <h2 class="govuk-heading-l">SEN and alternative provision considerations</h2>
+  <div class="app-summary-card">
+    <div class="app-summary-card__content">
+      <dl class="govuk-summary-list govuk-!-margin-bottom-0">
+        {% call row("Is the proposal likely to improve the standard, quality and range of SEN provision?", "/202609v5/impact-on-sen-provision") %}
+          {{ yesNo(data["impact-on-sen-provision"]) }}
+        {% endcall %}
+        {% if data["impact-on-sen-provision"] == "no" %}
+        {% call row("Give details", "/202609v5/impact-on-sen-provision", "why the proposal is not likely to improve SEN provision") %}
+          {{ richValue(data["impact-on-sen-provision-details"]) }}
+        {% endcall %}
+        {% endif %}
+
+        {% call row("Does the proposal conflict with a Local SEN Reform Plan (or equivalent) for SEN, AP and high needs provision?", "/202609v5/local-sen-plans") %}
+          {{ yesNo(data["local-sen-plans"]) }}
+        {% endcall %}
+        {% if data["local-sen-plans"] == "yes" %}
+        {% call row("Give details", "/202609v5/local-sen-plans", "how the proposal conflicts with the Local SEN Reform Plan") %}
+          {{ richValue(data["local-sen-plans-details"]) }}
+        {% endcall %}
+        {% endif %}
+
+        {% call row("Is this a genuine expansion of the special school that does not constitute a new school?", "/202609v5/satellite-site-arrangement") %}
+          {{ yesNo(data["satellite-site-arrangement-answer"]) }}
+        {% endcall %}
+        {% if data["satellite-site-arrangement-answer"] == "no" %}
+        {% call row("Give details", "/202609v5/satellite-site-arrangement", "why this is not a genuine expansion") %}
+          {{ richValue(data["satellite-site-arrangement"]) }}
+        {% endcall %}
+        {% endif %}
+
+        {% call row("Does the proposal meet the requirements set out for satellite sites in the operational guidance?", "/202609v5/special-school-satellite-considerations") %}
+          {{ yesNo(data["special-school-satellite-considerations-answer"]) }}
+        {% endcall %}
+        {% if data["special-school-satellite-considerations-answer"] == "no" %}
+        {% call row("Give details", "/202609v5/special-school-satellite-considerations", "how the proposal does not meet the satellite site requirements") %}
+          {{ richValue(data["special-school-satellite-considerations"]) }}
+        {% endcall %}
+        {% endif %}
+
+        {% call row("Does the proposal meet the requirements set out for special school provision on a satellite site in the operational guidance?", "/202609v5/mainstream-school-satellite-considerations") %}
+          {{ yesNo(data["mainstream-school-satellite-considerations-answer"]) }}
+        {% endcall %}
+        {% if data["mainstream-school-satellite-considerations-answer"] == "no" %}
+        {% call row("Give details", "/202609v5/mainstream-school-satellite-considerations", "how the proposal does not meet the special school satellite requirements") %}
+          {{ richValue(data["mainstream-school-satellite-considerations"]) }}
+        {% endcall %}
+        {% endif %}
+
+        {% call row("Does the trust currently have the experience and governance arrangements in place to support the proposed change?", "/202609v5/trust-experience-and-governance") %}
+          {{ yesNo(data["trust-experience-and-governance-answer"]) }}
+        {% endcall %}
+        {% if data["trust-experience-and-governance-answer"] == "no" %}
+        {% call row("Give details", "/202609v5/trust-experience-and-governance", "why the trust does not have the experience and governance arrangements in place") %}
+          {{ richValue(data["trust-experience-and-governance"]) }}
+        {% endcall %}
+        {% endif %}
+
+        {% call row("Does the proposal meet the requirements set out for a specialist base in the operational guidance?", "/202609v5/specialist-base-considerations") %}
+          {{ yesNo(data["specialist-base-considerations-answer"]) }}
+        {% endcall %}
+        {% if data["specialist-base-considerations-answer"] == "no" %}
+        {% call row("Give details", "/202609v5/specialist-base-considerations", "how the proposal does not meet the specialist base requirements") %}
+          {{ richValue(data["specialist-base-considerations"]) }}
+        {% endcall %}
+        {% endif %}
+
+        {% call row("Are there any existing performance concerns that would make it a risk to increase SEN pupil places?", "/202609v5/academy-performance-concerns") %}
+          {{ yesNo(data["academy-performance-concerns"]) }}
+        {% endcall %}
+        {% if data["academy-performance-concerns"] == "yes" %}
+        {% call row("Give details", "/202609v5/academy-performance-concerns", "existing performance concerns") %}
+          {{ richValue(data["academy-performance-concerns-details"]) }}
+        {% endcall %}
+        {% endif %}
+      </dl>
+    </div>
+  </div>
 </div>
 
 {# Public Sector Equality Duty #}
