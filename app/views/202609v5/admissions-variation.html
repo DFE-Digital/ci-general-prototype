@@ -7,7 +7,7 @@
 
 {% set pageName = "Admissions variation details" %}
 {% set navActive = "significant-changes" %}
-{% set returnTo = "/202609v5/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v5/st-theresas") %}
+{% set returnTo = "/202609v5/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v5/doodle-drive-primary") %}
 
 {% block beforeContent %}
 {{ govukBackLink({
@@ -21,7 +21,7 @@
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
     {% include "202609v5/includes/radio-error-summary.html" %}
-    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
+    <span class="govuk-caption-l">Doodle Drive Primary</span>
     <h1 class="govuk-heading-l">Admissions variation details</h1>
 
     <form method="post" action="">

@@ -119,8 +119,40 @@ const sigChangeRadioFields = {
   'impact-on-send-provision': [
     { name: 'impact-on-send-provision', text: 'Enter details', richText: true }
   ],
+  'impact-on-sen-provision': [
+    { name: 'impact-on-sen-provision', text: 'Select whether the proposal is likely to improve the standard, quality and range of SEN provision' },
+    { name: 'impact-on-sen-provision-details', text: 'Enter details', when: 'impact-on-sen-provision', equals: 'no', richText: true }
+  ],
   'local-send-plans': [
     { name: 'local-send-plans', text: 'Enter details', richText: true }
+  ],
+  'local-sen-plans': [
+    { name: 'local-sen-plans', text: 'Select whether the proposal conflicts with a Local SEN Reform Plan (or equivalent) for SEN, AP and high needs provision' },
+    { name: 'local-sen-plans-details', text: 'Enter details', when: 'local-sen-plans', equals: 'yes', richText: true }
+  ],
+  'satellite-site-arrangement-v5': [
+    { name: 'satellite-site-arrangement-answer', text: 'Select whether this is a genuine expansion of the special school that does not constitute a new school' },
+    { name: 'satellite-site-arrangement', text: 'Enter details', when: 'satellite-site-arrangement-answer', equals: 'no', richText: true }
+  ],
+  'special-school-satellite-considerations-v5': [
+    { name: 'special-school-satellite-considerations-answer', text: 'Select whether the proposal meets the requirements set out for satellite sites in the operational guidance' },
+    { name: 'special-school-satellite-considerations', text: 'Enter details', when: 'special-school-satellite-considerations-answer', equals: 'no', richText: true }
+  ],
+  'mainstream-school-satellite-considerations-v5': [
+    { name: 'mainstream-school-satellite-considerations-answer', text: 'Select whether the proposal meets the requirements set out for special school provision on a satellite site in the operational guidance' },
+    { name: 'mainstream-school-satellite-considerations', text: 'Enter details', when: 'mainstream-school-satellite-considerations-answer', equals: 'no', richText: true }
+  ],
+  'trust-experience-and-governance-v5': [
+    { name: 'trust-experience-and-governance-answer', text: 'Select whether the trust currently has the experience and governance arrangements in place to support the proposed change' },
+    { name: 'trust-experience-and-governance', text: 'Enter details', when: 'trust-experience-and-governance-answer', equals: 'no', richText: true }
+  ],
+  'specialist-base-considerations-v5': [
+    { name: 'specialist-base-considerations-answer', text: 'Select whether the proposal meets the requirements set out for a specialist base in the operational guidance' },
+    { name: 'specialist-base-considerations', text: 'Enter details', when: 'specialist-base-considerations-answer', equals: 'no', richText: true }
+  ],
+  'academy-performance-concerns-v5': [
+    { name: 'academy-performance-concerns', text: 'Select whether there are any existing performance concerns that would make it a risk to increase SEN pupil places' },
+    { name: 'academy-performance-concerns-details', text: 'Enter details', when: 'academy-performance-concerns', equals: 'yes', richText: true }
   ],
   'satellite-site-arrangement': [
     { name: 'satellite-site-arrangement', text: 'Enter details', richText: true }
@@ -170,6 +202,10 @@ function isV4Flow (version) {
 
 function versionPage (req, page) {
   return '/' + req.params.version + '/' + page
+}
+
+function sigChangeProjectPage (version) {
+  return '/' + version + '/' + (version === '202609v5' ? 'doodle-drive-primary' : 'st-theresas')
 }
 
 function requestVersion (req) {
@@ -405,7 +441,9 @@ const sigChangeTaskPages = [
   'ofsted-inspection',
   'ofsted-inspection-question',
   'impact-on-send-provision',
+  'impact-on-sen-provision',
   'local-send-plans',
+  'local-sen-plans',
   'satellite-site-arrangement',
   'special-school-satellite-considerations',
   'mainstream-school-satellite-considerations',
@@ -462,7 +500,7 @@ router.use(function (req, res, next) {
       res.locals.data.section = req.query.section
     }
   } else {
-    const returnUrl = '/' + version + '/st-theresas'
+    const returnUrl = sigChangeProjectPage(version)
     req.session.data['sig-change-return-to'] = returnUrl
     res.locals.data['sig-change-return-to'] = returnUrl
     // Clear query values that autoStoreData may have kept from a previous preview visit
@@ -770,7 +808,7 @@ router.post('/:version/admissions-variation-question', function (req, res, next)
   }
 
   clearRadioErrors(req, 'admissions-variation-question')
-  const returnTo = req.session.data['sig-change-return-to'] || '/' + req.params.version + '/st-theresas'
+  const returnTo = req.session.data['sig-change-return-to'] || sigChangeProjectPage(req.params.version)
   res.redirect(returnTo)
 })
 
@@ -795,7 +833,7 @@ router.post('/:version/ofsted-inspection-question', function (req, res, next) {
   }
 
   clearRadioErrors(req, 'ofsted-inspection-question')
-  const returnTo = req.session.data['sig-change-return-to'] || '/' + req.params.version + '/st-theresas'
+  const returnTo = req.session.data['sig-change-return-to'] || sigChangeProjectPage(req.params.version)
   res.redirect(returnTo)
 })
 
@@ -806,6 +844,18 @@ router.post('/:version/:page', function (req, res, next) {
   const page = req.params.page
   const fields = (page === 'approve' && isV4Flow(req.params.version))
     ? v4ApproveRadioFields
+    : (page === 'satellite-site-arrangement' && req.params.version === '202609v5')
+      ? sigChangeRadioFields['satellite-site-arrangement-v5']
+    : (page === 'special-school-satellite-considerations' && req.params.version === '202609v5')
+      ? sigChangeRadioFields['special-school-satellite-considerations-v5']
+    : (page === 'mainstream-school-satellite-considerations' && req.params.version === '202609v5')
+      ? sigChangeRadioFields['mainstream-school-satellite-considerations-v5']
+    : (page === 'trust-experience-and-governance' && req.params.version === '202609v5')
+      ? sigChangeRadioFields['trust-experience-and-governance-v5']
+    : (page === 'specialist-base-considerations' && req.params.version === '202609v5')
+      ? sigChangeRadioFields['specialist-base-considerations-v5']
+    : (page === 'academy-performance-concerns' && req.params.version === '202609v5')
+      ? sigChangeRadioFields['academy-performance-concerns-v5']
     : (page === 'admissions-variation-recommendation' && isV4Flow(req.params.version))
       ? v4AdmissionsVariationRecommendationRadioFields
       : (page === 'clearance-details' && isV4Flow(req.params.version))
@@ -843,13 +893,13 @@ router.post('/:version/:page', function (req, res, next) {
         delete req.session.data[name]
       })
       req.session.data['admissions-variation-complete'] = 'true'
-      const returnTo = req.session.data['sig-change-return-to'] || '/' + req.params.version + '/st-theresas'
+      const returnTo = req.session.data['sig-change-return-to'] || sigChangeProjectPage(req.params.version)
       return res.redirect(returnTo)
     }
     return res.redirect(taskPageUrl(req, 'admissions-variation-question'))
   }
 
-  const returnTo = req.session.data['sig-change-return-to'] || '/' + req.params.version + '/st-theresas'
+  const returnTo = req.session.data['sig-change-return-to'] || sigChangeProjectPage(req.params.version)
   res.redirect(returnTo)
 })
 

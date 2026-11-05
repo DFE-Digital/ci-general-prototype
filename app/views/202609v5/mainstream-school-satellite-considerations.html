@@ -1,12 +1,12 @@
 {% extends "202609v5/layouts/main-prepare.html" %}
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
 {% from "202609v5/includes/rich-text-editor.html" import appRichTextEditor %}
 
 {% set pageName = "Mainstream school satellite considerations" %}
-{% set fieldName = "mainstream-school-satellite-considerations" %}
 {% set navActive = "significant-changes" %}
-{% set returnTo = "/202609v5/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v5/st-theresas") %}
+{% set returnTo = "/202609v5/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v5/doodle-drive-primary") %}
 
 {% block beforeContent %}
 {{ govukBackLink({
@@ -16,5 +16,71 @@
 {% endblock %}
 
 {% block content %}
-{% include "202609v5/includes/details-task-page.html" %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "202609v5/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">Doodle Drive Primary</span>
+    <h1 class="govuk-heading-l">Mainstream school satellite considerations</h1>
+
+    <form method="post" action="">
+      {% set mainstreamSatelliteNoHtml %}
+      {{ appRichTextEditor({
+        name: "mainstream-school-satellite-considerations",
+        id: "mainstream-school-satellite-considerations",
+        value: data['mainstream-school-satellite-considerations'],
+        label: "Give details",
+        errorMessage: errors['mainstream-school-satellite-considerations']
+      }) }}
+      {% endset %}
+
+      {{ govukRadios({
+        name: "mainstream-school-satellite-considerations-answer",
+        errorMessage: errors['mainstream-school-satellite-considerations-answer'],
+        value: data['mainstream-school-satellite-considerations-answer'],
+        fieldset: {
+          legend: {
+            text: "Does the proposal meet the requirements set out for special school provision on a satellite site in the operational guidance?",
+            classes: "govuk-fieldset__legend--m"
+          }
+        },
+        items: [
+          { value: "yes", text: "Yes" },
+          {
+            value: "no",
+            text: "No",
+            conditional: {
+              html: mainstreamSatelliteNoHtml
+            }
+          },
+          { value: "not-applicable", text: "Not applicable" }
+        ]
+      }) }}
+
+      {% set primaryButtonText = "Save and return" %}
+      {% include "202609v5/includes/task-primary-button.html" %}
+    </form>
+  </div>
+
+  <div class="govuk-grid-column-one-quarter">
+    <aside class="app-related-items" role="complementary">
+      <h2 class="govuk-heading-s" id="subsection-title">Useful information</h2>
+      <nav role="navigation" aria-labelledby="subsection-title">
+        <ul class="govuk-list govuk-!-font-size-16">
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="school-application-form">Application form (opens in a new tab)</a>
+            </p>
+          </li>
+          <li>
+            <p class="govuk-body-s">
+              <a class="govuk-link" target="_blank" rel="noreferrer noopener" href="https://educationgovuk.sharepoint.com.mcas.ms/sites/lvewp00299/SitePages/Our-guidance-and-documents.aspx">Guidance and documents (opens in a new tab)</a>
+            </p>
+          </li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+</div>
+
 {% endblock %}

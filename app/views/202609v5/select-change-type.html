@@ -6,7 +6,7 @@
 
 {% set pageName = "Select change type" %}
 {% set navActive = "significant-changes" %}
-{% set returnTo = "/202609v5/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v5/st-theresas") %}
+{% set returnTo = "/202609v5/preview-document" + (("?section=" + data.section) if data.section else "") if data.returnTo == "preview" else (data["sig-change-return-to"] if data["sig-change-return-to"] else "/202609v5/doodle-drive-primary") %}
 
 {% block beforeContent %}
 {{ govukBackLink({
@@ -19,7 +19,7 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
+    <span class="govuk-caption-l">Doodle Drive Primary</span>
     <h1 class="govuk-heading-l">Select change type</h1>
     <p class="govuk-body">Select the type of significant change for this project. You can select more than one.</p>
 

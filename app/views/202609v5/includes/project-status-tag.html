@@ -1,4 +1,4 @@
-{% set tagId = projectStatusTagId or "project-status-101335" %}
+{% set tagId = projectStatusTagId or "project-status-202915" %}
 {% if data['recorded-decision'] == "Approve" or data['recorded-decision'] == "Approved" %}
 <strong class="govuk-tag govuk-tag--green" id="{{ tagId }}">Approved</strong>
 {% elseif data['recorded-decision'] == "Approve with conditions" or data['recorded-decision'] == "Approved with conditions" %}

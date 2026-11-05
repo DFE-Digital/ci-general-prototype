@@ -1,6 +1,6 @@
 {% extends "202609v5/layouts/main-prepare.html" %}
 
-{% set pageName = "St Theresa's Catholic Primary School" %}
+{% set pageName = "Doodle Drive Primary" %}
 {% set navActive = "significant-changes" %}
 {% set changeTypeLabel = data['change-type'] | changeTypeLabel %}
 
@@ -15,15 +15,15 @@
 {% block content %}
 
 <div class="govuk-width-container">
-    <a class="govuk-back-link" href="significant-changes">Back</a>
+    <a class="govuk-back-link" href="/202609v5/significant-changes">Back</a>
 
     <main class="govuk-main-wrapper" id="main-content" role="main">
 
         <div class="govuk-grid-row">
             <div class="govuk-grid-column-full">
-                <span class="govuk-caption-xl" data-cy=".govuk-caption-xl">URN: 101335</span>
+                <span class="govuk-caption-xl" data-cy=".govuk-caption-xl">URN: 202915</span>
                 <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" data-cy="select-heading">
-                    St Theresa's Catholic Primary School
+                    Doodle Drive Primary
                 </h1>
                 {% include "202609v5/includes/recorded-decision-banner.html" %}
             </div>
@@ -196,51 +196,72 @@
                         <ul class="app-task-list__items govuk-!-padding-left-0">
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="impact-on-send-provision-status" href="impact-on-send-provision">Impact on SEND provision</a>
+                                    <a class="govuk-link" aria-describedby="impact-on-send-provision-status" href="impact-on-sen-provision">Impact on SEN provision</a>
                                 </span>
-                                {{ statusTag("impact-on-send-provision-status", data | taskStatus(["impact-on-send-provision"])) }}
+                                {{ statusTag("impact-on-send-provision-status", data | taskStatus(["impact-on-sen-provision"])) }}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
-                                    <a class="govuk-link" aria-describedby="local-send-plans-status" href="local-send-plans">Local SEND plans</a>
+                                    <a class="govuk-link" aria-describedby="local-send-plans-status" href="local-sen-plans">Local SEN plans</a>
                                 </span>
-                                {{ statusTag("local-send-plans-status", data | taskStatus(["local-send-plans"])) }}
+                                {{ statusTag("local-send-plans-status", data | taskStatus([
+                                  "local-sen-plans",
+                                  { when: "local-sen-plans", equals: "yes", field: "local-sen-plans-details" }
+                                ])) }}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="satellite-site-arrangement-status" href="satellite-site-arrangement">Satellite site arrangement</a>
                                 </span>
-                                {{ statusTag("satellite-site-arrangement-status", data | taskStatus(["satellite-site-arrangement"])) }}
+                                {{ statusTag("satellite-site-arrangement-status", data | taskStatus([
+                                  "satellite-site-arrangement-answer",
+                                  { when: "satellite-site-arrangement-answer", equals: "no", field: "satellite-site-arrangement" }
+                                ])) }}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="special-school-satellite-considerations-status" href="special-school-satellite-considerations">Special school satellite site considerations</a>
                                 </span>
-                                {{ statusTag("special-school-satellite-considerations-status", data | taskStatus(["special-school-satellite-considerations"])) }}
+                                {{ statusTag("special-school-satellite-considerations-status", data | taskStatus([
+                                  "special-school-satellite-considerations-answer",
+                                  { when: "special-school-satellite-considerations-answer", equals: "no", field: "special-school-satellite-considerations" }
+                                ])) }}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="mainstream-school-satellite-considerations-status" href="mainstream-school-satellite-considerations">Mainstream school satellite considerations</a>
                                 </span>
-                                {{ statusTag("mainstream-school-satellite-considerations-status", data | taskStatus(["mainstream-school-satellite-considerations"])) }}
+                                {{ statusTag("mainstream-school-satellite-considerations-status", data | taskStatus([
+                                  "mainstream-school-satellite-considerations-answer",
+                                  { when: "mainstream-school-satellite-considerations-answer", equals: "no", field: "mainstream-school-satellite-considerations" }
+                                ])) }}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="trust-experience-and-governance-status" href="trust-experience-and-governance">Trust experience and governance</a>
                                 </span>
-                                {{ statusTag("trust-experience-and-governance-status", data | taskStatus(["trust-experience-and-governance"])) }}
+                                {{ statusTag("trust-experience-and-governance-status", data | taskStatus([
+                                  "trust-experience-and-governance-answer",
+                                  { when: "trust-experience-and-governance-answer", equals: "no", field: "trust-experience-and-governance" }
+                                ])) }}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="specialist-base-considerations-status" href="specialist-base-considerations">Specialist base considerations</a>
                                 </span>
-                                {{ statusTag("specialist-base-considerations-status", data | taskStatus(["specialist-base-considerations"])) }}
+                                {{ statusTag("specialist-base-considerations-status", data | taskStatus([
+                                  "specialist-base-considerations-answer",
+                                  { when: "specialist-base-considerations-answer", equals: "no", field: "specialist-base-considerations" }
+                                ])) }}
                             </li>
                             <li class="app-task-list__item">
                                 <span class="app-task-list__task-name">
                                     <a class="govuk-link" aria-describedby="academy-performance-concerns-status" href="academy-performance-concerns">Academy performance concerns</a>
                                 </span>
-                                {{ statusTag("academy-performance-concerns-status", data | taskStatus(["academy-performance-concerns"])) }}
+                                {{ statusTag("academy-performance-concerns-status", data | taskStatus([
+                                  "academy-performance-concerns",
+                                  { when: "academy-performance-concerns", equals: "yes", field: "academy-performance-concerns-details" }
+                                ])) }}
                             </li>
                         </ul>
                     </div>
