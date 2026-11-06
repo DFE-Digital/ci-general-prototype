@@ -22,6 +22,142 @@ function hasRadioValue (value) {
   return String(value).trim() !== ''
 }
 
+const v5DecisionTasks = [
+  {
+    title: 'Decision and implementation dates',
+    page: 'confirm-project-dates',
+    fields: [
+      ['proposed-decision-date-day', 'proposed-decision-date-month', 'proposed-decision-date-year'],
+      ['proposed-implementation-date-day', 'proposed-implementation-date-month', 'proposed-implementation-date-year']
+    ]
+  },
+  {
+    title: 'Admissions variation details',
+    page: 'admissions-variation',
+    fields: [
+      'admissions-variation-required',
+      { when: 'admissions-variation-required', equals: 'yes', field: 'admissions-variation-la-supportive' },
+      { when: 'admissions-variation-required', equals: 'yes', field: 'admissions-variation-pupil-place-planning-supportive' },
+      { when: 'admissions-variation-required', equals: 'yes', field: 'admissions-variation-admissions-team-supportive' }
+    ]
+  },
+  { title: 'Consultation', page: 'consultation', fields: ['consultation-carried-out'] },
+  { title: 'Local authority objections', page: 'la-objections', fields: ['la-objections-raised'] },
+  {
+    title: 'Religious bodies',
+    page: 'religious-bodies',
+    fields: ['religious-bodies-consulted', 'religious-bodies-objections-raised', 'religious-bodies-consent-granted']
+  },
+  {
+    title: 'Other stakeholder engagement',
+    page: 'stakeholder-engagement',
+    fields: [
+      'stakeholder-engagement-carried-out',
+      'stakeholder-engagement-objections-raised',
+      'stakeholder-engagement-consultation-included-admissions-variation'
+    ]
+  },
+  {
+    title: 'Ofsted',
+    page: 'ofsted-inspection',
+    fields: [
+      ['ofsted-inspection-date-day', 'ofsted-inspection-date-month', 'ofsted-inspection-date-year'],
+      { when: 'ofsted-inspection-framework', equals: 'pre-2024-09-19', field: 'ofsted-inspection-considered' },
+      { when: 'ofsted-inspection-framework', equals: '2024-09-19-to-2025-11-09', field: 'ofsted-inspection-leadership-education' },
+      { when: 'ofsted-inspection-framework', equals: 'post-2025-11-09', field: 'ofsted-inspection-evaluation-standard' }
+    ]
+  },
+  { title: 'Impact on SEN provision', page: 'impact-on-sen-provision', fields: ['impact-on-sen-provision'] },
+  {
+    title: 'Local SEN plans',
+    page: 'local-sen-plans',
+    fields: ['local-sen-plans', { when: 'local-sen-plans', equals: 'yes', field: 'local-sen-plans-details' }]
+  },
+  {
+    title: 'Satellite site arrangement',
+    page: 'satellite-site-arrangement',
+    fields: ['satellite-site-arrangement-answer', { when: 'satellite-site-arrangement-answer', equals: 'no', field: 'satellite-site-arrangement' }]
+  },
+  {
+    title: 'Special school satellite site considerations',
+    page: 'special-school-satellite-considerations',
+    fields: [
+      'special-school-satellite-considerations-answer',
+      { when: 'special-school-satellite-considerations-answer', equals: 'no', field: 'special-school-satellite-considerations' }
+    ]
+  },
+  {
+    title: 'Mainstream school satellite considerations',
+    page: 'mainstream-school-satellite-considerations',
+    fields: [
+      'mainstream-school-satellite-considerations-answer',
+      { when: 'mainstream-school-satellite-considerations-answer', equals: 'no', field: 'mainstream-school-satellite-considerations' }
+    ]
+  },
+  {
+    title: 'Trust experience and governance',
+    page: 'trust-experience-and-governance',
+    fields: [
+      'trust-experience-and-governance-answer',
+      { when: 'trust-experience-and-governance-answer', equals: 'no', field: 'trust-experience-and-governance' }
+    ]
+  },
+  {
+    title: 'Specialist base considerations',
+    page: 'specialist-base-considerations',
+    fields: [
+      'specialist-base-considerations-answer',
+      { when: 'specialist-base-considerations-answer', equals: 'no', field: 'specialist-base-considerations' }
+    ]
+  },
+  {
+    title: 'Academy performance concerns',
+    page: 'academy-performance-concerns',
+    fields: [
+      'academy-performance-concerns',
+      { when: 'academy-performance-concerns', equals: 'yes', field: 'academy-performance-concerns-details' }
+    ]
+  },
+  { title: 'Public Sector Equality Duty', page: 'psed', fields: ['psed-considered', 'psed-disproportionate-impact'] },
+  { title: 'Land transaction application', page: 'land-transaction', fields: ['land-transaction-required', 'land-transaction-team-consented'] },
+  { title: 'Planning permission', page: 'planning-permission', fields: ['planning-permission-required'] },
+  { title: 'Funding', page: 'funding', fields: ['funding-considered'] },
+  { title: 'Financial Health Assessment (FHA) outcomes', page: 'fha-outcomes', fields: ['fha-outcomes-recorded'] },
+  { title: 'HQTF consideration', page: 'high-quality-inclusive-education', fields: ['hqie-supports'] },
+  { title: 'Significant change recommendation', page: 'approve', fields: ['recommendation'] },
+  {
+    title: 'Admissions variation recommendation',
+    page: 'admissions-variation-recommendation',
+    fields: ['admissions-variation-recommendation']
+  },
+  { title: 'Clearance details', page: 'clearance-details', fields: ['clearance-details-1', 'clearance-details-2'] }
+]
+
+function isTaskFieldFilled (data, field) {
+  if (Array.isArray(field)) {
+    return field.every(function (key) {
+      return hasRadioValue(data[key])
+    })
+  }
+  if (field && typeof field === 'object') {
+    return data[field.when] !== field.equals || hasRadioValue(data[field.field])
+  }
+  return hasRadioValue(data[field])
+}
+
+function incompleteV5DecisionTasks (data) {
+  return v5DecisionTasks.filter(function (task) {
+    return !task.fields.every(function (field) {
+      return isTaskFieldFilled(data, field)
+    })
+  }).map(function (task) {
+    return {
+      text: 'Complete ' + task.title,
+      href: '/202609v5/' + task.page
+    }
+  })
+}
+
 const sigChangeRadioFields = {
   'admissions-variation': [
     { name: 'admissions-variation-required', text: 'Select whether an admissions variation is required' }
@@ -544,14 +680,20 @@ router.use(function (req, res, next) {
   const match = req.path.match(/^\/(202609v3|202609v4|202609v5)\/([^/]+)\/?$/)
   const page = match ? match[2] : null
   const errorsState = req.session.data && req.session.data['radio-errors']
+  const taskErrors = req.session.data && req.session.data['record-decision-task-errors']
 
+  let errorList = []
   if (errorsState && page === errorsState.page) {
-    res.locals.errorList = errorsState.errorList
+    errorList = errorsState.errorList
     res.locals.errors = errorsState.errors
   } else {
-    res.locals.errorList = []
     res.locals.errors = {}
   }
+
+  if (page === 'record-the-decision' && taskErrors) {
+    errorList = errorList.concat(taskErrors)
+  }
+  res.locals.errorList = errorList
 
   next()
 })
@@ -564,12 +706,28 @@ router.post('/:version/decision', function (req, res, next) {
     req.session.data = {}
   }
 
+  const taskErrorList = req.params.version === '202609v5'
+    ? incompleteV5DecisionTasks(req.session.data)
+    : []
+  if (taskErrorList.length) {
+    req.session.data['record-decision-task-errors'] = taskErrorList
+    req.session.data['pending-recorded-decision'] = req.body['recorded-decision']
+    delete req.session.data['recorded-decision']
+    delete req.session.data['recorded-decision-date']
+  } else {
+    delete req.session.data['record-decision-task-errors']
+  }
+
   const errorList = radioErrorList(req.body, sigChangeRadioFields['record-the-decision'])
   if (errorList.length) {
     storeRadioErrors(req, 'record-the-decision', errorList)
+  } else {
+    clearRadioErrors(req, 'record-the-decision')
+  }
+
+  if (errorList.length || taskErrorList.length) {
     return res.redirect('/' + req.params.version + '/record-the-decision')
   }
-  clearRadioErrors(req, 'record-the-decision')
 
   if (isV4Flow(req.params.version) && req.body['recorded-decision'] === 'Approve') {
     req.session.data['pending-recorded-decision'] = 'Approve'
