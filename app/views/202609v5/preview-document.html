@@ -217,11 +217,11 @@
     </h3>
   </div>
   <div class="govuk-accordion__section-content{% if changeAtTop %} app-risk-accordion-content{% endif %}" id="overview-accordion-content-{{ id }}" aria-labelledby="overview-accordion-heading-{{ id }}" role="region">
-    {% if changeHref and changeAtTop %}
+    {% if changeHref and changeAtTop and not data['recorded-decision'] %}
     <a class="govuk-link app-risk-accordion-change-link" href="{{ changeHref }}">Change<span class="govuk-visually-hidden"> {{ title | lower }}</span></a>
     {% endif %}
     {{ content | safe }}
-    {% if changeHref and not changeAtTop %}
+    {% if changeHref and not changeAtTop and not data['recorded-decision'] %}
     <p class="govuk-body app-accordion-change-link"><a class="govuk-link" href="{{ changeHref }}">Change<span class="govuk-visually-hidden"> {{ title | lower }}</span></a></p>
     {% endif %}
   </div>
