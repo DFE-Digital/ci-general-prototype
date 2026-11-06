@@ -593,10 +593,10 @@
             {% endif %}
           {% endcall %}
           {% endif %}
-          {% call row("Enter who cleared the significant change in Regions Group", "/202609v5/clearance-details", "Regions Group clearance") %}
+          {% call row("Enter the full name of the person who cleared the significant change in Regions Group", "/202609v5/clearance-details", "Regions Group clearance") %}
             {{ value(data["clearance-details-1"]) }}
           {% endcall %}
-          {% call row("Enter who cleared the significant change from Trust Regulation (formerly known as SFSO)", "/202609v5/clearance-details", "Trust Regulation clearance") %}
+          {% call row("Enter the full name of the person who cleared the significant change from Trust Regulation (formerly known as SFSO)", "/202609v5/clearance-details", "Trust Regulation clearance") %}
             {{ value(data["clearance-details-2"]) }}
           {% endcall %}
         </section>

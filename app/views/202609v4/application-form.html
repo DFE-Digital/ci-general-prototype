@@ -41,6 +41,28 @@
                     <a class="govuk-link govuk-!-padding-left-50" href="#">Change</a>
                     {% endif %}
                 </p>
+                <p class="govuk-body govuk-!-margin-bottom-1">
+                    Regions Group clearance:
+                    {% if data['clearance-details-1'] %}
+                    {{ data['clearance-details-1'] }}
+                    {% else %}
+                    <span class="empty">Empty</span>
+                    {% endif %}
+                    {% if not data['recorded-decision'] %}
+                    <a class="govuk-link govuk-!-padding-left-50" href="clearance-details">Change</a>
+                    {% endif %}
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-5">
+                    Trust Regulation (formerly known as SFSO) clearance:
+                    {% if data['clearance-details-2'] %}
+                    {{ data['clearance-details-2'] }}
+                    {% else %}
+                    <span class="empty">Empty</span>
+                    {% endif %}
+                    {% if not data['recorded-decision'] %}
+                    <a class="govuk-link govuk-!-padding-left-50" href="clearance-details">Change</a>
+                    {% endif %}
+                </p>
                 <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-5">
                     {% include "202609v4/includes/project-status-tag.html" %}
                 </p>
@@ -59,11 +81,13 @@
                                 Application form
                             </a>
                         </li>
+                        {% if data['recorded-decision'] %}
                         <li class="moj-sub-navigation__item" data-cy="record_decision_menu">
                             <a class="moj-sub-navigation__link" href="decision">
                                 Decision
                             </a>
                         </li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>

@@ -1,6 +1,7 @@
 {% extends "202609v5/layouts/main-prepare.html" %}
 
 {% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
 
 {% set pageName = "Decision" %}
 {% set navActive = "significant-changes" %}
@@ -41,6 +42,28 @@
                     <a class="govuk-link govuk-!-padding-left-50" href="#">Change</a>
                     {% endif %}
                 </p>
+                <p class="govuk-body govuk-!-margin-bottom-1">
+                    Regions Group clearance:
+                    {% if data['clearance-details-1'] %}
+                    {{ data['clearance-details-1'] }}
+                    {% else %}
+                    <span class="empty">Empty</span>
+                    {% endif %}
+                    {% if not data['recorded-decision'] %}
+                    <a class="govuk-link govuk-!-padding-left-50" href="clearance-details">Change</a>
+                    {% endif %}
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-5">
+                    Trust Regulation (formerly known as SFSO) clearance:
+                    {% if data['clearance-details-2'] %}
+                    {{ data['clearance-details-2'] }}
+                    {% else %}
+                    <span class="empty">Empty</span>
+                    {% endif %}
+                    {% if not data['recorded-decision'] %}
+                    <a class="govuk-link govuk-!-padding-left-50" href="clearance-details">Change</a>
+                    {% endif %}
+                </p>
                 <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-5">
                     {% include "202609v5/includes/project-status-tag.html" %}
                 </p>
@@ -59,11 +82,13 @@
                                 Application form
                             </a>
                         </li>
+                        {% if data['recorded-decision'] %}
                         <li class="moj-sub-navigation__item" data-cy="record_decision_menu">
                             <a class="moj-sub-navigation__link" aria-current="page" href="decision">
                                 Decision
                             </a>
                         </li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>
@@ -74,6 +99,51 @@
                 {% if data['recorded-decision'] %}
                 <h2 class="govuk-heading-l">Record a decision</h2>
                 <p class="govuk-body">A decision of {{ data['recorded-decision'] | lower }} has been recorded for this project.</p>
+                {{ govukSummaryList({
+                  rows: [
+                    {
+                      key: { text: "Decision" },
+                      value: { text: data['recorded-decision'] }
+                    },
+                    {
+                      key: { text: "Conditions" },
+                      value: { text: "Yes" if data['were-any-conditions-set'] == "yes" else ("No" if data['were-any-conditions-set'] == "no" else "Not applicable") }
+                    }
+                  ] if data['recorded-decision'] == "Approve" or data['recorded-decision'] == "Approved with conditions" else [
+                    {
+                      key: { text: "Decision" },
+                      value: { text: data['recorded-decision'] }
+                    }
+                  ]
+                }) }}
+                {% if data['recorded-decision'] == "Approve" or data['recorded-decision'] == "Approved with conditions" %}
+                  {% if data['were-any-conditions-set'] == "yes" and data['were-any-conditions-set-details'] %}
+                  <h3 class="govuk-heading-s">Conditions details</h3>
+                  <div class="app-project-rationale-summary">{{ data['were-any-conditions-set-details'] | safe }}</div>
+                  {% endif %}
+                {% elseif data['recorded-decision'] == "Decline" %}
+                <h3 class="govuk-heading-s">Why was this project declined?</h3>
+                <div class="app-project-rationale-summary">{{ data['decline-reason'] | safe }}</div>
+                {% elseif data['recorded-decision'] == "Withdraw" %}
+                <h3 class="govuk-heading-s">Why was this project withdrawn?</h3>
+                <div class="app-project-rationale-summary">{{ data['withdraw-reason'] | safe }}</div>
+                {% endif %}
+                {{ govukSummaryList({
+                  rows: [
+                    {
+                      key: { text: "Decision maker's role" },
+                      value: { text: data['who-made-this-decision'] or "Empty" }
+                    },
+                    {
+                      key: { text: "Decision maker's name" },
+                      value: { text: data['decision-maker-name'] or "Empty" }
+                    },
+                    {
+                      key: { text: "Date of decision" },
+                      value: { text: data['recorded-decision-date'] or "Empty" }
+                    }
+                  ]
+                }) }}
                 {% else %}
                 <h2 class="govuk-heading-l">Record a decision</h2>
                 <p class="govuk-body">You have not recorded a decision for this project.</p>

@@ -5,6 +5,7 @@
 {% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "govuk/components/button/macro.njk" import govukButton %}
 {% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+{% from "govuk/components/details/macro.njk" import govukDetails %}
 {% from "202609v4/includes/rich-text-editor.html" import appRichTextEditor %}
 
 {% set pageName = "Consultation" %}
@@ -26,8 +27,7 @@
     <span class="govuk-caption-l">St Theresa's Catholic Primary School</span>
     <h1 class="govuk-heading-l">Consultation</h1>
 
-    <h2 class="govuk-heading-m">Details from the application form</h2>
-
+    {% set consultationDetailsHtml %}
     {{ govukSummaryList({
       rows: [
         {
@@ -71,6 +71,12 @@
           }
         }
       ]
+    }) }}
+    {% endset %}
+
+    {{ govukDetails({
+      summaryText: "Details from the application form",
+      html: consultationDetailsHtml
     }) }}
 
     <form method="post" action="">

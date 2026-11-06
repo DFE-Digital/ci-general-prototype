@@ -22,7 +22,7 @@
     {% include "202609v5/includes/radio-error-summary.html" %}
     <span class="govuk-caption-l">Doodle Drive Primary</span>
     <h1 class="govuk-heading-l">Clearance details</h1>
-    <p class="govuk-body">Enter clearance details for this significant change.</p>
+    <p class="govuk-body">Clearance is given after a review. In Regions Group and Trust Regulation this would typically be by a Grade 7.</p>
 
     <form method="post" action="/202609v5/clearance-details">
 
@@ -32,7 +32,7 @@
         value: data['clearance-details-1'],
         errorMessage: errors['clearance-details-1'],
         label: {
-          text: "Enter who cleared the significant change in Regions Group"
+          text: "Enter the full name of the person who cleared the significant change in Regions Group"
         }
       }) }}
 
@@ -42,7 +42,7 @@
         value: data['clearance-details-2'],
         errorMessage: errors['clearance-details-2'],
         label: {
-          text: "Enter who cleared the significant change from Trust Regulation (formerly known as SFSO)"
+          text: "Enter the full name of the person who cleared the significant change from Trust Regulation (formerly known as SFSO)"
         }
       }) }}
 

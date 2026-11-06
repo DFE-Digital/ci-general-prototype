@@ -87,6 +87,13 @@
                                 Application form
                             </a>
                         </li>
+                        {% if data['recorded-decision'] %}
+                        <li class="moj-sub-navigation__item">
+                            <a class="moj-sub-navigation__link" href="decision">
+                                Decision
+                            </a>
+                        </li>
+                        {% endif %}
                     </ul>
                 </nav>
             </div>

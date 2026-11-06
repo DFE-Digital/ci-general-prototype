@@ -2396,6 +2396,16 @@ body:has(.app-docs-preview) footer {
 	margin-bottom: 0;
 }
 
+.app-accordion-change-link {
+	margin: 24px 0 0;
+	text-align: right;
+}
+
+.app-risk-accordion-content > .app-risk-accordion-change-link {
+	float: right;
+	margin-left: 16px;
+}
+
 .app-do-dont {
 	border: 1px solid #b1b4b6;
 	background: #ffffff;
