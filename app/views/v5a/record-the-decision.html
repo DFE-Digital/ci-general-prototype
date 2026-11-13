@@ -1,0 +1,54 @@
+{% extends "v5a/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+
+{% set pageName = "Record the decision" %}
+{% set navActive = "significant-changes" %}
+
+{% set backHref = "/v5a/approve-check-answers" if data['approve-return-to-check'] else "/v5a/preview-document" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: backHref
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "v5a/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">Record the decision</span>
+    <h1 class="govuk-heading-l">Record the decision</h1>
+
+    <form method="post" action="/v5a/decision">
+
+      {{ govukRadios({
+        name: "recorded-decision",
+        errorMessage: errors['recorded-decision'],
+        value: data['recorded-decision'] or data['pending-recorded-decision'],
+        fieldset: {
+          legend: {
+            text: "Record the decision",
+            classes: "govuk-visually-hidden"
+          }
+        },
+        items: [
+          { value: "Approve", text: "Approve" },
+          { value: "Withdraw", text: "Withdraw" },
+          { value: "Decline", text: "Decline" }
+        ]
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}

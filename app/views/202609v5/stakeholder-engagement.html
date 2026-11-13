@@ -136,7 +136,10 @@
       {{ govukInput({
         id: "stakeholder-engagement-supporting-evidence",
         name: "stakeholder-engagement-supporting-evidence",
-        value: data['stakeholder-engagement-supporting-evidence'] or "sharepoint.edu.gov.uk/evidence",
+        value: data['stakeholder-engagement-supporting-evidence'],
+        hint: {
+          text: "This must be a SharePoint link"
+        },
         label: {
           text: "Supporting evidence",
           classes: "govuk-label--m"

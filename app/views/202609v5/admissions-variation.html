@@ -51,7 +51,10 @@
       {{ govukInput({
         id: "admissions-variation-supporting-evidence",
         name: "admissions-variation-supporting-evidence",
-        value: data['admissions-variation-supporting-evidence'] or "sharepoint.edu.gov.uk/evidence",
+        value: data['admissions-variation-supporting-evidence'],
+        hint: {
+          text: "This must be a SharePoint link"
+        },
         label: {
           text: "Supporting evidence",
           classes: "govuk-label--m"

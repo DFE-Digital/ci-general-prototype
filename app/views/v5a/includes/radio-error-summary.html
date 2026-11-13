@@ -1,0 +1,7 @@
+{% from "govuk/components/error-summary/macro.njk" import govukErrorSummary %}
+{% if errorList and errorList.length %}
+{{ govukErrorSummary({
+  titleText: "There is a problem",
+  errorList: errorList
+}) }}
+{% endif %}

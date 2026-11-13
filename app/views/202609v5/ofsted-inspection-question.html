@@ -82,7 +82,10 @@
       {{ govukInput({
         id: "ofsted-inspection-supporting-evidence",
         name: "ofsted-inspection-supporting-evidence",
-        value: data['ofsted-inspection-supporting-evidence'] or "sharepoint.edu.gov.uk/evidence",
+        value: data['ofsted-inspection-supporting-evidence'],
+        hint: {
+          text: "This must be a SharePoint link"
+        },
         label: {
           text: "Supporting evidence",
           classes: "govuk-label--m"

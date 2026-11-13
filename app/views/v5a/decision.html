@@ -1,0 +1,167 @@
+{% extends "v5a/layouts/main-prepare.html" %}
+
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "govuk/components/summary-list/macro.njk" import govukSummaryList %}
+
+{% set pageName = "Decision" %}
+{% set navActive = "significant-changes" %}
+{% set changeTypeLabel = data['change-type'] | changeTypeLabel %}
+
+{% block content %}
+
+<div class="govuk-width-container">
+    <a class="govuk-back-link" href="significant-changes">Back</a>
+
+    <main class="govuk-main-wrapper" id="main-content" role="main">
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-full">
+                <span class="govuk-caption-xl" data-cy=".govuk-caption-xl">URN: 202915</span>
+                <h1 class="govuk-heading-xl govuk-!-margin-bottom-2" data-cy="select-heading">
+                    Doodle Drive Primary
+                </h1>
+                {% include "v5a/includes/recorded-decision-banner.html" %}
+            </div>
+            <div class="govuk-grid-column-full">
+                <p class="govuk-body govuk-!-margin-bottom-1">
+                    Trust: Appleby Grammar School (10059089)
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-1">
+                    Tier: 1
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-1">
+                    Type: {{ changeTypeLabel }}
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-5">
+                    Project owner:
+                    <span data-id="assigned-user">Your name</span>
+                    {% if not data['recorded-decision'] %}
+                    <a class="govuk-link govuk-!-padding-left-50" href="#">Change</a>
+                    {% endif %}
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-1">
+                    Regions Group clearance:
+                    {% if data['clearance-details-1'] %}
+                    {{ data['clearance-details-1'] }}
+                    {% else %}
+                    <span class="empty">Empty</span>
+                    {% endif %}
+                    {% if not data['recorded-decision'] %}
+                    <a class="govuk-link govuk-!-padding-left-50" href="clearance-details">Change</a>
+                    {% endif %}
+                </p>
+                <p class="govuk-body govuk-!-margin-bottom-5">
+                    Trust Regulation (formerly known as SFSO) clearance:
+                    {% if data['clearance-details-2'] %}
+                    {{ data['clearance-details-2'] }}
+                    {% else %}
+                    <span class="empty">Empty</span>
+                    {% endif %}
+                    {% if not data['recorded-decision'] %}
+                    <a class="govuk-link govuk-!-padding-left-50" href="clearance-details">Change</a>
+                    {% endif %}
+                </p>
+                <p class="govuk-!-margin-top-0 govuk-!-margin-bottom-5">
+                    {% include "v5a/includes/project-status-tag.html" %}
+                </p>
+            </div>
+
+            <div class="govuk-grid-column-full">
+                <nav class="moj-sub-navigation" aria-label="Sub navigation">
+                    <ul class="moj-sub-navigation__list govuk-!-margin-top-6">
+                        <li class="moj-sub-navigation__item">
+                            <a class="moj-sub-navigation__link" href="doodle-drive-primary">
+                                Project details
+                            </a>
+                        </li>
+                        <li class="moj-sub-navigation__item">
+                            <a class="moj-sub-navigation__link" href="application-form">
+                                Application form
+                            </a>
+                        </li>
+                        {% if data['recorded-decision'] %}
+                        <li class="moj-sub-navigation__item" data-cy="record_decision_menu">
+                            <a class="moj-sub-navigation__link" aria-current="page" href="decision">
+                                Decision
+                            </a>
+                        </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            </div>
+        </div>
+
+        <div class="govuk-grid-row">
+            <div class="govuk-grid-column-two-thirds">
+                {% if data['recorded-decision'] %}
+                <h2 class="govuk-heading-l">Record a decision</h2>
+                <p class="govuk-body">A decision of {{ data['recorded-decision'] | lower }} has been recorded for this project.</p>
+                {{ govukSummaryList({
+                  rows: [
+                    {
+                      key: { text: "Decision" },
+                      value: { text: data['recorded-decision'] }
+                    },
+                    {
+                      key: { text: "Conditions" },
+                      value: { text: "Yes" if data['were-any-conditions-set'] == "yes" else ("No" if data['were-any-conditions-set'] == "no" else "Not applicable") }
+                    }
+                  ] if data['recorded-decision'] == "Approve" or data['recorded-decision'] == "Approved with conditions" else [
+                    {
+                      key: { text: "Decision" },
+                      value: { text: data['recorded-decision'] }
+                    }
+                  ]
+                }) }}
+                {% if data['recorded-decision'] == "Approve" or data['recorded-decision'] == "Approved with conditions" %}
+                  {% if data['were-any-conditions-set'] == "yes" and data['were-any-conditions-set-details'] %}
+                  <h3 class="govuk-heading-s">Conditions details</h3>
+                  <div class="app-project-rationale-summary">{{ data['were-any-conditions-set-details'] | safe }}</div>
+                  {% endif %}
+                {% elseif data['recorded-decision'] == "Decline" %}
+                <h3 class="govuk-heading-s">Why was this project declined?</h3>
+                <div class="app-project-rationale-summary">{{ data['decline-reason'] | safe }}</div>
+                {% elseif data['recorded-decision'] == "Withdraw" %}
+                <h3 class="govuk-heading-s">Why was this project withdrawn?</h3>
+                <div class="app-project-rationale-summary">{{ data['withdraw-reason'] | safe }}</div>
+                {% endif %}
+                {{ govukSummaryList({
+                  rows: [
+                    {
+                      key: { text: "Decision maker's role" },
+                      value: { text: data['who-made-this-decision'] or "Empty" }
+                    },
+                    {
+                      key: { text: "Decision maker's name" },
+                      value: { text: data['decision-maker-name'] or "Empty" }
+                    },
+                    {
+                      key: { text: "Date of decision" },
+                      value: { text: data['recorded-decision-date'] or "Empty" }
+                    }
+                  ]
+                }) }}
+                {% else %}
+                <h2 class="govuk-heading-l">Record a decision</h2>
+                <p class="govuk-body">You have not recorded a decision for this project.</p>
+                <p class="govuk-body">You can only record a decision when a:</p>
+                <ul class="govuk-list govuk-list--bullet">
+                    <li>project has been assigned to somebody</li>
+                    <li>proposed decision date has been entered</li>
+                    <li>proposed conversion date has been entered</li>
+                    <li>trust name is entered for Form a MAT projects</li>
+                    <li>trust reference number is entered for Form a MAT projects</li>
+                    <li>decision has been made</li>
+                </ul>
+
+                {{ govukButton({
+                  text: "Record a decision",
+                  href: "record-the-decision"
+                }) }}
+                {% endif %}
+            </div>
+        </div>
+    </main>
+</div>
+
+{% endblock %}

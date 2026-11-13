@@ -94,7 +94,10 @@
       {{ govukInput({
         id: "land-transaction-supporting-evidence",
         name: "land-transaction-supporting-evidence",
-        value: data['land-transaction-supporting-evidence'] or "sharepoint.edu.gov.uk/evidence",
+        value: data['land-transaction-supporting-evidence'],
+        hint: {
+          text: "This must be a SharePoint link"
+        },
         label: {
           text: "Supporting evidence",
           classes: "govuk-label--m"

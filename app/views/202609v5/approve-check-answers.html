@@ -33,10 +33,12 @@
     <span class="govuk-caption-l">Record the decision</span>
     <h1 class="govuk-heading-l">Check your answers before recording this decision</h1>
 
-    {{ govukWarningText({
-      text: "You cannot make changes to this project in Prepare after you record a decision.",
-      iconFallbackText: "Warning"
-    }) }}
+    {% if decisionText == "Approve" or decisionText == "Approve with conditions" or decisionText == "Approved with conditions" %}
+      {{ govukWarningText({
+        text: "You cannot make changes to this project in Prepare after you record a decision.",
+        iconFallbackText: "Warning"
+      }) }}
+    {% endif %}
 
     <form method="post" action="/202609v5/approve-check-answers">
       {% set decisionRow = {

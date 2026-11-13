@@ -1,0 +1,45 @@
+{% extends "v5a/layouts/main-prepare.html" %}
+
+{% from "govuk/components/back-link/macro.njk" import govukBackLink %}
+{% from "govuk/components/button/macro.njk" import govukButton %}
+{% from "v5a/includes/rich-text-editor.html" import appRichTextEditor %}
+
+{% set pageName = "Why was this project declined?" %}
+{% set navActive = "significant-changes" %}
+
+{% set backHref = "/v5a/approve-check-answers" if data['approve-return-to-check'] else "/v5a/record-the-decision" %}
+
+{% block beforeContent %}
+{{ govukBackLink({
+  text: "Back",
+  href: backHref
+}) }}
+{% endblock %}
+
+{% block content %}
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    {% include "v5a/includes/radio-error-summary.html" %}
+    <span class="govuk-caption-l">Record the decision</span>
+    <h1 class="govuk-heading-l">Why was this project declined?</h1>
+
+    <form method="post" action="/v5a/decline-reason">
+
+      {{ appRichTextEditor({
+        name: "decline-reason",
+        id: "decline-reason",
+        value: data['decline-reason'],
+        label: "Give details",
+        errorMessage: errors['decline-reason']
+      }) }}
+
+      {{ govukButton({
+        text: "Continue"
+      }) }}
+
+    </form>
+  </div>
+</div>
+
+{% endblock %}

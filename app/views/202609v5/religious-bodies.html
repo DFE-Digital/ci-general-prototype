@@ -126,7 +126,10 @@
       {{ govukInput({
         id: "religious-bodies-supporting-evidence",
         name: "religious-bodies-supporting-evidence",
-        value: data['religious-bodies-supporting-evidence'] or "sharepoint.edu.gov.uk/evidence",
+        value: data['religious-bodies-supporting-evidence'],
+        hint: {
+          text: "This must be a SharePoint link"
+        },
         label: {
           text: "Supporting evidence",
           classes: "govuk-label--m"

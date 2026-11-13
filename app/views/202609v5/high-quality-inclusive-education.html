@@ -65,7 +65,10 @@
       {{ govukInput({
         id: "high-quality-inclusive-education-supporting-evidence",
         name: "high-quality-inclusive-education-supporting-evidence",
-        value: data['high-quality-inclusive-education-supporting-evidence'] or "sharepoint.edu.gov.uk/evidence",
+        value: data['high-quality-inclusive-education-supporting-evidence'],
+        hint: {
+          text: "This must be a SharePoint link"
+        },
         label: {
           text: "Supporting evidence",
           classes: "govuk-label--m"

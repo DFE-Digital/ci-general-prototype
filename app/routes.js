@@ -145,7 +145,7 @@ function isTaskFieldFilled (data, field) {
   return hasRadioValue(data[field])
 }
 
-function incompleteV5DecisionTasks (data) {
+function incompleteV5DecisionTasks (data, version) {
   return v5DecisionTasks.filter(function (task) {
     return !task.fields.every(function (field) {
       return isTaskFieldFilled(data, field)
@@ -153,7 +153,7 @@ function incompleteV5DecisionTasks (data) {
   }).map(function (task) {
     return {
       text: 'Complete ' + task.title,
-      href: '/202609v5/' + task.page
+      href: '/' + version + '/' + task.page
     }
   })
 }
@@ -310,6 +310,52 @@ const sigChangeRadioFields = {
   ]
 }
 
+const v5ConditionalDetailsFields = {
+  'admissions-variation-question': [
+    { name: 'admissions-variation-la-supportive-details', text: 'Enter details', when: 'admissions-variation-la-supportive', equals: 'no', richText: true },
+    { name: 'admissions-variation-pupil-place-planning-supportive-details', text: 'Enter details', when: 'admissions-variation-pupil-place-planning-supportive', equals: 'no', richText: true },
+    { name: 'admissions-variation-admissions-team-supportive-details', text: 'Enter details', when: 'admissions-variation-admissions-team-supportive', equals: 'no', richText: true }
+  ],
+  consultation: [
+    { name: 'consultation-carried-out-details', text: 'Enter details', when: 'consultation-carried-out', equals: 'no', richText: true }
+  ],
+  'fha-outcomes': [
+    { name: 'fha-outcomes-recorded-details', text: 'Enter details', when: 'fha-outcomes-recorded', equals: 'yes', richText: true }
+  ],
+  funding: [
+    { name: 'funding-source-details', text: 'Enter details', when: 'funding-considered', equals: 'yes', richText: true },
+    { name: 'funding-considered-details', text: 'Enter details', when: 'funding-considered', equals: 'no', richText: true }
+  ],
+  'high-quality-inclusive-education': [
+    { name: 'hqie-supports-details', text: 'Enter details', when: 'hqie-supports', equals: 'yes', richText: true }
+  ],
+  'la-objections': [
+    { name: 'la-objections-raised-yes-details', text: 'Enter details', when: 'la-objections-raised', equals: 'yes', richText: true }
+  ],
+  'land-transaction': [
+    { name: 'land-transaction-required-details', text: 'Enter details', when: 'land-transaction-required', equals: 'no', richText: true },
+    { name: 'land-transaction-team-consented-details', text: 'Enter details', when: 'land-transaction-team-consented', equals: 'no', richText: true }
+  ],
+  'planning-permission': [
+    { name: 'planning-permission-required-details', text: 'Enter details', when: 'planning-permission-required', equals: 'no', richText: true }
+  ],
+  psed: [
+    { name: 'psed-considered-details', text: 'Enter details', when: 'psed-considered', equals: 'no', richText: true },
+    { name: 'psed-some-impact-details', text: 'Enter details', when: 'psed-disproportionate-impact', equals: 'some-impact', richText: true },
+    { name: 'psed-disproportionate-impact-details', text: 'Enter details', when: 'psed-disproportionate-impact', equals: 'likely', richText: true }
+  ],
+  'religious-bodies': [
+    { name: 'religious-bodies-consulted-details', text: 'Enter details', when: 'religious-bodies-consulted', equals: 'no', richText: true },
+    { name: 'religious-bodies-objections-raised-details', text: 'Enter details', when: 'religious-bodies-objections-raised', equals: 'yes', richText: true },
+    { name: 'religious-bodies-consent-granted-details', text: 'Enter details', when: 'religious-bodies-consent-granted', equals: 'no', richText: true }
+  ],
+  'stakeholder-engagement': [
+    { name: 'stakeholder-engagement-carried-out-details', text: 'Enter details', when: 'stakeholder-engagement-carried-out', equals: 'no', richText: true },
+    { name: 'stakeholder-engagement-objections-raised-details', text: 'Enter details', when: 'stakeholder-engagement-objections-raised', equals: 'yes', richText: true },
+    { name: 'stakeholder-engagement-consultation-included-admissions-variation-details', text: 'Enter details', when: 'stakeholder-engagement-consultation-included-admissions-variation', equals: 'no', richText: true }
+  ]
+}
+
 const v4ApproveRadioFields = [
   { name: 'recommendation', text: 'Select a recommendation' },
   { name: 'approve-with-conditions-rationale', text: 'Enter details', when: 'recommendation', equals: 'Approve with conditions', richText: true },
@@ -329,11 +375,16 @@ const v4ClearanceDetailsRadioFields = [
   { name: 'clearance-details-2', text: 'Enter who cleared the significant change from Trust Regulation (formerly known as SFSO)' }
 ]
 
-const sigChangeVersions = ['202609v3', '202609v4', '202609v5']
-const v4FlowVersions = ['202609v4', '202609v5']
+const v5Versions = ['202609v5', 'v5a']
+const sigChangeVersions = ['202609v3', '202609v4'].concat(v5Versions)
+const v4FlowVersions = ['202609v4'].concat(v5Versions)
 
 function isV4Flow (version) {
   return v4FlowVersions.includes(version)
+}
+
+function isV5Flow (version) {
+  return v5Versions.includes(version)
 }
 
 function versionPage (req, page) {
@@ -341,14 +392,14 @@ function versionPage (req, page) {
 }
 
 function sigChangeProjectPage (version) {
-  return '/' + version + '/' + (version === '202609v5' ? 'doodle-drive-primary' : 'st-theresas')
+  return '/' + version + '/' + (isV5Flow(version) ? 'doodle-drive-primary' : 'st-theresas')
 }
 
 function requestVersion (req) {
   if (req.params && req.params.version) {
     return req.params.version
   }
-  const match = String(req.path || '').match(/^\/(202608v2|202609v3|202609v4|202609v5)(?:\/|$)/)
+  const match = String(req.path || '').match(/^\/(202608v2|202609v3|202609v4|202609v5|v5a)(?:\/|$)/)
   return match ? match[1] : '202609v3'
 }
 
@@ -609,7 +660,7 @@ router.use(function (req, res, next) {
     return next()
   }
 
-  const match = req.path.match(/^\/(202608v2|202609v3|202609v4|202609v5)\/([^/]+)\/?$/)
+  const match = req.path.match(/^\/(202608v2|202609v3|202609v4|202609v5|v5a)\/([^/]+)\/?$/)
   if (!match || !sigChangeTaskPages.includes(match[2])) {
     return next()
   }
@@ -654,7 +705,7 @@ router.use(function (req, res, next) {
     return next()
   }
 
-  const match = req.path.match(/^\/(202609v4|202609v5)\/(record-the-decision|approve-conditions|decline-reason|withdraw-reason|approve-decision-maker|approve-decision-date|approve-decision-maker-name)\/?$/)
+  const match = req.path.match(/^\/(202609v4|202609v5|v5a)\/(record-the-decision|approve-conditions|decline-reason|withdraw-reason|approve-decision-maker|approve-decision-date|approve-decision-maker-name)\/?$/)
   if (!match) {
     return next()
   }
@@ -677,7 +728,8 @@ router.use(function (req, res, next) {
 })
 
 router.use(function (req, res, next) {
-  const match = req.path.match(/^\/(202609v3|202609v4|202609v5)\/([^/]+)\/?$/)
+  const match = req.path.match(/^\/(202609v3|202609v4|202609v5|v5a)\/([^/]+)\/?$/)
+  const version = match ? match[1] : null
   const page = match ? match[2] : null
   const errorsState = req.session.data && req.session.data['radio-errors']
   const taskErrors = req.session.data && req.session.data['record-decision-task-errors']
@@ -690,7 +742,7 @@ router.use(function (req, res, next) {
     res.locals.errors = {}
   }
 
-  if (page === 'record-the-decision' && taskErrors) {
+  if (page === 'record-the-decision' && version === '202609v5' && taskErrors) {
     errorList = errorList.concat(taskErrors)
   }
   res.locals.errorList = errorList
@@ -707,7 +759,7 @@ router.post('/:version/decision', function (req, res, next) {
   }
 
   const taskErrorList = req.params.version === '202609v5'
-    ? incompleteV5DecisionTasks(req.session.data)
+    ? incompleteV5DecisionTasks(req.session.data, req.params.version)
     : []
   if (taskErrorList.length) {
     req.session.data['record-decision-task-errors'] = taskErrorList
@@ -959,7 +1011,10 @@ router.post('/:version/admissions-variation-question', function (req, res, next)
     return res.redirect(taskPageUrl(req, 'admissions-variation'))
   }
 
-  const errorList = radioErrorList(req.body, sigChangeRadioFields['admissions-variation-question'])
+  const fields = sigChangeRadioFields['admissions-variation-question'].concat(
+    isV5Flow(req.params.version) ? v5ConditionalDetailsFields['admissions-variation-question'] : []
+  )
+  const errorList = radioErrorList(req.body, fields)
   if (errorList.length) {
     storeRadioErrors(req, 'admissions-variation-question', errorList)
     return res.redirect(taskPageUrl(req, 'admissions-variation-question'))
@@ -984,7 +1039,17 @@ router.post('/:version/ofsted-inspection-question', function (req, res, next) {
     return res.redirect(taskPageUrl(req, 'ofsted-inspection'))
   }
 
-  const errorList = radioErrorList(req.body, [field])
+  const fields = [field]
+  if (isV5Flow(req.params.version)) {
+    fields.push({
+      name: field.details,
+      text: 'Enter details',
+      when: field.name,
+      equals: 'no',
+      richText: true
+    })
+  }
+  const errorList = radioErrorList(req.body, fields)
   if (errorList.length) {
     storeRadioErrors(req, 'ofsted-inspection-question', errorList)
     return res.redirect(taskPageUrl(req, 'ofsted-inspection-question'))
@@ -1002,24 +1067,28 @@ router.post('/:version/:page', function (req, res, next) {
   const page = req.params.page
   const fields = (page === 'approve' && isV4Flow(req.params.version))
     ? v4ApproveRadioFields
-    : (page === 'satellite-site-arrangement' && req.params.version === '202609v5')
+    : (page === 'satellite-site-arrangement' && isV5Flow(req.params.version))
       ? sigChangeRadioFields['satellite-site-arrangement-v5']
-    : (page === 'special-school-satellite-considerations' && req.params.version === '202609v5')
+    : (page === 'special-school-satellite-considerations' && isV5Flow(req.params.version))
       ? sigChangeRadioFields['special-school-satellite-considerations-v5']
-    : (page === 'mainstream-school-satellite-considerations' && req.params.version === '202609v5')
+    : (page === 'mainstream-school-satellite-considerations' && isV5Flow(req.params.version))
       ? sigChangeRadioFields['mainstream-school-satellite-considerations-v5']
-    : (page === 'trust-experience-and-governance' && req.params.version === '202609v5')
+    : (page === 'trust-experience-and-governance' && isV5Flow(req.params.version))
       ? sigChangeRadioFields['trust-experience-and-governance-v5']
-    : (page === 'specialist-base-considerations' && req.params.version === '202609v5')
+    : (page === 'specialist-base-considerations' && isV5Flow(req.params.version))
       ? sigChangeRadioFields['specialist-base-considerations-v5']
-    : (page === 'academy-performance-concerns' && req.params.version === '202609v5')
+    : (page === 'academy-performance-concerns' && isV5Flow(req.params.version))
       ? sigChangeRadioFields['academy-performance-concerns-v5']
     : (page === 'admissions-variation-recommendation' && isV4Flow(req.params.version))
       ? v4AdmissionsVariationRecommendationRadioFields
       : (page === 'clearance-details' && isV4Flow(req.params.version))
         ? v4ClearanceDetailsRadioFields
         : sigChangeRadioFields[page]
-  if (!fields && page !== 'confirm-project-dates') {
+  const conditionalDetails = isV5Flow(req.params.version)
+    ? (v5ConditionalDetailsFields[page] || [])
+    : []
+  const fieldsToValidate = fields && fields.concat(conditionalDetails)
+  if (!fieldsToValidate && page !== 'confirm-project-dates') {
     return next()
   }
 
@@ -1029,7 +1098,7 @@ router.post('/:version/:page', function (req, res, next) {
 
   const errorList = page === 'confirm-project-dates'
     ? confirmProjectDatesErrors(req.body)
-    : radioErrorList(req.body, fields)
+    : radioErrorList(req.body, fieldsToValidate)
 
   if (errorList.length) {
     storeRadioErrors(req, page, errorList)
