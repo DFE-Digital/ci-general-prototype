@@ -2,6 +2,7 @@
 
 {% from "govuk/components/back-link/macro.njk" import govukBackLink %}
 {% from "govuk/components/radios/macro.njk" import govukRadios %}
+{% from "govuk/components/input/macro.njk" import govukInput %}
 {% from "202609v5/includes/rich-text-editor.html" import appRichTextEditor %}
 
 {% set pageName = "Impact on SEN provision" %}
@@ -55,6 +56,19 @@
           },
           { value: "not-applicable", text: "Not applicable" }
         ]
+      }) }}
+
+      {{ govukInput({
+        id: "impact-on-sen-provision-supporting-evidence",
+        name: "impact-on-sen-provision-supporting-evidence",
+        value: data['impact-on-sen-provision-supporting-evidence'],
+        hint: {
+          text: "This must be a SharePoint link"
+        },
+        label: {
+          text: "Supporting evidence",
+          classes: "govuk-label--m"
+        }
       }) }}
 
       {% set primaryButtonText = "Save and return" %}

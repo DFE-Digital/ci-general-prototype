@@ -822,6 +822,9 @@
           {{ richValue(data["impact-on-sen-provision-details"]) }}
         {% endcall %}
         {% endif %}
+        {% call row("Supporting evidence", "/v5a/impact-on-sen-provision", "impact on SEN provision supporting evidence") %}
+          {{ value(data["impact-on-sen-provision-supporting-evidence"]) }}
+        {% endcall %}
 
         {% call row("Does the proposal conflict with a Local SEN Reform Plan (or equivalent) for SEN, AP and high needs provision?", "/v5a/local-sen-plans") %}
           {{ yesNo(data["local-sen-plans"]) }}
@@ -831,6 +834,9 @@
           {{ richValue(data["local-sen-plans-details"]) }}
         {% endcall %}
         {% endif %}
+        {% call row("Supporting evidence", "/v5a/local-sen-plans", "local SEN plans supporting evidence") %}
+          {{ value(data["local-sen-plans-supporting-evidence"]) }}
+        {% endcall %}
 
         {% call row("Is this a genuine expansion of the special school that does not constitute a new school?", "/v5a/satellite-site-arrangement") %}
           {{ yesNo(data["satellite-site-arrangement-answer"]) }}
@@ -840,6 +846,9 @@
           {{ richValue(data["satellite-site-arrangement"]) }}
         {% endcall %}
         {% endif %}
+        {% call row("Supporting evidence", "/v5a/satellite-site-arrangement", "satellite site arrangement supporting evidence") %}
+          {{ value(data["satellite-site-arrangement-supporting-evidence"]) }}
+        {% endcall %}
 
         {% call row("Does the proposal meet the requirements set out for satellite sites in the operational guidance?", "/v5a/special-school-satellite-considerations") %}
           {{ yesNo(data["special-school-satellite-considerations-answer"]) }}
@@ -849,6 +858,9 @@
           {{ richValue(data["special-school-satellite-considerations"]) }}
         {% endcall %}
         {% endif %}
+        {% call row("Supporting evidence", "/v5a/special-school-satellite-considerations", "special school satellite site considerations supporting evidence") %}
+          {{ value(data["special-school-satellite-considerations-supporting-evidence"]) }}
+        {% endcall %}
 
         {% call row("Does the proposal meet the requirements set out for special school provision on a satellite site in the operational guidance?", "/v5a/mainstream-school-satellite-considerations") %}
           {{ yesNo(data["mainstream-school-satellite-considerations-answer"]) }}
@@ -858,6 +870,9 @@
           {{ richValue(data["mainstream-school-satellite-considerations"]) }}
         {% endcall %}
         {% endif %}
+        {% call row("Supporting evidence", "/v5a/mainstream-school-satellite-considerations", "mainstream school satellite considerations supporting evidence") %}
+          {{ value(data["mainstream-school-satellite-considerations-supporting-evidence"]) }}
+        {% endcall %}
 
         {% call row("Does the trust currently have the experience and governance arrangements in place to support the proposed change?", "/v5a/trust-experience-and-governance") %}
           {{ yesNo(data["trust-experience-and-governance-answer"]) }}
@@ -867,6 +882,9 @@
           {{ richValue(data["trust-experience-and-governance"]) }}
         {% endcall %}
         {% endif %}
+        {% call row("Supporting evidence", "/v5a/trust-experience-and-governance", "trust experience and governance supporting evidence") %}
+          {{ value(data["trust-experience-and-governance-supporting-evidence"]) }}
+        {% endcall %}
 
         {% call row("Does the proposal meet the requirements set out for a specialist base in the operational guidance?", "/v5a/specialist-base-considerations") %}
           {{ yesNo(data["specialist-base-considerations-answer"]) }}
@@ -876,6 +894,9 @@
           {{ richValue(data["specialist-base-considerations"]) }}
         {% endcall %}
         {% endif %}
+        {% call row("Supporting evidence", "/v5a/specialist-base-considerations", "specialist base considerations supporting evidence") %}
+          {{ value(data["specialist-base-considerations-supporting-evidence"]) }}
+        {% endcall %}
 
         {% call row("Are there any existing performance concerns that would make it a risk to increase SEN pupil places?", "/v5a/academy-performance-concerns") %}
           {{ yesNo(data["academy-performance-concerns"]) }}
@@ -885,6 +906,9 @@
           {{ richValue(data["academy-performance-concerns-details"]) }}
         {% endcall %}
         {% endif %}
+        {% call row("Supporting evidence", "/v5a/academy-performance-concerns", "academy performance concerns supporting evidence") %}
+          {{ value(data["academy-performance-concerns-supporting-evidence"]) }}
+        {% endcall %}
       </dl>
     </div>
   </div>
